@@ -1,0 +1,35 @@
+;==========================================
+; Grafito
+;
+; SQLite-based Graph Database
+; in ARturo
+;
+; @file: grafito.art
+; @author: drkameleon
+;==========================================
+
+;; Just run this with:
+;; arturo sample.art
+;;
+;; This will create a local sample.db
+;; along with the corresponding dot file
+;; and its visualization as sample.png 
+;; - provided GraphViz is installed
+;;
+;; Have fun!
+
+do.import "grafito.art"
+
+do [
+	inspect graph "sample" [
+		john: is 'Person #[name: "John" sex: 'm]
+		joan: is 'Person #[name: "Joan" sex: 'f]
+		bob:  is 'Person #[name: "Bob"  sex: 'm]
+		jill: is 'Person #[name: "Jill" sex: 'f]
+
+		link john 'MarriedTo joan
+		link @[bob jill] 'ChildOf @[john joan]
+	]
+]
+
+execute ~"dot -Tpng sample.dot -o sample.png"

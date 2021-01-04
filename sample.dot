@@ -1,0 +1,10 @@
+digraph GrafitoGraph {
+layout=neato
+graph [pad=".25", ranksep="0.25", nodesep="0.45"];
+node [fontname="FreeSans",fontsize="14",shape=circle, width=2, height=.5];
+edge [fontname="FreeSans",fontsize="12",labelfontname="FreeSans",labelfontsize="8"];
+compound=true;
+overlap=false;
+
+John->Joan [label="MarriedTo"];Bob->John [label="ChildOf"];Bob->Joan [label="ChildOf"];Jill->John [label="ChildOf"];Jill->Joan [label="ChildOf"];
+}

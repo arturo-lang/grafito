@@ -1,0 +1,181 @@
+;==========================================
+; Grafito
+;
+; SQLite-based Graph Database
+; in ARturo
+;
+; @file: grafito.art
+; @author: drkameleon
+;==========================================
+
+;
+; The main entry point
+;--------------------------
+
+graph: function [path, body][
+
+    ;; The initial database schema
+
+    schema: split.by:";" {
+        DROP TABLE IF EXISTS nodes;
+        CREATE TABLE nodes (
+            id      INTEGER PRIMARY KEY,
+            tag     TEXT
+        );
+
+        CREATE INDEX IF NOT EXISTS node_tag_index ON nodes(tag);
+
+        DROP TABLE IF EXISTS properties;
+        CREATE TABLE properties (
+            node        INTEGER,
+            property    TEXT,
+            value       TEXT,
+            FOREIGN KEY (node) REFERENCES nodes(id)
+        );
+
+        CREATE INDEX IF NOT EXISTS property_node_index     ON properties(node);
+        CREATE INDEX IF NOT EXISTS property_property_index ON properties(property);
+
+        DROP TABLE IF EXISTS edges;
+        CREATE TABLE edges (
+            id          INTEGER PRIMARY KEY,
+            tag         TEXT,
+            source      INTEGER,
+            target      INTEGER,
+            direction   INTEGER,
+            FOREIGN KEY (source) REFERENCES nodes(id),
+            FOREIGN KEY (target) REFERENCES nodes(id)
+        );
+
+        CREATE INDEX IF NOT EXISTS edges_source_index ON edges(source);
+        CREATE INDEX IF NOT EXISTS edges_target_index ON edges(target);
+    }
+
+    ;; initial setup
+
+    relationships: []
+    cleanpath: extract.filename path
+
+    ;; let's open/create the database
+
+    db: open ~"|cleanpath|.db"
+
+    ;; and initialize it
+    ;; with the given schema
+
+    query db schema
+
+    ;
+    ; Node creation
+    ;--------------------------
+
+    is: function [name,attributes][
+        nodeId: query.id db ~"INSERT INTO nodes (tag) VALUES ('|name|')"
+
+        loop attributes [k,v][
+            query db ~"INSERT INTO properties (node,property,value) VALUES (|nodeId|,'|k|','|v|')"
+        ]
+
+        return #[
+            id: nodeId
+            tag: name
+            properties: attributes
+        ]
+    ]
+
+    ;
+    ; Edge creation
+    ;--------------------------
+
+    edge: function [src, name, tgt][
+        edgeId: query.id db ~"INSERT INTO edges (tag,source,target,direction) VALUES ('|name|','|src\id|','|tgt\id|',1)"
+
+        result: #[
+            id: edgeId
+            tag: name
+            source: src
+            target: tgt
+        ]
+
+        append 'relationships result
+
+        return result
+    ]
+
+    ;
+    ; Export to DOT file
+    ;--------------------------
+
+    export: function [links][
+        preamble: {
+            digraph GrafitoGraph {
+                layout=neato
+                graph [pad=".25", ranksep="0.25", nodesep="0.45"];
+                node [fontname="FreeSans",fontsize="14",shape=circle, width=2, height=.5];
+                edge [fontname="FreeSans",fontsize="12",labelfontname="FreeSans",labelfontsize="8"];
+                compound=true;
+                overlap=false;
+
+                |content|
+            }
+        }
+
+        content: ""
+        loop links [lnk][
+            append 'content ~{|lnk\source\properties\name|->|lnk\target\properties\name| [label="|lnk\tag|"]; }
+        ]
+
+        write ~"|cleanpath|.dot" ~preamble
+    ]
+
+    ;
+    ; Process 1+ edges
+    ;--------------------------
+
+    link: function [src, name, tgt][
+        edgeId: 0
+
+        if? :dictionary = type tgt [
+            return edge src name tgt
+        ]
+        else [
+            edges: []
+            if? :dictionary = type src [
+                loop tgt [t][
+                    append 'edges edge src name t
+                ]
+            ]
+            else [
+                loop src [s] [
+                    loop tgt [t][
+                        append 'edges edge s name t
+                    ]
+                ]
+            ]
+
+            return edges
+        ]
+    ]
+
+    ;; process body
+
+    result: do body
+
+    ;; close the database
+
+    close db
+
+    ;; export relationships
+    ;; to GraphViz DOT file
+
+    export relationships
+
+    ;; and that was it :)
+
+    return result
+]
+
+;==========================================
+; This is the end,
+; my only friend, the end...
+;==========================================
