@@ -1,4 +1,3 @@
----
 
 <p align="center"><img align="center" width="350" src="https://raw.githubusercontent.com/arturo-lang/grafito/master/logo.png"/></p>
 <p align="center">
