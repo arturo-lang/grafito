@@ -21,15 +21,29 @@
 do.import "grafito.art"
 
 do [
-	inspect graph "sample" [
-		john: is 'Person #[name: "John" sex: 'm]
-		joan: is 'Person #[name: "Joan" sex: 'f]
-		bob:  is 'Person #[name: "Bob"  sex: 'm]
-		jill: is 'Person #[name: "Jill" sex: 'f]
+	graph.create "sample" [
+		john: is 'person #[name: "John" sex: 'm]
+		joan: is 'person #[name: "Joan" sex: 'f]
+		bob:  is 'person #[name: "Bob"  sex: 'm]
+		jill: is 'person #[name: "Jill" sex: 'f]
 
-		link john 'MarriedTo joan
-		link @[bob jill] 'ChildOf @[john joan]
+		link john 'marriedTo joan
+		link @[bob jill] 'childOf @[john joan]
 	]
 ]
 
-execute ~"dot -Tpng sample.dot -o sample.png"
+do [
+	benchmark [
+		graph "sample" [
+			print "getting first person named Joan..."
+			joan: first fetch 'person #[name: "Joan"] #[]
+			inspect joan
+
+			print "getting all male people married to Joan..."
+			husband: fetch 'person #[] #[marriedTo: joan]
+			inspect first husband
+		]
+	]
+]
+
+; execute ~"dot -Tpng sample.dot -o sample.png"
