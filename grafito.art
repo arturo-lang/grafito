@@ -63,7 +63,9 @@ graph: function [path, body][
     ;; and initialize it
     ;; with the given schema
 
-    query db schema
+    if null <> attribute "create" [
+        query db schema
+    ]
 
     ;
     ; Node creation
@@ -84,22 +86,105 @@ graph: function [path, body][
     ]
 
     ;
+    ; Node check
+    ;--------------------------
+
+    isA?: function [ls,nd][
+        (to :string ls) = get nd "tag"
+    ]
+
+    ;
+    ; Node retrieval from id
+    ;--------------------------
+
+    node: function [nid][
+        ntag: first first query db ~"SELECT tag FROM nodes WHERE id='|nid|'"
+        nprops: #[]
+        loop query db ~"SELECT property,value FROM properties WHERE node='|nid|'" [prop][
+            set nprops first prop get prop 1
+        ]
+
+        return #[
+            id: nid
+            tag: ntag
+            properties: nprops
+        ]
+    ]
+
+    ;
     ; Edge creation
     ;--------------------------
 
     edge: function [src, name, tgt][
         edgeId: query.id db ~"INSERT INTO edges (tag,source,target,direction) VALUES ('|name|','|src\id|','|tgt\id|',1)"
 
-        result: #[
+        rezt: #[
             id: edgeId
             tag: name
             source: src
             target: tgt
         ]
 
-        append 'relationships result
+        append 'relationships rezt
 
-        return result
+        return rezt
+    ]
+
+    ;
+    ; Process edges
+    ;--------------------------
+
+    link: function [src, name, tgt][
+        edgeId: 0
+
+        if? :dictionary = type tgt [
+            return edge src name tgt
+        ]
+        else [
+            edges: []
+            if? :dictionary = type src [
+                loop tgt [t][
+                    append 'edges edge src name t
+                ]
+            ]
+            else [
+                loop src [s] [
+                    loop tgt [t][
+                        append 'edges edge s name t
+                    ]
+                ]
+            ]
+
+            return edges
+        ]
+    ]
+
+    ;
+    ; Fetch results
+    ;--------------------------
+
+    fetch: function [name,attributes,rels][
+        got: map query db ~"SELECT id FROM nodes WHERE tag='|name|'" [x][node first x]
+        loop attributes [k,v][
+            select 'got [item][
+                props: get item 'properties
+                if? key? props k [
+                    v = get props k
+                ]
+                else [false]
+            ]
+        ]
+        loop rels [k,v][
+            select 'got [item][
+                rr: query db ~"SELECT target FROM edges WHERE tag='|k|' AND source='|get item 'id|'" 
+
+                if? 0 < size rr [
+                    in? map rr [x][node first x] v
+                ]
+                else [false]
+            ]
+        ]
+        return got
     ]
 
     ;
@@ -128,35 +213,6 @@ graph: function [path, body][
         write ~"|cleanpath|.dot" ~preamble
     ]
 
-    ;
-    ; Process 1+ edges
-    ;--------------------------
-
-    link: function [src, name, tgt][
-        edgeId: 0
-
-        if? :dictionary = type tgt [
-            return edge src name tgt
-        ]
-        else [
-            edges: []
-            if? :dictionary = type src [
-                loop tgt [t][
-                    append 'edges edge src name t
-                ]
-            ]
-            else [
-                loop src [s] [
-                    loop tgt [t][
-                        append 'edges edge s name t
-                    ]
-                ]
-            ]
-
-            return edges
-        ]
-    ]
-
     ;; process body
 
     result: do body
@@ -168,7 +224,7 @@ graph: function [path, body][
     ;; export relationships
     ;; to GraphViz DOT file
 
-    export relationships
+    ; export relationships
 
     ;; and that was it :)
 
