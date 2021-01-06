@@ -22,6 +22,44 @@ arturo examples/sample1.art
 
 And you can see your lightweight graph engine in action!
 
+## How to
+
+### Create a simple Node
+
+```
+graph.create "mygraph" [
+		is 'person #[name: "John" sex: 'm]
+]
+```
+
+### Create Relationships between Nodes
+
+```
+graph.create "mygraph" [
+		john: is 'person #[name: "John" sex: 'm]
+		joan: is 'person #[name: "Joan" sex: 'f]
+
+		link john 'marriedTo joan
+]
+```
+
+### Search Nodes
+
+```
+graph "mygraph" [
+    inspect fetch 'person #[name: "Joan"] #[]
+]
+```
+
+### More complex queries
+
+```
+graph "mygraph" [
+    inspect fetchAll 'person #[sex: "m"] #[
+				marriedTo: fetch 'person #[name: "Joan"] #[]
+		]
+]
+```
 
 ## License
 
