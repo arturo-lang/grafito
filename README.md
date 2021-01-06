@@ -27,7 +27,7 @@ And you can see your lightweight graph engine in action!
 
 MIT License
 
-Copyright (c) 2021 Arturo Programming Language
+Copyright (c) 2021 Yanis Zafirópulos
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
