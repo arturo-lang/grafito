@@ -35,13 +35,20 @@ do [
 do [
 	benchmark [
 		graph "sample1" [
+			; husband: function [X][
+			; 	first fetch 'person #[sex: "m"] #[marriedTo: X]
+			; ]
 			print "getting first person named Joan..."
-			joan: first fetch 'person #[name: "Joan"] #[]
+			joan: fetch 'person #[name: "Joan"] #[]
 			inspect joan
 
 			print "getting all male people married to Joan..."
 			husband: fetch 'person #[] #[marriedTo: joan]
-			inspect first husband
+			inspect husband
+
+			inspect fetchAll 'person #[] #[
+				marriedTo: fetch 'person #[name: "Joan"] #[]
+			]
 		]
 	]
 ]
