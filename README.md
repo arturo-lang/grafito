@@ -28,7 +28,7 @@ And you can see your lightweight graph engine in action!
 
 ```
 graph.create "mygraph" [
-		is 'person #[name: "John" sex: 'm]
+	is 'person #[name: "John" sex: 'm]
 ]
 ```
 
@@ -36,10 +36,10 @@ graph.create "mygraph" [
 
 ```
 graph.create "mygraph" [
-		john: is 'person #[name: "John" sex: 'm]
-		joan: is 'person #[name: "Joan" sex: 'f]
+	john: is 'person #[name: "John" sex: 'm]
+	joan: is 'person #[name: "Joan" sex: 'f]
 
-		link john 'marriedTo joan
+	link john 'marriedTo joan
 ]
 ```
 
@@ -56,8 +56,8 @@ graph "mygraph" [
 ```
 graph "mygraph" [
     inspect fetchAll 'person #[sex: "m"] #[
-				marriedTo: fetch 'person #[name: "Joan"] #[]
-		]
+		marriedTo: fetch 'person #[name: "Joan"] #[]
+	]
 ]
 ```
 
