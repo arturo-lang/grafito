@@ -2,7 +2,7 @@
 ; Grafito
 ;
 ; SQLite-based Graph Database
-; in ARturo
+; in Arturo
 ;
 ; @file: grafito.art
 ; @author: drkameleon
@@ -35,15 +35,32 @@ do [
 do [
 	benchmark [
 		graph "sample1" [
-			print "getting first person named Joan..."
-			joan: first fetch 'person #[name: "Joan"] #[]
-			inspect joan
+			inspect first fetch 'person #[] #[
+				marriedTo: first fetch 'person #[name: "Joan"] #[]
+			]
+			; print "getting first person named Joan..."
+			; joan: first fetch 'person #[name: "Joan"] #[]
+			; inspect joan
 
-			print "getting all male people married to Joan..."
-			husband: fetch 'person #[] #[marriedTo: joan]
-			inspect first husband
+			; print "getting all male people married to Joan..."
+			; husband: fetch 'person #[] #[marriedTo: joan]
+			; inspect first husband
 		]
 	]
 ]
+
+; do [
+; 	benchmark [
+; 		graph "sample1" [
+; 			print "getting first person named Joan..."
+; 			joan: first fetch 'person #[name: "Joan"] #[]
+; 			inspect joan
+
+; 			print "getting all male people married to Joan..."
+; 			husband: fetch 'person #[] #[marriedTo: joan]
+; 			inspect first husband
+; 		]
+; 	]
+; ]
 
 ; execute ~"dot -Tpng sample.dot -o sample.png"
