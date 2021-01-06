@@ -47,7 +47,7 @@ graph.create "mygraph" [
 
 ```
 graph "mygraph" [
-    inspect fetch 'person #[name: "Joan"] #[]
+	inspect fetch 'person #[name: "Joan"] #[]
 ]
 ```
 
@@ -55,7 +55,7 @@ graph "mygraph" [
 
 ```
 graph "mygraph" [
-    inspect fetchAll 'person #[sex: "m"] #[
+	inspect fetchAll 'person #[sex: "m"] #[
 		marriedTo: fetch 'person #[name: "Joan"] #[]
 	]
 ]
