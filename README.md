@@ -9,9 +9,9 @@
 
 ---
 
-### Try Grafito!
+## Try Grafito!
 
-After having installed the latest version of Arturo, clone this repo
+After having installed the latest version of [Arturo](https://github.com/arturo-lang/arturo), clone this repo
 and simple go to the folder via your terminal.
 
 Then:
@@ -22,7 +22,8 @@ arturo examples/sample1.art
 
 And you can see your lightweight graph engine in action!
 
----
+
+## License
 
 MIT License
 
