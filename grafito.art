@@ -1,3 +1,4 @@
+#!/usr/bin/env arturo
 ;==========================================
 ; Grafito
 ;
@@ -8,15 +9,33 @@
 ; @author: drkameleon
 ;==========================================
 
-;
-; The main entry point
 ;--------------------------
+; The main library
+;--------------------------
+
+Grafito: #[
+    version: "0.1"
+]
 
 graph: function [path, body][
 
-    ;; The initial database schema
+    ;;==========================================
+    ;; CONSTANTS
+    ;;==========================================
+
+    ; The initial database schema
+    ; for SQLite
 
     schema: split.by:";" {!sql
+        DROP TABLE IF EXISTS meta;
+        CREATE TABLE meta (
+            id INTEGER PRIMARY KEY,
+            property TEXT,
+            value TEXT
+        );
+
+        CREATE INDEX IF NOT EXISTS meta_property_index ON meta(property);
+
         DROP TABLE IF EXISTS nodes;
         CREATE TABLE nodes (
             id      INTEGER PRIMARY KEY,
@@ -51,13 +70,13 @@ graph: function [path, body][
         CREATE INDEX IF NOT EXISTS edges_target_index ON edges(target);
     }
 
-    ;; app template
+    ; app template
 
     app: {!html
         <!DOCTYPE html>
         <html lang="en">
             <head>
-                <title>Grafito @:|cleanpath|</title>
+                <title>Grafito @ |cleanpath|</title>
                 <link rel="preconnect" href="https://fonts.gstatic.com">
                 <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
                 <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
@@ -280,31 +299,51 @@ graph: function [path, body][
                             webview.executeQuery(ele.value);        
                         }
                     }
+
+                    window.onbeforeunload = function(evt) {
+                        $.post( "/exit", {}, function( data ) {}
+                        );
+                        var message = "Are you sure?"; 
+                        /* InternetExplorer/Firefox*/
+                        var e = evt || window.event
+                        e.returnValue = false;//message 
+                        /* WebKit browser */
+                        return false;
+                    }
                 </script>
             </body>
         </html>
     }
 
-    ;; initial setup
+    ; Color library
+    ; for graph nodes
 
-    relationships: []
-    cleanpath: extract.filename path
+    colori: [
+        'blue 'blueviolet 'brown 'cadetblue 'chocolate
+        'crimson 'darkblue 'darkgreen 'darkmagenta 'darkorchid
+        'darkred 'darkslategray 'dodgerblue 'goldenrod 
+        'green 'indigo 'lightcoral 'lightblue 'lightsalmon
+        'maroon 'mediumpurple 'midnightblue 'olive 'orange
+        'orangered 'peru 'purple 'seagreen 'steelblue 
+        'teal 'yellowgreen
+    ]
 
-    ;; let's open/create the database
+    ;;==========================================
+    ;; METHODS
+    ;;==========================================
 
-    db: open ~"|cleanpath|.db"
+    ;
+    ; Print message
+    ;--------------------------
 
-    ;; and initialize it
-    ;; with the given schema
-
-    if null <> attribute "create" [
-        query db schema
+    printDebug: function [msg][
+        print @[color.cyan "# grafito ::" color.white msg]
     ]
 
     ;
     ; Node creation
     ;--------------------------
-
+    
     put: function [name,attributes][
         nodeId: query.id db ~{!sql INSERT INTO nodes (tag) VALUES ('|name|')}
 
@@ -358,8 +397,6 @@ graph: function [path, body][
             source: src
             target: tgt
         ]
-
-        append 'relationships rezt
 
         return rezt
     ]
@@ -441,20 +478,6 @@ graph: function [path, body][
         first fetch n a r
     ]
 
-    nodeConfig: #[
-
-    ]
-
-    colori: [
-        'blue 'blueviolet 'brown 'cadetblue 'chocolate
-        'crimson 'darkblue 'darkgreen 'darkmagenta 'darkorchid
-        'darkred 'darkslategray 'dodgerblue 'goldenrod 
-        'green 'indigo 'lightcoral 'lightblue 'lightsalmon
-        'maroon 'mediumpurple 'midnightblue 'olive 'orange
-        'orangered 'peru 'purple 'seagreen 'steelblue 
-        'teal 'yellowgreen
-    ]
-
     ;
     ; Preview nodeset as graph
     ;--------------------------
@@ -483,7 +506,7 @@ graph: function [path, body][
             print "finding neighbors of:"
             inspect nd
 
-            qr: ~"SELECT source,target,tag FROM edges WHERE source='|nd\id|' OR target='|nd\id|'"
+            qr: ~{!sql SELECT source,target,tag FROM edges WHERE source='|nd\id|' OR target='|nd\id|'}
             print qr
             rezu: query db qr
 
@@ -550,10 +573,8 @@ graph: function [path, body][
         
         currentNodes: new nodeset
         currentDataset: new getNodes nodeset
-        ; pt: ~prevTempl
-        ; print pt
 
-        serve.chrome.verbose #[
+        serve.chrome #[
             "/"     : [
                 dataset: write.json ø currentDataset
                 ~app
@@ -566,61 +587,145 @@ graph: function [path, body][
             ]
 
             "/getnode": [
-                print ["IN /GETNODE. Got:" ndid]
-                print "currentNodes WERE"
-                inspect currentNodes
                 append 'currentNodes node ndid
-                print "currentNodes ARE"
-                inspect currentNodes
                 currentDataset: new getNodes currentNodes
-                inspect currentDataset
                 write.json ø currentDataset
+            ]
+
+            "/exit": [
+                return ø
             ]
         ]
     ]
 
-    ;
-    ; Export to DOT file
-    ;--------------------------
+    ;;==========================================
+    ;; INITIALIZATION
+    ;;==========================================
 
-    export: function [links][
-        preamble: {
-            digraph GrafitoGraph {
-                layout=neato
-                graph [pad=".25", ranksep="0.25", nodesep="0.45"];
-                node [fontname="FreeSans",fontsize="14",shape=circle, width=2, height=.5];
-                edge [fontname="FreeSans",fontsize="12",labelfontname="FreeSans",labelfontsize="8"];
-                compound=true;
-                overlap=false;
+    verbose: not? null? attribute "verbose"
 
-                |content|
-            }
-        }
+    dbPath: ""
+    cleanpath: "in-memory"
+    dbExisted: false
 
-        content: ""
-        loop links [lnk][
-            append 'content ~{|lnk\source\properties\name|->|lnk\target\properties\name| [label="|lnk\tag|"]; }
-        ]
+    if? not? null? path [
+        cleanpath: extract.filename path
+        dbPath: ~"|cleanpath|.db"
+        dbExisted: exists? ~"|cleanpath|.db"
+    ]
 
-        write ~"|cleanpath|.dot" ~preamble
+    nodeConfig: #[]
+
+    ; open the database
+    if verbose -> printDebug ~"DB = |cleanpath|"
+    db: open dbPath
+
+    ; and initialize it
+    ; with the given schema (if necessary)
+    if? or? not? null? attribute "create"
+           not? dbExisted [
+        if verbose -> printDebug "creating database from scratch"
+        query db schema
+    ] 
+    else [
+        if verbose -> printDebug "using existing database"
     ]
 
     ;; process body
-
     result: do body
 
     ;; close the database
-
     close db
 
-    ;; export relationships
-    ;; to GraphViz DOT file
-
-    ; export relationships
-
     ;; and that was it :)
-
     return result
+]
+
+;--------------------------
+; The main entry point
+;--------------------------
+
+if standalone? [
+
+    ;; helpers & templates
+
+    Versions: #[
+        sqlite: first split.by:" " execute "sqlite3 --version"
+        engine: Grafito\version
+    ]
+
+    BR: "\n"
+
+    orange: $[x][
+        color.rgb:208 x
+    ]
+
+    GrafitoHeader: join @[
+        print color.magenta append append append ---
+                   __ _ _        
+                  / _(_) |       
+   __ _ _ __ __ _| |_ _| |_ ___  
+  / _` | '__/ _` |  _| | __/ _ \ 
+ | (_| | | | (_| | | | | || (_) |
+  \__, |_|  \__,_|_| |_|\__\___/ 
+   __/ |--- color.white "               (c) 2021" color.magenta ---                         
+  |___/--- color.white "       Yanis Zafirópulos"
+        print "  "
+        color.gray "-----------------------------------" BR
+        color.gray ~"  system: v/|Versions\engine|, engine: v/|Versions\sqlite|" BR
+        color.gray "-----------------------------------" BR
+    ]
+
+    ;; methods
+
+    launchTerminal: function [][
+        print ""
+        print [orange "# Launching Grafito console - rock on! 🤘" BR]
+
+        while [true] [
+            push null
+            Got: null
+
+            indent: ""
+            
+            inp: input "$> " 
+            while [suffix? inp " "][
+                if suffix? strip inp "[" [
+                    indent: indent ++ "\t"
+                ]
+                inp: inp ++ input ".. " ++ indent
+            ]
+            
+            do.import inp
+            
+            StackSize: size stack
+
+            if StackSize > 0 	-> Got: pop 1 
+            if Got <> null 		-> print color.gray ~"=> |Got|"
+
+            globalize
+            print ""
+        ]
+    ]
+
+    ;; startup
+
+    print GrafitoHeader
+
+    if 1 < size arg [
+        panic "Too many arguments given!"
+    ]
+
+    if? 0 = size arg [
+        graph.verbose ø [
+            launchTerminal
+        ]
+    ]
+    else [
+        graph.verbose arg\0 [
+            launchTerminal
+        ]
+    ]
 ]
 
 ;==========================================
