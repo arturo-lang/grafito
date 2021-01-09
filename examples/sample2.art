@@ -1,18 +1,20 @@
 do.import {grafito.art}
 
-do [graph.create "sample2" [
-    honorEnN: is 'Pos #[p:"noun"]
-    honorEsN: is 'Pos #[p:"noun"]
-    dishonorEnN: is 'Pos #[p:"noun"]
+do [ graph.create "sample2" [
+    honorEnN: put 'Pos #[p:"noun"]
+    honorEsN: put 'Pos #[p:"noun"]
+    dishonorEnN: put 'Pos #[p:"noun"]
 
-    tokenS: is 'Sense #[s:"token of praise or respect"]
+    tokenS: put 'Sense #[s:"token of praise or respect"]
 
-    link (is 'Lemma #[w:"honor" l:"en"]) 'has honorEnN
-    link (is 'Lemma #[w:"honor" l:"es"]) 'has honorEsN
-    link (is 'Lemma #[w:"dishonor" l:"en"]) 'has dishonorEnN
+    link (put 'Lemma #[w:"honor" l:"en"]) 'has honorEnN
+    link (put 'Lemma #[w:"honor" l:"es"]) 'has honorEsN
+    link (put 'Lemma #[w:"dishonor" l:"en"]) 'has dishonorEnN
 
     link honorEnN 'means tokenS
     link honorEsN 'means tokenS
 
     link dishonorEnN 'antonym honorEnN
+
+    preview fetch 'Lemma #[w:"honor"] #[]
 ]]

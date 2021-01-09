@@ -22,10 +22,10 @@ do.import "grafito.art"
 
 do [
 	graph.create "sample1" [
-		john: is 'person #[name: "John" sex: 'm]
-		joan: is 'person #[name: "Joan" sex: 'f]
-		bob:  is 'person #[name: "Bob"  sex: 'm]
-		jill: is 'person #[name: "Jill" sex: 'f]
+		john: put 'person #[s: "John" sex: 'm]
+		joan: put 'person #[s: "Joan" sex: 'f]
+		bob:  put 'person #[s: "Bob"  sex: 'm]
+		jill: put 'person #[s: "Jill" sex: 'f]
 
 		link john 'marriedTo joan
 		link @[bob jill] 'childOf @[john joan]
@@ -39,17 +39,23 @@ do [
 			; 	first fetch 'person #[sex: "m"] #[marriedTo: X]
 			; ]
 			print "getting first person named Joan..."
-			joan: fetch 'person #[name: "Joan"] #[]
+			joan: what 'person #[s: "Joan"] #[]
 			inspect joan
 
 			print "getting all male people married to Joan..."
-			husband: fetch 'person #[] #[marriedTo: joan]
+			husband: what 'person #[] #[marriedTo: joan]
 			inspect husband
 
-			inspect fetchAll 'person #[] #[
-				marriedTo: fetch 'person #[name: "Joan"] #[]
+			inspect fetch 'person #[] #[
+				marriedTo: what 'person #[s: "Joan"] #[]
 			]
 		]
+	]
+]
+
+do [
+	graph "sample1" [
+		preview fetch 'person #[] #[]
 	]
 ]
 
