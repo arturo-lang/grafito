@@ -9,13 +9,13 @@
 ; @author: drkameleon
 ;==========================================
 
-;--------------------------
-; The main library
-;--------------------------
-
 Grafito: #[
     version: "0.1"
 ]
+
+;--------------------------
+; The main library
+;--------------------------
 
 graph: function [path, body][
 
@@ -337,7 +337,7 @@ graph: function [path, body][
     ;--------------------------
 
     printDebug: function [msg][
-        print @[color.cyan "# grafito ::" color.white msg]
+        print color.cyan ":: " ++ msg
     ]
 
     ;
@@ -347,14 +347,22 @@ graph: function [path, body][
     put: function [name,attributes][
         nodeId: query.id db ~{!sql INSERT INTO nodes (tag) VALUES ('|name|')}
 
-        loop attributes [k,v][
+        att: attributes
+        if not? dictionary? att -> att: #att
+
+        loop att [k,v][
             query db ~{!sql INSERT INTO properties (node,property,value) VALUES (|nodeId|,'|k|','|v|')}
+        ]
+
+        if verbose? [
+            if? 1 = size att -> printDebug ~"created 1 node (@|nodeId|) with 1 property"
+            else -> printDebug ~"created 1 node (@|nodeId|) with |size att| properties"
         ]
 
         return #[
             id: nodeId
             tag: name
-            properties: attributes
+            properties: att
         ]
     ]
 
@@ -405,11 +413,14 @@ graph: function [path, body][
     ; Process edges
     ;--------------------------
 
-    link: function [src, name, tgt][
+    link: function [name, src, tgt][
         edgeId: 0
 
         if? :dictionary = type tgt [
-            return edge src name tgt
+            ret: edge src name tgt
+            if verbose? -> printDebug ~"created 1 edge (@|get ret 'id|)"
+
+            return ret
         ]
         else [
             edges: []
@@ -425,6 +436,8 @@ graph: function [path, body][
                     ]
                 ]
             ]
+
+            if verbose? -> printDebug ~"created |size edges| edges"
 
             return edges
         ]
@@ -443,8 +456,14 @@ graph: function [path, body][
     fetch: function [name,attributes,rels][
         qr: new [{!sql SELECT nodes.id FROM nodes }]
 
-        if ø <> attributes [
-            if 0 < size attributes ->
+        att: attributes
+
+        if and? not? dictionary? att 
+                not? null? att ->
+            att: #att
+
+        if ø <> att [
+            if 0 < size att ->
                 append 'qr {!sql INNER JOIN properties ON properties.node=nodes.id}
         ]
 
@@ -455,9 +474,9 @@ graph: function [path, body][
 
         append 'qr ~{!sql WHERE nodes.tag='|name|'}
 
-        if ø <> attributes [
-            if 0 < size attributes [
-                loop attributes [k,v]->
+        if ø <> att [
+            if 0 < size att [
+                loop att [k,v]->
                     append 'qr ~{!sql AND properties.property='|k|' AND properties.value='|v|'}
             ]
         ]
@@ -598,11 +617,15 @@ graph: function [path, body][
         ]
     ]
 
+    verbose: function .export:[verbose?] [][
+        verbose?: not? verbose?
+    ]
+
     ;;==========================================
     ;; INITIALIZATION
     ;;==========================================
 
-    verbose: not? null? attribute "verbose"
+    verbose?: not? null? attribute "verbose"
 
     dbPath: ""
     cleanpath: "in-memory"
@@ -617,18 +640,18 @@ graph: function [path, body][
     nodeConfig: #[]
 
     ; open the database
-    if verbose -> printDebug ~"DB = |cleanpath|"
+    printDebug ~"DB = |cleanpath|"
     db: open dbPath
 
     ; and initialize it
     ; with the given schema (if necessary)
     if? or? not? null? attribute "create"
            not? dbExisted [
-        if verbose -> printDebug "creating database from scratch"
+        printDebug "creating database from scratch"
         query db schema
     ] 
     else [
-        if verbose -> printDebug "using existing database"
+        printDebug "using existing database"
     ]
 
     ;; process body
@@ -680,7 +703,9 @@ if standalone? [
 
     launchTerminal: function [][
         print ""
-        print [orange "# Launching Grafito console - rock on! 🤘" BR]
+        print orange "## Tip: Type `verbose` to switch info messages on/off"
+        print orange "## Launching Grafito console - rock on! 🤘"
+        print ""
 
         while [true] [
             push null
@@ -712,19 +737,15 @@ if standalone? [
 
     print GrafitoHeader
 
-    if 1 < size arg [
+    if 1 < size arg ->
         panic "Too many arguments given!"
-    ]
 
-    if? 0 = size arg [
-        graph.verbose ø [
-            launchTerminal
-        ]
-    ]
-    else [
-        graph.verbose arg\0 [
-            launchTerminal
-        ]
+    dbInput: ø
+    if 1 = size arg -> 
+        dbInput: arg\0
+
+    graph dbInput [
+        launchTerminal
     ]
 ]
 
