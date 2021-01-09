@@ -9,6 +9,8 @@
 
 ---
 
+<p align="center"><img align="center" src="https://raw.githubusercontent.com/arturo-lang/grafito/master/screenshot.png"/></p>
+
 ## Try Grafito!
 
 After having installed the latest version of [Arturo](https://github.com/arturo-lang/arturo), clone this repo
