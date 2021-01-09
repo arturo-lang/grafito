@@ -14,7 +14,7 @@
 ## Try Grafito!
 
 After having installed the latest version of [Arturo](https://github.com/arturo-lang/arturo), clone this repo
-and simple go to the folder via your terminal.
+and simply go to the folder via your terminal.
 
 Then, run one of the examples:
 
