@@ -243,12 +243,9 @@ graph: function [path, body][
                             $.post("/getnode", {ndid: x.nodes[0] }, function (data){
                                 redrawGraph(JSON.parse(data));
                             });
-                            //webview.clicked(x.nodes[0]);
-                            //console.log("Selected:",x);
                         });
                         db.on("hoverNode",function (x){
                             var nd = nodes.get(x.node);
-                            //console.log(nodes.get(x.node));
                             var props = [];
                             for (var i=0; i<Object.keys(nd.properties).length; i++){
                                 var prop = Object.keys(nd.properties)[i];
@@ -301,13 +298,9 @@ graph: function [path, body][
                     }
 
                     window.onbeforeunload = function(evt) {
-                        $.post( "/exit", {}, function( data ) {}
-                        );
-                        var message = "Are you sure?"; 
-                        /* InternetExplorer/Firefox*/
+                        $.post( "/exit", {}, function( data ) {});
                         var e = evt || window.event
-                        e.returnValue = false;//message 
-                        /* WebKit browser */
+                        e.returnValue = false;
                         return false;
                     }
                 </script>
@@ -341,7 +334,21 @@ graph: function [path, body][
     ]
 
     ;
-    ; Node creation
+    ; Get random node color
+    ; for graph visualization
+    ;--------------------------
+
+    addColorForNodeType: function [nn][
+        if not? key? nodeConfig get nn 'tag [
+            set nodeConfig get nn 'tag #[
+                color: sample colori
+                label: get keys get nn 'properties 0
+            ]
+        ]
+    ]
+
+    ;
+    ; Create new node
     ;--------------------------
     
     put: function [name,attributes][
@@ -367,33 +374,7 @@ graph: function [path, body][
     ]
 
     ;
-    ; Node check
-    ;--------------------------
-
-    isA?: function [ls,nd][
-        (to :string ls) = get nd "tag"
-    ]
-
-    ;
-    ; Node retrieval from id
-    ;--------------------------
-
-    node: function [nid][
-        ntag: first first query db ~{!sql SELECT tag FROM nodes WHERE id='|nid|'}
-        nprops: #[]
-        loop query db ~{!sql SELECT property,value FROM properties WHERE node='|nid|'} [prop][
-            set nprops first prop get prop 1
-        ]
-
-        return #[
-            id: nid
-            tag: ntag
-            properties: nprops
-        ]
-    ]
-
-    ;
-    ; Edge creation
+    ; Create new edge
     ;--------------------------
 
     edge: function [src, name, tgt][
@@ -410,7 +391,26 @@ graph: function [path, body][
     ]
 
     ;
-    ; Process edges
+    ; Get node with properties
+    ; from ID
+    ;--------------------------
+
+    getNode: function [nid][
+        ntag: first first query db ~{!sql SELECT tag FROM nodes WHERE id='|nid|'}
+        nprops: #[]
+        loop query db ~{!sql SELECT property,value FROM properties WHERE node='|nid|'} [prop][
+            set nprops first prop get prop 1
+        ]
+
+        return #[
+            id: nid
+            tag: ntag
+            properties: nprops
+        ]
+    ]
+
+    ;
+    ; Link nodes with edges
     ;--------------------------
 
     link: function [name, src, tgt][
@@ -444,14 +444,18 @@ graph: function [path, body][
     ]
 
     ;
-    ; Fetch results
+    ; Check node type
     ;--------------------------
 
-    neighbors: function [nd][
-        qr: ~{!sql SELECT target,tag FROM edges WHERE source='|nd\id|'}
-        print qr
-        map query db qr 'x [node first first x]
+    isA?: function [ls,nd][
+        (to :string ls) = get nd "tag"
     ]
+
+    ;
+    ; Fetch all results for tag
+    ; with given properties
+    ; and edges
+    ;--------------------------
 
     fetch: function [name,attributes,rels][
         qr: new [{!sql SELECT nodes.id FROM nodes }]
@@ -488,27 +492,25 @@ graph: function [path, body][
             ]
         ]
         
-        got: map query db join.with:" " qr 'x [node first x]
+        got: map query db join.with:" " qr 'x [getNode first x]
 
         return got
     ]
+
+    ;
+    ; Get first result for tag
+    ; with given properties
+    ; and edges
+    ;--------------------------
 
     what: function [n,a,r][
         first fetch n a r
     ]
 
     ;
-    ; Preview nodeset as graph
+    ; Get nodeset 
+    ; for graph visualization
     ;--------------------------
-
-    addColorForNodeType: function [nn][
-        if not? key? nodeConfig get nn 'tag [
-            set nodeConfig get nn 'tag #[
-                color: sample colori
-                label: get keys get nn 'properties 0
-            ]
-        ]
-    ]
 
     getNodes: function [nodeset][
         clean: new nodeset
@@ -516,27 +518,16 @@ graph: function [path, body][
         edz: new []
 
         loop nodeset [nd][
-            ;print ["tag:" get nd 'tag]
             addColorForNodeType nd
-            ;if not? key? nodeColors get nd 'tag [
-            ;    print ["not found:" get nd' tag]
-                ; set nodeColors get nd 'tag to :string sample colori
-            ;]
-            print "finding neighbors of:"
-            inspect nd
 
             qr: ~{!sql SELECT source,target,tag FROM edges WHERE source='|nd\id|' OR target='|nd\id|'}
-            print qr
-            rezu: query db qr
 
+            rezu: query db qr
             loop rezu [rez][
                 appendable: ø
-                if? (get nd 'id) <> get rez 0 [
-                    appendable: node get rez 0
-                ]
-                else [
-                    appendable: node get rez 1
-                ]
+                if? (get nd 'id) <> get rez 0 -> appendable: getNode get rez 0
+                else -> appendable: getNode get rez 1
+
                 append 'clean appendable
                 addColorForNodeType appendable
                 append 'edz @[@[get rez 0 get rez 1 get rez 2]]
@@ -544,19 +535,9 @@ graph: function [path, body][
             clean: unique clean
         ]
 
-        print "CLEAN NODES"
-        inspect clean
-        print "EDZ"
-        inspect edz
-
-        print "NODECONFIG:"
-        inspect nodeConfig
-
         elements: new []
 
         loop clean [nd][
-            print "HERE"
-            inspect nd
             append 'elements #[
                 id: to :integer get nd 'id
                 title: get nd 'tag
@@ -565,9 +546,6 @@ graph: function [path, body][
                 color: get get nodeConfig get nd 'tag 'color
             ]
         ]
-        print "== ELEMENTS/"
-        inspect elements
-        print "/ELEMENTS =="
 
         relations: new []
 
@@ -580,13 +558,15 @@ graph: function [path, body][
             ]
         ]
 
-        ;; data: { id: '1+2', source: '1', target: '2', label: "to" }
-
         return #[
             nodes: unique elements
             edges: unique relations
         ]
     ]
+
+    ;
+    ; Visualize given nodeset
+    ;--------------------------
 
     preview: function [nodeset][
         
@@ -606,7 +586,7 @@ graph: function [path, body][
             ]
 
             "/getnode": [
-                append 'currentNodes node ndid
+                append 'currentNodes getNode ndid
                 currentDataset: new getNodes currentNodes
                 write.json ø currentDataset
             ]
@@ -616,6 +596,10 @@ graph: function [path, body][
             ]
         ]
     ]
+
+    ;
+    ; Switch verbosity on/off
+    ;--------------------------
 
     verbose: function .export:[verbose?] [][
         verbose?: not? verbose?
