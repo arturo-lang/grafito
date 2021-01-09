@@ -16,7 +16,7 @@ graph: function [path, body][
 
     ;; The initial database schema
 
-    schema: split.by:";" {
+    schema: split.by:";" {!sql
         DROP TABLE IF EXISTS nodes;
         CREATE TABLE nodes (
             id      INTEGER PRIMARY KEY,
@@ -53,7 +53,7 @@ graph: function [path, body][
 
     ;; app template
 
-    app: {
+    app: {!html
         <!DOCTYPE html>
         <html lang="en">
             <head>
@@ -306,10 +306,10 @@ graph: function [path, body][
     ;--------------------------
 
     put: function [name,attributes][
-        nodeId: query.id db ~"INSERT INTO nodes (tag) VALUES ('|name|')"
+        nodeId: query.id db ~{!sql INSERT INTO nodes (tag) VALUES ('|name|')}
 
         loop attributes [k,v][
-            query db ~"INSERT INTO properties (node,property,value) VALUES (|nodeId|,'|k|','|v|')"
+            query db ~{!sql INSERT INTO properties (node,property,value) VALUES (|nodeId|,'|k|','|v|')}
         ]
 
         return #[
@@ -332,9 +332,9 @@ graph: function [path, body][
     ;--------------------------
 
     node: function [nid][
-        ntag: first first query db ~"SELECT tag FROM nodes WHERE id='|nid|'"
+        ntag: first first query db ~{!sql SELECT tag FROM nodes WHERE id='|nid|'}
         nprops: #[]
-        loop query db ~"SELECT property,value FROM properties WHERE node='|nid|'" [prop][
+        loop query db ~{!sql SELECT property,value FROM properties WHERE node='|nid|'} [prop][
             set nprops first prop get prop 1
         ]
 
@@ -350,7 +350,7 @@ graph: function [path, body][
     ;--------------------------
 
     edge: function [src, name, tgt][
-        edgeId: query.id db ~"INSERT INTO edges (tag,source,target,direction) VALUES ('|name|','|src\id|','|tgt\id|',1)"
+        edgeId: query.id db ~{!sql INSERT INTO edges (tag,source,target,direction) VALUES ('|name|','|src\id|','|tgt\id|',1)}
 
         rezt: #[
             id: edgeId
@@ -398,41 +398,41 @@ graph: function [path, body][
     ;--------------------------
 
     neighbors: function [nd][
-        qr: ~"SELECT target,tag FROM edges WHERE source='|nd\id|'"
+        qr: ~{!sql SELECT target,tag FROM edges WHERE source='|nd\id|'}
         print qr
         map query db qr 'x [node first first x]
     ]
 
     fetch: function [name,attributes,rels][
-        qr: new "SELECT nodes.id FROM nodes "
+        qr: new [{!sql SELECT nodes.id FROM nodes }]
 
         if ø <> attributes [
             if 0 < size attributes ->
-                append 'qr "INNER JOIN properties ON properties.node=nodes.id "
+                append 'qr {!sql INNER JOIN properties ON properties.node=nodes.id}
         ]
 
         if ø <> rels [
             if 0 < size rels ->
-                append 'qr "INNER JOIN edges ON edges.source=nodes.id "
+                append 'qr {!sql INNER JOIN edges ON edges.source=nodes.id}
         ]
 
-        append 'qr ~"WHERE nodes.tag='|name|' "
+        append 'qr ~{!sql WHERE nodes.tag='|name|'}
 
         if ø <> attributes [
             if 0 < size attributes [
                 loop attributes [k,v]->
-                    append 'qr ~"AND properties.property='|k|' AND properties.value='|v|' "
+                    append 'qr ~{!sql AND properties.property='|k|' AND properties.value='|v|'}
             ]
         ]
 
         if ø <> rels [
             if 0 < size rels [
                 loop rels [k,v]->
-                    append 'qr ~"AND edges.tag='|k|' AND edges.target='|v\id|' "
+                    append 'qr ~{!sql AND edges.tag='|k|' AND edges.target='|v\id|'}
             ]
         ]
         
-        got: map query db qr 'x [node first x]
+        got: map query db join.with:" " qr 'x [node first x]
 
         return got
     ]
