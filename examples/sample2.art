@@ -7,14 +7,14 @@ do [ graph.create "sample2" [
 
     tokenS: put 'Sense #[s:"token of praise or respect"]
 
-    link (put 'Lemma #[w:"honor" l:"en"]) 'has honorEnN
-    link (put 'Lemma #[w:"honor" l:"es"]) 'has honorEsN
-    link (put 'Lemma #[w:"dishonor" l:"en"]) 'has dishonorEnN
+    link'has (put 'Lemma #[w:"honor" l:"en"]) honorEnN
+    link'has (put 'Lemma #[w:"honor" l:"es"]) honorEsN
+    link'has (put 'Lemma #[w:"dishonor" l:"en"]) dishonorEnN
 
-    link honorEnN 'means tokenS
-    link honorEsN 'means tokenS
+    link'means honorEnN tokenS
+    link'means honorEsN tokenS
 
-    link dishonorEnN 'antonym honorEnN
+    link'antonym dishonorEnN honorEnN
 
-    preview fetch 'Lemma #[w:"honor"] #[]
+    preview (fetch 'Pos ø ø)
 ]]

@@ -27,8 +27,8 @@ do [
 		bob:  put 'person #[s: "Bob"  sex: 'm]
 		jill: put 'person #[s: "Jill" sex: 'f]
 
-		link john 'marriedTo joan
-		link @[bob jill] 'childOf @[john joan]
+		link'marriedTo john joan
+		link'childOf @[bob jill] @[john joan]
 	]
 ]
 
