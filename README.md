@@ -14,11 +14,19 @@
 After having installed the latest version of [Arturo](https://github.com/arturo-lang/arturo), clone this repo
 and simple go to the folder via your terminal.
 
-Then:
+Then, run one of the examples:
 
 ```
-arturo examples/sample1.art
+arturo examples/sample3.art
 ```
+
+Or, fire up the interactive console:
+
+```
+./grafito.art
+```
+
+(If you pass a name, it will use it as your database file. If not, the database will be in-memory)
 
 And you can see your lightweight graph engine in action!
 
@@ -28,7 +36,7 @@ And you can see your lightweight graph engine in action!
 
 ```
 graph.create "mygraph" [
-	is 'person #[name: "John" sex: 'm]
+	put 'person #[name: "John" sex: 'm]
 ]
 ```
 
@@ -36,10 +44,10 @@ graph.create "mygraph" [
 
 ```
 graph.create "mygraph" [
-	john: is 'person #[name: "John" sex: 'm]
-	joan: is 'person #[name: "Joan" sex: 'f]
+	john: put 'person #[name: "John" sex: 'm]
+	joan: put 'person #[name: "Joan" sex: 'f]
 
-	link john 'marriedTo joan
+	link 'marriedTo john joan
 ]
 ```
 
@@ -47,7 +55,25 @@ graph.create "mygraph" [
 
 ```
 graph "mygraph" [
-	inspect fetch 'person #[name: "Joan"] #[]
+	inspect what 'person #[name: "Joan"] #[]
+]
+```
+
+
+### Delete an existing Node
+
+```
+graph "mygraph" [
+	unput what'person #[name: "John"] ø
+]
+```
+
+### Delete an existing Relationship
+
+```
+graph "mygraph" [
+	unlink'marriedTo what'person #[name: "John"] ø
+                     what'person #[name: "Joan"] ø
 ]
 ```
 
@@ -55,11 +81,21 @@ graph "mygraph" [
 
 ```
 graph "mygraph" [
-	inspect fetchAll 'person #[sex: "m"] #[
-		marriedTo: fetch 'person #[name: "Joan"] #[]
+	inspect fetch 'person #[sex: "m"] #[
+		marriedTo: what 'person #[name: "Joan"] #[]
 	]
 ]
 ```
+
+### Preview a set of Nodes
+
+```
+graph "mygraph" [
+	preview fetch 'person ø ø
+]
+```
+
+(If you run the `sample3` in the *examples* folder, the image you'll get is the one you see above ;-))
 
 ## License
 
