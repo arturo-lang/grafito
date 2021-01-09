@@ -386,6 +386,16 @@ graph: function [path, body][
     ]
 
     ;
+    ; Delete existing node
+    ;--------------------------
+
+    unput: function [nd][
+        query db ~{!sql DELETE FROM nodes WHERE id='|nd\id|'}
+        query db ~{!sql DELETE FROM properties WHERE node='|nd\id|'}
+        query db ~{!sql DELETE FROM edges WHERE source='|nd\id|' OR target='|nd\id|'}
+    ]
+
+    ;
     ; Create new edge
     ;--------------------------
 
@@ -400,6 +410,14 @@ graph: function [path, body][
         ]
 
         return rezt
+    ]
+
+    ;
+    ; Delete existing edge
+    ;--------------------------
+
+    unedge: function [src, name, tgt][
+        query db ~{!sql DELETE FROM edges WHERE source='|src\id|' AND target='|tgt\id|'}
     ]
 
     ;
@@ -452,6 +470,35 @@ graph: function [path, body][
             if verbose? -> printDebug ~"created |size edges| edges"
 
             return edges
+        ]
+    ]
+
+    ;
+    ; Delete node edges
+    ;--------------------------
+
+    unlink: function [name, src, tgt][
+        edgeId: 0
+
+        if? :dictionary = type tgt [
+            unedge src name tgt
+            if verbose? -> printDebug ~"removed 1 edge"
+        ]
+        else [
+            if? :dictionary = type src [
+                loop tgt [t][
+                    unedge src name t
+                ]
+            ]
+            else [
+                loop src [s] [
+                    loop tgt [t][
+                        unedge s name t
+                    ]
+                ]
+            ]
+
+            ; if verbose? -> printDebug ~"created |size edges| edges"
         ]
     ]
 
