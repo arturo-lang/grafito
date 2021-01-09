@@ -193,6 +193,7 @@ graph: function [path, body][
                     crossorigin="anonymous"></script>
                 <script type="text/javascript">
                     window.dataset = |dataset|;
+                    window.infotext = "";
                     function drawGraph() {
                         var initial = window.dataset;
 
@@ -229,15 +230,26 @@ graph: function [path, body][
                                         scaleFactor: 0.5,
                                         type: "arrow"
                                     }
-                                }
+                                },
+                                length: 3.0
                             },
                             interaction:{
                                 hover:true,
                                 hoverConnectedEdges:false
+                            },
+                            physics: {
+                                barnesHut: {
+                                    springConstant: 0.03,
+                                    avoidOverlap: 0.2
+                                }
                             }
                         };
 
                         var db = new vis.Network(container, window.data, options);
+
+                        window.infotext = `Showing ${data.nodes.length} nodes and ${data.edges.length} edges`;
+                        $("#infobar").html(window.infotext);
+
                         db.on("doubleClick",function (x){
                             console.log("selectNode: ", x);
                             $.post("/getnode", {ndid: x.nodes[0] }, function (data){
@@ -253,22 +265,22 @@ graph: function [path, body][
 
                                 props.push(`<span class="infoitem"><b>${prop}</b>: ${propv}</span>`);
                             }
-                            $("#infobar").html(`<span class='infotag'>${nd.title}</span>&nbsp;<span class="infoitem"><b>id</b>: ${nd.id}</span>,&nbsp;${props.join(",&nbsp;")}`);
+                            $("#infobar").html(`<span class='infotag'>${nd.title}</span>&nbsp;<span class="infoitem"><b>id</b>: ${nd.id}</span>&nbsp;${props.join("&nbsp;")}`);
                         });
 
                         db.on("hoverEdge",function (x){
                             var ed = edges.get(x.edge);
                             var nodeFrom = nodes.get(ed.from);
-                            var nodeTo =nodes.get(ed.to);
+                            var nodeTo = nodes.get(ed.to);
                             $("#infobar").html(`<span class='infotag'>${ed.label}</span>&nbsp;<span class="infoitem"><b>from</b>: ${nodeFrom.title} (${nodeFrom.id})</span>&nbsp;<span class="infoitem"><b>to</b>: ${nodeTo.title} (${nodeTo.id})</span>`)
                         });
 
                         db.on("blurNode",function (x){
-                            $("#infobar").html("");
+                            $("#infobar").html(window.infotext);
                         });
 
                         db.on("blurEdge",function (x){
-                            $("#infobar").html("");
+                            $("#infobar").html(window.infotext);
                         });
                     }
                     function redrawGraph(dt){
