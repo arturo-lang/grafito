@@ -381,6 +381,11 @@ graph: function [path, body][
     ;--------------------------
     
     put: function [name,attributes][
+        if not? null? attribute "unique" [
+            found: what name attributes #[]
+            if not? null? found -> return found
+        ]
+
         nodeId: query.id db ~{!sql INSERT INTO nodes (tag) VALUES ('|name|')}
 
         att: attributes
