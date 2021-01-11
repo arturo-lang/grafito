@@ -153,8 +153,8 @@ Create a new relationship of given type between given nodes.
 
 <pre>
 <b>link</b> <ins>type</ins> <i>:literal</i>
-     <ins>source</ins> <i>:dictionary</i> (node)
-     <ins>target</ins> <i>:dictionary</i> (node)
+     <ins>source</ins> <i>:dictionary</i> (node), <i>:block</i> of <i>:dictionary</i> (node)
+     <ins>target</ins> <i>:dictionary</i> (node), <i>:block</i> of <i>:dictionary</i> (node)
 </pre>
 
 #### Returns
