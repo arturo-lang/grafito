@@ -7,11 +7,40 @@
   <img src="https://img.shields.io/badge/language-Arturo-orange.svg?style=flat-square">
 </p>
 
----
-
 <p align="center"><img align="center" src="https://raw.githubusercontent.com/arturo-lang/grafito/master/screenshot.png"/></p>
 
+---
+
+<!--ts-->
+
+* [Try Grafito](#try-grafito)
+    * [As a Library](#as-a-library)
+    * [As a Standalone tool](#as-a-standalone-tool)
+* [How To](#how-to)
+    * [Create a simple Node](#create-a-simple-node)
+    * [Create Relationships between Nodes](#create-relationships-between-nodes)
+    * [Search Nodes](#search-nodes)
+    * [Delete an existing Node](#delete-an-existing-node)
+    * [Delete an existing Relationship](#delete-an-existing-relationship)
+    * [More complex queries](#more-complex-queries)
+    * [Preview a Set of Nodes](#preview-a-set-of-nodes)
+* [Command Reference](#command-reference)
+    * [put](#put)
+    * [unput](#unput)
+    * [link](#link)
+    * [unlink](#unlink)
+    * [what](#what)
+    * [fetch](#fetch)
+    * [preview](#preview)
+* [License](#license)   
+
+<!--te-->
+
+---
+
 ## Try Grafito!
+
+### As a Library
 
 After having installed the latest version of [Arturo](https://github.com/arturo-lang/arturo), clone this repo
 and simply go to the folder via your terminal.
@@ -21,6 +50,8 @@ Then, run one of the examples:
 ```
 arturo examples/sample3.art
 ```
+
+### As a Standalone tool
 
 Or, fire up the interactive console:
 
@@ -32,7 +63,7 @@ Or, fire up the interactive console:
 
 And you can see your lightweight graph engine in action!
 
-## How to
+## How To
 
 ### Create a simple Node
 
@@ -89,7 +120,7 @@ graph "mygraph" [
 ]
 ```
 
-### Preview a set of Nodes
+### Preview a Set of Nodes
 
 ```
 graph "mygraph" [
