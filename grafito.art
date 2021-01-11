@@ -447,10 +447,20 @@ graph: function [path, body][
         edgeId: 0
 
         if? :dictionary = type tgt [
-            ret: edge src name tgt
-            if verbose? -> printDebug ~"created 1 edge (@|get ret 'id|)"
+            edges: []
+            if? :dictionary = type src [
+                ret: edge src name tgt
+                return ret
+            ]
+            else [
+                loop src [s] [
+                    append 'edges edge s name tgt
+                ]
+            ]
+            
+            if verbose? -> printDebug ~"created |size edges| edges"
 
-            return ret
+            return edges
         ]
         else [
             edges: []
