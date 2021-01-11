@@ -99,6 +99,166 @@ graph "mygraph" [
 
 (If you run the `sample3` in the *examples* folder, the image you'll get is the one you see above ;-))
 
+## Command Reference
+
+### put
+
+#### Description
+
+Create a new node of given type and with given properties.
+
+#### Usage
+
+<pre>
+<b>put</b> <ins>type</ins> <i>:literal</i>
+    <ins>properties</ins> <i>:dictionary</i>
+</pre>
+
+#### Returns
+
+- *:dictionary* (node)
+
+#### Examples
+
+```red
+put 'person #[name: "John" surname: "Doe" birthday: 1986]
+```
+
+### unput
+
+#### Description
+
+Delete given node
+
+#### Usage
+
+<pre>
+<b>unput</b> <ins>node</ins> <i>:dictionary</i>
+</pre>
+
+#### Examples
+
+```red
+x: put 'person #[name: "John" surname: "Doe" birthday: 1986]
+unput x
+```
+
+### link
+
+#### Description
+
+Create a new relationship of given type between given nodes.
+
+#### Usage
+
+<pre>
+<b>link</b> <ins>type</ins> <i>:literal</i>
+     <ins>source</ins> <i>:dictionary</i> (node)
+     <ins>target</ins> <i>:dictionary</i> (node)
+</pre>
+
+#### Returns
+
+- *:dictionary* (edge)
+
+#### Examples
+
+```red
+link 'marriedTo put 'person #[name: "John" surname: "Doe" birthday: 1986] 
+                put 'person #[name: "Mary" surname: "Doe" birthday: 1986]
+```
+
+### unlink
+
+#### Description
+
+Delete given relationship between given nodes
+
+#### Usage
+
+<pre>
+<b>unlink</b> <ins>type</ins> <i>:literal</i>
+       <ins>source</ins> <i>:dictionary</i> (node)
+       <ins>target</ins> <i>:dictionary</i> (node)
+</pre>
+
+#### Examples
+
+```red
+x: put 'person #[name: "John" surname: "Doe" birthday: 1986]
+y: put 'person #[name: "Mary" surname: "Doe" birthday: 1986]
+link 'marriedTo x y
+unlink 'marriedTo x y
+```
+
+### what
+
+#### Description
+
+Get the first node of given type, that satisfies all of given properties and relationships
+
+#### Usage
+
+<pre>
+<b>what</b> <ins>type</ins> <i>:literal</i>
+     <ins>properties</ins> <i>:dictionary</i> <i>:null</i>
+     <ins>relationships</ins> <i>:dictionary</i> <i>:null</i>
+</pre>
+
+#### Returns
+
+- *:dictionary* (node)
+
+#### Examples
+
+```red
+print what 'person #[name: "John"] #[]
+```
+
+### fetch
+
+#### Description
+
+Get all nodes of given type, that satisfy all of given properties and relationships
+
+#### Usage
+
+<pre>
+<b>fetch</b> <ins>type</ins> <i>:literal</i>
+      <ins>properties</ins> <i>:dictionary</i> <i>:null</i>
+      <ins>relationships</ins> <i>:dictionary</i> <i>:null</i>
+</pre>
+
+#### Returns
+
+- *:block* of *:dictionary* (node)
+
+#### Examples
+
+```red
+print fetch 'person #[surname: "Doe"] #[]
+print fetch 'person #[surname: "Doe"] #[marriedTo: what'person #[name: "Mary"]#[]]
+```
+
+### preview
+
+#### Description
+
+Preview given array of nodes in Desktop app.
+
+#### Usage
+
+<pre>
+<b>preview</b> <ins>nodes</ins> <i>:block</i>
+</pre>
+
+#### Examples
+
+```red
+preview fetch 'person #[surname: "Doe"] #[]
+```
+
+
 ## License
 
 MIT License
