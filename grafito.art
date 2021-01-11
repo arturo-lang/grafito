@@ -590,7 +590,9 @@ graph: function [path, body][
     ;--------------------------
 
     what: function [n,a,r][
-        first fetch n a r
+        got: fetch n a r
+        if? 0 < size got -> first got
+        else -> ø
     ]
 
     ;
