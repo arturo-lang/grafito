@@ -280,14 +280,14 @@ graph: function [path, body][
 
                                 props.push(`<span class="infoitem"><b>${prop}</b>: ${propv}</span>`);
                             }
-                            $("#infobar").html(`<span class='infotag'>${nd.title}</span>&nbsp;<span class="infoitem"><b>id</b>: ${nd.id}</span>&nbsp;${props.join("&nbsp;")}`);
+                            $("#infobar").html(`<span class='infotag'>${nd.tag}</span>&nbsp;<span class="infoitem"><b>id</b>: ${nd.id}</span>&nbsp;${props.join("&nbsp;")}`);
                         });
 
                         db.on("hoverEdge",function (x){
                             var ed = edges.get(x.edge);
                             var nodeFrom = nodes.get(ed.from);
                             var nodeTo = nodes.get(ed.to);
-                            $("#infobar").html(`<span class='infotag'>${ed.label}</span>&nbsp;<span class="infoitem"><b>from</b>: ${nodeFrom.title} (${nodeFrom.id})</span>&nbsp;<span class="infoitem"><b>to</b>: ${nodeTo.title} (${nodeTo.id})</span>`)
+                            $("#infobar").html(`<span class='infotag'>${ed.label}</span>&nbsp;<span class="infoitem"><b>from</b>: ${nodeFrom.tag} (${nodeFrom.id})</span>&nbsp;<span class="infoitem"><b>to</b>: ${nodeTo.tag} (${nodeTo.id})</span>`)
                         });
 
                         db.on("blurNode",function (x){
@@ -626,7 +626,7 @@ graph: function [path, body][
         loop clean [nd][
             append 'elements #[
                 id: to :integer get nd 'id
-                ;title: get nd 'tag
+                tag: get nd 'tag
                 label: get get nd 'properties get get nodeConfig get nd 'tag 'label
                 properties: get nd'properties
                 color: get get nodeConfig get nd 'tag 'color
