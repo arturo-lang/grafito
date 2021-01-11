@@ -197,6 +197,8 @@ graph: function [path, body][
                     function drawGraph() {
                         var initial = window.dataset;
 
+                        //console.log(JSON.stringify({nodes: initial.nodes, edges: initial.edges}));
+
                         // create an array with nodes
                         var nodes = new vis.DataSet(
                             initial.nodes
@@ -214,14 +216,17 @@ graph: function [path, body][
                             edges: edges,
                         };
 
+                        //console.log(JSON.stringify(window.data));
+
                         var options = {
                             autoResize: true,
                             height: '100%',
                             width: '100%',
                             nodes: {
-                                font: { color: 'white', align: "center"},
+                                font: { color: 'white', align: "center" },
                                 shape: 'circle',
-                                widthConstraint: 50
+                                widthConstraint: 60,
+                                borderWidth: 2
                             },
                             edges:{
                                 arrows: {
@@ -245,7 +250,7 @@ graph: function [path, body][
                             }
                         };
 
-                        var db = new vis.Network(container, window.data, options);
+                        window.db = new vis.Network(container, window.data, options);
 
                         window.infotext = `Showing ${data.nodes.length} nodes and ${data.edges.length} edges`;
                         $("#infobar").html(window.infotext);
@@ -253,7 +258,17 @@ graph: function [path, body][
                         db.on("doubleClick",function (x){
                             console.log("selectNode: ", x);
                             $.post("/getnode", {ndid: x.nodes[0] }, function (data){
-                                redrawGraph(JSON.parse(data));
+                                var dt = JSON.parse(data);
+                                for (var i=0; i<dt.nodes.length; i++){
+                                    //if (window.data.nodes.get(dt.nodes[i].id)==null){
+                                        window.data.nodes.update(dt.nodes[i]);
+                                    //}
+                                }
+                                for (var i=0; i<dt.edges.length; i++){
+                                    //if (window.data.edges.get(dt.nodes[i].id)==null){
+                                        window.data.edges.update(dt.edges[i]);
+                                    //}
+                                }
                             });
                         });
                         db.on("hoverNode",function (x){
@@ -611,7 +626,7 @@ graph: function [path, body][
         loop clean [nd][
             append 'elements #[
                 id: to :integer get nd 'id
-                title: get nd 'tag
+                ;title: get nd 'tag
                 label: get get nd 'properties get get nodeConfig get nd 'tag 'label
                 properties: get nd'properties
                 color: get get nodeConfig get nd 'tag 'color
@@ -642,7 +657,12 @@ graph: function [path, body][
     preview: function [nodeset][
         
         currentNodes: new nodeset
-        currentDataset: new getNodes nodeset
+
+        if not? block? nodeset [
+            currentNodes: new @[nodeset]
+        ]
+
+        currentDataset: new getNodes currentNodes
 
         serve.chrome #[
             "/"     : [
@@ -657,9 +677,10 @@ graph: function [path, body][
             ]
 
             "/getnode": [
-                append 'currentNodes getNode ndid
-                currentDataset: new getNodes currentNodes
-                write.json ø currentDataset
+                ; append 'currentNodes getNode ndid
+                ; currentDataset: new getNodes currentNodes
+                newNodes: new getNodes @[getNode ndid]
+                write.json ø newNodes
             ]
 
             "/exit": [
