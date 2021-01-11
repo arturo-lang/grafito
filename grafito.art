@@ -352,8 +352,10 @@ graph: function [path, body][
 
     addColorForNodeType: function [nn][
         if not? key? nodeConfig get nn 'tag [
+            cl: sample colori
+            'colori -- cl
             set nodeConfig get nn 'tag #[
-                color: sample colori
+                color: cl
                 label: get keys get nn 'properties 0
             ]
         ]
