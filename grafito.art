@@ -27,15 +27,6 @@ graph: function [path, body][
     ; for SQLite
 
     schema: split.by:";" {!sql
-        DROP TABLE IF EXISTS meta;
-        CREATE TABLE meta (
-            id INTEGER PRIMARY KEY,
-            property TEXT,
-            value TEXT
-        );
-
-        CREATE INDEX IF NOT EXISTS meta_property_index ON meta(property);
-
         DROP TABLE IF EXISTS nodes;
         CREATE TABLE nodes (
             id      INTEGER PRIMARY KEY,
@@ -76,6 +67,7 @@ graph: function [path, body][
         <!DOCTYPE html>
         <html lang="en">
             <head>
+                <meta charset="UTF-8">
                 <title>Grafito @ |cleanpath|</title>
                 <link rel="preconnect" href="https://fonts.gstatic.com">
                 <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -736,6 +728,9 @@ graph: function [path, body][
            not? dbExisted [
         printDebug "creating database from scratch"
         query db schema
+        put'meta #[
+            version: get Grafito 'version
+        ]
     ] 
     else [
         printDebug "using existing database"
