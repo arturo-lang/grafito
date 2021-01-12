@@ -617,6 +617,6 @@ do [
         pos35c7f973f2: put 'pos #[p: {verb}]
         link'is lemma3af60c7721 pos35c7f973f2
 
-        preview fetch 'pos #[]#[]
+        preview fetch 'pos #[]#[] 
     ]
 ]
