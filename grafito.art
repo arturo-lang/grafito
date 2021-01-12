@@ -391,9 +391,13 @@ graph: function [path, body][
         att: attributes
         if not? dictionary? att -> att: #att
 
+        queries: new []
+
         loop att [k,v][
-            query db ~{!sql INSERT INTO properties (node,property,value) VALUES (|nodeId|,'|k|','|v|')}
+            'queries ++ ~{!sql INSERT INTO properties (node,property,value) VALUES (|nodeId|,'|k|','|v|')}
         ]
+
+        query db queries
 
         if verbose? [
             if? 1 = size att -> printDebug ~"created 1 node (@|nodeId|) with 1 property"
