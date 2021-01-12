@@ -132,6 +132,24 @@ graph "mygraph" [
 
 ## Command Reference
 
+All of the following commands must run within a `graph` environment. In order to set it up, use:
+
+```
+graph <database> [
+	;; your code goes here
+]
+```
+> ⚠️  The `graph` command is not needed when you run Grafito as a tool, since the "environment" is already set up for you. ;-) 
+
+If you pass `null` (or `ø`) then the database will be *in-memory*. If you want to save to a file on disk, then pass a string with the desired database name. If the database already exists, it will be re-opened. If not, it will be created from scratch.
+
+> 💡  You may force the database to be re-created from scratch, regardless of whether it exists, by setting the `.create` attribute. E.g.
+> ```
+> graph.create "mygraph" [
+> 	;; your code goes here
+> ]
+> ```
+
 ### put
 
 #### Description
