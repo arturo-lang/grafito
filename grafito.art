@@ -395,7 +395,7 @@ graph: function [path, body][
             if? 1 = size att -> printDebug ~"created 1 node (@|nodeId|) with 1 property"
             else -> printDebug ~"created 1 node (@|nodeId|) with |size att| properties"
         ]
-
+    
         return #[
             id: nodeId
             tag: name
