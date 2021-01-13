@@ -358,6 +358,14 @@ Preview given array of nodes in Desktop app.
 preview fetch 'person #[surname: "Doe"] #[]
 ```
 
+Community
+------------------------------
+
+In case you want to ask a question, suggest an idea, or practically anything related to Grafito (or Arturo) - feel free! Everything and everyone is welcome.
+
+For that, the most convenient place for me would be the [GitHub Issues](https://github.com/arturo-lang/grafito/issues) page.
+
+[![Stargazers over time](https://starchart.cc/arturo-lang/grafito.svg)](https://starchart.cc/arturo-lang/grafito)
 
 ## License
 
