@@ -360,7 +360,7 @@ graph: function [path, body][
     addColorForNodeType: function [nn][
         if not? key? nodeConfig get nn 'tag [
             cl: sample colori
-            'colori -- cl
+            remove 'colori cl
             set nodeConfig get nn 'tag #[
                 color: cl
                 label: get keys get nn 'properties 0
@@ -386,7 +386,7 @@ graph: function [path, body][
         queries: new []
 
         loop att [k,v][
-            'queries ++ ~{!sql INSERT INTO properties (node,property,value) VALUES (|nodeId|,'|k|','|v|')}
+            append 'queries ~{!sql INSERT INTO properties (node,property,value) VALUES (|nodeId|,'|k|','|v|')}
         ]
 
         query db queries
@@ -533,7 +533,7 @@ graph: function [path, body][
     ;
     ; Check node type
     ;--------------------------
-
+    
     isA?: function [ls,nd][
         (to :string ls) = get nd "tag"
     ]
