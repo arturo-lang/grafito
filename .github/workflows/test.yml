@@ -34,6 +34,10 @@ jobs:
         with:
           submodules: recursive
 
+      - name: "Setup Arturo"
+        run: |
+          docker pull arturolang/arturo
+
       - name: Run Tests
         run: |
           docker run -i -v $(pwd):/home arturolang/arturo tests/test1.art
