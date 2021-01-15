@@ -1,0 +1,13 @@
+do.import {grafito.art}
+
+do [
+    graph ø [
+        put'person #[name: "John" surname: "Doe"]
+        put'person #[name: "Jane" surname: "Doe"]
+
+        if 2 <> size fetch'person #[surname: "Doe"] ø [
+            panic.code:1 "OOPS"
+        ]
+        print "ALL OK"
+    ]
+]
