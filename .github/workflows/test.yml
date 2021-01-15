@@ -36,4 +36,4 @@ jobs:
 
       - name: Run Tests
         run: |
-          docker run -it -v $(pwd):/home arturolang/arturo tests/test1.art
+          docker run -i -v $(pwd):/home arturolang/arturo tests/test1.art
