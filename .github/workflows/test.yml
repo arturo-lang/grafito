@@ -1,0 +1,39 @@
+name: "Run Tests"
+on:
+  push:
+    paths-ignore:
+      - '*.gif'
+      - '*.png'
+      - '*.yml'
+      - '*.md'
+      - 'LICENSE'
+  pull_request:
+    paths-ignore:
+      - '*.gif'
+      - '*.png'
+      - '*.yml'
+      - '*.md'
+      - 'LICENSE'
+
+defaults:
+  run:
+    shell: bash -l {0}
+
+jobs:  
+  build:
+    name: "Check"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Cancel similar actions in progress"
+        uses: styfle/cancel-workflow-action@0.6.0
+        with:
+          access_token: ${{ github.token }}
+
+      - name: "Checkout"
+        uses: actions/checkout@main
+        with:
+          submodules: recursive
+
+      - name: Run Tests
+        run: |
+          docker run -it -v $(pwd):/home arturolang/arturo tests/test1.art
