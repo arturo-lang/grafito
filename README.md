@@ -15,6 +15,7 @@
 
 * [At A Glance](#at-a-glance)
 * [Try Grafito](#try-grafito)
+    * [Docker](#docker)
     * [As a Library](#as-a-library)
     * [As a Standalone tool](#as-a-standalone-tool)
 * [How To](#how-to)
@@ -89,6 +90,20 @@ do [
 ```
 
 ## Try Grafito!
+
+### Docker
+
+The easiest way to try Grafito is using Docker (although, without support for the Desktop app - yet)
+
+```
+docker run -it arturolang/grafito
+```
+
+or, if you want to run a specific script:
+
+```
+docker run -it -v $(pwd):/home arturolang/grafito <yourscript>
+```
 
 ### As a Library
 
