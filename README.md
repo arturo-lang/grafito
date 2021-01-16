@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/badge/language-Arturo-orange.svg?style=flat-square">
 </p>
 
-<p align="center"><img align="center" src="https://raw.githubusercontent.com/arturo-lang/grafito/master/screenshot.png"/></p>
+<p align="center"><img width="100%" align="center" src="https://raw.githubusercontent.com/arturo-lang/grafito/master/screenshot.png"/></p>
 
 ---
 
@@ -126,7 +126,7 @@ Or, fire up the interactive console:
 
 (If you pass a name, it will use it as your database file. If not, the database will be in-memory)
 
-<p align="center"><img align="center" src="https://raw.githubusercontent.com/arturo-lang/grafito/master/console.png"/></p>
+<p align="center"><img width="100%" align="center" src="https://raw.githubusercontent.com/arturo-lang/grafito/master/console.png"/></p>
 
 And you can see your lightweight graph engine in action!
 
