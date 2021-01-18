@@ -610,7 +610,7 @@ graph: function [path, body][
 
         append 'qr ~{!sql COLLATE NOCASE}
 
-        inspect qr
+        ; inspect qr
         
         got: map query db join.with:" " qr 'x [getNode first x]
 
