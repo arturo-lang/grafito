@@ -26,6 +26,7 @@
     * [Delete an existing Node](#delete-an-existing-node)
     * [Delete an existing Relationship](#delete-an-existing-relationship)
     * [More complex queries](#more-complex-queries)
+    	* [Using filters](#using-filters)
     * [Preview a Set of Nodes](#preview-a-set-of-nodes)
 * [Command Reference](#command-reference)
     * [put](#put)
@@ -185,6 +186,17 @@ graph "mygraph" [
 	inspect fetch 'person #[sex: "m"] #[
 		marriedTo: what 'person #[name: "Joan"] #[]
 	]
+]
+```
+
+#### Using filters
+
+```
+graph "mygraph" [
+	fetch'person [
+		surname:"Doe"
+		age: -> greater: 30
+	] ø
 ]
 ```
 
