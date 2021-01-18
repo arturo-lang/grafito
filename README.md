@@ -415,7 +415,10 @@ fetch'person [
 ] ø
 ```
 
-(The above, using Arturo's powerful syntax, could also be written like: ```fetch'person [ surname: -> contains: "D" ] ø```
+(The above, using Arturo's powerful syntax, could also be written like: 
+```red
+fetch'person [ surname: -> contains: "D" ] ø
+```
 
 ### contains
 
