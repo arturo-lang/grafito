@@ -567,8 +567,24 @@ graph: function [path, body][
 
         if ø <> att [
             if 0 < size att [
-                loop att [k,v]->
-                    append 'qr ~{!sql AND properties.property='|k|' AND properties.value='|v|'}
+                loop att [k,v][
+                    symb: "="
+                    val: v
+                    if block? v [
+                        loop #v [filt,arg][
+                            case [equal? filt]
+                                when? ["contains"][
+                                    symb: "LIKE"
+                                    val: ~"%|arg|%"
+                                ]
+                                else [
+                                    panic.code: 1 ~"filter: |filt| not recognized"
+                                ]
+                        ]
+                    ]
+
+                    append 'qr ~{!sql AND properties.property='|k|' AND properties.value |symb| '|val|'}
+                ]
             ]
         ]
 
@@ -725,7 +741,7 @@ graph: function [path, body][
     ; and initialize it
     ; with the given schema (if necessary)
     if? or? not? null? attribute "create"
-           not? dbExisted [
+            not? dbExisted [
         printDebug "creating database from scratch"
         query db schema
         put'meta #[
