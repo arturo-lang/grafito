@@ -573,10 +573,15 @@ graph: function [path, body][
                     if block? v [
                         loop #v [filt,arg][
                             case [equal? filt]
-                                when? ["contains"][
-                                    symb: "LIKE"
-                                    val: ~"%|arg|%"
-                                ]
+                                when? ["contains"]          [symb: "LIKE" val: ~"%|arg|%"]
+                                when? ["prefix"]            [symb: "LIKE" val: ~"|arg|%"]
+                                when? ["suffix"]            [symb: "LIKE" val: ~"%|arg|"]
+                                when? ["less"]              [symb: "<"    val: arg]
+                                when? ["greater"]           [symb: ">"    val: arg]
+                                when? ["lessOrEqual"]       [symb: "<="   val: arg]
+                                when? ["greaterOrEqual"]    [symb: ">="   val: arg]
+                                when? ["notEqual"]          [symb: "!="   val: arg]
+                                when? ["equal"]             [symb: "="    val: arg]
                                 else [
                                     panic.code: 1 ~"filter: |filt| not recognized"
                                 ]
@@ -594,6 +599,8 @@ graph: function [path, body][
                     append 'qr ~{!sql AND edges.tag='|k|' AND edges.target='|v\id|'}
             ]
         ]
+
+        append 'qr ~{!sql COLLATE NOCASE}
         
         got: map query db join.with:" " qr 'x [getNode first x]
 
