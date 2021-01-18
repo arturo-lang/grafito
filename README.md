@@ -36,6 +36,14 @@
     * [what](#what)
     * [fetch](#fetch)
     * [preview](#preview)
+* [Filter Reference](#filter-reference)
+    * [contains](#contains)
+    * [less](#less)
+    * [greater](#greater)
+    * [lessOrEqual](#lessOrEqual)
+    * [greaterOrEqual](#greaterOrEqual)
+    * [notEqual](#notEqual)
+    * [equal](#equal)
 * [Community](#community)
 * [License](#license)   
 
@@ -386,6 +394,57 @@ Preview given array of nodes in Desktop app.
 ```red
 preview fetch 'person #[surname: "Doe"] #[]
 ```
+
+## Filter Reference
+
+When querying - e.g. with `fetch` or `what` - you can search for results, not only for exact matches, but also using one of the filters below.
+
+```red
+fetch'person [
+	surname: "Doe" 	; here, we are looking for an exact match
+			; that is: people with the surname Doe
+] ø
+```
+
+```red
+fetch'person [
+	surname: [
+		contains: "D"	; here, we are using the 'contains filter
+			        ; that is: people whose surname contains the letter D
+	]
+] ø
+```
+
+(The above, using Arturo's powerful syntax, could also be written like: ```fetch'person [ surname: -> contains: "D" ] ø```
+
+### contains
+
+Get rows that *contain* the given text.
+
+### less
+
+Get rows with a numeric value *less than* the given one.
+
+### greater
+
+Get rows with a numeric value *greater than* the given one.
+
+### lessOrEqual
+
+Get rows with a numeric value *less than or equal to* the given one.
+
+### greaterOrEqual
+
+Get rows with a numeric value *greater than or equal to* the given one.
+
+### notEqual
+
+Get rows with a value *not equal to* the given one.
+
+### equal
+
+Get rows with a numeric value *equal* the given one. (This is the same as not using any filter at all)
+
 
 Community
 ------------------------------
