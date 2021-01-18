@@ -42,8 +42,8 @@
     * [greater](#greater)
     * [lessOrEqual](#lessOrEqual)
     * [greaterOrEqual](#greaterOrEqual)
-    * [notEqual](#notEqual)
-    * [equal](#equal)
+    * [not](#not)
+    * [in](#in)
 * [Community](#community)
 * [License](#license)   
 
@@ -440,13 +440,13 @@ Get rows with a numeric value *less than or equal to* the given one.
 
 Get rows with a numeric value *greater than or equal to* the given one.
 
-### notEqual
+### not
 
-Get rows with a value *not equal to* the given one.
+Get rows with a value *not equal to* the given one (or block of given values).
 
-### equal
+### in
 
-Get rows with a numeric value *equal* the given one. (This is the same as not using any filter at all)
+Get rows with a numeric value *equal* to *one of those in* the given block.
 
 
 Community
