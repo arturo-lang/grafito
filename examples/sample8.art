@@ -1,0 +1,67 @@
+do.import {grafito.art}
+
+do [
+    graph.create "sample8" [
+        ;---------------------------------------------
+        ; Populate the database
+        ;---------------------------------------------
+
+        us: put'country [name: "United States"]
+        au: put'country [name: "Australia"]
+
+        john: put'person [name: "John" surname: "Doe" age: 34]
+        jane: put'person [name: "Jane" surname: "doe" age: 24]
+        
+        bill: put'person [name: "Bill" surname: "Jones" age: 44]
+        mary: put'person [name: "Mary" age: 54]
+
+        link'marriedTo john jane
+        link'marriedTo bill mary
+
+        link'isFrom @[john mary] us
+        link'isFrom @[jane bill] au
+
+        ;---------------------------------------------
+        ; Let's perform some interesting queries!
+        ;---------------------------------------------
+
+        ; fetch all people
+        inspect fetch'person ø
+
+        ; fetch all people that have a surname
+        inspect fetch'person [surname: true]
+
+        ; fetch all people that have the name John
+        inspect fetch'person [name: "John"]
+
+        ; fetch all people that are over 40 years old
+        inspect fetch'person [age: -> greater: 40]
+
+        ; fetch all people that are over 40 years old 
+        ; and have the surname "Jones"
+        inspect fetch'person [
+            age: -> greater: 40
+            surname: "Jones"
+        ]
+
+        ; fetch all people that have the name John
+        ; and are married to someone/anyone
+        inspect fetch'person [
+            name:"John" 
+            marriedTo: ø 
+        ]
+
+        ; fetch all people that have the name John
+        ; and are married to someone with the name Joan
+        inspect fetch'person [
+            name:"John" marriedTo: what'person [name:"Joan"]
+        ]
+
+        ; fetch all people that have either the name "John"
+        ; or the surname "Jones"
+        inspect fetch'person .any [
+            name:"John" 
+            surname:"Jones"
+        ]
+    ]
+]
