@@ -56,10 +56,19 @@
 I know you really don't care about long explanations and want to have a look at working code right away, so... here you are (this is the code the creates the graph in the image above):
 
 ```red
+;---------------------------------------------
+; Import Grafito
+; and ... let's rock'n'roll! :)
+;---------------------------------------------
 do.import {grafito.art}
 
 do [
+    ;---------------------------------------------
+    ; Set up a new graph environment
+    ; with a local database named "sample4"
+    ;---------------------------------------------
     graph.create "sample4" [
+
         ;---------------------------------------------
         ; Populate the database
         ;---------------------------------------------
