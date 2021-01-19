@@ -1,0 +1,19 @@
+do.import {grafito.art}
+
+do [
+    graph.create "sample7" [
+        put'country [name: "United States"]
+        put'country [name: "Australia"]
+
+        put'person [name: "John" surname: "Doe" age: 34 country: "United States"]
+        put'person [name: "Jane" surname: "doe" age: 24 country: "United States"]
+        put'person [name: "Bill" surname: "Jones" age: 44 country: "Australia"]
+
+        ; let's find all the people who are 
+        ; more than 30 years old
+        inspect fetch'person [
+            age: [greater: 30]
+            surname: "Doe"
+        ] ø
+    ]
+]
