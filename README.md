@@ -174,7 +174,7 @@ And you can see your lightweight graph engine in action!
 
 ### Create a simple Node
 
-```
+```red
 graph.create "mygraph" [
 	put'person [name: "John" sex: 'm]
 ]
@@ -182,7 +182,7 @@ graph.create "mygraph" [
 
 ### Create Relationships between Nodes
 
-```
+```red
 graph.create "mygraph" [
 	john: put'person [name: "John" sex: 'm]
 	joan: put'person [name: "Joan" sex: 'f]
@@ -193,7 +193,7 @@ graph.create "mygraph" [
 
 ### Search Nodes
 
-```
+```red
 graph "mygraph" [
 	inspect what'person [name: "Joan"]
 ]
@@ -202,7 +202,7 @@ graph "mygraph" [
 
 ### Delete an existing Node
 
-```
+```red
 graph "mygraph" [
 	unput what'person [name: "John"]
 ]
@@ -210,16 +210,16 @@ graph "mygraph" [
 
 ### Delete an existing Relationship
 
-```
+```red
 graph "mygraph" [
 	unlink'marriedTo what'person [name: "John"]
-                     what'person [name: "Joan"]
+                         what'person [name: "Joan"]
 ]
 ```
 
 ### More complex queries
 
-```
+```red
 graph "mygraph" [
 	inspect fetch'person [
 		sex: "m"
@@ -230,7 +230,7 @@ graph "mygraph" [
 
 #### Using filters
 
-```
+```red
 graph "mygraph" [
 	fetch'person [
 		surname:"Doe"
@@ -241,7 +241,7 @@ graph "mygraph" [
 
 ### Preview a Set of Nodes
 
-```
+```red
 graph "mygraph" [
 	preview fetch 'person ø
 ]
@@ -253,7 +253,7 @@ graph "mygraph" [
 
 All of the following commands must run within a `graph` environment. In order to set it up, use:
 
-```
+```red
 graph <database> [
 	;; your code goes here
 ]
@@ -340,7 +340,7 @@ link 'marriedTo put 'person #[name: "John" surname: "Doe" birthday: 1986]
 
 #### Description
 
-Delete given relationship between given nodes
+Delete given relationship between given nodes.
 
 #### Usage
 
@@ -355,6 +355,7 @@ Delete given relationship between given nodes
 ```red
 x: put 'person #[name: "John" surname: "Doe" birthday: 1986]
 y: put 'person #[name: "Mary" surname: "Doe" birthday: 1986]
+
 link 'marriedTo x y
 unlink 'marriedTo x y
 ```
@@ -363,7 +364,7 @@ unlink 'marriedTo x y
 
 #### Description
 
-Get the first node of given type, that satisfies all of given properties and relationships
+Get the first node of given type, that satisfies all of given properties and/or relationships.
 
 #### Usage
 
@@ -386,7 +387,7 @@ print what 'person [name: "John"]
 
 #### Description
 
-Get all nodes of given type, that satisfy all of given properties and relationships
+Get all nodes of given type, that satisfy all of given properties and/or relationships.
 
 #### Usage
 
