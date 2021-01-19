@@ -2,621 +2,621 @@ do.import {grafito.art}
 
 do [
     graph.create "sample5" [
-        lemma8b257cd027: put 'lemma #[w: {book} l: {en}]
-        pos3722df1028: put 'pos #[p: {noun}]
+        lemma8b257cd027: put 'lemma [w: {book} l: {en}]
+        pos3722df1028: put'pos [p: {noun}]
         link'is lemma8b257cd027 pos3722df1028
-        sensef86f08d2e2: put'sense #[s:{collection of sheets of paper bound together containing printed or written material}]
+        sensef86f08d2e2: put'sense [s:{collection of sheets of paper bound together containing printed or written material}]
         link'means pos3722df1028 sensef86f08d2e2
-        lemma493be85c29: put'lemma #[w: {كتاب} l: {apc}]
-        pose499631911: put'pos #[p: {noun}]
+        lemma493be85c29: put'lemma [w: {كتاب} l: {apc}]
+        pose499631911: put'pos [p: {noun}]
         link'is lemma493be85c29 pose499631911
         link'means pose499631911 sensef86f08d2e2
-        lemma693a742816: put'lemma #[w: {ᏗᎪᏪᎵ} l: {chr}]
-        pos22d786790a: put'pos #[p: {noun}]
+        lemma693a742816: put'lemma [w: {ᏗᎪᏪᎵ} l: {chr}]
+        pos22d786790a: put'pos [p: {noun}]
         link'is lemma693a742816 pos22d786790a
         link'means pos22d786790a sensef86f08d2e2
-        lemma26fd5156d7: put'lemma #[w: {書} l: {gan}]
-        posf6b3172996: put'pos #[p: {noun}]
+        lemma26fd5156d7: put'lemma [w: {書} l: {gan}]
+        posf6b3172996: put'pos [p: {noun}]
         link'is lemma26fd5156d7 posf6b3172996
         link'means posf6b3172996 sensef86f08d2e2
-        lemma9a3a17ffe8: put'lemma #[w: {书} l: {gan}]
-        pos9b9ff30210: put'pos #[p: {noun}]
+        lemma9a3a17ffe8: put'lemma [w: {书} l: {gan}]
+        pos9b9ff30210: put'pos [p: {noun}]
         link'is lemma9a3a17ffe8 pos9b9ff30210
         link'means pos9b9ff30210 sensef86f08d2e2
-        lemma3027ada842: put'lemma #[w: {書} l: {cjy}]
-        pose7e0f1482c: put'pos #[p: {noun}]
+        lemma3027ada842: put'lemma [w: {書} l: {cjy}]
+        pose7e0f1482c: put'pos [p: {noun}]
         link'is lemma3027ada842 pose7e0f1482c
         link'means pose7e0f1482c sensef86f08d2e2
-        lemmafb0ebfc12a: put'lemma #[w: {书} l: {cjy}]
-        pos83a0d216aa: put'pos #[p: {noun}]
+        lemmafb0ebfc12a: put'lemma [w: {书} l: {cjy}]
+        pos83a0d216aa: put'pos [p: {noun}]
         link'is lemmafb0ebfc12a pos83a0d216aa
         link'means pos83a0d216aa sensef86f08d2e2
-        lemmafdf3beed04: put'lemma #[w: {書} l: {mnp}]
-        pos49fb33a5c6: put'pos #[p: {noun}]
+        lemmafdf3beed04: put'lemma [w: {書} l: {mnp}]
+        pos49fb33a5c6: put'pos [p: {noun}]
         link'is lemmafdf3beed04 pos49fb33a5c6
         link'means pos49fb33a5c6 sensef86f08d2e2
-        lemmae8ba2100e7: put'lemma #[w: {书} l: {mnp}]
-        pos45b2f78257: put'pos #[p: {noun}]
+        lemmae8ba2100e7: put'lemma [w: {书} l: {mnp}]
+        pos45b2f78257: put'pos [p: {noun}]
         link'is lemmae8ba2100e7 pos45b2f78257
         link'means pos45b2f78257 sensef86f08d2e2
-        lemmabfb684d055: put'lemma #[w: {書} l: {hsn}]
-        pos21c619ca73: put'pos #[p: {noun}]
+        lemmabfb684d055: put'lemma [w: {書} l: {hsn}]
+        pos21c619ca73: put'pos [p: {noun}]
         link'is lemmabfb684d055 pos21c619ca73
         link'means pos21c619ca73 sensef86f08d2e2
-        lemma49e788e226: put'lemma #[w: {书} l: {hsn}]
-        pos53828a28f1: put'pos #[p: {noun}]
+        lemma49e788e226: put'lemma [w: {书} l: {hsn}]
+        pos53828a28f1: put'pos [p: {noun}]
         link'is lemma49e788e226 pos53828a28f1
         link'means pos53828a28f1 sensef86f08d2e2
-        lemma3de6f10595: put'lemma #[w: {𞤣𞤫𞤬𞤼𞤫𞤪𞤫} l: {ff}]
-        pos61a1c07120: put'pos #[p: {noun}]
+        lemma3de6f10595: put'lemma [w: {𞤣𞤫𞤬𞤼𞤫𞤪𞤫} l: {ff}]
+        pos61a1c07120: put'pos [p: {noun}]
         link'is lemma3de6f10595 pos61a1c07120
         link'means pos61a1c07120 sensef86f08d2e2
-        lemmadd03b675a5: put'lemma #[w: {deftere} l: {ff}]
-        pos2ba9f770dd: put'pos #[p: {noun}]
+        lemmadd03b675a5: put'lemma [w: {deftere} l: {ff}]
+        pos2ba9f770dd: put'pos [p: {noun}]
         link'is lemmadd03b675a5 pos2ba9f770dd
         link'means pos2ba9f770dd sensef86f08d2e2
-        lemmab6adde549d: put'lemma #[w: {ブック} l: {ja}]
-        posefc5173c6e: put'pos #[p: {noun}]
+        lemmab6adde549d: put'lemma [w: {ブック} l: {ja}]
+        posefc5173c6e: put'pos [p: {noun}]
         link'is lemmab6adde549d posefc5173c6e
         link'means posefc5173c6e sensef86f08d2e2
-        lemma979bc5909e: put'lemma #[w: {buku} l: {jv}]
-        pos53c5fefdd3: put'pos #[p: {noun}]
+        lemma979bc5909e: put'lemma [w: {buku} l: {jv}]
+        pos53c5fefdd3: put'pos [p: {noun}]
         link'is lemma979bc5909e pos53c5fefdd3
         link'means pos53c5fefdd3 sensef86f08d2e2
-        lemma77d51b75ed: put'lemma #[w: {layang} l: {jv}]
-        pose41277bf28: put'pos #[p: {noun}]
+        lemma77d51b75ed: put'lemma [w: {layang} l: {jv}]
+        pose41277bf28: put'pos [p: {noun}]
         link'is lemma77d51b75ed pose41277bf28
         link'means pose41277bf28 sensef86f08d2e2
-        lemmada9979caf2: put'lemma #[w: {serat} l: {jv}]
-        pos89453006b2: put'pos #[p: {noun}]
+        lemmada9979caf2: put'lemma [w: {serat} l: {jv}]
+        pos89453006b2: put'pos [p: {noun}]
         link'is lemmada9979caf2 pos89453006b2
         link'means pos89453006b2 sensef86f08d2e2
-        lemmaf9128c3a63: put'lemma #[w: {hun} l: {tr}]
-        posc360a20e09: put'pos #[p: {noun}]
+        lemmaf9128c3a63: put'lemma [w: {hun} l: {tr}]
+        posc360a20e09: put'pos [p: {noun}]
         link'is lemmaf9128c3a63 posc360a20e09
         link'means posc360a20e09 sensef86f08d2e2
-        senseb2f79ce965: put'sense #[s:{record of betting}]
+        senseb2f79ce965: put'sense [s:{record of betting}]
         link'means pos3722df1028 senseb2f79ce965
-        sensee629d8b849: put'sense #[s:{convenient collection of small paper items, such as stamps}]
+        sensee629d8b849: put'sense [s:{convenient collection of small paper items, such as stamps}]
         link'means pos3722df1028 sensee629d8b849
-        sense92e15899d7: put'sense #[s:{major division of a published work, larger than a chapter}]
+        sense92e15899d7: put'sense [s:{major division of a published work, larger than a chapter}]
         link'means pos3722df1028 sense92e15899d7
-        sensea5f1ab78b7: put'sense #[s:{script of a musical}]
+        sensea5f1ab78b7: put'sense [s:{script of a musical}]
         link'means pos3722df1028 sensea5f1ab78b7
-        sense310968d56f: put'sense #[s:{usually in plural: records of the accounts of a business}]
+        sense310968d56f: put'sense [s:{usually in plural: records of the accounts of a business}]
         link'means pos3722df1028 sense310968d56f
-        pos7f8fc0a70a: put 'pos #[p: {verb}]
+        pos7f8fc0a70a: put'pos [p: {verb}]
         link'is lemma8b257cd027 pos7f8fc0a70a
-        senseda38a026ab: put'sense #[s:{to reserve}]
+        senseda38a026ab: put'sense [s:{to reserve}]
         link'means pos7f8fc0a70a senseda38a026ab
-        lemma5ffab7eaf1: put'lemma #[w: {حَجَزَ} l: {ar}]
-        pos8f96b36193: put'pos #[p: {verb}]
+        lemma5ffab7eaf1: put'lemma [w: {حَجَزَ} l: {ar}]
+        pos8f96b36193: put'pos [p: {verb}]
         link'is lemma5ffab7eaf1 pos8f96b36193
         link'means pos8f96b36193 senseda38a026ab
-        lemmab052952b74: put'lemma #[w: {запазвам} l: {bg}]
-        pos400e2c04fa: put'pos #[p: {verb}]
+        lemmab052952b74: put'lemma [w: {запазвам} l: {bg}]
+        pos400e2c04fa: put'pos [p: {verb}]
         link'is lemmab052952b74 pos400e2c04fa
         link'means pos400e2c04fa senseda38a026ab
-        lemmac68abfa48d: put'lemma #[w: {reservar} l: {ca}]
-        pos718825f926: put'pos #[p: {verb}]
+        lemmac68abfa48d: put'lemma [w: {reservar} l: {ca}]
+        pos718825f926: put'pos [p: {verb}]
         link'is lemmac68abfa48d pos718825f926
         link'means pos718825f926 senseda38a026ab
-        lemma99b2986739: put'lemma #[w: {預訂} l: {cmn}]
-        pos4cd050d838: put'pos #[p: {verb}]
+        lemma99b2986739: put'lemma [w: {預訂} l: {cmn}]
+        pos4cd050d838: put'pos [p: {verb}]
         link'is lemma99b2986739 pos4cd050d838
         link'means pos4cd050d838 senseda38a026ab
-        lemmafa2b938743: put'lemma #[w: {预订} l: {cmn}]
-        posb4eb4eba86: put'pos #[p: {verb}]
+        lemmafa2b938743: put'lemma [w: {预订} l: {cmn}]
+        posb4eb4eba86: put'pos [p: {verb}]
         link'is lemmafa2b938743 posb4eb4eba86
         link'means posb4eb4eba86 senseda38a026ab
-        lemma0f0d44abcf: put'lemma #[w: {rezervovat} l: {cs}]
-        pos162f335187: put'pos #[p: {verb}]
+        lemma0f0d44abcf: put'lemma [w: {rezervovat} l: {cs}]
+        pos162f335187: put'pos [p: {verb}]
         link'is lemma0f0d44abcf pos162f335187
         link'means pos162f335187 senseda38a026ab
-        lemmaef137e0718: put'lemma #[w: {zarezervovat} l: {cs}]
-        posf6d7b3a598: put'pos #[p: {verb}]
+        lemmaef137e0718: put'lemma [w: {zarezervovat} l: {cs}]
+        posf6d7b3a598: put'pos [p: {verb}]
         link'is lemmaef137e0718 posf6d7b3a598
         link'means posf6d7b3a598 senseda38a026ab
-        lemma2692b18099: put'lemma #[w: {zabukovat} l: {cs}]
-        poscc0eb62b54: put'pos #[p: {verb}]
+        lemma2692b18099: put'lemma [w: {zabukovat} l: {cs}]
+        poscc0eb62b54: put'pos [p: {verb}]
         link'is lemma2692b18099 poscc0eb62b54
         link'means poscc0eb62b54 senseda38a026ab
-        lemma1654d11c38: put'lemma #[w: {reservere} l: {da}]
-        pos9f550e3669: put'pos #[p: {verb}]
+        lemma1654d11c38: put'lemma [w: {reservere} l: {da}]
+        pos9f550e3669: put'pos [p: {verb}]
         link'is lemma1654d11c38 pos9f550e3669
         link'means pos9f550e3669 senseda38a026ab
-        lemma3eb280bc1c: put'lemma #[w: {bestille} l: {da}]
-        pos269495d662: put'pos #[p: {verb}]
+        lemma3eb280bc1c: put'lemma [w: {bestille} l: {da}]
+        pos269495d662: put'pos [p: {verb}]
         link'is lemma3eb280bc1c pos269495d662
         link'means pos269495d662 senseda38a026ab
-        lemmaa5e7be2c82: put'lemma #[w: {boeken} l: {nl}]
-        pos9fb854c050: put'pos #[p: {verb}]
+        lemmaa5e7be2c82: put'lemma [w: {boeken} l: {nl}]
+        pos9fb854c050: put'pos [p: {verb}]
         link'is lemmaa5e7be2c82 pos9fb854c050
         link'means pos9fb854c050 senseda38a026ab
-        lemmac9f87cbf24: put'lemma #[w: {reserveren} l: {nl}]
-        pos66b6ed688a: put'pos #[p: {verb}]
+        lemmac9f87cbf24: put'lemma [w: {reserveren} l: {nl}]
+        pos66b6ed688a: put'pos [p: {verb}]
         link'is lemmac9f87cbf24 pos66b6ed688a
         link'means pos66b6ed688a senseda38a026ab
-        lemmabbc5f17f49: put'lemma #[w: {rezervi} l: {eo}]
-        pos37d07f5e83: put'pos #[p: {verb}]
+        lemmabbc5f17f49: put'lemma [w: {rezervi} l: {eo}]
+        pos37d07f5e83: put'pos [p: {verb}]
         link'is lemmabbc5f17f49 pos37d07f5e83
         link'means pos37d07f5e83 senseda38a026ab
-        lemmab7f16f3b0b: put'lemma #[w: {varata} l: {fi}]
-        pos810ea59d98: put'pos #[p: {verb}]
+        lemmab7f16f3b0b: put'lemma [w: {varata} l: {fi}]
+        pos810ea59d98: put'pos [p: {verb}]
         link'is lemmab7f16f3b0b pos810ea59d98
         link'means pos810ea59d98 senseda38a026ab
-        lemmaea73a2348c: put'lemma #[w: {tehdä varaus} l: {fi}]
-        pos8c953c4fbb: put'pos #[p: {verb}]
+        lemmaea73a2348c: put'lemma [w: {tehdä varaus} l: {fi}]
+        pos8c953c4fbb: put'pos [p: {verb}]
         link'is lemmaea73a2348c pos8c953c4fbb
         link'means pos8c953c4fbb senseda38a026ab
-        lemmaa6e05310a1: put'lemma #[w: {réserver} l: {fr}]
-        posdb48c2f6f9: put'pos #[p: {verb}]
+        lemmaa6e05310a1: put'lemma [w: {réserver} l: {fr}]
+        posdb48c2f6f9: put'pos [p: {verb}]
         link'is lemmaa6e05310a1 posdb48c2f6f9
         link'means posdb48c2f6f9 senseda38a026ab
-        lemma57ee34b617: put'lemma #[w: {reservar} l: {gl}]
-        posedc5b0780b: put'pos #[p: {verb}]
+        lemma57ee34b617: put'lemma [w: {reservar} l: {gl}]
+        posedc5b0780b: put'pos [p: {verb}]
         link'is lemma57ee34b617 posedc5b0780b
         link'means posedc5b0780b senseda38a026ab
-        lemma20e6bcda51: put'lemma #[w: {რეგისტრირება} l: {ka}]
-        posa462660823: put'pos #[p: {verb}]
+        lemma20e6bcda51: put'lemma [w: {რეგისტრირება} l: {ka}]
+        posa462660823: put'pos [p: {verb}]
         link'is lemma20e6bcda51 posa462660823
         link'means posa462660823 senseda38a026ab
-        lemmab7b174e6b7: put'lemma #[w: {რეგისტრაციაში გატარება} l: {ka}]
-        pos7f7fb6d403: put'pos #[p: {verb}]
+        lemmab7b174e6b7: put'lemma [w: {რეგისტრაციაში გატარება} l: {ka}]
+        pos7f7fb6d403: put'pos [p: {verb}]
         link'is lemmab7b174e6b7 pos7f7fb6d403
         link'means pos7f7fb6d403 senseda38a026ab
-        lemmad0bd3f2e5f: put'lemma #[w: {დაბრონვა} l: {ka}]
-        pos217871f31e: put'pos #[p: {verb}]
+        lemmad0bd3f2e5f: put'lemma [w: {დაბრონვა} l: {ka}]
+        pos217871f31e: put'pos [p: {verb}]
         link'is lemmad0bd3f2e5f pos217871f31e
         link'means pos217871f31e senseda38a026ab
-        lemma419efd5922: put'lemma #[w: {ბრონირება} l: {ka}]
-        pos8f34f3db49: put'pos #[p: {verb}]
+        lemma419efd5922: put'lemma [w: {ბრონირება} l: {ka}]
+        pos8f34f3db49: put'pos [p: {verb}]
         link'is lemma419efd5922 pos8f34f3db49
         link'means pos8f34f3db49 senseda38a026ab
-        lemma9ce011469e: put'lemma #[w: {buchen} l: {de}]
-        posbc3dcacdaa: put'pos #[p: {verb}]
+        lemma9ce011469e: put'lemma [w: {buchen} l: {de}]
+        posbc3dcacdaa: put'pos [p: {verb}]
         link'is lemma9ce011469e posbc3dcacdaa
         link'means posbc3dcacdaa senseda38a026ab
-        lemma4adc255247: put'lemma #[w: {reservieren} l: {de}]
-        posabf9ceb9e3: put'pos #[p: {verb}]
+        lemma4adc255247: put'lemma [w: {reservieren} l: {de}]
+        posabf9ceb9e3: put'pos [p: {verb}]
         link'is lemma4adc255247 posabf9ceb9e3
         link'means posabf9ceb9e3 senseda38a026ab
-        lemma8142abc97f: put'lemma #[w: {κρατώ} l: {el}]
-        pos29eb57cafc: put'pos #[p: {verb}]
+        lemma8142abc97f: put'lemma [w: {κρατώ} l: {el}]
+        pos29eb57cafc: put'pos [p: {verb}]
         link'is lemma8142abc97f pos29eb57cafc
         link'means pos29eb57cafc senseda38a026ab
-        lemma64c115b11d: put'lemma #[w: {προκρατ} l: {el}]
-        posf6043dbd1d: put'pos #[p: {verb}]
+        lemma64c115b11d: put'lemma [w: {προκρατ} l: {el}]
+        posf6043dbd1d: put'pos [p: {verb}]
         link'is lemma64c115b11d posf6043dbd1d
         link'means posf6043dbd1d senseda38a026ab
-        lemma0c080e4747: put'lemma #[w: {κλείνω} l: {el}]
-        pos9be526592e: put'pos #[p: {verb}]
+        lemma0c080e4747: put'lemma [w: {κλείνω} l: {el}]
+        pos9be526592e: put'pos [p: {verb}]
         link'is lemma0c080e4747 pos9be526592e
         link'means pos9be526592e senseda38a026ab
-        lemma1445c3359b: put'lemma #[w: {रिज़र्व करना} l: {hi}]
-        pos2652d23622: put'pos #[p: {verb}]
+        lemma1445c3359b: put'lemma [w: {रिज़र्व करना} l: {hi}]
+        pos2652d23622: put'pos [p: {verb}]
         link'is lemma1445c3359b pos2652d23622
         link'means pos2652d23622 senseda38a026ab
-        lemmad879fb0956: put'lemma #[w: {lefoglal} l: {hu}]
-        posfa7a7ccc22: put'pos #[p: {verb}]
+        lemmad879fb0956: put'lemma [w: {lefoglal} l: {hu}]
+        posfa7a7ccc22: put'pos [p: {verb}]
         link'is lemmad879fb0956 posfa7a7ccc22
         link'means posfa7a7ccc22 senseda38a026ab
-        lemmad3a1fe2739: put'lemma #[w: {foglal} l: {hu}]
-        posc4b80a955a: put'pos #[p: {verb}]
+        lemmad3a1fe2739: put'lemma [w: {foglal} l: {hu}]
+        posc4b80a955a: put'pos [p: {verb}]
         link'is lemmad3a1fe2739 posc4b80a955a
         link'means posc4b80a955a senseda38a026ab
-        lemmaf9d257fe1b: put'lemma #[w: {megvált} l: {hu}]
-        pos8272261f05: put'pos #[p: {verb}]
+        lemmaf9d257fe1b: put'lemma [w: {megvált} l: {hu}]
+        pos8272261f05: put'pos [p: {verb}]
         link'is lemmaf9d257fe1b pos8272261f05
         link'means pos8272261f05 senseda38a026ab
-        lemma0628303c25: put'lemma #[w: {vált} l: {hu}]
-        pos91a5d1faa1: put'pos #[p: {verb}]
+        lemma0628303c25: put'lemma [w: {vált} l: {hu}]
+        pos91a5d1faa1: put'pos [p: {verb}]
         link'is lemma0628303c25 pos91a5d1faa1
         link'means pos91a5d1faa1 senseda38a026ab
-        lemmad664047b50: put'lemma #[w: {előjegyez} l: {hu}]
-        pos172fda6753: put'pos #[p: {verb}]
+        lemmad664047b50: put'lemma [w: {előjegyez} l: {hu}]
+        pos172fda6753: put'pos [p: {verb}]
         link'is lemmad664047b50 pos172fda6753
         link'means pos172fda6753 senseda38a026ab
-        lemma0fcd290db9: put'lemma #[w: {pesan} l: {id}]
-        pos3fc7440682: put'pos #[p: {verb}]
+        lemma0fcd290db9: put'lemma [w: {pesan} l: {id}]
+        pos3fc7440682: put'pos [p: {verb}]
         link'is lemma0fcd290db9 pos3fc7440682
         link'means pos3fc7440682 senseda38a026ab
-        lemma285918e9d7: put'lemma #[w: {reservar} l: {ia}]
-        pos71e7aa6831: put'pos #[p: {verb}]
+        lemma285918e9d7: put'lemma [w: {reservar} l: {ia}]
+        pos71e7aa6831: put'pos [p: {verb}]
         link'is lemma285918e9d7 pos71e7aa6831
         link'means pos71e7aa6831 senseda38a026ab
-        lemmab388c1d5f4: put'lemma #[w: {cuir in áirithe} l: {ga}]
-        posc087fab3ae: put'pos #[p: {verb}]
+        lemmab388c1d5f4: put'lemma [w: {cuir in áirithe} l: {ga}]
+        posc087fab3ae: put'pos [p: {verb}]
         link'is lemmab388c1d5f4 posc087fab3ae
         link'means posc087fab3ae senseda38a026ab
-        lemma50000a8536: put'lemma #[w: {prenotare} l: {it}]
-        pos95467c3689: put'pos #[p: {verb}]
+        lemma50000a8536: put'lemma [w: {prenotare} l: {it}]
+        pos95467c3689: put'pos [p: {verb}]
         link'is lemma50000a8536 pos95467c3689
         link'means pos95467c3689 senseda38a026ab
-        lemmae07803f170: put'lemma #[w: {riservare} l: {it}]
-        pos6a7ad647ae: put'pos #[p: {verb}]
+        lemmae07803f170: put'lemma [w: {riservare} l: {it}]
+        pos6a7ad647ae: put'pos [p: {verb}]
         link'is lemmae07803f170 pos6a7ad647ae
         link'means pos6a7ad647ae senseda38a026ab
-        lemma4452d5f6db: put'lemma #[w: {予約する} l: {ja}]
-        pos454ca32c7b: put'pos #[p: {verb}]
+        lemma4452d5f6db: put'lemma [w: {予約する} l: {ja}]
+        pos454ca32c7b: put'pos [p: {verb}]
         link'is lemma4452d5f6db pos454ca32c7b
         link'means pos454ca32c7b senseda38a026ab
-        lemma8fcd8726fe: put'lemma #[w: {예약하다} l: {ko}]
-        pos4a5a86c7bd: put'pos #[p: {verb}]
+        lemma8fcd8726fe: put'lemma [w: {예약하다} l: {ko}]
+        pos4a5a86c7bd: put'pos [p: {verb}]
         link'is lemma8fcd8726fe pos4a5a86c7bd
         link'means pos4a5a86c7bd senseda38a026ab
-        lemma2433e61607: put'lemma #[w: {豫約} l: {ko}]
-        pos6473e71a0d: put'pos #[p: {verb}]
+        lemma2433e61607: put'lemma [w: {豫約} l: {ko}]
+        pos6473e71a0d: put'pos [p: {verb}]
         link'is lemma2433e61607 pos6473e71a0d
         link'means pos6473e71a0d senseda38a026ab
-        lemma0b78bda757: put'lemma #[w: {하다} l: {ko}]
-        pos1a5ff82ae5: put'pos #[p: {verb}]
+        lemma0b78bda757: put'lemma [w: {하다} l: {ko}]
+        pos1a5ff82ae5: put'pos [p: {verb}]
         link'is lemma0b78bda757 pos1a5ff82ae5
         link'means pos1a5ff82ae5 senseda38a026ab
-        lemma9c4463e264: put'lemma #[w: {резерви́ра} l: {mk}]
-        pos53276c2faa: put'pos #[p: {verb}]
+        lemma9c4463e264: put'lemma [w: {резерви́ра} l: {mk}]
+        pos53276c2faa: put'pos [p: {verb}]
         link'is lemma9c4463e264 pos53276c2faa
         link'means pos53276c2faa senseda38a026ab
-        lemma00530c554d: put'lemma #[w: {закажува} l: {mk}]
-        pos40bedcde3d: put'pos #[p: {verb}]
+        lemma00530c554d: put'lemma [w: {закажува} l: {mk}]
+        pos40bedcde3d: put'pos [p: {verb}]
         link'is lemma00530c554d pos40bedcde3d
         link'means pos40bedcde3d senseda38a026ab
-        lemma34f6b2ffdd: put'lemma #[w: {tempah} l: {ms}]
-        pos2d7cbe1793: put'pos #[p: {verb}]
+        lemma34f6b2ffdd: put'lemma [w: {tempah} l: {ms}]
+        pos2d7cbe1793: put'pos [p: {verb}]
         link'is lemma34f6b2ffdd pos2d7cbe1793
         link'means pos2d7cbe1793 senseda38a026ab
-        lemmad6f29905b6: put'lemma #[w: {tāpui} l: {mi}]
-        pos23a68a8d2b: put'pos #[p: {verb}]
+        lemmad6f29905b6: put'lemma [w: {tāpui} l: {mi}]
+        pos23a68a8d2b: put'pos [p: {verb}]
         link'is lemmad6f29905b6 pos23a68a8d2b
         link'means pos23a68a8d2b senseda38a026ab
-        lemmaf698af452b: put'lemma #[w: {ukaɗimia} l: {zdj}]
-        pos6e1ac881a5: put'pos #[p: {verb}]
+        lemmaf698af452b: put'lemma [w: {ukaɗimia} l: {zdj}]
+        pos6e1ac881a5: put'pos [p: {verb}]
         link'is lemmaf698af452b pos6e1ac881a5
         link'means pos6e1ac881a5 senseda38a026ab
-        lemmac034b1f0e8: put'lemma #[w: {boutchi} l: {nrf}]
-        pos712ca843ca: put'pos #[p: {verb}]
+        lemmac034b1f0e8: put'lemma [w: {boutchi} l: {nrf}]
+        pos712ca843ca: put'pos [p: {verb}]
         link'is lemmac034b1f0e8 pos712ca843ca
         link'means pos712ca843ca senseda38a026ab
-        lemma77255589bd: put'lemma #[w: {bestille} l: {no}]
-        posd2ec255c53: put'pos #[p: {verb}]
+        lemma77255589bd: put'lemma [w: {bestille} l: {no}]
+        posd2ec255c53: put'pos [p: {verb}]
         link'is lemma77255589bd posd2ec255c53
         link'means posd2ec255c53 senseda38a026ab
-        lemma0536ef5117: put'lemma #[w: {reservere} l: {no}]
-        pos93c775435f: put'pos #[p: {verb}]
+        lemma0536ef5117: put'lemma [w: {reservere} l: {no}]
+        pos93c775435f: put'pos [p: {verb}]
         link'is lemma0536ef5117 pos93c775435f
         link'means pos93c775435f senseda38a026ab
-        lemmafc32ea3c6b: put'lemma #[w: {رزرو کردن} l: {fa}]
-        pos75d89b17a4: put'pos #[p: {verb}]
+        lemmafc32ea3c6b: put'lemma [w: {رزرو کردن} l: {fa}]
+        pos75d89b17a4: put'pos [p: {verb}]
         link'is lemmafc32ea3c6b pos75d89b17a4
         link'means pos75d89b17a4 senseda38a026ab
-        lemma0d1a467c92: put'lemma #[w: {rezerwować} l: {pl}]
-        pos6b76db03c3: put'pos #[p: {verb}]
+        lemma0d1a467c92: put'lemma [w: {rezerwować} l: {pl}]
+        pos6b76db03c3: put'pos [p: {verb}]
         link'is lemma0d1a467c92 pos6b76db03c3
         link'means pos6b76db03c3 senseda38a026ab
-        lemma30625f22fd: put'lemma #[w: {zarezerwować} l: {pl}]
-        pos283289ef18: put'pos #[p: {verb}]
+        lemma30625f22fd: put'lemma [w: {zarezerwować} l: {pl}]
+        pos283289ef18: put'pos [p: {verb}]
         link'is lemma30625f22fd pos283289ef18
         link'means pos283289ef18 senseda38a026ab
-        lemma7bd6f153d5: put'lemma #[w: {bukować} l: {pl}]
-        pos6e5c9329a8: put'pos #[p: {verb}]
+        lemma7bd6f153d5: put'lemma [w: {bukować} l: {pl}]
+        pos6e5c9329a8: put'pos [p: {verb}]
         link'is lemma7bd6f153d5 pos6e5c9329a8
         link'means pos6e5c9329a8 senseda38a026ab
-        lemma5e6b1a766b: put'lemma #[w: {zabukować} l: {pl}]
-        pos002a1fcd8e: put'pos #[p: {verb}]
+        lemma5e6b1a766b: put'lemma [w: {zabukować} l: {pl}]
+        pos002a1fcd8e: put'pos [p: {verb}]
         link'is lemma5e6b1a766b pos002a1fcd8e
         link'means pos002a1fcd8e senseda38a026ab
-        lemma26b0f4e842: put'lemma #[w: {reservar} l: {pt}]
-        pos12c0f1ee7a: put'pos #[p: {verb}]
+        lemma26b0f4e842: put'lemma [w: {reservar} l: {pt}]
+        pos12c0f1ee7a: put'pos [p: {verb}]
         link'is lemma26b0f4e842 pos12c0f1ee7a
         link'means pos12c0f1ee7a senseda38a026ab
-        lemma879ebd4b4c: put'lemma #[w: {rezerva} l: {ro}]
-        pos926bdd0d33: put'pos #[p: {verb}]
+        lemma879ebd4b4c: put'lemma [w: {rezerva} l: {ro}]
+        pos926bdd0d33: put'pos [p: {verb}]
         link'is lemma879ebd4b4c pos926bdd0d33
         link'means pos926bdd0d33 senseda38a026ab
-        lemmace2406de31: put'lemma #[w: {брони́ровать} l: {ru}]
-        posb84f90110d: put'pos #[p: {verb}]
+        lemmace2406de31: put'lemma [w: {брони́ровать} l: {ru}]
+        posb84f90110d: put'pos [p: {verb}]
         link'is lemmace2406de31 posb84f90110d
         link'means posb84f90110d senseda38a026ab
-        lemmae4ed260f84: put'lemma #[w: {заброни́ровать} l: {ru}]
-        pose74deb4481: put'pos #[p: {verb}]
+        lemmae4ed260f84: put'lemma [w: {заброни́ровать} l: {ru}]
+        pose74deb4481: put'pos [p: {verb}]
         link'is lemmae4ed260f84 pose74deb4481
         link'means pose74deb4481 senseda38a026ab
-        lemma8f820f7a26: put'lemma #[w: {резерви́ровать} l: {ru}]
-        pos0347e3dc8e: put'pos #[p: {verb}]
+        lemma8f820f7a26: put'lemma [w: {резерви́ровать} l: {ru}]
+        pos0347e3dc8e: put'pos [p: {verb}]
         link'is lemma8f820f7a26 pos0347e3dc8e
         link'means pos0347e3dc8e senseda38a026ab
-        lemma708016700d: put'lemma #[w: {зарезерви́ровать} l: {ru}]
-        pos1390c3be31: put'pos #[p: {verb}]
+        lemma708016700d: put'lemma [w: {зарезерви́ровать} l: {ru}]
+        pos1390c3be31: put'pos [p: {verb}]
         link'is lemma708016700d pos1390c3be31
         link'means pos1390c3be31 senseda38a026ab
-        lemma530ab298bb: put'lemma #[w: {зака́зывать} l: {ru}]
-        pos7067c6efa1: put'pos #[p: {verb}]
+        lemma530ab298bb: put'lemma [w: {зака́зывать} l: {ru}]
+        pos7067c6efa1: put'pos [p: {verb}]
         link'is lemma530ab298bb pos7067c6efa1
         link'means pos7067c6efa1 senseda38a026ab
-        lemma2b81adebcc: put'lemma #[w: {заказа́ть} l: {ru}]
-        poseafb3e54d8: put'pos #[p: {verb}]
+        lemma2b81adebcc: put'lemma [w: {заказа́ть} l: {ru}]
+        poseafb3e54d8: put'pos [p: {verb}]
         link'is lemma2b81adebcc poseafb3e54d8
         link'means poseafb3e54d8 senseda38a026ab
-        lemma27f3081168: put'lemma #[w: {predbilježiti} l: {sh}]
-        pos2e39921f77: put'pos #[p: {verb}]
+        lemma27f3081168: put'lemma [w: {predbilježiti} l: {sh}]
+        pos2e39921f77: put'pos [p: {verb}]
         link'is lemma27f3081168 pos2e39921f77
         link'means pos2e39921f77 senseda38a026ab
-        lemmac390608b64: put'lemma #[w: {rezervirati} l: {sh}]
-        pos7ca2e7b7a1: put'pos #[p: {verb}]
+        lemmac390608b64: put'lemma [w: {rezervirati} l: {sh}]
+        pos7ca2e7b7a1: put'pos [p: {verb}]
         link'is lemmac390608b64 pos7ca2e7b7a1
         link'means pos7ca2e7b7a1 senseda38a026ab
-        lemma0fa6291cae: put'lemma #[w: {rezervovať} l: {sk}]
-        pos27093a6607: put'pos #[p: {verb}]
+        lemma0fa6291cae: put'lemma [w: {rezervovať} l: {sk}]
+        pos27093a6607: put'pos [p: {verb}]
         link'is lemma0fa6291cae pos27093a6607
         link'means pos27093a6607 senseda38a026ab
-        lemma9b51132bd5: put'lemma #[w: {zarezervovať} l: {sk}]
-        pos3afcdc8775: put'pos #[p: {verb}]
+        lemma9b51132bd5: put'lemma [w: {zarezervovať} l: {sk}]
+        pos3afcdc8775: put'pos [p: {verb}]
         link'is lemma9b51132bd5 pos3afcdc8775
         link'means pos3afcdc8775 senseda38a026ab
-        lemmadade0190a1: put'lemma #[w: {reservar} l: {es}]
-        pos1a3816d253: put'pos #[p: {verb}]
+        lemmadade0190a1: put'lemma [w: {reservar} l: {es}]
+        pos1a3816d253: put'pos [p: {verb}]
         link'is lemmadade0190a1 pos1a3816d253
         link'means pos1a3816d253 senseda38a026ab
-        lemmabe96b9eda9: put'lemma #[w: {boka} l: {sv}]
-        pos8abf78a031: put'pos #[p: {verb}]
+        lemmabe96b9eda9: put'lemma [w: {boka} l: {sv}]
+        pos8abf78a031: put'pos [p: {verb}]
         link'is lemmabe96b9eda9 pos8abf78a031
         link'means pos8abf78a031 senseda38a026ab
-        lemma66f4963c8f: put'lemma #[w: {yer ayırma} l: {tr}]
-        pos3b7b578927: put'pos #[p: {verb}]
+        lemma66f4963c8f: put'lemma [w: {yer ayırma} l: {tr}]
+        pos3b7b578927: put'pos [p: {verb}]
         link'is lemma66f4963c8f pos3b7b578927
         link'means pos3b7b578927 senseda38a026ab
-        lemma1befa0db9f: put'lemma #[w: {kitap} l: {tr}]
-        pos5945f4a88c: put'pos #[p: {verb}]
+        lemma1befa0db9f: put'lemma [w: {kitap} l: {tr}]
+        pos5945f4a88c: put'pos [p: {verb}]
         link'is lemma1befa0db9f pos5945f4a88c
         link'means pos5945f4a88c senseda38a026ab
-        lemmab0303cee06: put'lemma #[w: {cadw} l: {cy}]
-        pos36d8a0e63e: put'pos #[p: {verb}]
+        lemmab0303cee06: put'lemma [w: {cadw} l: {cy}]
+        pos36d8a0e63e: put'pos [p: {verb}]
         link'is lemmab0303cee06 pos36d8a0e63e
         link'means pos36d8a0e63e senseda38a026ab
-        sense8095a9e6b4: put'sense #[s:{to write down, register, record}]
+        sense8095a9e6b4: put'sense [s:{to write down, register, record}]
         link'means pos7f8fc0a70a sense8095a9e6b4
-        lemmad852354987: put'lemma #[w: {записвам} l: {bg}]
-        pos8819b3eae4: put'pos #[p: {verb}]
+        lemmad852354987: put'lemma [w: {записвам} l: {bg}]
+        pos8819b3eae4: put'pos [p: {verb}]
         link'is lemmad852354987 pos8819b3eae4
         link'means pos8819b3eae4 sense8095a9e6b4
-        lemmab005141cd0: put'lemma #[w: {anotar} l: {ca}]
-        pos97495274a8: put'pos #[p: {verb}]
+        lemmab005141cd0: put'lemma [w: {anotar} l: {ca}]
+        pos97495274a8: put'pos [p: {verb}]
         link'is lemmab005141cd0 pos97495274a8
         link'means pos97495274a8 sense8095a9e6b4
-        lemma0e15b367cc: put'lemma #[w: {nedskrive} l: {da}]
-        pos97d056b11a: put'pos #[p: {verb}]
+        lemma0e15b367cc: put'lemma [w: {nedskrive} l: {da}]
+        pos97d056b11a: put'pos [p: {verb}]
         link'is lemma0e15b367cc pos97d056b11a
         link'means pos97d056b11a sense8095a9e6b4
-        lemmacdefb85839: put'lemma #[w: {notere} l: {da}]
-        posfdd3b63753: put'pos #[p: {verb}]
+        lemmacdefb85839: put'lemma [w: {notere} l: {da}]
+        posfdd3b63753: put'pos [p: {verb}]
         link'is lemmacdefb85839 posfdd3b63753
         link'means posfdd3b63753 sense8095a9e6b4
-        lemmaa25f253805: put'lemma #[w: {bogføre} l: {da}]
-        posade3600c74: put'pos #[p: {verb}]
+        lemmaa25f253805: put'lemma [w: {bogføre} l: {da}]
+        posade3600c74: put'pos [p: {verb}]
         link'is lemmaa25f253805 posade3600c74
         link'means posade3600c74 sense8095a9e6b4
-        lemma304f17307c: put'lemma #[w: {te boek stellen} l: {nl}]
-        posd31eb16f3f: put'pos #[p: {verb}]
+        lemma304f17307c: put'lemma [w: {te boek stellen} l: {nl}]
+        posd31eb16f3f: put'pos [p: {verb}]
         link'is lemma304f17307c posd31eb16f3f
         link'means posd31eb16f3f sense8095a9e6b4
-        lemma755a870552: put'lemma #[w: {noteren} l: {nl}]
-        pos6fc05d6155: put'pos #[p: {verb}]
+        lemma755a870552: put'lemma [w: {noteren} l: {nl}]
+        pos6fc05d6155: put'pos [p: {verb}]
         link'is lemma755a870552 pos6fc05d6155
         link'means pos6fc05d6155 sense8095a9e6b4
-        lemma8b3d7ecf85: put'lemma #[w: {kirjoittaa ylös} l: {fi}]
-        pos3c91c6d9bc: put'pos #[p: {verb}]
+        lemma8b3d7ecf85: put'lemma [w: {kirjoittaa ylös} l: {fi}]
+        pos3c91c6d9bc: put'pos [p: {verb}]
         link'is lemma8b3d7ecf85 pos3c91c6d9bc
         link'means pos3c91c6d9bc sense8095a9e6b4
-        lemma2c97454540: put'lemma #[w: {kirjata} l: {fi}]
-        posc1827b1993: put'pos #[p: {verb}]
+        lemma2c97454540: put'lemma [w: {kirjata} l: {fi}]
+        posc1827b1993: put'pos [p: {verb}]
         link'is lemma2c97454540 posc1827b1993
         link'means posc1827b1993 sense8095a9e6b4
-        lemma7e3ca6f4f8: put'lemma #[w: {kirjoittaa muistiin} l: {fi}]
-        pos9e0e710234: put'pos #[p: {verb}]
+        lemma7e3ca6f4f8: put'lemma [w: {kirjoittaa muistiin} l: {fi}]
+        pos9e0e710234: put'pos [p: {verb}]
         link'is lemma7e3ca6f4f8 pos9e0e710234
         link'means pos9e0e710234 sense8095a9e6b4
-        lemma26cbdd3150: put'lemma #[w: {rekisteröidä} l: {fi}]
-        posf3119d023c: put'pos #[p: {verb}]
+        lemma26cbdd3150: put'lemma [w: {rekisteröidä} l: {fi}]
+        posf3119d023c: put'pos [p: {verb}]
         link'is lemma26cbdd3150 posf3119d023c
         link'means posf3119d023c sense8095a9e6b4
-        lemmaf68d609965: put'lemma #[w: {anotar} l: {gl}]
-        pos84cd315e51: put'pos #[p: {verb}]
+        lemmaf68d609965: put'lemma [w: {anotar} l: {gl}]
+        pos84cd315e51: put'pos [p: {verb}]
         link'is lemmaf68d609965 pos84cd315e51
         link'means pos84cd315e51 sense8095a9e6b4
-        lemma0de80bc46e: put'lemma #[w: {notieren} l: {de}]
-        pos84a5f64c2e: put'pos #[p: {verb}]
+        lemma0de80bc46e: put'lemma [w: {notieren} l: {de}]
+        pos84a5f64c2e: put'pos [p: {verb}]
         link'is lemma0de80bc46e pos84a5f64c2e
         link'means pos84a5f64c2e sense8095a9e6b4
-        lemmaa10d262aaa: put'lemma #[w: {schreiben} l: {de}]
-        pos5b1b03041e: put'pos #[p: {verb}]
+        lemmaa10d262aaa: put'lemma [w: {schreiben} l: {de}]
+        pos5b1b03041e: put'pos [p: {verb}]
         link'is lemmaa10d262aaa pos5b1b03041e
         link'means pos5b1b03041e sense8095a9e6b4
-        lemma540a841c3d: put'lemma #[w: {γράφω} l: {el}]
-        pos48be3a8c62: put'pos #[p: {verb}]
+        lemma540a841c3d: put'lemma [w: {γράφω} l: {el}]
+        pos48be3a8c62: put'pos [p: {verb}]
         link'is lemma540a841c3d pos48be3a8c62
         link'means pos48be3a8c62 sense8095a9e6b4
-        lemma7fd4b6db6a: put'lemma #[w: {καταχωρώ} l: {el}]
-        posdc3280615b: put'pos #[p: {verb}]
+        lemma7fd4b6db6a: put'lemma [w: {καταχωρώ} l: {el}]
+        posdc3280615b: put'pos [p: {verb}]
         link'is lemma7fd4b6db6a posdc3280615b
         link'means posdc3280615b sense8095a9e6b4
-        lemmab7b990a4b0: put'lemma #[w: {σημειώνω} l: {el}]
-        pos70c93fbb47: put'pos #[p: {verb}]
+        lemmab7b990a4b0: put'lemma [w: {σημειώνω} l: {el}]
+        pos70c93fbb47: put'pos [p: {verb}]
         link'is lemmab7b990a4b0 pos70c93fbb47
         link'means pos70c93fbb47 sense8095a9e6b4
-        lemmaa6b4c7bca1: put'lemma #[w: {könyvel} l: {hu}]
-        posb4d1705702: put'pos #[p: {verb}]
+        lemmaa6b4c7bca1: put'lemma [w: {könyvel} l: {hu}]
+        posb4d1705702: put'pos [p: {verb}]
         link'is lemmaa6b4c7bca1 posb4d1705702
         link'means posb4d1705702 sense8095a9e6b4
-        lemmab43710f26b: put'lemma #[w: {elkönyvel} l: {hu}]
-        pos0ae342613c: put'pos #[p: {verb}]
+        lemmab43710f26b: put'lemma [w: {elkönyvel} l: {hu}]
+        pos0ae342613c: put'pos [p: {verb}]
         link'is lemmab43710f26b pos0ae342613c
         link'means pos0ae342613c sense8095a9e6b4
-        lemma0511896480: put'lemma #[w: {lekönyvel} l: {hu}]
-        pos3b3b44fb1a: put'pos #[p: {verb}]
+        lemma0511896480: put'lemma [w: {lekönyvel} l: {hu}]
+        pos3b3b44fb1a: put'pos [p: {verb}]
         link'is lemma0511896480 pos3b3b44fb1a
         link'means pos3b3b44fb1a sense8095a9e6b4
-        lemmabce991bde2: put'lemma #[w: {annotare} l: {it}]
-        pos5ef4098e1e: put'pos #[p: {verb}]
+        lemmabce991bde2: put'lemma [w: {annotare} l: {it}]
+        pos5ef4098e1e: put'pos [p: {verb}]
         link'is lemmabce991bde2 pos5ef4098e1e
         link'means pos5ef4098e1e sense8095a9e6b4
-        lemma2d43e6f98b: put'lemma #[w: {trascrivere} l: {it}]
-        pos939a70c95b: put'pos #[p: {verb}]
+        lemma2d43e6f98b: put'lemma [w: {trascrivere} l: {it}]
+        pos939a70c95b: put'pos [p: {verb}]
         link'is lemma2d43e6f98b pos939a70c95b
         link'means pos939a70c95b sense8095a9e6b4
-        lemmaa37bb862d6: put'lemma #[w: {記入する} l: {ja}]
-        posbac3839f97: put'pos #[p: {verb}]
+        lemmaa37bb862d6: put'lemma [w: {記入する} l: {ja}]
+        posbac3839f97: put'pos [p: {verb}]
         link'is lemmaa37bb862d6 posbac3839f97
         link'means posbac3839f97 sense8095a9e6b4
-        lemma8544784707: put'lemma #[w: {внесува} l: {mk}]
-        pos70ca5d74c6: put'pos #[p: {verb}]
+        lemma8544784707: put'lemma [w: {внесува} l: {mk}]
+        pos70ca5d74c6: put'pos [p: {verb}]
         link'is lemma8544784707 pos70ca5d74c6
         link'means pos70ca5d74c6 sense8095a9e6b4
-        lemma875e7a5bda: put'lemma #[w: {запишува} l: {mk}]
-        pose2a009c635: put'pos #[p: {verb}]
+        lemma875e7a5bda: put'lemma [w: {запишува} l: {mk}]
+        pose2a009c635: put'pos [p: {verb}]
         link'is lemma875e7a5bda pose2a009c635
         link'means pose2a009c635 sense8095a9e6b4
-        lemmaee5012657d: put'lemma #[w: {заведува} l: {mk}]
-        posa54755bcaa: put'pos #[p: {verb}]
+        lemmaee5012657d: put'lemma [w: {заведува} l: {mk}]
+        posa54755bcaa: put'pos [p: {verb}]
         link'is lemmaee5012657d posa54755bcaa
         link'means posa54755bcaa sense8095a9e6b4
-        lemmad70262d4ea: put'lemma #[w: {notere} l: {no}]
-        pos358f613c8a: put'pos #[p: {verb}]
+        lemmad70262d4ea: put'lemma [w: {notere} l: {no}]
+        pos358f613c8a: put'pos [p: {verb}]
         link'is lemmad70262d4ea pos358f613c8a
         link'means pos358f613c8a sense8095a9e6b4
-        lemma02aa35731c: put'lemma #[w: {nedskrive} l: {no}]
-        posa8ec1ffe68: put'pos #[p: {verb}]
+        lemma02aa35731c: put'lemma [w: {nedskrive} l: {no}]
+        posa8ec1ffe68: put'pos [p: {verb}]
         link'is lemma02aa35731c posa8ec1ffe68
         link'means posa8ec1ffe68 sense8095a9e6b4
-        lemma01516d0d30: put'lemma #[w: {spisać} l: {pl}]
-        pos12ec563702: put'pos #[p: {verb}]
+        lemma01516d0d30: put'lemma [w: {spisać} l: {pl}]
+        pos12ec563702: put'pos [p: {verb}]
         link'is lemma01516d0d30 pos12ec563702
         link'means pos12ec563702 sense8095a9e6b4
-        lemma2611d0acb7: put'lemma #[w: {anotar} l: {pt}]
-        pos869ad4d4c8: put'pos #[p: {verb}]
+        lemma2611d0acb7: put'lemma [w: {anotar} l: {pt}]
+        pos869ad4d4c8: put'pos [p: {verb}]
         link'is lemma2611d0acb7 pos869ad4d4c8
         link'means pos869ad4d4c8 sense8095a9e6b4
-        lemma115333dd6b: put'lemma #[w: {zaznačiť} l: {sk}]
-        pos78a01b223a: put'pos #[p: {verb}]
+        lemma115333dd6b: put'lemma [w: {zaznačiť} l: {sk}]
+        pos78a01b223a: put'pos [p: {verb}]
         link'is lemma115333dd6b pos78a01b223a
         link'means pos78a01b223a sense8095a9e6b4
-        lemma096b64d995: put'lemma #[w: {zaknihovať} l: {sk}]
-        posfe3151ea95: put'pos #[p: {verb}]
+        lemma096b64d995: put'lemma [w: {zaknihovať} l: {sk}]
+        posfe3151ea95: put'pos [p: {verb}]
         link'is lemma096b64d995 posfe3151ea95
         link'means posfe3151ea95 sense8095a9e6b4
-        lemma55e473797a: put'lemma #[w: {anotar} l: {es}]
-        pos6734388ceb: put'pos #[p: {verb}]
+        lemma55e473797a: put'lemma [w: {anotar} l: {es}]
+        pos6734388ceb: put'pos [p: {verb}]
         link'is lemma55e473797a pos6734388ceb
         link'means pos6734388ceb sense8095a9e6b4
-        lemmaa06d6a035f: put'lemma #[w: {bokföra} l: {sv}]
-        pos82f6ae7130: put'pos #[p: {verb}]
+        lemmaa06d6a035f: put'lemma [w: {bokföra} l: {sv}]
+        pos82f6ae7130: put'pos [p: {verb}]
         link'is lemmaa06d6a035f pos82f6ae7130
         link'means pos82f6ae7130 sense8095a9e6b4
-        lemmaef47e75a55: put'lemma #[w: {skriva in} l: {sv}]
-        pos9e5da87289: put'pos #[p: {verb}]
+        lemmaef47e75a55: put'lemma [w: {skriva in} l: {sv}]
+        pos9e5da87289: put'pos [p: {verb}]
         link'is lemmaef47e75a55 pos9e5da87289
         link'means pos9e5da87289 sense8095a9e6b4
-        sensee218329346: put'sense #[s:{to record the details of an offender}]
+        sensee218329346: put'sense [s:{to record the details of an offender}]
         link'means pos7f8fc0a70a sensee218329346
-        lemmad643753534: put'lemma #[w: {rekisteröidä} l: {fi}]
-        pos5b8591e2bc: put'pos #[p: {verb}]
+        lemmad643753534: put'lemma [w: {rekisteröidä} l: {fi}]
+        pos5b8591e2bc: put'pos [p: {verb}]
         link'is lemmad643753534 pos5b8591e2bc
         link'means pos5b8591e2bc sensee218329346
-        lemmab34798aa49: put'lemma #[w: {felír} l: {hu}]
-        pos76ca843a7f: put'pos #[p: {verb}]
+        lemmab34798aa49: put'lemma [w: {felír} l: {hu}]
+        pos76ca843a7f: put'pos [p: {verb}]
         link'is lemmab34798aa49 pos76ca843a7f
         link'means pos76ca843a7f sensee218329346
-        lemma2384d799e8: put'lemma #[w: {調書を取る} l: {ja}]
-        pos76f69059ac: put'pos #[p: {verb}]
+        lemma2384d799e8: put'lemma [w: {調書を取る} l: {ja}]
+        pos76f69059ac: put'pos [p: {verb}]
         link'is lemma2384d799e8 pos76f69059ac
         link'means pos76f69059ac sensee218329346
-        lemma74800b8ba1: put'lemma #[w: {multar} l: {pt}]
-        posd2e6f18ffd: put'pos #[p: {verb}]
+        lemma74800b8ba1: put'lemma [w: {multar} l: {pt}]
+        posd2e6f18ffd: put'pos [p: {verb}]
         link'is lemma74800b8ba1 posd2e6f18ffd
         link'means posd2e6f18ffd sensee218329346
-        sense5524244560: put'sense #[s:{sports: to issue with a caution}]
+        sense5524244560: put'sense [s:{sports: to issue with a caution}]
         link'means pos7f8fc0a70a sense5524244560
-        lemmac7b383a3e1: put'lemma #[w: {varoittaa} l: {fi}]
-        pos0b9995cd5d: put'pos #[p: {verb}]
+        lemmac7b383a3e1: put'lemma [w: {varoittaa} l: {fi}]
+        pos0b9995cd5d: put'pos [p: {verb}]
         link'is lemmac7b383a3e1 pos0b9995cd5d
         link'means pos0b9995cd5d sense5524244560
-        lemmaa86e7b94de: put'lemma #[w: {antaa varoitus} l: {fi}]
-        pos236b000aa1: put'pos #[p: {verb}]
+        lemmaa86e7b94de: put'lemma [w: {antaa varoitus} l: {fi}]
+        pos236b000aa1: put'pos [p: {verb}]
         link'is lemmaa86e7b94de pos236b000aa1
         link'means pos236b000aa1 sense5524244560
-        lemmaeca039bc89: put'lemma #[w: {sárga lapot ad} l: {hu}]
-        pos583dbbd7c1: put'pos #[p: {verb}]
+        lemmaeca039bc89: put'lemma [w: {sárga lapot ad} l: {hu}]
+        pos583dbbd7c1: put'pos [p: {verb}]
         link'is lemmaeca039bc89 pos583dbbd7c1
         link'means pos583dbbd7c1 sense5524244560
-        lemmae0276b43f4: put'lemma #[w: {ammonire} l: {it}]
-        pos8cff370755: put'pos #[p: {verb}]
+        lemmae0276b43f4: put'lemma [w: {ammonire} l: {it}]
+        pos8cff370755: put'pos [p: {verb}]
         link'is lemmae0276b43f4 pos8cff370755
         link'means pos8cff370755 sense5524244560
-        sense90edbe61b4: put'sense #[s:{slang: to travel very fast}]
+        sense90edbe61b4: put'sense [s:{slang: to travel very fast}]
         link'means pos7f8fc0a70a sense90edbe61b4
-        lemma126c5a7bbb: put'lemma #[w: {boeken} l: {nl}]
-        posbb935ff58b: put'pos #[p: {verb}]
+        lemma126c5a7bbb: put'lemma [w: {boeken} l: {nl}]
+        posbb935ff58b: put'pos [p: {verb}]
         link'is lemma126c5a7bbb posbb935ff58b
         link'means posbb935ff58b sense90edbe61b4
-        lemmab64af5f571: put'lemma #[w: {vlammen} l: {nl}]
-        pos8ef07ad582: put'pos #[p: {verb}]
+        lemmab64af5f571: put'lemma [w: {vlammen} l: {nl}]
+        pos8ef07ad582: put'pos [p: {verb}]
         link'is lemmab64af5f571 pos8ef07ad582
         link'means pos8ef07ad582 sense90edbe61b4
-        lemmadc7c5c24bd: put'lemma #[w: {luukuttaa} l: {fi}]
-        posc384af9d73: put'pos #[p: {verb}]
+        lemmadc7c5c24bd: put'lemma [w: {luukuttaa} l: {fi}]
+        posc384af9d73: put'pos [p: {verb}]
         link'is lemmadc7c5c24bd posc384af9d73
         link'means posc384af9d73 sense90edbe61b4
-        lemmaf7717609a3: put'lemma #[w: {rasen} l: {de}]
-        pos7b4bf047a5: put'pos #[p: {verb}]
+        lemmaf7717609a3: put'lemma [w: {rasen} l: {de}]
+        pos7b4bf047a5: put'pos [p: {verb}]
         link'is lemmaf7717609a3 pos7b4bf047a5
         link'means pos7b4bf047a5 sense90edbe61b4
-        lemma8df31a6b61: put'lemma #[w: {száguld} l: {hu}]
-        posdf53c51b96: put'pos #[p: {verb}]
+        lemma8df31a6b61: put'lemma [w: {száguld} l: {hu}]
+        posdf53c51b96: put'pos [p: {verb}]
         link'is lemma8df31a6b61 posdf53c51b96
         link'means posdf53c51b96 sense90edbe61b4
-        lemmac38cd89073: put'lemma #[w: {スピードを出す} l: {ja}]
-        pos52af984c8e: put'pos #[p: {verb}]
+        lemmac38cd89073: put'lemma [w: {スピードを出す} l: {ja}]
+        pos52af984c8e: put'pos [p: {verb}]
         link'is lemmac38cd89073 pos52af984c8e
         link'means pos52af984c8e sense90edbe61b4
-        lemma43a341aeb4: put'lemma #[w: {飛ばす} l: {ja}]
-        pos4a27143545: put'pos #[p: {verb}]
+        lemma43a341aeb4: put'lemma [w: {飛ばす} l: {ja}]
+        pos4a27143545: put'pos [p: {verb}]
         link'is lemma43a341aeb4 pos4a27143545
         link'means pos4a27143545 sense90edbe61b4
-        sense4ece92bfd9: put'sense #[s:{to record bets as bookmaker}]
+        sense4ece92bfd9: put'sense [s:{to record bets as bookmaker}]
         link'means pos7f8fc0a70a sense4ece92bfd9
-        lemmafaa9c8acee: put'lemma #[w: {pitää kirjaa} l: {fi}]
-        pos00f8e8942b: put'pos #[p: {verb}]
+        lemmafaa9c8acee: put'lemma [w: {pitää kirjaa} l: {fi}]
+        pos00f8e8942b: put'pos [p: {verb}]
         link'is lemmafaa9c8acee pos00f8e8942b
         link'means pos00f8e8942b sense4ece92bfd9
-        sense6ea9e80c3d: put'sense #[s:{to receive the highest grade in a class}]
+        sense6ea9e80c3d: put'sense [s:{to receive the highest grade in a class}]
         link'means pos7f8fc0a70a sense6ea9e80c3d
-        lemmabb32c98866: put'lemma #[w: {legjobbként végez} l: {hu}]
-        posb87fd52a1b: put'pos #[p: {verb}]
+        lemmabb32c98866: put'lemma [w: {legjobbként végez} l: {hu}]
+        posb87fd52a1b: put'pos [p: {verb}]
         link'is lemmabb32c98866 posb87fd52a1b
         link'means posb87fd52a1b sense6ea9e80c3d
-        sense7b57751785: put'sense #[s:{slang: to leave}]
+        sense7b57751785: put'sense [s:{slang: to leave}]
         link'means pos7f8fc0a70a sense7b57751785
-        lemma37504a71c2: put'lemma #[w: {nostaa kytkintä} l: {fi}]
-        pos79f54bd342: put'pos #[p: {verb}]
+        lemma37504a71c2: put'lemma [w: {nostaa kytkintä} l: {fi}]
+        pos79f54bd342: put'pos [p: {verb}]
         link'is lemma37504a71c2 pos79f54bd342
         link'means pos79f54bd342 sense7b57751785
-        lemma1e895e7987: put'lemma #[w: {lelép} l: {hu}]
-        posdf6ca3c753: put'pos #[p: {verb}]
+        lemma1e895e7987: put'lemma [w: {lelép} l: {hu}]
+        posdf6ca3c753: put'pos [p: {verb}]
         link'is lemma1e895e7987 posdf6ca3c753
         link'means posdf6ca3c753 sense7b57751785
-        pos7f8fc0a70a: put 'pos #[p: {verb}]
+        pos7f8fc0a70a: put'pos [p: {verb}]
         link'is lemma8b257cd027 pos7f8fc0a70a
         lemmaceac518675: put 'lemma #[w: {book} l: {li}]
-        posf68c8817db: put 'pos #[p: {noun}]
+        posf68c8817db: put'pos [p: {noun}]
         link'is lemmaceac518675 posf68c8817db
         lemmac1a1a27858: put 'lemma #[w: {book} l: {enm}]
-        pos0ff9e0a13a: put 'pos #[p: {noun}]
+        pos0ff9e0a13a: put'pos [p: {noun}]
         link'is lemmac1a1a27858 pos0ff9e0a13a
-        pos0ff9e0a13a: put 'pos #[p: {noun}]
+        pos0ff9e0a13a: put'pos [p: {noun}]
         link'is lemmac1a1a27858 pos0ff9e0a13a
         lemma3af60c7721: put 'lemma #[w: {book} l: {nb}]
-        pos35c7f973f2: put 'pos #[p: {verb}]
+        pos35c7f973f2: put'pos [p: {verb}]
         link'is lemma3af60c7721 pos35c7f973f2
 
-        preview fetch 'pos #[]#[] 
+        preview fetch'pos ø
     ]
 ]

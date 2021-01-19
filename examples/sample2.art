@@ -1,20 +1,20 @@
 do.import {grafito.art}
 
 do [ graph.create "sample2" [
-    honorEnN: put 'Pos #[p:"noun"]
-    honorEsN: put 'Pos #[p:"noun"]
-    dishonorEnN: put 'Pos #[p:"noun"]
+    honorEnN: put'Pos [p:"noun"]
+    honorEsN: put'Pos [p:"noun"]
+    dishonorEnN: put'Pos [p:"noun"]
 
-    tokenS: put 'Sense #[s:"token of praise or respect"]
+    tokenS: put'Sense [s:"token of praise or respect"]
 
-    link'has (put 'Lemma #[w:"honor" l:"en"]) honorEnN
-    link'has (put 'Lemma #[w:"honor" l:"es"]) honorEsN
-    link'has (put 'Lemma #[w:"dishonor" l:"en"]) dishonorEnN
+    link'has (put'Lemma [w:"honor" l:"en"]) honorEnN
+    link'has (put'Lemma [w:"honor" l:"es"]) honorEsN
+    link'has (put'Lemma [w:"dishonor" l:"en"]) dishonorEnN
 
     link'means honorEnN tokenS
     link'means honorEsN tokenS
 
     link'antonym dishonorEnN honorEnN
 
-    preview (fetch 'Pos ø ø)
+    preview fetch 'Pos ø
 ]]

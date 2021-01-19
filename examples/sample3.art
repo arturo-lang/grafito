@@ -2,19 +2,19 @@ do.import {grafito.art}
 
 do [
     graph.create "sample3" [
-        nick: put'person #[name: "Nick", sex: "m", birth: 1957]
-        eleftheria: put'person #[name: "Eleftheria", sex: "f", birth: 1960]
-        angela: put'person #[name: "Angela", sex: "f", birth: 1999]
-        john: put'person #[name: "John", sex: "m", birth: 1986]
+        nick: put'person [name: "Nick", sex: "m", birth: 1957]
+        eleftheria: put'person [name: "Eleftheria", sex: "f", birth: 1960]
+        angela: put'person [name: "Angela", sex: "f", birth: 1999]
+        john: put'person [name: "John", sex: "m", birth: 1986]
         
-        niovi: put'person #[name: "Niovi", sex: "f", birth: 1928]
-        johnA: put'person #[name: "John", sex: "m", birth: 1933]
+        niovi: put'person [name: "Niovi", sex: "f", birth: 1928]
+        johnA: put'person [name: "John", sex: "m", birth: 1933]
 
-        tatie: put'person #[name: "Tatie", sex: "m", birth: 1958]
+        tatie: put'person [name: "Tatie", sex: "m", birth: 1958]
 
-        spaghetti: put'food #[name: "Spaghetti"]
-        pizza: put'food #[name: "Pizza"]
-        steak: put'food #[name: "Steak"]
+        spaghetti: put'food [name: "Spaghetti"]
+        pizza: put'food [name: "Pizza"]
+        steak: put'food [name: "Steak"]
 
         link'marriedTo nick eleftheria
         link'marriedTo johnA niovi
@@ -26,6 +26,6 @@ do [
         link'likes @[eleftheria johnA nick] @[pizza]
         link'likes @[john tatie nick] @[steak]
 
-        preview fetch 'person ø ø
+        preview fetch 'person ø
     ]
 ]

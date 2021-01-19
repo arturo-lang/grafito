@@ -1,13 +1,3 @@
-;==========================================
-; Grafito
-;
-; SQLite-based Graph Database
-; in ARturo
-;
-; @file: grafito.art
-; @author: drkameleon
-;==========================================
-
 ;; Just run this with:
 ;; arturo sample.art
 ;;
@@ -22,10 +12,10 @@ do.import "grafito.art"
 
 do [
 	graph.create "sample1" [
-		john: put 'person #[s: "John" sex: 'm]
-		joan: put 'person #[s: "Joan" sex: 'f]
-		bob:  put 'person #[s: "Bob"  sex: 'm]
-		jill: put 'person #[s: "Jill" sex: 'f]
+		john: put 'person [s: "John" sex: 'm]
+		joan: put 'person [s: "Joan" sex: 'f]
+		bob:  put 'person [s: "Bob"  sex: 'm]
+		jill: put 'person [s: "Jill" sex: 'f]
 
 		link'marriedTo john joan
 		link'childOf @[bob jill] @[john joan]
@@ -35,19 +25,17 @@ do [
 do [
 	benchmark [
 		graph "sample1" [
-			; husband: function [X][
-			; 	first fetch 'person #[sex: "m"] #[marriedTo: X]
-			; ]
+
 			print "getting first person named Joan..."
-			joan: what 'person #[s: "Joan"] #[]
+			joan: what'person [s: "Joan"]
 			inspect joan
 
 			print "getting all male people married to Joan..."
-			husband: what 'person #[] #[marriedTo: joan]
+			husband: what 'person [marriedTo: joan]
 			inspect husband
 
-			inspect fetch 'person #[] #[
-				marriedTo: what 'person #[s: "Joan"] #[]
+			inspect fetch 'person [
+				marriedTo: what 'person [s: "Joan"]
 			]
 		]
 	]

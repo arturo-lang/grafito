@@ -16,6 +16,6 @@ do [
         inspect fetch'person [
             age: -> greater: 30
             surname: "Doe"
-        ] ø
+        ]
     ]
 ]

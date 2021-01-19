@@ -10,6 +10,6 @@ do [
         ; more than 30 years old
         inspect fetch'person [
             age: -> greater: 30
-        ] ø
+        ]
     ]
 ]
