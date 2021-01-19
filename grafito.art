@@ -384,7 +384,7 @@ graph: function [path, body][
         if not? dictionary? att -> att: #att
 
         queries: new []
-
+    
         loop att [k,v][
             append 'queries ~{!sql INSERT INTO properties (node,property,value) VALUES (|nodeId|,'|k|','|v|')}
         ]
