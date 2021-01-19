@@ -408,9 +408,13 @@ graph: function [path, body][
     ;--------------------------
 
     unput: function [nd][
-        query db ~{!sql DELETE FROM nodes WHERE id='|nd\id|'}
-        query db ~{!sql DELETE FROM properties WHERE node='|nd\id|'}
-        query db ~{!sql DELETE FROM edges WHERE source='|nd\id|' OR target='|nd\id|'}
+        qr: new []
+        
+        append 'qr ~{!sql DELETE FROM nodes WHERE id='|nd\id|'}
+        append 'qr ~{!sql DELETE FROM properties WHERE node='|nd\id|'}
+        append 'qr ~{!sql DELETE FROM edges WHERE source='|nd\id|' OR target='|nd\id|'}
+
+        query db qr
     ]
 
     ;
