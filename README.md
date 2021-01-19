@@ -289,7 +289,7 @@ Create a new node of given type and with given properties.
 #### Examples
 
 ```red
-put 'person #[name: "John" surname: "Doe" birthday: 1986]
+put 'person [name: "John" surname: "Doe" birthday: 1986]
 ```
 
 ### unput
@@ -307,7 +307,7 @@ Delete given node
 #### Examples
 
 ```red
-x: put 'person #[name: "John" surname: "Doe" birthday: 1986]
+x: put 'person [name: "John" surname: "Doe" birthday: 1986]
 unput x
 ```
 
@@ -332,8 +332,8 @@ Create a new relationship of given type between given nodes.
 #### Examples
 
 ```red
-link 'marriedTo put 'person #[name: "John" surname: "Doe" birthday: 1986] 
-                put 'person #[name: "Mary" surname: "Doe" birthday: 1986]
+link 'marriedTo put 'person [name: "John" surname: "Doe" birthday: 1986] 
+                put 'person [name: "Mary" surname: "Doe" birthday: 1986]
 ```
 
 ### unlink
@@ -353,8 +353,8 @@ Delete given relationship between given nodes.
 #### Examples
 
 ```red
-x: put 'person #[name: "John" surname: "Doe" birthday: 1986]
-y: put 'person #[name: "Mary" surname: "Doe" birthday: 1986]
+x: put 'person [name: "John" surname: "Doe" birthday: 1986]
+y: put 'person [name: "Mary" surname: "Doe" birthday: 1986]
 
 link 'marriedTo x y
 unlink 'marriedTo x y
