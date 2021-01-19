@@ -249,7 +249,7 @@ graph: function [path, body][
 
                         db.on("doubleClick",function (x){
                             console.log("selectNode: ", x);
-                            $.post("/getnode", {ndid: x.nodes[0] }, function (data){
+                            $.post("/nodeFromId", {ndid: x.nodes[0] }, function (data){
                                 var dt = JSON.parse(data);
                                 for (var i=0; i<dt.nodes.length; i++){
                                     //if (window.data.nodes.get(dt.nodes[i].id)==null){
@@ -409,7 +409,7 @@ graph: function [path, body][
 
     unput: function [nd][
         qr: new []
-        
+
         append 'qr ~{!sql DELETE FROM nodes WHERE id='|nd\id|'}
         append 'qr ~{!sql DELETE FROM properties WHERE node='|nd\id|'}
         append 'qr ~{!sql DELETE FROM edges WHERE source='|nd\id|' OR target='|nd\id|'}
@@ -447,16 +447,28 @@ graph: function [path, body][
     ; from ID
     ;--------------------------
 
-    getNode: function [nid][
-        ntag: first first query db ~{!sql SELECT tag FROM nodes WHERE id='|nid|'}
+    nodeFromId: function [nid][
+        qr: ~{!sql
+            SELECT nodes.tag, properties.property, properties.value 
+            FROM nodes 
+            INNER JOIN properties
+            ON properties.node=nodes.id
+            WHERE nodes.id='|nid|'
+        }
+
+        results: query db qr
+        
+        if empty? results -> return ø
+
         nprops: #[]
-        loop query db ~{!sql SELECT property,value FROM properties WHERE node='|nid|'} [prop][
-            set nprops first prop get prop 1
+
+        loop results [row][
+            set nprops get row 1 get row 2
         ]
 
         return #[
             id: nid
-            tag: ntag
+            tag: first first results
             properties: nprops
         ]
     ]
@@ -670,7 +682,7 @@ graph: function [path, body][
         ; inspect qr
         ; print qr
         
-        got: map query db join.with:" " qr 'x [getNode first x]
+        got: map query db join.with:" " qr 'x [nodeFromId first x]
 
         return got
     ]
@@ -692,7 +704,7 @@ graph: function [path, body][
     ; for graph visualization
     ;--------------------------
 
-    getNodes: function [nodeset][
+    nodeFromIds: function [nodeset][
         clean: new nodeset
 
         edz: new []
@@ -705,8 +717,8 @@ graph: function [path, body][
             rezu: query db qr
             loop rezu [rez][
                 appendable: ø
-                if? (get nd 'id) <> get rez 0 -> appendable: getNode get rez 0
-                else -> appendable: getNode get rez 1
+                if? (get nd 'id) <> get rez 0 -> appendable: nodeFromId get rez 0
+                else -> appendable: nodeFromId get rez 1
 
                 append 'clean appendable
                 addColorForNodeType appendable
@@ -756,7 +768,7 @@ graph: function [path, body][
             currentNodes: new @[nodeset]
         ]
 
-        currentDataset: new getNodes currentNodes
+        currentDataset: new nodeFromIds currentNodes
 
         serve.chrome #[
             "/"     : [
@@ -766,14 +778,14 @@ graph: function [path, body][
 
             "/exec" : [
                 currentNodes: new do command
-                currentDataset: new getNodes currentNodes
+                currentDataset: new nodeFromIds currentNodes
                 write.json ø currentDataset
             ]
 
-            "/getnode": [
-                ; append 'currentNodes getNode ndid
-                ; currentDataset: new getNodes currentNodes
-                newNodes: new getNodes @[getNode ndid]
+            "/nodeFromId": [
+                ; append 'currentNodes nodeFromId ndid
+                ; currentDataset: new nodeFromIds currentNodes
+                newNodes: new nodeFromIds @[nodeFromId ndid]
                 write.json ø newNodes
             ]
 
