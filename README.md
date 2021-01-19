@@ -17,8 +17,9 @@
 * [At A Glance](#at-a-glance)
 * [Try Grafito](#try-grafito)
     * [Docker](#docker)
-    * [As a Library](#as-a-library)
-    * [As a Standalone tool](#as-a-standalone-tool)
+    * [Installation](#installation)
+        * [As a Library](#as-a-library)
+        * [As a Standalone tool](#as-a-standalone-tool)
 * [How To](#how-to)
     * [Create a simple Node](#create-a-simple-node)
     * [Create Relationships between Nodes](#create-relationships-between-nodes)
@@ -138,23 +139,29 @@ or, if you want to run a specific script:
 docker run -it -v $(pwd):/home arturolang/grafito <yourscript>
 ```
 
-### As a Library
+### Installation
 
-After having installed the latest version of [Arturo](https://github.com/arturo-lang/arturo), clone this repo
-and simply go to the folder via your terminal.
+To install local, first you have to have installed the latest version of [Arturo](https://github.com/arturo-lang/arturo).
 
-Then, run one of the examples:
+Then, just clone this repo and simply go to the folder via your terminal.
+
+
+#### As a Library
+
+After having installed the latest version of Arturo, you can use Grafito from any Arturo script as a library.
+
+For example, here's how you run one of the included examples:
 
 ```
 arturo examples/sample3.art
 ```
 
-### As a Standalone tool
+#### As a Standalone tool
 
-Or, fire up the interactive console:
+Of course, you can also run Grafito as a tool on it own:
 
 ```
-./grafito.art
+./grafito.art <database>
 ```
 
 (If you pass a name, it will use it as your database file. If not, the database will be in-memory)
@@ -169,7 +176,7 @@ And you can see your lightweight graph engine in action!
 
 ```
 graph.create "mygraph" [
-	put 'person #[name: "John" sex: 'm]
+	put'person [name: "John" sex: 'm]
 ]
 ```
 
@@ -177,8 +184,8 @@ graph.create "mygraph" [
 
 ```
 graph.create "mygraph" [
-	john: put 'person #[name: "John" sex: 'm]
-	joan: put 'person #[name: "Joan" sex: 'f]
+	john: put'person [name: "John" sex: 'm]
+	joan: put'person [name: "Joan" sex: 'f]
 
 	link 'marriedTo john joan
 ]
@@ -188,7 +195,7 @@ graph.create "mygraph" [
 
 ```
 graph "mygraph" [
-	inspect what 'person #[name: "Joan"] #[]
+	inspect what'person [name: "Joan"]
 ]
 ```
 
@@ -197,7 +204,7 @@ graph "mygraph" [
 
 ```
 graph "mygraph" [
-	unput what'person #[name: "John"] ø
+	unput what'person [name: "John"]
 ]
 ```
 
@@ -205,8 +212,8 @@ graph "mygraph" [
 
 ```
 graph "mygraph" [
-	unlink'marriedTo what'person #[name: "John"] ø
-                     what'person #[name: "Joan"] ø
+	unlink'marriedTo what'person [name: "John"]
+                     what'person [name: "Joan"]
 ]
 ```
 
@@ -214,8 +221,9 @@ graph "mygraph" [
 
 ```
 graph "mygraph" [
-	inspect fetch 'person #[sex: "m"] #[
-		marriedTo: what 'person #[name: "Joan"] #[]
+	inspect fetch'person [
+		sex: "m"
+		marriedTo: what 'person [name: "Joan"]
 	]
 ]
 ```
@@ -227,7 +235,7 @@ graph "mygraph" [
 	fetch'person [
 		surname:"Doe"
 		age: -> greater: 30
-	] ø
+	]
 ]
 ```
 
@@ -235,7 +243,7 @@ graph "mygraph" [
 
 ```
 graph "mygraph" [
-	preview fetch 'person ø ø
+	preview fetch 'person ø
 ]
 ```
 
@@ -361,8 +369,7 @@ Get the first node of given type, that satisfies all of given properties and rel
 
 <pre>
 <b>what</b> <ins>type</ins> <i>:literal</i>
-     <ins>properties</ins> <i>:dictionary</i> <i>:null</i>
-     <ins>relationships</ins> <i>:dictionary</i> <i>:null</i>
+     <ins>properties</ins> <i>:block</i> <i>:dictionary</i> <i>:null</i>
 </pre>
 
 #### Returns
@@ -372,7 +379,7 @@ Get the first node of given type, that satisfies all of given properties and rel
 #### Examples
 
 ```red
-print what 'person #[name: "John"] #[]
+print what 'person [name: "John"]
 ```
 
 ### fetch
@@ -385,8 +392,7 @@ Get all nodes of given type, that satisfy all of given properties and relationsh
 
 <pre>
 <b>fetch</b> <ins>type</ins> <i>:literal</i>
-      <ins>properties</ins> <i>:dictionary</i> <i>:null</i>
-      <ins>relationships</ins> <i>:dictionary</i> <i>:null</i>
+      <ins>properties</ins> <i>:block</i> <i>:dictionary</i> <i>:null</i>
 </pre>
 
 #### Returns
@@ -396,8 +402,11 @@ Get all nodes of given type, that satisfy all of given properties and relationsh
 #### Examples
 
 ```red
-print fetch 'person #[surname: "Doe"] #[]
-print fetch 'person #[surname: "Doe"] #[marriedTo: what'person #[name: "Mary"]#[]]
+print fetch 'person [surname: "Doe"]
+print fetch 'person [
+	surname: "Doe"
+	marriedTo: what'person [name: "Mary"]
+]
 ```
 
 ### preview
@@ -415,7 +424,7 @@ Preview given array of nodes in Desktop app.
 #### Examples
 
 ```red
-preview fetch 'person #[surname: "Doe"] #[]
+preview fetch 'person [surname: "Doe"]
 ```
 
 ## Filter Reference
@@ -426,7 +435,7 @@ When querying - e.g. with `fetch` or `what` - you can search for results, not on
 fetch'person [
 	surname: "Doe" 	; here, we are looking for an exact match
 			; that is: people with the surname Doe
-] ø
+]
 ```
 
 ```red
@@ -435,12 +444,12 @@ fetch'person [
 		contains: "D"	; here, we are using the 'contains filter
 			        ; that is: people whose surname contains the letter D
 	]
-] ø
+]
 ```
 
 (The above, using Arturo's powerful syntax, could also be written like: 
 ```red
-fetch'person [ surname: -> contains: "D" ] ø
+fetch'person [ surname: -> contains: "D" ]
 ```
 
 ### contains
