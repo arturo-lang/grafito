@@ -565,6 +565,8 @@ graph: function [path, body][
 
         append 'qr ~{!sql WHERE nodes.tag='|name|'}
 
+        props: new []
+
         if ø <> att [
             if 0 < size att [
                 loop att [k,v][
@@ -596,7 +598,17 @@ graph: function [path, body][
                         ]
                     ]
 
-                    append 'qr ~{!sql AND properties.property='|k|' AND properties.value |symb| |val|}
+                    append 'props ~{!sql (properties.property='|k|' AND properties.value |symb| |val|)} 
+                ]
+
+                if? 1 = size props [
+                    append 'qr ~"AND |first props|"
+                ]
+                else [
+                    append 'qr "GROUP BY nodes.id"
+                    append 'qr "HAVING COUNT( CASE WHEN"
+                    append 'qr join.with:" OR " props
+                    append 'qr ~"THEN 1 END ) = |size props|"
                 ]
             ]
         ]
@@ -611,6 +623,7 @@ graph: function [path, body][
         append 'qr ~{!sql COLLATE NOCASE}
 
         ; inspect qr
+        ; print qr
         
         got: map query db join.with:" " qr 'x [getNode first x]
 
