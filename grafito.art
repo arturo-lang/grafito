@@ -544,36 +544,50 @@ graph: function [path, body][
     ; and edges
     ;--------------------------
 
-    fetch: function [name,attributes,rels][
+    fetch: function [name,attributes][
+        catchAny?: false
+        if? not? null? attribute "any" ->
+            catchAny?: true
+
         qr: new [{!sql SELECT nodes.id FROM nodes }]
 
-        att: attributes
+        att: new attributes
 
         if and? not? dictionary? att 
                 not? null? att ->
             att: #att
 
-        if ø <> att [
-            if 0 < size att ->
-                append 'qr {!sql INNER JOIN properties ON properties.node=nodes.id}
-        ]
+        ;; HACK - to solve
+        remove.key 'att 'n
+        remove.key 'att 'a
+        ;;inspect att
 
-        if ø <> rels [
-            if 0 < size rels ->
-                append 'qr {!sql INNER JOIN edges ON edges.source=nodes.id}
-        ]
+        hasPropertyFilters?: false
+        hasEdgeFilters?: false
 
-        append 'qr ~{!sql WHERE nodes.tag='|name|'}
+        criteria: new []
 
-        props: new []
+        if not? empty? att [
+            loop att [k,v][
+                case [equal? type v]
+                    when? [:null][
+                        ; it's an edge filter without criteria
+                        hasEdgeFilters?: true
+                        append 'criteria ~{!sql (edges.tag='|k|')}
+                    ]
+                    when? [:dictionary][
+                        ; it's an edge filter
+                        hasEdgeFilters?: true
+                        append 'criteria ~{!sql (edges.tag='|k|' AND edges.target='|v\id|')}
+                    ]
+                    when? [:block][
+                        ; it's a complex property filter
+                        hasPropertyFilters?: true
 
-        if ø <> att [
-            if 0 < size att [
-                loop att [k,v][
-                    symb: "="
-                    val: ~"'|v|'"
-                    if block? v [
                         loop #v [filt,arg][
+                            symb: "="
+                            val: ~"'|v|'"
+
                             case [equal? filt]
                                 when? ["contains"]          [symb: "LIKE"   val: ~"'%|arg|%'"]
                                 when? ["prefix"]            [symb: "LIKE"   val: ~"'|arg|%'"]
@@ -595,28 +609,55 @@ graph: function [path, body][
                                 else [
                                     panic.code: 1 ~"filter: |filt| not recognized"
                                 ]
+
+                            append 'criteria ~{!sql (properties.property='|k|' AND properties.value |symb| |val|)} 
                         ]
                     ]
-
-                    append 'props ~{!sql (properties.property='|k|' AND properties.value |symb| |val|)} 
-                ]
-
-                if? 1 = size props [
-                    append 'qr ~"AND |first props|"
-                ]
-                else [
-                    append 'qr "GROUP BY nodes.id"
-                    append 'qr "HAVING COUNT( CASE WHEN"
-                    append 'qr join.with:" OR " props
-                    append 'qr ~"THEN 1 END ) = |size props|"
-                ]
+                    when? [:boolean][
+                        ; it's a simple property filter without criteria
+                        hasPropertyFilters?: true
+                        append 'criteria ~{!sql (properties.property='|k|')} 
+                    ]
+                    else [
+                        ; it's a simple property filter
+                        hasPropertyFilters?: true
+                        append 'criteria ~{!sql (properties.property='|k|' AND properties.value='|v|')} 
+                    ]
             ]
         ]
 
-        if ø <> rels [
-            if 0 < size rels [
-                loop rels [k,v]->
-                    append 'qr ~{!sql AND edges.tag='|k|' AND edges.target='|v\id|'}
+        if hasPropertyFilters? ->
+            append 'qr {!sql INNER JOIN properties ON properties.node=nodes.id}
+
+        if hasEdgeFilters? ->
+            append 'qr {!sql INNER JOIN edges ON edges.source=nodes.id}
+
+        append 'qr ~{!sql WHERE nodes.tag='|name|'}
+
+        if not? empty? criteria [
+            if? 1 = size criteria [
+                append 'qr ~"AND |first criteria|"
+            ]
+            else [
+                append 'qr "GROUP BY nodes.id"
+                append 'qr "HAVING COUNT( CASE WHEN"
+                append 'qr join.with:" OR " criteria
+
+                expected: size criteria
+
+                if? and? hasPropertyFilters?
+                        hasEdgeFilters? [
+                    expected: 2*expected
+                ]
+                
+                if? catchAny? [
+                    expected: " >= 1"
+                ]
+                else [
+                    expected: ~" = |expected|"
+                ]
+
+                append 'qr ~"THEN 1 END ) |expected|"
             ]
         ]
 
@@ -636,9 +677,9 @@ graph: function [path, body][
     ; and edges
     ;--------------------------
 
-    what: function [n,a,r][
-        got: fetch n a r
-        if? 0 < size got -> first got
+    what: function [n,a][
+        allresults: fetch n a
+        if? 0 < size allresults -> first allresults
         else -> ø
     ]
 
