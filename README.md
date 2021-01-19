@@ -60,25 +60,34 @@ do.import {grafito.art}
 
 do [
     graph.create "sample4" [
+        ;---------------------------------------------
+        ; Populate the database
+        ;---------------------------------------------
+
         uk: put'country [name: "United Kingdom"]
         au: put'country [name: "Australia"]
         us: put'country [name: "United States"] 
         ca: put'country [name: "Canada"]
 
-        nolan: put'person [name: "Christopher Nolan" birthday: 1970 sex: "m"]
-        pearce: put'person [name: "Guy Pearce" birthday: 1967 sex: "m"]
-        hanson: put'person [name: "Curtis Hanson" birthday: 1945 sex: "m"]
-        spacey: put'person [name: "Kevin Spacey" birthday: 1959 sex: "m"]
+        nolan:    put'person [name: "Christopher Nolan" birthday: 1970 sex: "m"]
+        pearce:   put'person [name: "Guy Pearce" birthday: 1967 sex: "m"]
+        hanson:   put'person [name: "Curtis Hanson" birthday: 1945 sex: "m"]
+        spacey:   put'person [name: "Kevin Spacey" birthday: 1959 sex: "m"]
         dicaprio: put'person [name: "Leonardo DiCaprio" birthday: 1974 sex: "m"]
-        moss: put'person [name: "Carrie-Ann Moss" birthday: 1967 sex: "f"]
+        moss:     put'person [name: "Carrie-Ann Moss" birthday: 1967 sex: "f"]
 
         wach1: put'person [name: "Lana Wachowski" birthday: 1965 sex: "f"]
         wach2: put'person [name: "Lilly Wachowski" birthday: 1967 sex: "f"]
 
-        memento: put'movie [title: "Memento" year: 2000]
-        inception: put'movie [title: "Inception" year: 2010]
-        laconfidential: put'movie [title: "L.A. Confidential" year: 1997]
-        matrix: put'movie [title: "The Matrix" year: 1999]
+        memento:         put'movie [title: "Memento" year: 2000]
+        inception:       put'movie [title: "Inception" year: 2010]
+        laconfidential:  put'movie [title: "L.A. Confidential" year: 1997]
+        matrix:          put'movie [title: "The Matrix" year: 1999]
+
+        ;---------------------------------------------
+        ; Define the relationships
+        ; between our nodes
+        ;---------------------------------------------
 
         link'isFrom nolan uk
         link'isFrom pearce au
@@ -88,10 +97,16 @@ do [
         link'directed nolan @[memento inception]
         link'directed hanson laconfidential
         link'directed @[wach1 wach2] matrix
+
         link'actedIn pearce @[memento laconfidential]
         link'actedIn spacey laconfidential
         link'actedIn dicaprio inception
         link'actedIn moss @[memento matrix]
+
+        ;---------------------------------------------
+        ; Fetch every "person" &
+        ; open the Desktop app for visualization
+        ;---------------------------------------------
         
         preview fetch 'person ø
     ]
