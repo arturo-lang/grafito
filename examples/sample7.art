@@ -5,9 +5,11 @@ do [
         put'country [name: "United States"]
         put'country [name: "Australia"]
 
-        put'person [name: "John" surname: "Doe" age: 34 country: "United States"]
-        put'person [name: "Jane" surname: "doe" age: 24 country: "United States"]
+        john: put'person [name: "John" surname: "Doe" age: 34 country: "United States"]
+        jane: put'person [name: "Jane" surname: "doe" age: 24 country: "United States"]
         put'person [name: "Bill" surname: "Jones" age: 44 country: "Australia"]
+
+        link'marriedTo john jane
 
         ; let's find all the people who are 
         ; more than 30 years old
