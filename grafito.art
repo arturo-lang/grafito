@@ -458,7 +458,7 @@ graph: function [path, body][
 
         results: query db qr
         
-        if empty? results -> return ø
+        if empty? results [ return ø ]
 
         nprops: #[]
 
