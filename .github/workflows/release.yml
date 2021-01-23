@@ -37,7 +37,7 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@main
         with:
-          path: grafito
+          path: grafitorepo
           submodules: recursive
 
       - name: Install Nim
@@ -62,11 +62,11 @@ jobs:
 
       - name: Package Grafito
         run: |
-          ./package grafito/grafito.art
+          ./package grafitorepo/grafito.art
 
       - name: Create artifact
         run: |
-          install -m 0755 ./grafito/grafito .
+          install -m 0755 ./grafitorepo/grafito .
           tar czf grafito-${{runner.os}}.tar.gz grafito README.md LICENSE
 
       - name: Upload Artifact
