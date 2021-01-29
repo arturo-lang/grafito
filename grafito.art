@@ -769,19 +769,19 @@ graph: function [path, body][
 
         currentDataset: new nodeFromIds currentNodes
 
-        serve.chrome #[
-            "/"     : [
+        serve.chrome #.raw[
+            "/"             [
                 dataset: write.json ø currentDataset
                 ~app
             ]
 
-            "/exec" : [
+            "/exec"         [
                 currentNodes: new do command
                 currentDataset: new nodeFromIds currentNodes
                 write.json ø currentDataset
             ]
 
-            "/nodeFromId": [
+            "/nodeFromId"   [
                 ; append 'currentNodes nodeFromId ndid
                 ; currentDataset: new nodeFromIds currentNodes
                 newNodes: new nodeFromIds @[nodeFromId ndid]
