@@ -373,7 +373,7 @@ graph: function [path, body][
     ;--------------------------
     
     put: function [name,attributes][
-        if not? null? attribute "unique" [
+        if not? null? attr "unique" [
             found: what name attributes #[]
             if not? null? found -> return found
         ]
@@ -424,14 +424,12 @@ graph: function [path, body][
     edge: function [src, name, tgt][
         edgeId: query.id db ~{!sql INSERT INTO edges (tag,source,target,direction) VALUES ('|name|','|src\id|','|tgt\id|',1)}
 
-        rezt: #[
+        #[
             id: edgeId
             tag: name
             source: src
             target: tgt
         ]
-
-        return rezt
     ]
 
     ;
@@ -458,8 +456,10 @@ graph: function [path, body][
 
         results: query db qr
         
-        if empty? results [ return ø ]
-
+        if empty? results [ 
+            return ø 
+        ]
+        
         nprops: #[]
 
         loop results [row][
@@ -482,16 +482,15 @@ graph: function [path, body][
 
         if? :dictionary = type tgt [
             edges: []
-            if? :dictionary = type src [
+            if :dictionary = type src [
                 ret: edge src name tgt
                 return ret
             ]
-            else [
-                loop src [s] [
-                    append 'edges edge s name tgt
-                ]
+
+            loop src [s] [
+                append 'edges edge s name tgt
             ]
-            
+        
             if verbose? -> printDebug ~"created |size edges| edges"
 
             return edges
@@ -562,7 +561,7 @@ graph: function [path, body][
 
     fetch: function [name,attributes][
         catchAny?: false
-        if? not? null? attribute "any" ->
+        if? not? null? attr "any" ->
             catchAny?: true
 
         qr: new [{!sql SELECT nodes.id FROM nodes }]
@@ -807,7 +806,7 @@ graph: function [path, body][
     ;; INITIALIZATION
     ;;==========================================
 
-    verbose?: not? null? attribute "verbose"
+    verbose?: not? null? attr "verbose"
 
     dbPath: ""
     cleanpath: "in-memory"
@@ -827,7 +826,7 @@ graph: function [path, body][
 
     ; and initialize it
     ; with the given schema (if necessary)
-    if? or? not? null? attribute "create"
+    if? or? not? null? attr "create"
             not? dbExisted [
         printDebug "creating database from scratch"
         query db schema
@@ -892,7 +891,7 @@ if standalone? [
         print orange "## Launching Grafito console - rock on! 🤘"
         print ""
 
-        while [true] [
+        while [true] .import [
             push null
             Got: null
 
@@ -913,7 +912,6 @@ if standalone? [
             if StackSize > 0 	-> Got: pop 1 
             if Got <> null 		-> print color.gray ~"=> |Got|"
 
-            globalize
             print ""
         ]
     ]
