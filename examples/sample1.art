@@ -43,7 +43,7 @@ do [
 
 do [
 	graph "sample1" [
-		preview fetch 'person #[] #[]
+		preview fetch 'person #[]
 	]
 ]
 
