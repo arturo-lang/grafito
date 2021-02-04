@@ -10,7 +10,7 @@
 
 <p align="center"><img width="90%" align="center" src="https://raw.githubusercontent.com/arturo-lang/grafito/master/screenshot.png"/></p>
 
----
+--- 
 
 <!--ts-->
 
