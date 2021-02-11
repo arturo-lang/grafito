@@ -68,7 +68,7 @@ graph: function [path, body][
         <html lang="en">
             <head>
                 <meta charset="UTF-8">
-                <title>Grafito @ |cleanpath|</title>
+                <title>Grafito @ <|cleanpath|></title>
                 <link rel="preconnect" href="https://fonts.gstatic.com">
                 <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
                 <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
