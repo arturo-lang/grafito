@@ -3,9 +3,9 @@
 <p align="center">
   <b>Portable, Serverless & Lightweight<br>SQLite-based Graph Database</b>
   <br><br>
-  <img src="https://img.shields.io/github/license/arturo-lang/grafito?style=flat-square">
-  <img src="https://img.shields.io/badge/language-Arturo-orange.svg?style=flat-square">
-  <img src="https://img.shields.io/github/workflow/status/arturo-lang/grafito/Run%20Tests?style=flat-square">
+  <img src="https://img.shields.io/github/license/arturo-lang/grafito?style=for-the-badge">
+  <img src="https://img.shields.io/badge/language-Arturo-orange.svg?style=for-the-badge">
+  <img src="https://img.shields.io/github/workflow/status/arturo-lang/grafito/Run%20Tests?style=for-the-badge">
 </p>
 
 <p align="center"><img width="90%" align="center" src="https://raw.githubusercontent.com/arturo-lang/grafito/master/screenshot.png"/></p>
