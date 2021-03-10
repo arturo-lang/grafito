@@ -68,7 +68,7 @@ graph: function [path, body][
         <html lang="en">
             <head>
                 <meta charset="UTF-8">
-                <title>Grafito @ <|cleanpath|></title>
+                <title>Grafito @ <|=cleanpath|></title>
                 <link rel="preconnect" href="https://fonts.gstatic.com">
                 <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
                 <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
@@ -868,7 +868,7 @@ if standalone? [
     ]
 
     GrafitoHeader: join @[
-        print color.magenta append append append ---
+        print color.magenta append append append {:
                    __ _ _        
                   / _(_) |       
    __ _ _ __ __ _| |_ _| |_ ___  
@@ -876,7 +876,7 @@ if standalone? [
  | (_| | | | (_| | | | | || (_) |
   \__, |_|  \__,_|_| |_|\__\___/ 
    __/ |--- color.white "               (c) 2021" color.magenta ---                         
-  |___/--- color.white "       Yanis Zafirópulos"
+  |___/:} color.white "       Yanis Zafirópulos"
         print "  "
         color.gray "-----------------------------------" BR
         color.gray ~"  system: v/|Versions\engine|, engine: v/|Versions\sqlite|" BR
