@@ -1,0 +1,228 @@
+;---------------------------------------------
+; Import Grafito
+; and ... let's rock'n'roll! :)
+;---------------------------------------------
+do.import {grafito.art}
+
+do [
+    ;---------------------------------------------
+    ; Set up a new graph environment
+    ; with a local database named "sample4"
+    ;---------------------------------------------
+    graph.create "sample9" [
+
+        ArithmeticObj: put'modl [name: "Arithmetic"]
+        arraysObj: put'modl [name: "arrays"]
+        arturoObj: put'modl [name: "arturo"]
+        benchmarkObj: put'modl [name: "benchmark"]
+        bignumObj: put'modl [name: "bignum"]
+        BinaryObj: put'modl [name: "Binary"]
+        bytecodeObj: put'modl [name: "bytecode"]
+        CollectionsObj: put'modl [name: "Collections"]
+        ComparisonObj: put'modl [name: "Comparison"]
+        ConvertersObj: put'modl [name: "Converters"]
+        CoreObj: put'modl [name: "Core"]
+        CryptoObj: put'modl [name: "Crypto"]
+        csvObj: put'modl [name: "csv"]
+        databaseObj: put'modl [name: "database"]
+        DatabasesObj: put'modl [name: "Databases"]
+        datasourceObj: put'modl [name: "datasource"]
+        DatesObj: put'modl [name: "Dates"]
+        debugObj: put'modl [name: "debug"]
+        envObj: put'modl [name: "env"]
+        errorsObj: put'modl [name: "errors"]
+        evalObj: put'modl [name: "eval"]
+        execObj: put'modl [name: "exec"]
+        ffiObj: put'modl [name: "ffi"]
+        FilesObj: put'modl [name: "Files"]
+        globalsObj: put'modl [name: "globals"]
+        helperObj: put'modl [name: "helper"]
+        htmlObj: put'modl [name: "html"]
+        IoObj: put'modl [name: "Io"]
+        IteratorsObj: put'modl [name: "Iterators"]
+        jsonobjectObj: put'modl [name: "jsonobject"]
+        libObj: put'modl [name: "lib"]
+        LogicObj: put'modl [name: "Logic"]
+        markdownObj: put'modl [name: "markdown"]
+        mathsObj: put'modl [name: "maths"]
+        md4cObj: put'modl [name: "md4c"]
+        minizObj: put'modl [name: "miniz"]
+        NetObj: put'modl [name: "Net"]
+        NumbersObj: put'modl [name: "Numbers"]
+        parseObj: put'modl [name: "parse"]
+        pathObj: put'modl [name: "path"]
+        PathsObj: put'modl [name: "Paths"]
+        ReflectionObj: put'modl [name: "Reflection"]
+        replObj: put'modl [name: "repl"]
+        SetsObj: put'modl [name: "Sets"]
+        stackObj: put'modl [name: "stack"]
+        stringsObj: put'modl [name: "strings"]
+        StringsObj: put'modl [name: "Strings"]
+        SystemObj: put'modl [name: "System"]
+        templatesObj: put'modl [name: "templates"]
+        tomlObj: put'modl [name: "toml"]
+        UiObj: put'modl [name: "Ui"]
+        unisortObj: put'modl [name: "unisort"]
+        urlObj: put'modl [name: "url"]
+        valueObj: put'modl [name: "value"]
+        versionObj: put'modl [name: "version"]
+        vmObj: put'modl [name: "vm"]
+        webviewObj: put'modl [name: "webview"]
+        link'rel valueObj bignumObj
+        link'rel errorsObj stringsObj
+        link'rel valueObj errorsObj
+        link'rel envObj valueObj
+        link'rel evalObj debugObj
+        link'rel globalsObj errorsObj
+        link'rel globalsObj valueObj
+        link'rel bytecodeObj globalsObj
+        link'rel bytecodeObj valueObj
+        link'rel evalObj bytecodeObj
+        link'rel evalObj globalsObj
+        link'rel evalObj valueObj
+        link'rel parseObj errorsObj
+        link'rel parseObj valueObj
+        link'rel stackObj valueObj
+        link'rel execObj bytecodeObj
+        link'rel execObj errorsObj
+        link'rel execObj evalObj
+        link'rel execObj globalsObj
+        link'rel execObj parseObj
+        link'rel execObj stackObj
+        link'rel execObj valueObj
+        link'rel vmObj envObj
+        link'rel vmObj errorsObj
+        link'rel vmObj evalObj
+        link'rel vmObj execObj
+        link'rel vmObj globalsObj
+        link'rel vmObj parseObj
+        link'rel vmObj stackObj
+        link'rel vmObj valueObj
+        link'rel vmObj versionObj
+        link'rel libObj globalsObj
+        link'rel libObj errorsObj
+        link'rel libObj stackObj
+        link'rel libObj valueObj
+        link'rel ArithmeticObj libObj
+        link'rel vmObj ArithmeticObj
+        link'rel BinaryObj libObj
+        link'rel vmObj BinaryObj
+        link'rel arraysObj valueObj
+        link'rel CollectionsObj arraysObj
+        link'rel unisortObj valueObj
+        link'rel CollectionsObj unisortObj
+        link'rel CollectionsObj libObj
+        link'rel vmObj CollectionsObj
+        link'rel ComparisonObj libObj
+        link'rel vmObj ComparisonObj
+        link'rel ConvertersObj bignumObj
+        link'rel urlObj valueObj
+        link'rel datasourceObj urlObj
+        link'rel ConvertersObj datasourceObj
+        link'rel ConvertersObj stringsObj
+        link'rel ConvertersObj libObj
+        link'rel ConvertersObj errorsObj
+        link'rel ConvertersObj execObj
+        link'rel ConvertersObj parseObj
+        link'rel vmObj ConvertersObj
+        link'rel CoreObj datasourceObj
+        link'rel ffiObj errorsObj
+        link'rel ffiObj valueObj
+        link'rel CoreObj ffiObj
+        link'rel CoreObj libObj
+        link'rel CoreObj envObj
+        link'rel CoreObj errorsObj
+        link'rel CoreObj evalObj
+        link'rel CoreObj execObj
+        link'rel CoreObj parseObj
+        link'rel vmObj CoreObj
+        link'rel CryptoObj libObj
+        link'rel vmObj CryptoObj
+        link'rel databaseObj valueObj
+        link'rel DatabasesObj databaseObj
+        link'rel DatabasesObj libObj
+        link'rel vmObj DatabasesObj
+        link'rel DatesObj libObj
+        link'rel vmObj DatesObj
+        link'rel htmlObj valueObj
+        ; link'rel markdownObj md4cObj
+        ; link'rel markdownObj valueObj
+        ; link'rel tomlObj valueObj
+        ; link'rel FilesObj minizObj
+        ; link'rel FilesObj htmlObj
+        ; link'rel FilesObj markdownObj
+        ; link'rel FilesObj tomlObj
+        ; link'rel csvObj valueObj
+        ; link'rel FilesObj csvObj
+        ; link'rel FilesObj datasourceObj
+        ; link'rel jsonobjectObj valueObj
+        ; link'rel FilesObj jsonobjectObj
+        ; link'rel FilesObj libObj
+        ; link'rel vmObj FilesObj
+        ; link'rel replObj valueObj
+        ; link'rel IoObj replObj
+        ; link'rel IoObj libObj
+        ; link'rel IoObj evalObj
+        ; link'rel IoObj execObj
+        ; link'rel vmObj IoObj
+        ; link'rel IteratorsObj libObj
+        ; link'rel IteratorsObj errorsObj
+        ; link'rel IteratorsObj evalObj
+        ; link'rel IteratorsObj execObj
+        ; link'rel vmObj IteratorsObj
+        ; link'rel LogicObj libObj
+        ; link'rel LogicObj execObj
+        ; link'rel vmObj LogicObj
+        ; link'rel NetObj webviewObj
+        ; link'rel NetObj libObj
+        ; link'rel NetObj envObj
+        ; link'rel NetObj execObj
+        ; link'rel vmObj NetObj
+        ; link'rel NumbersObj bignumObj
+        ; link'rel mathsObj bignumObj
+        ; link'rel mathsObj valueObj
+        ; link'rel NumbersObj mathsObj
+        ; link'rel NumbersObj libObj
+        ; link'rel vmObj NumbersObj
+        ; link'rel pathObj valueObj
+        ; link'rel PathsObj pathObj
+        ; link'rel PathsObj urlObj
+        ; link'rel PathsObj libObj
+        ; link'rel PathsObj envObj
+        ; link'rel vmObj PathsObj
+        ; link'rel ReflectionObj benchmarkObj
+        ; link'rel helperObj globalsObj
+        ; link'rel helperObj valueObj
+        ; link'rel ReflectionObj helperObj
+        ; link'rel ReflectionObj libObj
+        ; link'rel ReflectionObj envObj
+        ; link'rel ReflectionObj execObj
+        ; link'rel vmObj ReflectionObj
+        ; link'rel SetsObj libObj
+        ; link'rel vmObj SetsObj
+        ; link'rel StringsObj stringsObj
+        ; link'rel templatesObj execObj
+        ; link'rel templatesObj parseObj
+        ; link'rel templatesObj stackObj
+        ; link'rel templatesObj valueObj
+        ; link'rel StringsObj templatesObj
+        ; link'rel StringsObj libObj
+        ; link'rel vmObj StringsObj
+        ; link'rel SystemObj libObj
+        ; link'rel SystemObj errorsObj
+        ; link'rel SystemObj execObj
+        ; link'rel vmObj SystemObj
+        ; link'rel UiObj libObj
+        ; link'rel UiObj jsonobjectObj
+        ; link'rel UiObj urlObj
+        ; link'rel UiObj webviewObj
+        ; link'rel UiObj envObj
+        ; link'rel UiObj execObj
+        ;link'rel vmObj UiObj
+        ;link'rel arturoObj versionObj
+        link'rel arturoObj valueObj
+        link'rel arturoObj vmObj
+                
+        preview fetch 'modl ø
+    ]
+]
