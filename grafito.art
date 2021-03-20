@@ -373,8 +373,8 @@ graph: function [path, body][
     ;--------------------------
     
     put: function [name,attributes][
-        if not? null? attr "unique" [
-            found: what name attributes #[]
+        if attr "unique" [
+            found: what name attributes
             if not? null? found -> return found
         ]
 
@@ -768,7 +768,7 @@ graph: function [path, body][
         ]
 
         currentDataset: new nodeFromIds currentNodes
-
+        
         serve.chrome #.raw[
             "/"             [
                 dataset: write.json ø currentDataset
