@@ -1,43 +1,35 @@
 name: "Release"
-
 on:
   push:
     tags:
       - 'v*.*.*'
-
 env:
-  app-name: arturo
+  app-name: grafito
 
 defaults:
   run:
     shell: bash -l {0}
 
-jobs:
+jobs:  
   package:
-    name: "Package"
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
           - ubuntu-latest
           - macos-latest
-
+        version:
+          - full
     steps:
       - name: "Cancel similar actions in progress"
         uses: styfle/cancel-workflow-action@0.6.0
         with:
           access_token: ${{ github.token }}
 
-      - name: "Checkout Arturo"
+      - name: "Get Arturo"
         uses: actions/checkout@main
         with:
           repository: arturo-lang/arturo
-          submodules: recursive
-
-      - name: "Checkout"
-        uses: actions/checkout@main
-        with:
-          path: grafitorepo
           submodules: recursive
 
       - name: Install Nim
@@ -50,42 +42,42 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install libwebkit2gtk-4.0-dev
-
+          
       - name: Verify dependecies
         run: |
           nim --version
 
-      - name: Build Arturo
+      - name: "Checkout"
+        uses: actions/checkout@main
+        with:
+          submodules: recursive
+          path: "grafito"
+          
+      - name: Package binary
         run: |
-          ./install log
-          echo "$HOME/.arturo/bin" >> $GITHUB_PATH
-
-      - name: Package Grafito
-        run: |
-          ./package grafitorepo/grafito.art
+          mv grafito/grafito.art grafito.art
+          rm -rf grafito
+          ./package grafito.art
+          ls -la
 
       - name: Create artifact
         run: |
-          install -m 0755 ./grafitorepo/grafito .
-          tar czf grafito-${{runner.os}}.tar.gz grafito README.md LICENSE
+          install -m 0755 ./grafito .
+          tar czf ${{ env.app-name }}-${{runner.os}}.tar.gz ${{ env.app-name }} README.md LICENSE
 
       - name: Upload Artifact
         uses: 'actions/upload-artifact@v1'
         with:
-          name: grafito-${{runner.os}}.tar.gz
-          path: grafito-${{runner.os}}.tar.gz
+          name: ${{ env.app-name }}-${{runner.os}}.tar.gz
+          path: ${{ env.app-name }}-${{runner.os}}.tar.gz
 
   upload:
     name: "Upload"
     runs-on: ubuntu-latest
     if: ${{ always() }}
-    needs: [package]
+    needs: 
+      - package
     steps:
-      - name: "Cancel similar actions in progress"
-        uses: styfle/cancel-workflow-action@0.6.0
-        with:
-          access_token: ${{ github.token }}
-
       - uses: actions/download-artifact@v2
         with:
           path: ./assets
@@ -102,6 +94,7 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
           body: |
+            Official Release
             ${{ github.ref }}
           draft: false
           prerelease: false
@@ -114,4 +107,3 @@ jobs:
         with:
           release_id: ${{ steps.create-release.outputs.id }}
           assets_path: ./assets
-          

@@ -1,16 +1,13 @@
-name: "Run Tests"
+name: "Build & Test"
 on:
   push:
-    paths-ignore:
-      - '*.gif'
-      - '*.png'
-      - '*.yml'
-      - '*.md'
-      - 'LICENSE'
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
   pull_request:
     paths-ignore:
-      - '*.gif'
-      - '*.png'
+      - 'docs/*'
       - '*.yml'
       - '*.md'
       - 'LICENSE'
@@ -21,23 +18,52 @@ defaults:
 
 jobs:  
   build:
-    name: "Check"
-    runs-on: ubuntu-latest
+    name: "Build & Test"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+        version:
+          - full
     steps:
       - name: "Cancel similar actions in progress"
         uses: styfle/cancel-workflow-action@0.6.0
         with:
           access_token: ${{ github.token }}
 
+      - name: "Get Arturo"
+        uses: actions/checkout@main
+        with:
+          repository: arturo-lang/arturo
+          submodules: recursive
+
+      - name: Install Nim
+        run: |
+          wget -qO - https://nim-lang.org/choosenim/init.sh | bash -s -- -y
+          echo "$HOME/.nimble/bin" >> $GITHUB_PATH
+
+      - name: Install dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install libwebkit2gtk-4.0-dev
+          
+      - name: Verify dependecies
+        run: |
+          nim --version
+          
+      - name: Build Arturo
+        run: |
+          ./install ${{ matrix.version }} log
+          echo "$HOME/.arturo/bin" >> $GITHUB_PATH
+
       - name: "Checkout"
         uses: actions/checkout@main
         with:
           submodules: recursive
 
-      - name: "Setup Arturo"
+      - name: Run unit tests
         run: |
-          docker pull arturolang/arturo
-
-      - name: Run Tests
-        run: |
-          docker run -i -v $(pwd):/home arturolang/arturo tests/test1.art
+          echo "${{ github.workspace }}/bin" >> $GITHUB_PATH
+          arturo tests/test1.art
