@@ -4,24 +4,22 @@
 ;
 ; SQLite-based Graph Database
 ; in Arturo
-;
-; @file: grafito.art
-; @author: drkameleon
+;------------------------------------------
+;; name: grafito
+;; version: 0.2.6
+;; author: drkameleon
+;; category: database
 ;==========================================
-
-Grafito: #[
-    version: "0.2.5"
-] 
 
 ;--------------------------
 ; The main library
 ;--------------------------
 
-graph: function [path, body][
+graph: function [dbpath, body][
 
-    ;;==========================================
-    ;; CONSTANTS
-    ;;==========================================
+    ;==========================================
+    ; CONSTANTS
+    ;==========================================
 
     ; The initial database schema
     ; for SQLite
@@ -340,9 +338,9 @@ graph: function [path, body][
         'teal 'yellowgreen
     ]
 
-    ;;==========================================
-    ;; METHODS
-    ;;==========================================
+    ;==========================================
+    ; METHODS
+    ;==========================================
 
     ;
     ; Print message
@@ -572,10 +570,10 @@ graph: function [path, body][
                 not? null? att ->
             att: #att
 
-        ;; HACK - to solve
+        ; HACK - to solve
         remove.key 'att 'n
         remove.key 'att 'a
-        ;;inspect att
+        ;inspect att
 
         hasPropertyFilters?: false
         hasEdgeFilters?: false
@@ -802,9 +800,9 @@ graph: function [path, body][
         verbose?: not? verbose?
     ]
 
-    ;;==========================================
-    ;; INITIALIZATION
-    ;;==========================================
+    ;==========================================
+    ; INITIALIZATION
+    ;==========================================
 
     verbose?: not? null? attr "verbose"
 
@@ -812,8 +810,8 @@ graph: function [path, body][
     cleanpath: "in-memory"
     dbExisted: false
 
-    if? not? null? path [
-        cleanpath: extract.filename path
+    if? not? null? dbpath [
+        cleanpath: extract.filename dbpath
         dbPath: ~"|cleanpath|.db"
         dbExisted: exists? ~"|cleanpath|.db"
     ]
@@ -838,13 +836,13 @@ graph: function [path, body][
         printDebug "using existing database"
     ]
 
-    ;; process body
+    ; process body
     result: do body
 
-    ;; close the database
+    ; close the database
     close db
 
-    ;; and that was it :)
+    ; and that was it :)
     return result
 ]
 
@@ -854,11 +852,11 @@ graph: function [path, body][
 
 if standalone? [
 
-    ;; helpers & templates
+    ; helpers & templates
 
     Versions: #[
-        sqlite: first split.by:" " execute "sqlite3 --version"
-        engine: Grafito\version
+        sqlite: to :version first split.by:" " execute "sqlite3 --version"
+        engine: script\version
     ]
 
     BR: "\n"
@@ -875,7 +873,7 @@ if standalone? [
   / _` | '__/ _` |  _| | __/ _ \ 
  | (_| | | | (_| | | | | || (_) |
   \__, |_|  \__,_|_| |_|\__\___/ 
-   __/ |--- color.white "               (c) 2021" color.magenta ---                         
+   __/ |:} color.white "               (c) 2021" color.magenta {:
   |___/:} color.white "       Yanis Zafirópulos"
         print "  "
         color.gray "-----------------------------------" BR
@@ -883,40 +881,52 @@ if standalone? [
         color.gray "-----------------------------------" BR
     ]
 
-    ;; methods
+    ; methods
 
     launchTerminal: function [][
+        completions: ["what" "fetch" "put" "unput" "link" "unlink" "edge" "unedge"]
+        historyPath: join.path @[path\home ".arturo" "grafito-history.lst"]
+
         print ""
         print orange "## Tip: Type `verbose` to switch info messages on/off"
         print orange "## Launching Grafito console - rock on! 🤘"
         print ""
 
         while [true] .import [
-            push null
+            ;push null
             Got: null
 
-            indent: ""
+            indentation: ""
             
-            inp: input "$> " 
+            inp: input .repl
+                    .history: historyPath 
+                    .complete: completions
+                    "$> " 
+
             while [suffix? inp " "][
                 if suffix? strip inp "[" [
-                    indent: indent ++ "\t"
+                    indentation: indentation ++ "\t"
                 ]
-                inp: inp ++ input ".. " ++ indent
+                inp: inp ++ input ".. " ++ indentation
             ]
-            
-            do.import inp
-            
-            StackSize: size stack
 
-            if StackSize > 0 	-> Got: pop 1 
-            if Got <> null 		-> print color.gray ~"=> |Got|"
+            try?.verbose.import [
+                try.verbose.import to :block inp
 
-            print ""
+                StackSize: size stack
+                
+                if StackSize > 0 		-> Got: pop 1
+                if Got <> null 			-> print color.gray ~"=> |Got|"
+
+                print ""
+            ]
+            else [
+                print ""
+            ]
         ]
     ]
 
-    ;; startup
+    ; startup
 
     print GrafitoHeader
 
