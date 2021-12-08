@@ -54,7 +54,7 @@
 
 ## At A Glance
 
-I know you really don't care about long explanations and want to have a look at working code right away, so... here you are (this is the code the creates the graph in the image above):
+I know you really don't care about long explanations and want to have a look at working code right away, so... here you are (this is the code that creates the graph in the image above):
 
 ```red
 ;---------------------------------------------
