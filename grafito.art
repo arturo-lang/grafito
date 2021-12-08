@@ -348,7 +348,7 @@ graph: function [dbpath, body][
     ;--------------------------
 
     printDebug: function [msg][
-        print color.cyan ":: " ++ msg
+        print color #cyan ":: " ++ msg
     ]
 
     ;
@@ -861,24 +861,20 @@ if standalone? [
 
     BR: "\n"
 
-    orange: $[x][
-        color.rgb:208 x
-    ]
-
     GrafitoHeader: join @[
-        print color.magenta append append append {:
+        print color #magenta append append append {:
                    __ _ _        
                   / _(_) |       
    __ _ _ __ __ _| |_ _| |_ ___  
   / _` | '__/ _` |  _| | __/ _ \ 
  | (_| | | | (_| | | | | || (_) |
   \__, |_|  \__,_|_| |_|\__\___/ 
-   __/ |:} color.white "               (c) 2021" color.magenta {:
-  |___/:} color.white "       Yanis Zafirópulos"
+   __/ |:} color #white "               (c) 2021" color #magenta {:
+  |___/:} color #white "       Yanis Zafirópulos"
         print "  "
-        color.gray "-----------------------------------" BR
-        color.gray ~"  system: v/|Versions\engine|, engine: v/|Versions\sqlite|" BR
-        color.gray "-----------------------------------" BR
+        color #gray "-----------------------------------" BR
+        color #gray ~"  system: v/|Versions\engine|, engine: v/|Versions\sqlite|" BR
+        color #gray "-----------------------------------" BR
     ]
 
     ; methods
@@ -887,9 +883,8 @@ if standalone? [
         completions: ["what" "fetch" "put" "unput" "link" "unlink" "edge" "unedge"]
         historyPath: join.path @[path\home ".arturo" "grafito-history.lst"]
 
-        print ""
-        print orange "## Tip: Type `verbose` to switch info messages on/off"
-        print orange "## Launching Grafito console - rock on! 🤘"
+        print color #orange "## Tip: Type `verbose` to switch info messages on/off"
+        print color #orange "## Launching Grafito console - rock on! 🤘"
         print ""
 
         while [true] .import [
@@ -916,7 +911,7 @@ if standalone? [
                 StackSize: size stack
                 
                 if StackSize > 0 		-> Got: pop 1
-                if Got <> null 			-> print color.gray ~"=> |Got|"
+                if Got <> null 			-> print color #gray ~"=> |Got|"
 
                 print ""
             ]
