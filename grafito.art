@@ -797,7 +797,7 @@ graph: function [dbpath, body][
     ; Switch verbosity on/off
     ;--------------------------
 
-    verbose: function .export:[verbose?] [][
+    verbose: function [] .export:[verbose?] [
         verbose?: not? verbose?
     ]
 
@@ -883,6 +883,7 @@ if standalone? [
         completions: ["what" "fetch" "put" "unput" "link" "unlink" "edge" "unedge"]
         historyPath: join.path @[path\home ".arturo" "grafito-history.lst"]
 
+        print ""
         print color #orange "## Tip: Type `verbose` to switch info messages on/off"
         print color #orange "## Launching Grafito console - rock on! 🤘"
         print ""
