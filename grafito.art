@@ -738,16 +738,20 @@ graph: function [dbpath, body][
                 ON edges.source=nodes.id
             }
 
-        append 'qr ~{!sql WHERE nodes.tag='|name|'}
+        append 'qr ~{!sql 
+            WHERE nodes.tag='|name|'
+        }
 
         if not? empty? criteria [
             if? 1 = size criteria [
-                append 'qr ~"AND |first criteria|"
+                append 'qr ~{!sql
+                    AND |first criteria|
+                }
             ]
             else [
-                append 'qr "GROUP BY nodes.id"
-                append 'qr "HAVING COUNT( CASE WHEN"
-                append 'qr join.with:" OR " criteria
+                append 'qr "\nGROUP BY nodes.id"
+                append 'qr "\nHAVING COUNT( CASE WHEN"
+                append 'qr "\n" ++ join.with:" OR " criteria
 
                 expected: size criteria
 
