@@ -69,6 +69,16 @@ do [
         ; Fetch every "person" &
         ; open the Desktop app for visualization
         ;---------------------------------------------
+
+        ; person? [
+        ;     isFrom: first country? -> name: "United States" 
+        ;     name: -> contains: "d"
+        ; ] ; returns DiCaprio
+
+        ; person? [
+        ;     isFrom: country? "United States" 
+        ;     name: -> contains: "d"
+        ; ] ; should return DiCaprio
         
         preview fetch 'person ø
     ]
