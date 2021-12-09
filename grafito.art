@@ -774,12 +774,10 @@ graph: function [dbpath, body][
     ;--------------------------
 
     preview: function [nodeset][
-        
         currentNodes: new nodeset
-
         currentDataset: new nodeFromIds currentNodes
         
-        serve.verbose #.raw[
+        routes: #.raw[
             "/"             [
                 dataset: write.json ø currentDataset
                 render.template app
@@ -801,6 +799,13 @@ graph: function [dbpath, body][
             ; "/exit": [
             ;     return ø
             ; ]
+        ]
+
+        if? null? attr 'server [
+            serve.chrome routes
+        ]
+        else [
+            serve.verbose routes
         ]
     ]
 
