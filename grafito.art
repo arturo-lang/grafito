@@ -363,12 +363,12 @@ graph: function [dbpath, body][
     ;--------------------------
 
     addColorForNodeType: function [nn][
-        if not? key? nodeConfig get nn 'tag [
+        if not? key? nodeConfig nn\tag [
             cl: sample colori
             remove 'colori cl
-            set nodeConfig get nn 'tag #[
+            set nodeConfig nn\tag #[
                 color: cl
-                label: get keys get nn 'properties 0
+                label: get keys nn\properties 0
             ]
         ]
     ]
@@ -468,7 +468,7 @@ graph: function [dbpath, body][
         nprops: #[]
 
         loop results [row][
-            set nprops get row 1 get row 2
+            set nprops row\1 row\2
         ]
 
         return #[
@@ -555,7 +555,7 @@ graph: function [dbpath, body][
     ;--------------------------
     
     isA?: function [ls,nd][
-        (to :string ls) = get nd "tag"
+        nd\tag = to :string ls
     ]
 
     ;
@@ -721,12 +721,12 @@ graph: function [dbpath, body][
             rezu: query db qr
             loop rezu [rez][
                 appendable: ø
-                if? (get nd 'id) <> get rez 0 -> appendable: nodeFromId get rez 0
-                else -> appendable: nodeFromId get rez 1
+                if? nd\id <> rez\0 -> appendable: nodeFromId rez\0
+                else -> appendable: nodeFromId rez\1
 
                 append 'clean appendable
                 addColorForNodeType appendable
-                append 'edz @[@[get rez 0 get rez 1 get rez 2]]
+                append 'edz @[@[rez\0 rez\1 rez\2]]
             ]
             clean: unique clean
         ]
@@ -734,12 +734,16 @@ graph: function [dbpath, body][
         elements: new []
 
         loop clean [nd][
+            t: nd\tag
+            props: nd\properties
+            nconf: nodeConfig\[t]
+            
             append 'elements #[
-                id: to :integer get nd 'id
-                tag: get nd 'tag
-                label: get get nd 'properties get get nodeConfig get nd 'tag 'label
-                properties: get nd'properties
-                color: get get nodeConfig get nd 'tag 'color
+                id: to :integer nd\id
+                tag: t
+                properties: props
+                label: get props nconf\label
+                color: nconf\color
             ]
         ]
 
@@ -747,10 +751,10 @@ graph: function [dbpath, body][
 
         loop edz [ed][
             append 'relations #[ 
-                id: ~"|get ed 0|+|get ed 1|"
-                from: to :integer get ed 0
-                to: to :integer get ed 1
-                label: get ed 2
+                id: ~"|ed\0|+|ed\1|"
+                from: to :integer ed\0
+                to: to :integer ed\1
+                label: ed\2
             ]
         ]
 
