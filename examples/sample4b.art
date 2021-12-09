@@ -70,15 +70,19 @@ do [
         ; open the Desktop app for visualization
         ;---------------------------------------------
 
-        ; person? [
-        ;     isFrom: first country? -> name: "United States" 
-        ;     name: -> contains: "d"
+        ; person? [isFrom: first country? -> name: "United States" name: -> contains: "d"
         ; ] ; returns DiCaprio
 
         ; person? [
         ;     isFrom: country? "United States" 
         ;     name: -> contains: "d"
         ; ] ; should return DiCaprio
+
+        ; pythonic (potentially)
+        ; person? 
+        ;     isFrom: country? 
+        ;         name: 
+        ;             contains: "United"
         
         preview fetch 'person ø
     ]
