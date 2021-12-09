@@ -303,15 +303,24 @@ graph: function [dbpath, body][
                     commandInput.addEventListener("keydown", function (e) {
                         if (e.keyCode === 13) {  //checks whether the pressed key is "Enter"
                             $.post( "/exec", {command: $("#command").val()}, function( data ) {
-                                console.log("got:", data); 
-                                try {
-                                    j = JSON.parse(data);
-                                    redrawGraph(j);
+                                if (data!="empty"){
+                                    console.log("got:", data); 
+                                    if (data=="error"){
+                                        alert("Internal error!");
+                                    }
+                                    else {
+                                        try {
+                                            j = JSON.parse(data);
+                                            redrawGraph(j);
+                                        }
+                                        catch (e) {
+                                            alert(e);
+                                        }
+                                    }
                                 }
-                                catch (e) {
-                                    alert(e);
+                                else {
+                                    alert("Done! :)");
                                 }
-                                   
                             });
                         }
                     });
@@ -797,9 +806,22 @@ graph: function [dbpath, body][
             ]
 
             "/exec"         [
-                currentNodes: new do command
-                currentDataset: new nodeFromIds currentNodes
-                write.json ø currentDataset
+                try? [
+                    currentNodes: new do command
+
+                    if? or? [not? block? currentNodes]
+                            [and? [0 < size currentNodes][not? dictionary? first currentNodes]][
+                        "empty"
+                    ]
+                    else [
+                        inspect currentNodes
+                        currentDataset: new nodeFromIds currentNodes
+                        write.json ø currentDataset
+                    ]
+                ]
+                else [
+                    "error"
+                ]
             ]
 
             "/nodeFromId"   [
