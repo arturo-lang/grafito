@@ -83,6 +83,17 @@ do [
         ;     isFrom: country? 
         ;         name: 
         ;             contains: "United"
+
+        ; person? [
+        ;     isFrom: country? [
+        ;         name: [
+        ;             contains: "United"
+        ;         ]
+        ;     ] 
+        ;     name: [
+        ;         contains: "w"
+        ;     ]
+        ; ]
         
         preview fetch 'person ø
     ]
