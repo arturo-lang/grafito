@@ -16,6 +16,8 @@
 ; The main library
 ;--------------------------
 
+Debug: true
+
 graph: function [dbpath, body][
 
     ;==========================================
@@ -359,6 +361,25 @@ graph: function [dbpath, body][
     ;==========================================
 
     ;
+    ; Perform query
+    ;--------------------------
+
+    performQuery: function [qu][
+        if and? [Debug][null? attr 'noDebug] [
+            dstr: ""
+            if? block? qu [
+                dstr: join.with: ";\n    " qu
+            ]
+            else [
+                dstr: join.with:"\n    " split.lines qu
+            ]
+            if not? empty? strip dstr ->
+                print color #gray "==> " ++ dstr
+        ]
+        query db qu
+    ]
+
+    ;
     ; Print message
     ;--------------------------
 
@@ -403,7 +424,7 @@ graph: function [dbpath, body][
             append 'queries ~{!sql INSERT INTO properties (node,property,value) VALUES (|nodeId|,'|k|','|v|')}
         ]
 
-        query db queries
+        performQuery queries
 
         if verbose? [
             if? 1 = size att -> printDebug ~"created 1 node (@|nodeId|) with 1 property"
@@ -428,7 +449,7 @@ graph: function [dbpath, body][
         append 'qr ~{!sql DELETE FROM properties WHERE node='|nd\id|'}
         append 'qr ~{!sql DELETE FROM edges WHERE source='|nd\id|' OR target='|nd\id|'}
 
-        query db qr
+        performQuery qr
     ]
 
     ;
@@ -451,7 +472,7 @@ graph: function [dbpath, body][
     ;--------------------------
 
     unedge: function [src, name, tgt][
-        query db ~{!sql DELETE FROM edges WHERE source='|src\id|' AND target='|tgt\id|'}
+        performQuery ~{!sql DELETE FROM edges WHERE source='|src\id|' AND target='|tgt\id|'}
     ]
 
     ;
@@ -468,7 +489,7 @@ graph: function [dbpath, body][
             WHERE nodes.id='|nid|'
         }
 
-        results: query db qr
+        results: performQuery qr
         
         if empty? results [ 
             return ø 
@@ -704,11 +725,8 @@ graph: function [dbpath, body][
         ]
 
         append 'qr ~{!sql COLLATE NOCASE}
-
-        ; inspect qr
-        print qr
         
-        got: map query db join.with:" " qr 'x [nodeFromId first x]
+        got: map performQuery join.with:" " qr 'x [nodeFromId first x]
 
         return got
     ]
@@ -745,7 +763,7 @@ graph: function [dbpath, body][
 
             qr: ~{!sql SELECT source,target,tag FROM edges WHERE source='|nd\id|' OR target='|nd\id|'}
 
-            rezu: query db qr
+            rezu: performQuery qr
             loop rezu [rez][
                 appendable: ø
                 if? nd\id <> rez\0 -> appendable: nodeFromId rez\0
@@ -814,7 +832,6 @@ graph: function [dbpath, body][
                         "empty"
                     ]
                     else [
-                        inspect currentNodes
                         currentDataset: new nodeFromIds currentNodes
                         write.json ø currentDataset
                     ]
@@ -879,7 +896,7 @@ graph: function [dbpath, body][
     if? or? not? null? attr "create"
             not? dbExisted [
         printDebug "creating database from scratch"
-        query db schema
+        performQuery.noDebug schema
         put'meta #[
             version: script\version
         ]
