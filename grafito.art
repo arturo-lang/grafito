@@ -811,7 +811,7 @@ graph: function [dbpath, body][
     cleanpath: "in-memory"
     dbExisted: false
 
-    if? not? null? dbpath [
+    if not? null? dbpath [
         cleanpath: extract.filename dbpath
         dbPath: ~"|cleanpath|.db"
         dbExisted: exists? ~"|cleanpath|.db"
@@ -889,8 +889,7 @@ if standalone? [
         print color #orange "## Launching Grafito console - rock on! 🤘"
         print ""
 
-        while [true] .import [
-            ;push null
+        while ø .import [
             Got: null
 
             indentation: ""
