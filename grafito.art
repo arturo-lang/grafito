@@ -805,7 +805,7 @@ graph: function [dbpath, body][
     ; INITIALIZATION
     ;==========================================
 
-    verbose?: not? null? attr "verbose"
+    verbose?: not? null? attr 'verbose
 
     dbPath: ""
     cleanpath: "in-memory"
@@ -830,8 +830,9 @@ graph: function [dbpath, body][
         printDebug "creating database from scratch"
         query db schema
         put'meta #[
-            version: get Grafito 'version
+            version: script\version
         ]
+        pop.discard 1
     ] 
     else [
         printDebug "using existing database"
