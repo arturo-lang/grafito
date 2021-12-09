@@ -708,7 +708,12 @@ graph: function [dbpath, body][
     ; for graph visualization
     ;--------------------------
 
-    nodeFromIds: function [nodeset][
+    nodeFromIds: function [nodes][
+        nodeset: new nodes
+        if not? block? nodeset [
+            nodeset: new @[nodeset]
+        ]
+
         clean: new nodeset
 
         edz: new []
@@ -771,10 +776,6 @@ graph: function [dbpath, body][
     preview: function [nodeset][
         
         currentNodes: new nodeset
-
-        if not? block? nodeset [
-            currentNodes: new @[nodeset]
-        ]
 
         currentDataset: new nodeFromIds currentNodes
         
