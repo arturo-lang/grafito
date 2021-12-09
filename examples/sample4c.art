@@ -1,0 +1,80 @@
+;---------------------------------------------
+; Import Grafito
+; and ... let's rock'n'roll! :)
+;---------------------------------------------
+do.import {grafito.art}
+
+do [
+    ;---------------------------------------------
+    ; Set up a new graph environment
+    ; with a local database named "sample4"
+    ;---------------------------------------------
+    graph.create "sample4b" [
+        ;---------------------
+        ; HELPERS
+        ;---------------------
+
+        generateHelper: function [id,block][
+            if? not? null? attr 'new [
+                put id block
+            ]
+            else [
+                fetch id block
+            ]
+        ]
+        
+        country: function [block] -> generateHelper 'country block
+        person: function [block] -> generateHelper 'person block
+        movie: function [block] -> generateHelper 'movie block
+        
+        ;---------------------------------------------
+        ; Populate the database
+        ;---------------------------------------------
+
+        uk: country.new [name: "United Kingdom"]
+        au: country.new [name: "Australia"]
+        us: country.new [name: "United States"] 
+        ca: country.new [name: "Canada"]
+
+        nolan:    person.new [name: "Christopher Nolan" birthday: 1970 sex: "m"]
+        pearce:   person.new [name: "Guy Pearce" birthday: 1967 sex: "m"]
+        hanson:   person.new [name: "Curtis Hanson" birthday: 1945 sex: "m"]
+        spacey:   person.new [name: "Kevin Spacey" birthday: 1959 sex: "m"]
+        dicaprio: person.new [name: "Leonardo DiCaprio" birthday: 1974 sex: "m"]
+        moss:     person.new [name: "Carrie-Ann Moss" birthday: 1967 sex: "f"]
+
+        wach1: person.new [name: "Lana Wachowski" birthday: 1965 sex: "f"]
+        wach2: person.new [name: "Lilly Wachowski" birthday: 1967 sex: "f"]
+
+        memento:         movie.new [title: "Memento" year: 2000]
+        inception:       movie.new [title: "Inception" year: 2010]
+        laconfidential:  movie.new [title: "L.A. Confidential" year: 1997]
+        matrix:          movie.new [title: "The Matrix" year: 1999]
+
+        ;---------------------------------------------
+        ; Define the relationships
+        ; between our nodes
+        ;---------------------------------------------
+
+        link'isFrom nolan uk
+        link'isFrom pearce au
+        link'isFrom @[hanson spacey dicaprio wach1 wach2] us
+        link'isFrom moss ca
+
+        link'directed nolan @[memento inception]
+        link'directed hanson laconfidential
+        link'directed @[wach1 wach2] matrix
+
+        link'actedIn pearce @[memento laconfidential]
+        link'actedIn spacey laconfidential
+        link'actedIn dicaprio inception
+        link'actedIn moss @[memento matrix]
+
+        ;---------------------------------------------
+        ; Fetch every "person" &
+        ; open the Desktop app for visualization
+        ;---------------------------------------------
+        
+        preview fetch 'person ø
+    ]
+]
