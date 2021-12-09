@@ -304,7 +304,13 @@ graph: function [dbpath, body][
                         if (e.keyCode === 13) {  //checks whether the pressed key is "Enter"
                             $.post( "/exec", {command: $("#command").val()}, function( data ) {
                                 console.log("got:", data); 
-                                redrawGraph(JSON.parse(data));
+                                try {
+                                    j = JSON.parse(data);
+                                    redrawGraph(j);
+                                }
+                                catch (e) {
+                                    alert(e);
+                                }
                                    
                             });
                         }
@@ -768,7 +774,7 @@ graph: function [dbpath, body][
 
         currentDataset: new nodeFromIds currentNodes
         
-        serve.chrome #.raw[
+        serve.verbose #.raw[
             "/"             [
                 dataset: write.json ø currentDataset
                 render.template app
@@ -787,9 +793,9 @@ graph: function [dbpath, body][
                 write.json ø newNodes
             ]
 
-            "/exit": [
-                return ø
-            ]
+            ; "/exit": [
+            ;     return ø
+            ; ]
         ]
     ]
 
