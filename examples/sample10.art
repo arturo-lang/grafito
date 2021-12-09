@@ -9,9 +9,6 @@ do [
         j: put 'person [name: "John" age: 35]
         n: put 'person [name: "Jane" age: 41]
         link 'likes j n
-
-        inspect j
-
         preview fetch 'person ø
     ]
 ]
