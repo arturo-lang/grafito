@@ -1,0 +1,75 @@
+;---------------------------------------------
+; Import Grafito
+; and ... let's rock'n'roll! :)
+;---------------------------------------------
+do.import {grafito.art}
+
+do [
+    ;---------------------------------------------
+    ; Set up a new graph environment
+    ; with a local database named "sample4"
+    ;---------------------------------------------
+    graph.create "sample4b" [
+        ;---------------------
+        ; HELPERS
+        ;---------------------
+        
+        country: function [block] -> put 'country block
+        person: function [block] -> put 'person block
+        movie: function [block] -> put 'movie block
+
+        country?: function [block] -> fetch 'country block
+        person?: function [block] -> fetch 'person block
+        movie?: function [block] -> fetch 'movie block
+
+        ;---------------------------------------------
+        ; Populate the database
+        ;---------------------------------------------
+
+        uk: country [name: "United Kingdom"]
+        au: country [name: "Australia"]
+        us: country [name: "United States"] 
+        ca: country [name: "Canada"]
+
+        nolan:    person [name: "Christopher Nolan" birthday: 1970 sex: "m"]
+        pearce:   person [name: "Guy Pearce" birthday: 1967 sex: "m"]
+        hanson:   person [name: "Curtis Hanson" birthday: 1945 sex: "m"]
+        spacey:   person [name: "Kevin Spacey" birthday: 1959 sex: "m"]
+        dicaprio: person [name: "Leonardo DiCaprio" birthday: 1974 sex: "m"]
+        moss:     person [name: "Carrie-Ann Moss" birthday: 1967 sex: "f"]
+
+        wach1: person [name: "Lana Wachowski" birthday: 1965 sex: "f"]
+        wach2: person [name: "Lilly Wachowski" birthday: 1967 sex: "f"]
+
+        memento:         movie [title: "Memento" year: 2000]
+        inception:       movie [title: "Inception" year: 2010]
+        laconfidential:  movie [title: "L.A. Confidential" year: 1997]
+        matrix:          movie [title: "The Matrix" year: 1999]
+
+        ;---------------------------------------------
+        ; Define the relationships
+        ; between our nodes
+        ;---------------------------------------------
+
+        link'isFrom nolan uk
+        link'isFrom pearce au
+        link'isFrom @[hanson spacey dicaprio wach1 wach2] us
+        link'isFrom moss ca
+
+        link'directed nolan @[memento inception]
+        link'directed hanson laconfidential
+        link'directed @[wach1 wach2] matrix
+
+        link'actedIn pearce @[memento laconfidential]
+        link'actedIn spacey laconfidential
+        link'actedIn dicaprio inception
+        link'actedIn moss @[memento matrix]
+
+        ;---------------------------------------------
+        ; Fetch every "person" &
+        ; open the Desktop app for visualization
+        ;---------------------------------------------
+        
+        preview fetch 'person ø
+    ]
+]
