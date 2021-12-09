@@ -601,36 +601,49 @@ graph: function [dbpath, body][
                         append 'criteria ~{!sql (edges.tag='|k|' AND edges.target='|v\id|')}
                     ]
                     when? [:block][
-                        ; it's a complex property filter
-                        hasPropertyFilters?: true
+                        if? and? 0 < size v 
+                                 :dictionary = type first v [
+                            ; it's an array of edge filters
+                            hasEdgeFilters?: true
+                            orCriteria: new []
+                            loop v [edgef][
+                                'orCriteria ++ ~{!sql (edges.tag='|k|' AND edges.target='|edgef\id|')}
+                            ]
+                            append 'criteria "(" ++ (join.with:" OR " orCriteria) ++ ")"
+                        ]
+                        else [
+                            ; it's a complex property filter
+                            hasPropertyFilters?: true
 
-                        loop #v [filt,arg][
-                            symb: "="
-                            val: ~"'|v|'"
+                            loop #v [filt,arg][
 
-                            case [equal? filt]
-                                when? ["contains"]          [symb: "LIKE"   val: ~"'%|arg|%'"]
-                                when? ["prefix"]            [symb: "LIKE"   val: ~"'|arg|%'"]
-                                when? ["suffix"]            [symb: "LIKE"   val: ~"'%|arg|'"]
-                                when? ["less"]              [symb: "<"      val: arg]
-                                when? ["greater"]           [symb: ">"      val: arg]
-                                when? ["lessOrEqual"]       [symb: "<="     val: arg]
-                                when? ["greaterOrEqual"]    [symb: ">="     val: arg]
-                                when? ["not"]               [     
-                                    if? block? arg [
-                                        symb: "NOT IN" val: ~{(|join.with:", " map arg [x]["'" ++ (to :string x) ++ "'"]|)}
+                                symb: "="
+                                val: ~"'|v|'"
+
+                                case [equal? filt]
+                                    when? ["contains"]          [symb: "LIKE"   val: ~"'%|arg|%'"]
+                                    when? ["prefix"]            [symb: "LIKE"   val: ~"'|arg|%'"]
+                                    when? ["suffix"]            [symb: "LIKE"   val: ~"'%|arg|'"]
+                                    when? ["less"]              [symb: "<"      val: arg]
+                                    when? ["greater"]           [symb: ">"      val: arg]
+                                    when? ["lessOrEqual"]       [symb: "<="     val: arg]
+                                    when? ["greaterOrEqual"]    [symb: ">="     val: arg]
+                                    when? ["not"]               [     
+                                        if? block? arg [
+                                            symb: "NOT IN" val: ~{(|join.with:", " map arg [x]["'" ++ (to :string x) ++ "'"]|)}
+                                        ]
+                                        else [
+                                            symb: "!="
+                                            val: ~"'|arg|'"
+                                        ]   
                                     ]
+                                    when? ["in"]                [symb: "IN"     val: ~{(|join.with:", " map arg [x]["'" ++ (to :string x) ++ "'"]|)}]
                                     else [
-                                        symb: "!="
-                                        val: ~"'|arg|'"
-                                    ]   
-                                ]
-                                when? ["in"]                [symb: "IN"     val: ~{(|join.with:", " map arg [x]["'" ++ (to :string x) ++ "'"]|)}]
-                                else [
-                                    panic.code: 1 ~"filter: |filt| not recognized"
-                                ]
+                                        panic.code: 1 ~"filter: |filt| not recognized"
+                                    ]
 
-                            append 'criteria ~{!sql (properties.property='|k|' AND properties.value |symb| |val|)} 
+                                append 'criteria ~{!sql (properties.property='|k|' AND properties.value |symb| |val|)} 
+                            ]
                         ]
                     ]
                     when? [:boolean][
@@ -684,7 +697,7 @@ graph: function [dbpath, body][
         append 'qr ~{!sql COLLATE NOCASE}
 
         ; inspect qr
-        ; print qr
+        print qr
         
         got: map query db join.with:" " qr 'x [nodeFromId first x]
 
