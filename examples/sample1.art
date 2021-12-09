@@ -24,27 +24,29 @@ do [
 
 do [
 	benchmark [
-		graph "sample1" [
+		graph.verbose "sample1" [
 
 			print "getting first person named Joan..."
 			joan: what'person [s: "Joan"]
 			inspect joan
 
 			print "getting all male people married to Joan..."
-			husband: what 'person [marriedTo: joan]
+			husband: what 'person [sex: 'm marriedTo: joan]
 			inspect husband
 
-			inspect fetch 'person [
-				marriedTo: what 'person [s: "Joan"]
-			]
+			; inspect fetch 'person [
+			; 	marriedTo: what 'person [s: "Joan"]
+			; ]
+
+			preview fetch 'person ø
 		]
 	]
 ]
 
-do [
-	graph "sample1" [
-		preview fetch 'person #[]
-	]
-]
+; do [
+; 	graph "sample1" [
+; 		preview fetch 'person ø
+; 	]
+; ]
 
 ; execute ~"dot -Tpng sample.dot -o sample.png"
