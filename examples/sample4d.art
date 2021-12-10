@@ -1,0 +1,100 @@
+;---------------------------------------------
+; Import Grafito
+; and ... let's rock'n'roll! :)
+;---------------------------------------------
+do.import {grafito.art}
+
+do [
+    ;---------------------------------------------
+    ; Set up a new graph environment
+    ; with a local database named "sample4"
+    ;---------------------------------------------
+    graph.create "sample4b" [
+        ;---------------------
+        ; HELPERS
+        ;---------------------
+        
+        newCountry: function [block] -> put 'country block
+        newPerson: function [block] -> put 'person block
+        newMovie: function [block] -> put 'movie block
+
+        country: function [block] -> fetch 'country block
+        person: function [block] -> fetch 'person block
+        movie: function [block] -> fetch 'movie block
+
+        ;---------------------------------------------
+        ; Populate the database
+        ;---------------------------------------------
+
+        uk: newCountry [name: "United Kingdom"]
+        au: newCountry [name: "Australia"]
+        us: newCountry [name: "United States"] 
+        ca: newCountry [name: "Canada"]
+
+        nolan:    newPerson [name: "Christopher Nolan" birthday: 1970 sex: "m"]
+        pearce:   newPerson [name: "Guy Pearce" birthday: 1967 sex: "m"]
+        hanson:   newPerson [name: "Curtis Hanson" birthday: 1945 sex: "m"]
+        spacey:   newPerson [name: "Kevin Spacey" birthday: 1959 sex: "m"]
+        dicaprio: newPerson [name: "Leonardo DiCaprio" birthday: 1974 sex: "m"]
+        moss:     newPerson [name: "Carrie-Ann Moss" birthday: 1967 sex: "f"]
+
+        wach1: newPerson [name: "Lana Wachowski" birthday: 1965 sex: "f"]
+        wach2: newPerson [name: "Lilly Wachowski" birthday: 1967 sex: "f"]
+
+        memento:         newMovie [title: "Memento" year: 2000]
+        inception:       newMovie [title: "Inception" year: 2010]
+        laconfidential:  newMovie [title: "L.A. Confidential" year: 1997]
+        matrix:          newMovie [title: "The Matrix" year: 1999]
+
+        ;---------------------------------------------
+        ; Define the relationships
+        ; between our nodes
+        ;---------------------------------------------
+
+        link'isFrom nolan uk
+        link'isFrom pearce au
+        link'isFrom @[hanson spacey dicaprio wach1 wach2] us
+        link'isFrom moss ca
+
+        link'directed nolan @[memento inception]
+        link'directed hanson laconfidential
+        link'directed @[wach1 wach2] matrix
+
+        link'actedIn pearce @[memento laconfidential]
+        link'actedIn spacey laconfidential
+        link'actedIn dicaprio inception
+        link'actedIn moss @[memento matrix]
+
+        ;---------------------------------------------
+        ; Fetch every "person" &
+        ; open the Desktop app for visualization
+        ;---------------------------------------------
+
+        ; person? [isFrom: first country? -> name: "United States" name: -> contains: "d"
+        ; ] ; returns DiCaprio
+
+        ; person? [
+        ;     isFrom: country? "United States" 
+        ;     name: -> contains: "d"
+        ; ] ; should return DiCaprio
+
+        ; pythonic (potentially)
+        ; person? 
+        ;     isFrom: country? 
+        ;         name: 
+        ;             contains: "United"
+
+        ; person? [
+        ;     isFrom: country? [
+        ;         name: [
+        ;             contains: "United"
+        ;         ]
+        ;     ] 
+        ;     name: [
+        ;         contains: "w"
+        ;     ]
+        ; ]
+        
+        preview person ø
+    ]
+]
