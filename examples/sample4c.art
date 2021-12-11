@@ -9,7 +9,7 @@ do [
     ; Set up a new graph environment
     ; with a local database named "sample4"
     ;---------------------------------------------
-    graph.create "sample4b" [
+    graph.create "sample4c" [
         ;---------------------
         ; HELPERS
         ;---------------------
@@ -42,6 +42,9 @@ do [
         spacey:   person.new [name: "Kevin Spacey" birthday: 1959 sex: "m"]
         dicaprio: person.new [name: "Leonardo DiCaprio" birthday: 1974 sex: "m"]
         moss:     person.new [name: "Carrie-Ann Moss" birthday: 1967 sex: "f"]
+        kidman:   person.new [name: "Nicole Kidman" birthday: 1967 sex: "f"]
+        cruise:   person.new [name: "Tom Cruise" birthday: 1962 sex: "m"]
+        kubrick:  person.new [name: "Stanley Kubrick" birthday: 1928 sex: "m"]
 
         wach1: person.new [name: "Lana Wachowski" birthday: 1965 sex: "f"]
         wach2: person.new [name: "Lilly Wachowski" birthday: 1967 sex: "f"]
@@ -50,6 +53,7 @@ do [
         inception:       movie.new [title: "Inception" year: 2010]
         laconfidential:  movie.new [title: "L.A. Confidential" year: 1997]
         matrix:          movie.new [title: "The Matrix" year: 1999]
+        eyes:            movie.new [title: "Eyes Wide Shut" year: 1999]
 
         ;---------------------------------------------
         ; Define the relationships
@@ -57,18 +61,29 @@ do [
         ;---------------------------------------------
 
         link'isFrom nolan uk
-        link'isFrom pearce au
-        link'isFrom @[hanson spacey dicaprio wach1 wach2] us
+        link'isFrom @[pearce kidman] au
+        link'isFrom @[hanson spacey dicaprio wach1 wach2 cruise kubrick] us
         link'isFrom moss ca
 
         link'directed nolan @[memento inception]
         link'directed hanson laconfidential
         link'directed @[wach1 wach2] matrix
+        link'directed kubrick eyes
 
         link'actedIn pearce @[memento laconfidential]
         link'actedIn spacey laconfidential
         link'actedIn dicaprio inception
         link'actedIn moss @[memento matrix]
+        link'actedIn @[cruise kidman] eyes
+
+        link'origin memento us
+        link'origin laconfidential us 
+        link'origin matrix @[us au]
+        link'origin @[inception eyes] @[uk us]
+
+        link'sibling wach1 wach2
+        link'married cruise kidman
+
 
         ;---------------------------------------------
         ; Fetch every "person" &
