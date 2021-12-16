@@ -606,7 +606,14 @@ graph: function [
     ; Link nodes with edges
     ;--------------------------
 
-    link: function [name, src, tgt][
+    link: function [
+        name :literal :string
+        src :dictionary
+        tgt :dictionary
+    ].info: [
+        description « create a connection from source to target node with given name
+        returns :block :dictionary
+    ][
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: link"
         ]
