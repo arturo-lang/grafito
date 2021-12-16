@@ -707,7 +707,16 @@ graph: function [
     ; and edges
     ;--------------------------
 
-    fetch: function [name,attributes][
+    fetch: function [
+        name :literal :string
+        attributes :null :block :dictionary
+    ].info: [
+        description « retrieves nodes with name that match all given attributes
+        options [
+            .any « try matching any of the attributes
+        ]
+        returns :block
+    ][
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: fetch"
         ]
