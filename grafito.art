@@ -549,7 +549,13 @@ graph: function [
     ; Delete existing edge
     ;--------------------------
 
-    unedge: function [src, name, tgt][
+    unedge: function [
+        src :dictionary
+        name :literal :string
+        tgt :dictionary
+    ].info: [
+        description « delete edge from source to target node with given name
+    ][
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: unedge"
         ]
