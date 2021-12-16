@@ -84,7 +84,6 @@ do [
         link'sibling wach1 wach2
         link'married cruise kidman
 
-
         ;---------------------------------------------
         ; Fetch every "person" &
         ; open the Desktop app for visualization
