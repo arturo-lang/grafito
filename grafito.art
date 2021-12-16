@@ -488,7 +488,11 @@ graph: function [
     ; Delete existing node
     ;--------------------------
 
-    unput: function [nd][
+    unput: function [
+        nd :dictionary
+    ].info: [
+        description « remove given node from graph
+    ][
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: unput"
         ]
