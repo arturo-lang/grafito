@@ -21,14 +21,14 @@ Debug: true
 graph: function [
     dbpath :string :null
     body :block
-].info:[
-    description: « initiate a new graph environment with given name and body
-    options: [
+].info: [
+    description « initiate a new graph environment with given name and body
+    options [
         .create « recreate database from scratch, even if it exists
         .verbose « show messages regarding database operations
     ]
-    returns: :any
-    example: {
+    returns :any
+    example {
         graph "mydb" [
             ; do sth with this graph database
         ]
@@ -435,8 +435,16 @@ graph: function [
     ; Create new node
     ;--------------------------
     
-    put: function [name, attributes]
-    [
+    put: function [
+        name :literal :string
+        attributes :block :dictionary
+    ].info: [
+        description « insert new node to graph with given name and attributes
+        options [
+            .unique "add only if node doesn't already exist"
+        ]
+        returns :dictionary
+    ][
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: put"
         ]
