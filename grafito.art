@@ -18,8 +18,27 @@
 
 Debug: true
 
-graph: function [dbpath, body][
-
+graph: function [
+    dbpath :string :null
+    body :block
+].info:[
+    description: « initiate a new graph environment with given name and body
+    options: [
+        .create « recreate database from scratch, even if it exists
+        .verbose « show messages regarding database operations
+    ]
+    returns: :any
+    example: {
+        graph "mydb" [
+            ; do sth with this graph database
+        ]
+        ;;;;
+        ; in memory database
+        graph ø [
+            ; do sth with this graph database
+        ]
+    }
+][
     ;==========================================
     ; CONSTANTS
     ;==========================================
@@ -416,7 +435,11 @@ graph: function [dbpath, body][
     ; Create new node
     ;--------------------------
     
-    put: function [name,attributes][
+    put: function [name, attributes]
+    [
+        if and? [Debug][null? attr 'noDebug] [
+            print color #gray "IN: put"
+        ]
         if attr "unique" [
             found: what name attributes
             if not? null? found -> return found
@@ -458,6 +481,9 @@ graph: function [dbpath, body][
     ;--------------------------
 
     unput: function [nd][
+        if and? [Debug][null? attr 'noDebug] [
+            print color #gray "IN: unput"
+        ]
         qr: new []
 
         append 'qr ~{!sql 
@@ -484,6 +510,9 @@ graph: function [dbpath, body][
     ;--------------------------
 
     edge: function [src, name, tgt][
+        if and? [Debug][null? attr 'noDebug] [
+            print color #gray "IN: edge"
+        ]
         edgeId: query.id db ~{!sql 
             INSERT INTO edges (tag,source,target,direction) 
             VALUES ('|name|','|src\id|','|tgt\id|',1)
@@ -502,6 +531,9 @@ graph: function [dbpath, body][
     ;--------------------------
 
     unedge: function [src, name, tgt][
+        if and? [Debug][null? attr 'noDebug] [
+            print color #gray "IN: unedge"
+        ]
         performQuery ~{!sql 
             DELETE 
             FROM edges 
@@ -515,6 +547,9 @@ graph: function [dbpath, body][
     ;--------------------------
 
     nodeFromId: function [nid][
+        if and? [Debug][null? attr 'noDebug] [
+            print color #gray "IN: nodeFromId"
+        ]
         qr: ~{!sql
             SELECT nodes.tag, properties.property, properties.value 
             FROM nodes 
@@ -547,6 +582,9 @@ graph: function [dbpath, body][
     ;--------------------------
 
     link: function [name, src, tgt][
+        if and? [Debug][null? attr 'noDebug] [
+            print color #gray "IN: link"
+        ]
         edgeId: 0
 
         if? :dictionary = type tgt [
@@ -590,6 +628,9 @@ graph: function [dbpath, body][
     ;--------------------------
 
     unlink: function [name, src, tgt][
+        if and? [Debug][null? attr 'noDebug] [
+            print color #gray "IN: unlink"
+        ]
         edgeId: 0
 
         if? :dictionary = type tgt [
@@ -629,6 +670,9 @@ graph: function [dbpath, body][
     ;--------------------------
 
     fetch: function [name,attributes][
+        if and? [Debug][null? attr 'noDebug] [
+            print color #gray "IN: fetch"
+        ]
         catchAny?: false
         if? not? null? attr "any" ->
             catchAny?: true
@@ -755,9 +799,9 @@ graph: function [dbpath, body][
 
                 expected: size criteria
 
-                if? and? hasPropertyFilters?
+                if and? hasPropertyFilters?
                         hasEdgeFilters? [
-                    expected: 2*expected
+                    expected: expected * 2
                 ]
                 
                 if? catchAny? [
@@ -785,6 +829,9 @@ graph: function [dbpath, body][
     ;--------------------------
 
     what: function [n,a][
+        if and? [Debug][null? attr 'noDebug] [
+            print color #gray "IN: what"
+        ]
         allresults: fetch n a
         if? 0 < size allresults -> first allresults
         else -> ø
@@ -867,6 +914,15 @@ graph: function [dbpath, body][
     preview: function [nodeset][
         currentNodes: new nodeset
         currentDataset: new nodeFromIds currentNodes
+
+        inspect query db {
+            SELECT nodes.id
+            FROM nodes 
+            INNER JOIN properties ON properties.node=nodes.id 
+            INNER JOIN edges ON edges.source=nodes.id 
+            WHERE nodes.tag='person'
+            COLLATE NOCASE
+        }
         
         routes: #.raw[
             "/"             [
@@ -876,8 +932,9 @@ graph: function [dbpath, body][
 
             "/exec"         [
                 try? [
+                    print ["<==" command]
                     currentNodes: new do command
-
+                    print "=== OK"
                     if? or? [not? block? currentNodes]
                             [and? [0 < size currentNodes][not? dictionary? first currentNodes]][
                         "empty"
