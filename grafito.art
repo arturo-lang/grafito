@@ -958,7 +958,14 @@ graph: function [
     ; Visualize given nodeset
     ;--------------------------
 
-    preview: function [nodeset][
+    preview: function [
+        nodeset :block
+    ].info: [
+        description « preview given set of nodes in Grafito's UI
+        options [
+            .server « start Grafito as a server
+        ]
+    ][
         currentNodes: new nodeset
         currentDataset: new nodeFromIds currentNodes
 
