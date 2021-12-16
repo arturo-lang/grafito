@@ -659,7 +659,13 @@ graph: function [
     ; Delete node edges
     ;--------------------------
 
-    unlink: function [name, src, tgt][
+    unlink: function [
+        name :literal :string
+        src :dictionary
+        tgt :dictionary
+    ].info: [
+        description « remove connection from source to target node with given name
+    ][
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: unlink"
         ]
