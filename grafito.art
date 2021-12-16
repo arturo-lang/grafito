@@ -608,8 +608,8 @@ graph: function [
 
     link: function [
         name :literal :string
-        src :dictionary
-        tgt :dictionary
+        src :block :dictionary
+        tgt :block :dictionary
     ].info: [
         description « create a connection from source to target node with given name
         returns :block :dictionary
