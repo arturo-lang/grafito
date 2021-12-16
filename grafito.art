@@ -521,7 +521,14 @@ graph: function [
     ; Create new edge
     ;--------------------------
 
-    edge: function [src, name, tgt][
+    edge: function [
+        src :dictionary 
+        name :literal :string
+        tgt :dictionary
+    ].info: [
+        description « create edge from source to target node with given name
+        returns :dictionary
+    ][
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: edge"
         ]
