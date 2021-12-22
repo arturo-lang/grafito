@@ -16,19 +16,19 @@
 ; The main library
 ;--------------------------
 
-Debug: true
+Debug: false ; true
 
 graph: function [
     dbpath :string :null
     body :block
 ][
-    ;; description « initiate a new graph environment with given name and body
-    ;; options [
-    ;;      .create « recreate database from scratch, even if it exists
-    ;;      .verbose « show messages regarding database operations
+    ;; description: « initiate a new graph environment with given name and body
+    ;; options: [
+    ;;      create: « recreate database from scratch, even if it exists
+    ;;      verbose: « show messages regarding database operations
     ;; ]
-    ;; returns :any
-    ;; example {
+    ;; returns: :any
+    ;; example: {
     ;;      graph "mydb" [
     ;;          ; do sth with this graph database
     ;;      ]
@@ -439,11 +439,11 @@ graph: function [
         name :literal :string
         attributes :block :dictionary
     ][
-        ;; description « insert new node to graph with given name and attributes
-        ;; options [
-        ;;      unique « add only if node doesn't already exist"
+        ;; description: « insert new node to graph with given name and attributes
+        ;; options: 
+        ;;      unique: « add only if node doesn't already exist"
         ;; ]
-        ;; returns :dictionary
+        ;; returns: :dictionary
 
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: put"
@@ -491,7 +491,7 @@ graph: function [
     unput: function [
         nd :dictionary
     ][
-        ;; description « remove given node from graph
+        ;; description: « remove given node from graph
 
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: unput"
@@ -526,8 +526,8 @@ graph: function [
         name :literal :string
         tgt :dictionary
     ][
-        ;; description « create edge from source to target node with given name
-        ;; returns :dictionary
+        ;; description: « create edge from source to target node with given name
+        ;; returns: :dictionary
 
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: edge"
@@ -554,7 +554,7 @@ graph: function [
         name :literal :string
         tgt :dictionary
     ][
-        ;; description « delete edge from source to target node with given name
+        ;; description: « delete edge from source to target node with given name
 
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: unedge"
@@ -612,8 +612,8 @@ graph: function [
         tgt :block :dictionary
     ]
     [
-        ;; description « create a connection from source to target node with given name
-        ;; returns :block :dictionary
+        ;; description: « create a connection from source to target node with given name
+        ;; returns: :block :dictionary
 
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: link"
@@ -665,7 +665,7 @@ graph: function [
         src :dictionary
         tgt :dictionary
     ][
-        ;; description « remove connection from source to target node with given name
+        ;; description: « remove connection from source to target node with given name
 
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: unlink"
@@ -712,11 +712,11 @@ graph: function [
         name :literal :string
         attributes :null :block :dictionary
     ][
-        ;; description « retrieves nodes with name that match all given attributes
-        ;; options [
+        ;; description: « retrieves nodes with name that match all given attributes
+        ;; options: [
         ;;      .any « try matching any of the attributes
         ;; ]
-        ;; returns :block
+        ;; returns: :block
 
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: fetch"
@@ -962,9 +962,9 @@ graph: function [
     preview: function [
         nodeset :block
     ][
-        ;; description « preview given set of nodes in Grafito's UI
-        ;; options [
-        ;;      .server « start Grafito as a server
+        ;; description: « preview given set of nodes in Grafito's UI
+        ;; options: [
+        ;;      server: « start Grafito as a server
         ;; ]
 
         currentNodes: new nodeset
