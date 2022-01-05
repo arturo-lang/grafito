@@ -8,7 +8,7 @@ do [
 
     ;---------------------------------------------
     ; Set up a new graph environment
-    ; with a local database named "sample4"
+    ; with a local database named "sample11"
     ;---------------------------------------------
     graph .create
           .helpers: [person movie country] 
@@ -37,10 +37,12 @@ do [
         moss:       person.new [name: "Carrie-Ann Moss" birthday: 1967 sex: "f"]
         kidman:     person.new [name: "Nicole Kidman" birthday: 1967 sex: "f"]
         cruise:     person.new [name: "Tom Cruise" birthday: 1962 sex: "m"]
-        kubrick:    person.new [name: "Stanley Kubrick" birthday: 1928 sex: "m"]
+        kubrick:    person.new [name: "Stanley Kubrick" birthday: 1928 died: 1999 sex: "m"]
         burton:     person.new [name: "Tim Burton" birthday: 1958 sex: "m"]
         depp:       person.new [name: "Johny Depp" birthday: 1965 sex: "m"]
         hallstrom:  person.new [name: "Lasse Hallström" birthday: 1946 sex: "m"]
+        scorsese:   person.new [name: "Martin Scorsese" birthday: 1942 sex: "m"]
+        sydow:      person.new [name: "Max von Sydow" birthday: 1929 died: 2020 sex: "m"]
         binoche:    person.new [name: "Juliette Binoche" birthday: 1964 sex: "f"]
         dench:      person.new [name: "Judi Dench" birthday: 1934 sex: "f"]
         eastwood:   person.new [name: "Clint Eastwood" birthday: 1930 sex: "m"]
@@ -51,16 +53,17 @@ do [
         wach1:      person.new [name: "Lana Wachowski" birthday: 1965 sex: "f"]
         wach2:      person.new [name: "Lilly Wachowski" birthday: 1967 sex: "f"]
 
-        memento:         movie.new [title: "Memento" year: 2000]
-        inception:       movie.new [title: "Inception" year: 2010]
-        laconfidential:  movie.new [title: "L.A. Confidential" year: 1997]
-        matrix:          movie.new [title: "The Matrix" year: 1999]
-        eyes:            movie.new [title: "Eyes Wide Shut" year: 1999]
-        bigfish:         movie.new [title: "Big Fish" year: 2003]
-        sleepyhollow:    movie.new [title: "Sleepy Hollow" year: 1999]
-        chocolat:        movie.new [title: "Chocolat" year: 2000]
-        jedgar:          movie.new [title: "J. Edgar" year: 2011]
-        ninthgate:       movie.new [title: "The Ninth Gate" year: 1999]
+        memento:        movie.new [title: "Memento" year: 2000]
+        inception:      movie.new [title: "Inception" year: 2010]
+        laconfidential: movie.new [title: "L.A. Confidential" year: 1997]
+        matrix:         movie.new [title: "The Matrix" year: 1999]
+        eyes:           movie.new [title: "Eyes Wide Shut" year: 1999]
+        bigfish:        movie.new [title: "Big Fish" year: 2003]
+        sleepyhollow:   movie.new [title: "Sleepy Hollow" year: 1999]
+        chocolat:       movie.new [title: "Chocolat" year: 2000]
+        jedgar:         movie.new [title: "J. Edgar" year: 2011]
+        ninthgate:      movie.new [title: "The Ninth Gate" year: 1999]
+        shutter:        movie.new [title: "Shutter Island" year: 2010]
 
         ;---------------------------------------------
         ; Define the relationships
@@ -69,10 +72,10 @@ do [
 
         link'isFrom @[nolan hardy dench pook] uk
         link'isFrom @[pearce kidman] au
-        link'isFrom @[hanson spacey dicaprio wach1 wach2 cruise kubrick burton depp eastwood] us
+        link'isFrom @[hanson spacey dicaprio wach1 wach2 cruise kubrick burton depp eastwood scorsese] us
         link'isFrom moss ca
         link'isFrom @[cotillard binoche polanski] fr
-        link'isFrom @[hallstrom olin] se
+        link'isFrom @[hallstrom olin sydow] se
         link'isFrom zimmer de
 
         link'directed nolan @[memento inception]
@@ -83,10 +86,12 @@ do [
         link'directed hallstrom chocolat
         link'directed eastwood jedgar
         link'directed polanski ninthgate
+        link'directed scorsese shutter
 
         link'actedIn pearce @[memento laconfidential]
         link'actedIn spacey laconfidential
         link'actedIn @[dicaprio hardy cotillard] inception
+        link'actedIn @[dicaprio sydow] shutter
         link'actedIn cotillard bigfish
         link'actedIn moss @[memento matrix chocolat]
         link'actedIn @[cruise kidman] eyes
@@ -100,7 +105,7 @@ do [
 
         link'written nolan inception
 
-        link'origin @[bigfish memento laconfidential jedgar] us
+        link'origin @[bigfish memento laconfidential jedgar shutter] us
         link'origin matrix @[us au]
         link'origin @[inception eyes chocolat] @[uk us]
         link'origin sleepyhollow @[us de]
