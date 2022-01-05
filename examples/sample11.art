@@ -12,7 +12,7 @@ do [
     ;---------------------------------------------
     graph .create
           .helpers: [person movie country] 
-          "sample4c" 
+          "sample11" 
     [
         ;---------------------------------------------
         ; Populate the database
@@ -22,51 +22,89 @@ do [
         au: country.new [name: "Australia"]
         us: country.new [name: "United States"] 
         ca: country.new [name: "Canada"]
+        fr: country.new [name: "France"]
+        de: country.new [name: "Germany"]
+        se: country.new [name: "Sweden"]
+        es: country.new [name: "Spain"]
 
-        nolan:    person.new [name: "Christopher Nolan" birthday: 1970 sex: "m"]
-        pearce:   person.new [name: "Guy Pearce" birthday: 1967 sex: "m"]
-        hanson:   person.new [name: "Curtis Hanson" birthday: 1945 sex: "m"]
-        spacey:   person.new [name: "Kevin Spacey" birthday: 1959 sex: "m"]
-        dicaprio: person.new [name: "Leonardo DiCaprio" birthday: 1974 sex: "m"]
-        moss:     person.new [name: "Carrie-Ann Moss" birthday: 1967 sex: "f"]
-        kidman:   person.new [name: "Nicole Kidman" birthday: 1967 sex: "f"]
-        cruise:   person.new [name: "Tom Cruise" birthday: 1962 sex: "m"]
-        kubrick:  person.new [name: "Stanley Kubrick" birthday: 1928 sex: "m"]
-
-        wach1: person.new [name: "Lana Wachowski" birthday: 1965 sex: "f"]
-        wach2: person.new [name: "Lilly Wachowski" birthday: 1967 sex: "f"]
+        nolan:      person.new [name: "Christopher Nolan" birthday: 1970 sex: "m"]
+        pearce:     person.new [name: "Guy Pearce" birthday: 1967 sex: "m"]
+        hanson:     person.new [name: "Curtis Hanson" birthday: 1945 sex: "m"]
+        spacey:     person.new [name: "Kevin Spacey" birthday: 1959 sex: "m"]
+        dicaprio:   person.new [name: "Leonardo DiCaprio" birthday: 1974 sex: "m"]
+        hardy:      person.new [name: "Tom Hardy" birthday: 1977 sex: "m"]
+        cotillard:  person.new [name: "Marion Cotillard" birthday: 1975 sex: "f"]
+        moss:       person.new [name: "Carrie-Ann Moss" birthday: 1967 sex: "f"]
+        kidman:     person.new [name: "Nicole Kidman" birthday: 1967 sex: "f"]
+        cruise:     person.new [name: "Tom Cruise" birthday: 1962 sex: "m"]
+        kubrick:    person.new [name: "Stanley Kubrick" birthday: 1928 sex: "m"]
+        burton:     person.new [name: "Tim Burton" birthday: 1958 sex: "m"]
+        depp:       person.new [name: "Johny Depp" birthday: 1965 sex: "m"]
+        hallstrom:  person.new [name: "Lasse Hallström" birthday: 1946 sex: "m"]
+        binoche:    person.new [name: "Juliette Binoche" birthday: 1964 sex: "f"]
+        dench:      person.new [name: "Judi Dench" birthday: 1934 sex: "f"]
+        eastwood:   person.new [name: "Clint Eastwood" birthday: 1930 sex: "m"]
+        polanski:   person.new [name: "Roman Polanski" birthday: 1933 sex: "m"]
+        olin:       person.new [name: "Lena Olin" birthday: 1955 sex: "f"]
+        zimmer:     person.new [name: "Hans Zimmer" birthday: 1957 sex: "m"]
+        pook:       person.new [name: "Jocelyn Pook" birthday: 1960 sex: "f"]
+        wach1:      person.new [name: "Lana Wachowski" birthday: 1965 sex: "f"]
+        wach2:      person.new [name: "Lilly Wachowski" birthday: 1967 sex: "f"]
 
         memento:         movie.new [title: "Memento" year: 2000]
         inception:       movie.new [title: "Inception" year: 2010]
         laconfidential:  movie.new [title: "L.A. Confidential" year: 1997]
         matrix:          movie.new [title: "The Matrix" year: 1999]
         eyes:            movie.new [title: "Eyes Wide Shut" year: 1999]
+        bigfish:         movie.new [title: "Big Fish" year: 2003]
+        sleepyhollow:    movie.new [title: "Sleepy Hollow" year: 1999]
+        chocolat:        movie.new [title: "Chocolat" year: 2000]
+        jedgar:          movie.new [title: "J. Edgar" year: 2011]
+        ninthgate:       movie.new [title: "The Ninth Gate" year: 1999]
 
         ;---------------------------------------------
         ; Define the relationships
         ; between our nodes
         ;---------------------------------------------
 
-        link'isFrom nolan uk
+        link'isFrom @[nolan hardy dench pook] uk
         link'isFrom @[pearce kidman] au
-        link'isFrom @[hanson spacey dicaprio wach1 wach2 cruise kubrick] us
+        link'isFrom @[hanson spacey dicaprio wach1 wach2 cruise kubrick burton depp eastwood] us
         link'isFrom moss ca
+        link'isFrom @[cotillard binoche polanski] fr
+        link'isFrom @[hallstrom olin] se
+        link'isFrom zimmer de
 
         link'directed nolan @[memento inception]
         link'directed hanson laconfidential
         link'directed @[wach1 wach2] matrix
         link'directed kubrick eyes
+        link'directed burton @[bigfish sleepyhollow]
+        link'directed hallstrom chocolat
+        link'directed eastwood jedgar
+        link'directed polanski ninthgate
 
         link'actedIn pearce @[memento laconfidential]
         link'actedIn spacey laconfidential
-        link'actedIn dicaprio inception
-        link'actedIn moss @[memento matrix]
+        link'actedIn @[dicaprio hardy cotillard] inception
+        link'actedIn cotillard bigfish
+        link'actedIn moss @[memento matrix chocolat]
         link'actedIn @[cruise kidman] eyes
+        link'actedIn depp @[chocolat sleepyhollow]
+        link'actedIn @[binoche dench olin] chocolat
+        link'actedIn @[dicaprio dench] jedgar
+        link'actedIn @[depp olin] ninthgate
 
-        link'origin memento us
-        link'origin laconfidential us 
+        link'composed zimmer inception
+        link'composed pook eyes
+
+        link'written nolan inception
+
+        link'origin @[bigfish memento laconfidential jedgar] us
         link'origin matrix @[us au]
-        link'origin @[inception eyes] @[uk us]
+        link'origin @[inception eyes chocolat] @[uk us]
+        link'origin sleepyhollow @[us de]
+        link'origin ninthgate @[us fr es]
 
         link'sibling wach1 wach2
         link'married cruise kidman
