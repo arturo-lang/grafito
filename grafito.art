@@ -969,15 +969,6 @@ graph: function [
 
         currentNodes: new nodeset
         currentDataset: new nodeFromIds currentNodes
-
-        inspect query db {
-            SELECT nodes.id
-            FROM nodes 
-            INNER JOIN properties ON properties.node=nodes.id 
-            INNER JOIN edges ON edges.source=nodes.id 
-            WHERE nodes.tag='person'
-            COLLATE NOCASE
-        }
         
         routes: #.raw[
             "/"             [
