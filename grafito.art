@@ -942,7 +942,7 @@ graph: function [
 
         loop edz [ed][
             append 'relations #[ 
-                id: hash ed
+                id: ~"|ed\0|+|ed\1|+|ed\2|"
                 from: to :integer ed\0
                 to: to :integer ed\1
                 label: ed\2
