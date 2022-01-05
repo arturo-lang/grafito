@@ -5,28 +5,15 @@
 do.import {grafito.art}
 
 do [
+
     ;---------------------------------------------
     ; Set up a new graph environment
     ; with a local database named "sample4"
     ;---------------------------------------------
-    graph.create "sample4c" [
-        ;---------------------
-        ; HELPERS
-        ;---------------------
-
-        generateHelper: function [id,block][
-            if? not? null? attr 'new [
-                put id block
-            ]
-            else [
-                fetch id block
-            ]
-        ]
-        
-        country: function [block] -> generateHelper 'country block
-        person: function [block] -> generateHelper 'person block
-        movie: function [block] -> generateHelper 'movie block
-        
+    graph .create
+          .helpers: [person movie country] 
+          "sample4c" 
+    [
         ;---------------------------------------------
         ; Populate the database
         ;---------------------------------------------
