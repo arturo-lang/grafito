@@ -956,6 +956,18 @@ graph: function [
     ]
 
     ;
+    ; Generate access helper
+    ;--------------------------
+    generateHelper: function [id,block][
+        if? not? null? attr 'new [
+            put id block
+        ]
+        else [
+            fetch id block
+        ]
+    ]
+
+    ;
     ; Visualize given nodeset
     ;--------------------------
 
@@ -1058,6 +1070,16 @@ graph: function [
     ] 
     else [
         printDebug "using existing database"
+    ]
+
+    ; create helpers, if any
+    entities: attr "helpers"
+    if null? entities -> entities: []
+    ei: new 0
+    while [ei < size entities].import [
+        entity: to :literal entities\[ei]
+        let entity function [block] with 'entity -> generateHelper entity block
+        inc 'ei
     ]
 
     ; process body
