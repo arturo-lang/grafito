@@ -89,7 +89,9 @@ graph: function [
             <head>
                 <meta charset="UTF-8">
                 <title>Grafito @ <||=cleanpath||></title>
-                <link rel="preconnect" href="https://fonts.gstatic.com">
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
                 <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
                 <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
                 <script>
@@ -162,7 +164,6 @@ graph: function [
                         left: 15px;
                         top: 15px;
                     }
-
                     #command {
                         position: fixed:
                         left: 20px;
@@ -172,6 +173,7 @@ graph: function [
                         width:100%;
                         font-size: 20px;
                         border-top: 0;
+                        font-family: 'Fira Code';
                         /*border-top: 2px solid darkgray;*/
                         border-bottom: 2px solid darkgray;
                         border-left: 0;
@@ -183,8 +185,6 @@ graph: function [
                         background-position: calc(100% - 70px) center;
                         /*background-clip: content-box;*/
                         padding-left: 45px;
-
-                        font-family: "Roboto Mono";
                     }
 
                     #command:focus {
@@ -627,7 +627,8 @@ graph: function [
                 return ret
             ]
 
-            loop src [s] [
+            sr: @ src
+            loop sr [s] [
                 append 'edges edge s name tgt
             ]
         
@@ -637,14 +638,16 @@ graph: function [
         ]
         else [
             edges: []
+            tg: @ tgt
             if? :dictionary = type src [
-                loop tgt [t][
+                loop tg [t][
                     append 'edges edge src name t
                 ]
             ]
             else [
-                loop src [s] [
-                    loop tgt [t][
+                sr: @ src
+                loop sr [s] [
+                    loop tg [t][
                         append 'edges edge s name t
                     ]
                 ]
@@ -1039,6 +1042,7 @@ graph: function [
     ; INITIALIZATION
     ;==========================================
 
+    ; basic setup
     verbose?: not? null? attr 'verbose
 
     dbPath: ""
