@@ -368,11 +368,11 @@ graph: function [
     colori: [
         'blue 'blueviolet 'brown 'cadetblue 'chocolate
         'crimson 'darkblue 'darkgreen 'darkmagenta 'darkorchid
-        'darkred 'darkslategray 'dodgerblue 'goldenrod 
-        'green 'indigo 'lightcoral 'lightblue 'lightsalmon
+        'darkred 'darkslategray 'dodgerblue
+        'green 'indigo 'lightcoral 'lightblue
         'maroon 'mediumpurple 'midnightblue 'olive 'orange
         'orangered 'peru 'purple 'seagreen 'steelblue 
-        'teal 'yellowgreen
+        'teal
     ]
 
     ;==========================================
@@ -420,14 +420,22 @@ graph: function [
     ; for graph visualization
     ;--------------------------
 
-    addColorForNodeType: function [nn][
-        if not? key? nodeConfig nn\tag [
+    addColorForNodeType: function [nn, existingCl][
+        if? not? key? nodeConfig nn\tag [
             cl: sample colori
+            while [contains? existingCl cl][
+                cl: sample colori
+            ]
+            print ~"picked |cl|"
             remove 'colori cl
             set nodeConfig nn\tag #[
                 color: cl
                 label: get keys nn\properties 0
             ]
+            return cl
+        ]
+        else [
+            return null
         ]
     ]
 
@@ -902,9 +910,10 @@ graph: function [
         clean: new nodeset
 
         edz: new []
+        usedColors: new []
 
         loop nodeset [nd][
-            addColorForNodeType nd
+            'usedColors ++ addColorForNodeType nd usedColors
 
             qr: ~{!sql 
                 SELECT source,target,tag 
@@ -919,7 +928,7 @@ graph: function [
                 else -> appendable: nodeFromId rez\1
 
                 append 'clean appendable
-                addColorForNodeType appendable
+                'usedColors ++ addColorForNodeType appendable usedColors
                 append 'edz @[@[rez\0 rez\1 rez\2]]
             ]
             clean: unique clean
