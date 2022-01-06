@@ -4,6 +4,9 @@
 ;---------------------------------------------
 do.import {grafito.art}
 
+; set aliases
+alias.infix {~>} 'link
+
 do [
 
     ;---------------------------------------------
@@ -70,46 +73,46 @@ do [
         ; between our nodes
         ;---------------------------------------------
 
-        link'isFrom @[nolan hardy dench pook] uk
-        link'isFrom @[pearce kidman] au
-        link'isFrom @[hanson spacey dicaprio wach1 wach2 cruise kubrick burton depp eastwood scorsese] us
+        link'isFrom [nolan hardy dench pook] uk
+        link'isFrom [pearce kidman] au
+        link'isFrom [hanson spacey dicaprio wach1 wach2 cruise kubrick burton depp eastwood scorsese] us
         link'isFrom moss ca
-        link'isFrom @[cotillard binoche polanski] fr
-        link'isFrom @[hallstrom olin sydow] se
+        link'isFrom [cotillard binoche polanski] fr
+        link'isFrom [hallstrom olin sydow] se
         link'isFrom zimmer de
 
-        link'directed nolan @[memento inception]
+        link'directed nolan [memento inception]
         link'directed hanson laconfidential
-        link'directed @[wach1 wach2] matrix
+        link'directed [wach1 wach2] matrix
         link'directed kubrick eyes
-        link'directed burton @[bigfish sleepyhollow]
+        link'directed burton [bigfish sleepyhollow]
         link'directed hallstrom chocolat
         link'directed eastwood jedgar
         link'directed polanski ninthgate
         link'directed scorsese shutter
 
-        link'actedIn pearce @[memento laconfidential]
+        link'actedIn pearce [memento laconfidential]
         link'actedIn spacey laconfidential
-        link'actedIn @[dicaprio hardy cotillard] inception
-        link'actedIn @[dicaprio sydow] shutter
+        link'actedIn [dicaprio hardy cotillard] inception
+        link'actedIn [dicaprio sydow] shutter
         link'actedIn cotillard bigfish
-        link'actedIn moss @[memento matrix chocolat]
-        link'actedIn @[cruise kidman] eyes
-        link'actedIn depp @[chocolat sleepyhollow]
-        link'actedIn @[binoche dench olin] chocolat
-        link'actedIn @[dicaprio dench] jedgar
-        link'actedIn @[depp olin] ninthgate
+        link'actedIn moss [memento matrix chocolat]
+        link'actedIn [cruise kidman] eyes
+        link'actedIn depp [chocolat sleepyhollow]
+        link'actedIn [binoche dench olin] chocolat
+        link'actedIn [dicaprio dench] jedgar
+        link'actedIn [depp olin] ninthgate
 
         link'composed zimmer inception
         link'composed pook eyes
 
         link'written nolan inception
 
-        link'origin @[bigfish memento laconfidential jedgar shutter] us
-        link'origin matrix @[us au]
-        link'origin @[inception eyes chocolat] @[uk us]
-        link'origin sleepyhollow @[us de]
-        link'origin ninthgate @[us fr es]
+        link'origin [bigfish memento laconfidential jedgar shutter] us
+        link'origin matrix [us au]
+        link'origin [inception eyes chocolat] [uk us]
+        link'origin sleepyhollow [us de]
+        link'origin ninthgate [us fr es]
 
         link'sibling wach1 wach2
         link'married cruise kidman
