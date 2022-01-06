@@ -5,10 +5,9 @@
 do.import {grafito.art}
 
 ; set aliases
-alias.infix {~>} 'link
+
 
 do [
-
     ;---------------------------------------------
     ; Set up a new graph environment
     ; with a local database named "sample11"
