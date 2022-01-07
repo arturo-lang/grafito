@@ -13,7 +13,7 @@ do [
     ; with a local database named "sample11"
     ;---------------------------------------------
     graph .create
-          .helpers: [person movie country] 
+          .helpers: [person movie country book] 
           "sample11" 
     [
         ;---------------------------------------------
@@ -52,6 +52,8 @@ do [
         olin:       person.new [name: "Lena Olin" birthday: 1955 sex: "f"]
         zimmer:     person.new [name: "Hans Zimmer" birthday: 1957 sex: "m"]
         pook:       person.new [name: "Jocelyn Pook" birthday: 1960 sex: "f"]
+        lehane:     person.new [name: "Dennis Lehane" birthday: 1965 sex: "m"]
+        penn:       person.new [name: "Sean Penn" birthday: 1960 sex: "m"]
         wach1:      person.new [name: "Lana Wachowski" birthday: 1965 sex: "f"]
         wach2:      person.new [name: "Lilly Wachowski" birthday: 1967 sex: "f"]
 
@@ -66,55 +68,62 @@ do [
         jedgar:         movie.new [title: "J. Edgar" year: 2011]
         ninthgate:      movie.new [title: "The Ninth Gate" year: 1999]
         shutter:        movie.new [title: "Shutter Island" year: 2010]
+        mystic:         movie.new [title: "Mystic River" year: 2003]
+
+        mysticB:        book.new [title: "Mystic River" year: 2001 language: "en"]
 
         ;---------------------------------------------
         ; Define the relationships
         ; between our nodes
         ;---------------------------------------------
 
-        link'isFrom [nolan hardy dench pook] uk
-        link'isFrom [pearce kidman] au
-        link'isFrom [hanson spacey dicaprio wach1 wach2 cruise kubrick burton depp eastwood scorsese] us
-        link'isFrom moss ca
-        link'isFrom [cotillard binoche polanski] fr
-        link'isFrom [hallstrom olin sydow] se
-        link'isFrom zimmer de
+        [nolan hardy dench pook] ~> 'isFrom uk
+        [pearce kidman] ~> 'isFrom au
+        [hanson spacey dicaprio wach1 wach2 cruise kubrick burton depp eastwood scorsese lehane penn] ~> 'isFrom us
+        moss ~> 'isFrom ca
+        [cotillard binoche polanski] ~> 'isFrom fr
+        [hallstrom olin sydow] ~> 'isFrom se
+        zimmer ~> 'isFrom de
 
-        link'directed nolan [memento inception]
-        link'directed hanson laconfidential
-        link'directed [wach1 wach2] matrix
-        link'directed kubrick eyes
-        link'directed burton [bigfish sleepyhollow]
-        link'directed hallstrom chocolat
-        link'directed eastwood jedgar
-        link'directed polanski ninthgate
-        link'directed scorsese shutter
+        nolan ~> 'directed [memento inception]
+        hanson ~> 'directed laconfidential
+        [wach1 wach2] ~> 'directed matrix
+        kubrick ~> 'directed eyes
+        burton ~> 'directed [bigfish sleepyhollow]
+        hallstrom ~> 'directed chocolat
+        eastwood ~> 'directed [jedgar mystic]
+        polanski ~> 'directed ninthgate
+        scorsese ~> 'directed shutter
 
-        link'actedIn pearce [memento laconfidential]
-        link'actedIn spacey laconfidential
-        link'actedIn [dicaprio hardy cotillard] inception
-        link'actedIn [dicaprio sydow] shutter
-        link'actedIn cotillard bigfish
-        link'actedIn moss [memento matrix chocolat]
-        link'actedIn [cruise kidman] eyes
-        link'actedIn depp [chocolat sleepyhollow]
-        link'actedIn [binoche dench olin] chocolat
-        link'actedIn [dicaprio dench] jedgar
-        link'actedIn [depp olin] ninthgate
+        pearce ~> 'actedIn [memento laconfidential]
+        spacey ~> 'actedIn laconfidential
+        [dicaprio hardy cotillard] ~> 'actedIn inception
+        [dicaprio sydow] ~> 'actedIn shutter
+        cotillard ~> 'actedIn bigfish
+        moss ~> 'actedIn [memento matrix chocolat]
+        [cruise kidman] ~> 'actedIn eyes
+        depp ~> 'actedIn [chocolat sleepyhollow]
+        [binoche dench olin] ~> 'actedIn chocolat
+        [dicaprio dench] ~> 'actedIn jedgar
+        [depp olin] ~> 'actedIn ninthgate
+        penn ~> 'actedIn mystic
 
-        link'composed zimmer inception
-        link'composed pook eyes
+        zimmer ~> 'composed inception
+        pook ~> 'composed eyes
 
-        link'written nolan inception
+        nolan ~> 'written inception
 
-        link'origin [bigfish memento laconfidential jedgar shutter] us
-        link'origin matrix [us au]
-        link'origin [inception eyes chocolat] [uk us]
-        link'origin sleepyhollow [us de]
-        link'origin ninthgate [us fr es]
+        lehane ~> 'written mysticB
+        mystic ~> 'basedOn mysticB
 
-        link'sibling wach1 wach2
-        link'married cruise kidman
+        [bigfish memento laconfidential jedgar shutter mystic] ~> 'origin us
+        matrix ~> 'origin [us au]
+        [inception eyes chocolat] ~> 'origin [uk us]
+        sleepyhollow ~> 'origin [us de]
+        ninthgate ~> 'origin [us fr es]
+
+        wach1 ~> 'sibling wach2
+        cruise ~> 'married kidman
 
         ;---------------------------------------------
         ; Fetch every "person" &
