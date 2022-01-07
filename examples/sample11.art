@@ -28,6 +28,7 @@ do [
         de: country.new [name: "Germany"]
         se: country.new [name: "Sweden"]
         es: country.new [name: "Spain"]
+        pl: country.new [name: "Poland"]
 
         nolan:      person.new [name: "Christopher Nolan" birthday: 1970 sex: "m"]
         pearce:     person.new [name: "Guy Pearce" birthday: 1967 sex: "m"]
@@ -54,6 +55,8 @@ do [
         pook:       person.new [name: "Jocelyn Pook" birthday: 1960 sex: "f"]
         lehane:     person.new [name: "Dennis Lehane" birthday: 1965 sex: "m"]
         penn:       person.new [name: "Sean Penn" birthday: 1960 sex: "m"]
+        malick:     person.new [name: "Terrence Malick" birthday: 1943 sex: "m"]
+        brody:      person.new [name: "Adrien Brody" birthday: 1973 sex: "m"]
         wach1:      person.new [name: "Lana Wachowski" birthday: 1965 sex: "f"]
         wach2:      person.new [name: "Lilly Wachowski" birthday: 1967 sex: "f"]
 
@@ -69,6 +72,8 @@ do [
         ninthgate:      movie.new [title: "The Ninth Gate" year: 1999]
         shutter:        movie.new [title: "Shutter Island" year: 2010]
         mystic:         movie.new [title: "Mystic River" year: 2003]
+        redline:        movie.new [title: "Thin Red Line" year: 1998]
+        pianist:        movie.new [title: "The Pianist" year: 2002]
 
         mysticB:        book.new [title: "Mystic River" year: 2001 language: "en"]
 
@@ -79,9 +84,10 @@ do [
 
         [nolan hardy dench pook] ~> 'isFrom uk
         [pearce kidman] ~> 'isFrom au
-        [hanson spacey dicaprio wach1 wach2 cruise kubrick burton depp eastwood scorsese lehane penn] ~> 'isFrom us
+        [malick brody hanson spacey dicaprio wach1 wach2 cruise kubrick burton depp eastwood scorsese lehane penn] ~> 'isFrom us
         moss ~> 'isFrom ca
-        [cotillard binoche polanski] ~> 'isFrom fr
+        [cotillard binoche] ~> 'isFrom fr
+        polanski ~> 'isFrom [fr pl]
         [hallstrom olin sydow] ~> 'isFrom se
         zimmer ~> 'isFrom de
 
@@ -92,8 +98,9 @@ do [
         burton ~> 'directed [bigfish sleepyhollow]
         hallstrom ~> 'directed chocolat
         eastwood ~> 'directed [jedgar mystic]
-        polanski ~> 'directed ninthgate
+        polanski ~> 'directed [pianist ninthgate]
         scorsese ~> 'directed shutter
+        malick ~> 'directed [pianist redline]
 
         pearce ~> 'actedIn [memento laconfidential]
         spacey ~> 'actedIn laconfidential
@@ -106,7 +113,8 @@ do [
         [binoche dench olin] ~> 'actedIn chocolat
         [dicaprio dench] ~> 'actedIn jedgar
         [depp olin] ~> 'actedIn ninthgate
-        penn ~> 'actedIn mystic
+        penn ~> 'actedIn [mystic redline]
+        brody ~> 'actedIn [redline pianist]
 
         zimmer ~> 'composed inception
         pook ~> 'composed eyes
@@ -116,11 +124,12 @@ do [
         lehane ~> 'written mysticB
         mystic ~> 'basedOn mysticB
 
-        [bigfish memento laconfidential jedgar shutter mystic] ~> 'origin us
+        [redline bigfish memento laconfidential jedgar shutter mystic] ~> 'origin us
         matrix ~> 'origin [us au]
         [inception eyes chocolat] ~> 'origin [uk us]
         sleepyhollow ~> 'origin [us de]
         ninthgate ~> 'origin [us fr es]
+        pianist ~> 'origin [uk fr de pl]
 
         wach1 ~> 'sibling wach2
         cruise ~> 'married kidman
