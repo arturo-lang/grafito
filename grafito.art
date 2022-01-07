@@ -1013,7 +1013,7 @@ graph: function [
                     bench: benchmark.get [
                         currentNodes: new do command
                     ]
-                    print ~"=== OK (|bench|ms)"
+                    print ~"=== OK (|bench| ms)"
                     if? or? [not? block? currentNodes]
                             [and? [0 < size currentNodes][not? dictionary? first currentNodes]][
                         "empty"
