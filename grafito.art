@@ -794,10 +794,10 @@ graph: function [
                                     when? ["contains"]          [symb: "LIKE"   val: ~"'%|arg|%'"]
                                     when? ["prefix"]            [symb: "LIKE"   val: ~"'|arg|%'"]
                                     when? ["suffix"]            [symb: "LIKE"   val: ~"'%|arg|'"]
-                                    when? ["less"]              [symb: "<"      val: arg]
-                                    when? ["greater"]           [symb: ">"      val: arg]
-                                    when? ["lessOrEqual"]       [symb: "<="     val: arg]
-                                    when? ["greaterOrEqual"]    [symb: ">="     val: arg]
+                                    when? ["under"]             [symb: "<"      val: arg]
+                                    when? ["over"]              [symb: ">"      val: arg]
+                                    when? ["underOrEqual"]      [symb: "<="     val: arg]
+                                    when? ["overOrEqual"]       [symb: ">="     val: arg]
                                     when? ["not"]               [     
                                         if? block? arg [
                                             symb: "NOT IN" val: ~{(|join.with:", " map arg [x]["'" ++ (to :string x) ++ "'"]|)}
