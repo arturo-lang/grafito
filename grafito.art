@@ -583,13 +583,13 @@ graph: function [
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: nodeFromId"
         ]
-        qr: ~{!sql
+        qr: ~{!sql:
             SELECT nodes.tag, properties.property, properties.value 
             FROM nodes 
             INNER JOIN properties
             ON properties.node=nodes.id
             WHERE nodes.id='|nid|'
-        }
+        :}
 
         results: performQuery qr
         
@@ -852,15 +852,15 @@ graph: function [
                 }
             ]
             else [
-                append 'qr "\nGROUP BY nodes.id"
-                append 'qr "\nHAVING COUNT( CASE WHEN"
-                append 'qr "\n" ++ join.with:" OR " criteria
+                append 'qr "GROUP BY nodes.id"
+                append 'qr "HAVING COUNT( CASE WHEN"
+                append 'qr join.with:" OR " criteria
 
                 expected: size criteria
 
                 if and? hasPropertyFilters?
                         hasEdgeFilters? [
-                    expected: expected * 2
+                    ;expected: expected * 2
                 ]
                 
                 if? catchAny? [
@@ -875,6 +875,8 @@ graph: function [
         ]
 
         append 'qr ~{!sql COLLATE NOCASE}
+
+        print join.with:"\n" qr
         
         got: map performQuery join.with:" " qr 'x [nodeFromId first x]
 
