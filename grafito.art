@@ -426,7 +426,7 @@ graph: function [
             while [contains? existingCl cl][
                 cl: sample colori
             ]
-            print ~"picked |cl|"
+            ;print ~"picked |cl|"
             remove 'colori cl
             set nodeConfig nn\tag #[
                 color: cl
@@ -729,17 +729,45 @@ graph: function [
         ;; ]
         ;; returns: :block
 
+        querySubset: function [nm, crit, getAny][
+            tableName: "properties"
+            onWhat: "properties.node"
+            onWhere: ""
+            countNum: ~" = |size crit|"
+            if not? null? attr 'edges [
+                tableName: "edges"
+                onWhat: "edges.source"
+            ]
+            if getAny [
+                countNum: " >= 1"
+            ]
+            if not? null? nm [
+                onWhere: ~"WHERE nodes.tag='|nm|'"
+            ]
+
+            return ~{!sql
+                SELECT nodes.id
+                FROM nodes 
+                INNER JOIN |tableName|
+                ON |onWhat|=nodes.id
+                |onWhere|
+                GROUP BY nodes.id 
+                HAVING COUNT( 
+                    CASE 
+                        WHEN |join.with:" OR " crit| 
+                        THEN 1 
+                    END 
+                ) |countNum|
+                COLLATE NOCASE
+            }
+        ]
+
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: fetch"
         ]
         catchAny?: false
         if? not? null? attr "any" ->
             catchAny?: true
-
-        qr: new [{!sql 
-            SELECT nodes.id 
-            FROM nodes 
-        }]
 
         att: new attributes
 
@@ -756,6 +784,8 @@ graph: function [
         hasEdgeFilters?: false
 
         criteria: new []
+        propertyFilters: new []
+        edgeFilters: new []
 
         if not? empty? att [
             loop att [k,v][
@@ -763,12 +793,12 @@ graph: function [
                     when? [:null][
                         ; it's an edge filter without criteria
                         hasEdgeFilters?: true
-                        append 'criteria ~{!sql (edges.tag='|k|')}
+                        append 'edgeFilters ~{!sql (edges.tag='|k|')}
                     ]
                     when? [:dictionary][
                         ; it's an edge filter
                         hasEdgeFilters?: true
-                        append 'criteria ~{!sql (edges.tag='|k|' AND edges.target='|v\id|')}
+                        append 'edgeFilters ~{!sql (edges.tag='|k|' AND edges.target='|v\id|')}
                     ]
                     when? [:block][
                         if? and? 0 < size v 
@@ -779,7 +809,7 @@ graph: function [
                             loop v [edgef][
                                 'orCriteria ++ ~{!sql (edges.tag='|k|' AND edges.target='|edgef\id|')}
                             ]
-                            append 'criteria "(" ++ (join.with:" OR " orCriteria) ++ ")"
+                            append 'edgeFilters "(" ++ (join.with:" OR " orCriteria) ++ ")"
                         ]
                         else [
                             ; it's a complex property filter
@@ -812,74 +842,48 @@ graph: function [
                                         panic.code: 1 ~"filter: |filt| not recognized"
                                     ]
 
-                                append 'criteria ~{!sql (properties.property='|k|' AND properties.value |symb| |val|)} 
+                                append 'propertyFilters ~{!sql (properties.property='|k|' AND properties.value |symb| |val|)} 
                             ]
                         ]
                     ]
                     when? [:boolean][
                         ; it's a simple property filter without criteria
                         hasPropertyFilters?: true
-                        append 'criteria ~{!sql (properties.property='|k|')} 
+                        append 'propertyFilters ~{!sql (properties.property='|k|')} 
                     ]
                     else [
                         ; it's a simple property filter
                         hasPropertyFilters?: true
-                        append 'criteria ~{!sql (properties.property='|k|' AND properties.value='|v|')} 
+                        append 'propertyFilters ~{!sql (properties.property='|k|' AND properties.value='|v|')} 
                     ]
             ]
         ]
 
-        if hasPropertyFilters? ->
-            append 'qr {!sql 
-                INNER JOIN properties 
-                ON properties.node=nodes.id
+        if not? empty? propertyFilters ->
+            'criteria ++ querySubset name propertyFilters catchAny?
+
+        if not? empty? edgeFilters ->
+            'criteria ++ querySubset.edges name edgeFilters catchAny?
+
+        qr: ""
+
+        if? empty? criteria [
+            qr: ~{!sql   
+                SELECT nodes.id
+                FROM nodes
+                WHERE nodes.tag='|name|'
+                COLLATE NOCASE
             }
-
-        if hasEdgeFilters? ->
-            append 'qr {!sql 
-                INNER JOIN edges 
-                ON edges.source=nodes.id
-            }
-
-        append 'qr ~{!sql 
-            WHERE nodes.tag='|name|'
-        }
-
-        if not? empty? criteria [
-            if? 1 = size criteria [
-                append 'qr ~{!sql
-                    AND |first criteria|
-                }
-            ]
-            else [
-                append 'qr "GROUP BY nodes.id"
-                append 'qr "HAVING COUNT( CASE WHEN"
-                append 'qr join.with:" OR " criteria
-
-                expected: size criteria
-
-                if and? hasPropertyFilters?
-                        hasEdgeFilters? [
-                    ;expected: expected * 2
-                ]
-                
-                if? catchAny? [
-                    expected: " >= 1"
-                ]
-                else [
-                    expected: ~" = |expected|"
-                ]
-
-                append 'qr ~"THEN 1 END ) |expected|"
-            ]
+        ]
+        else [
+            unifier: "INTERSECT"
+            if catchAny? ->
+                unifier: "UNION"
+            qr: join.with: ~"\n|unifier|\n" criteria
         ]
 
-        append 'qr ~{!sql COLLATE NOCASE}
-
-        print join.with:"\n" qr
-        
-        got: map performQuery join.with:" " qr 'x [nodeFromId first x]
-
+        ;print qr
+        got: map performQuery qr 'x [nodeFromId first x]
         return got
     ]
 
@@ -1005,8 +1009,11 @@ graph: function [
             "/exec"         [
                 try? [
                     print ["<==" command]
-                    currentNodes: new do command
-                    print "=== OK"
+                    currentNodes: ""
+                    bench: benchmark.get [
+                        currentNodes: new do command
+                    ]
+                    print ~"=== OK (|bench|ms)"
                     if? or? [not? block? currentNodes]
                             [and? [0 < size currentNodes][not? dictionary? first currentNodes]][
                         "empty"
