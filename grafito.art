@@ -369,7 +369,7 @@ graph: function [
         'blue 'blueviolet 'brown 'cadetblue 'chocolate
         'crimson 'darkblue 'darkgreen 'darkmagenta 'darkorchid
         'darkred 'darkslategray 'dodgerblue
-        'green 'indigo 'lightcoral 'lightblue
+        'green 'indigo 
         'maroon 'mediumpurple 'midnightblue 'olive 'orange
         'orangered 'peru 'purple 'seagreen 'steelblue 
         'teal
@@ -615,8 +615,8 @@ graph: function [
     ;--------------------------
 
     link: function [
-        name :literal :string
         src :block :dictionary
+        name :literal :string
         tgt :block :dictionary
     ]
     [
@@ -1065,6 +1065,9 @@ graph: function [
     ]
 
     nodeConfig: #[]
+
+    ; define aliases
+    alias.infix {~>} 'link
 
     ; open the database
     printDebug ~"DB = |cleanpath|"
