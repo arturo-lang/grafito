@@ -769,8 +769,6 @@ graph: function [
 
         qr: qr ++ "\nCOLLATE NOCASE"
 
-        print qr
-
         return map performQuery "fetch" qr 'x [
             #[
                 id: x\0
