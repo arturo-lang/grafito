@@ -362,26 +362,12 @@ graph: function [
     ; Perform query
     ;--------------------------
 
-    performQuery: function [qu][
+    performQuery: function [ctx, qu][
         if and? [Debug][null? attr 'noDebug] [
-            dstr: new []
-            if? block? qu [
-                print color #gray "..."
-                loop qu 'qq [
-                    dstr: dstr ++ @[join.with:"\n" split.lines qq]
-                ]
-            ]
-            else [
-                dstr: @[join.with:"\n" split.lines qu]
-            ]
-            if not? empty? dstr [
-                loop dstr 'line [
-                    print color #gray "==> " ++ line
-                ]
-            ]
-            if block? qu [
-                print color #gray "---"
-            ]
+            prepend: " | "
+            print color.bold #gray ">: " ++ ctx
+            print color #gray prepend ++ join.with:"\n"++prepend split.lines qu
+            print ""
         ]
         query db qu
     ]
@@ -443,7 +429,7 @@ graph: function [
         att: attributes
         if not? dictionary? att -> att: #att
 
-        nodeId: query.id db ~{!sql 
+        nodeId: performQuery.id "put" ~{!sql 
             INSERT INTO nodes (tag, properties) 
             VALUES ('|name|', '|write.json ø att|')
         }
@@ -485,7 +471,7 @@ graph: function [
             WHERE source='|nd\id|' OR target='|nd\id|'
         }
 
-        performQuery qr
+        performQuery "unput" qr
     ]
 
     ;
@@ -503,7 +489,7 @@ graph: function [
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: edge"
         ]
-        edgeId: query.id db ~{!sql 
+        edgeId: performQuery.id "edge" ~{!sql 
             INSERT INTO edges (tag,source,target,direction) 
             VALUES ('|name|','|src\id|','|tgt\id|',1)
         }
@@ -530,7 +516,7 @@ graph: function [
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: unedge"
         ]
-        performQuery ~{!sql 
+        performQuery "unedge" ~{!sql 
             DELETE 
             FROM edges 
             WHERE source='|src\id|' AND target='|tgt\id|'
@@ -552,7 +538,7 @@ graph: function [
             WHERE nodes.id='|nid|'
         :}
 
-        results: performQuery qr
+        results: performQuery "nodeFromId" qr
         
         if empty? results ->
             return ø 
@@ -810,7 +796,7 @@ graph: function [
 
         print qr
 
-        return map performQuery qr 'x [
+        return map performQuery "fetch" qr 'x [
             #[
                 id: x\0
                 tag: x\1
@@ -857,10 +843,11 @@ graph: function [
                 SELECT nodes.id, nodes.tag, nodes.properties, source,target,edges.tag AS label
                 FROM edges 
                 INNER JOIN nodes
-                WHERE (source='|nd\id|' OR target='|nd\id|') AND (nodes.id=edges.source OR nodes.id=edges.target) AND (nodes.id<>'|nd\id|')
+                ON nodes.id=edges.source OR nodes.id=edges.target
+                WHERE (source='|nd\id|' OR target='|nd\id|') AND (nodes.id<>'|nd\id|')
             }
 
-            rezu: performQuery qr
+            rezu: performQuery "nodeFromIds" qr
             loop rezu [rez][
                 appendable: #[
                     id: rez\0
@@ -1021,7 +1008,7 @@ graph: function [
     if? or? not? null? attr "create"
             not? dbExisted [
         printDebug "creating database from scratch"
-        performQuery.noDebug schema
+        performQuery.noDebug "main" schema
         put'meta #[
             version: script\version
         ]
