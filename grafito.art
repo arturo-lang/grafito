@@ -981,6 +981,7 @@ graph: function [
         performQuery.noDebug "main" schema
         put'meta #[
             version: script\version
+            mode: "json"
         ]
         pop.discard 1
     ] 
