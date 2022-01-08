@@ -43,12 +43,20 @@ graph: function [
     ; CONSTANTS
     ;==========================================
 
-    ; The initial database schema
-    ; for SQLite
+    ; Global SQL scripts
 
-    schema: split.by:";" read "sql/schema.sql"
+    schemaSQL:          split.by:";" read "sql/schema.sql"
 
-    ; app template
+    createNodeSQL:      read "sql/createNode.sql"
+    deleteNodeSQL:      read "sql/deleteNode.sql"
+    deleteNodeEdgesSQL: read "sql/deleteNodeEdges.sql"
+    getNodeSQL:         read "sql/getNode.sql"
+    getRelatedNodesSQL: read "sql/getRelatedNodes.sql"
+
+    createEdgeSQL:      read "sql/createEdge.sql"
+    deleteEdgeSQL:      read "sql/deleteEdge.sql"
+
+    ; Global UI template
 
     app: read "ui/index.html"
 
@@ -140,10 +148,7 @@ graph: function [
 
         att: attributes
         if not? dictionary? att -> att: #att
-        nodeId: performQuery.id 'put {!sql 
-            INSERT INTO nodes (tag, properties) 
-            VALUES (?, ?)
-        } @[name, write.json ø att]
+        nodeId: performQuery.id 'put createNodeSQL @[name, write.json ø att]
 
         if verbose? [
             if? 1 = size att -> printDebug ~"created 1 node (@|nodeId|) with 1 property"
@@ -168,17 +173,8 @@ graph: function [
 
         qr: new []
 
-        performQuery 'unput {!sql 
-            DELETE 
-            FROM nodes 
-            WHERE id=?
-        } @[nd\id]
-
-        performQuery 'unput {!sql 
-            DELETE 
-            FROM edges 
-            WHERE source=? OR target=?
-        } @[nd\id, nd\id]
+        performQuery 'unput deleteNodeSQL @[nd\id]
+        performQuery 'unput deleNodeEdgesSQL @[nd\id, nd\id]
     ]
 
     ;
@@ -193,10 +189,7 @@ graph: function [
         ;; description: « create edge from source to target node with given name
         ;; returns: :dictionary
 
-        edgeId: performQuery.id 'edge {!sql 
-            INSERT INTO edges (tag, source, target, direction) 
-            VALUES (?, ?, ?, 1)
-        } @[name, src\id, tgt\id]
+        edgeId: performQuery.id 'edge createEdgeSQL @[name, src\id, tgt\id]
 
         #[
             id: edgeId
@@ -217,11 +210,7 @@ graph: function [
     ][
         ;; description: « delete edge from source to target node with given name
 
-        performQuery 'unedge ~{!sql 
-            DELETE 
-            FROM edges 
-            WHERE source=? AND target=?
-        } @[src\id, tgt\id]
+        performQuery 'unedge deleteEdgeSQL @[src\id, tgt\id]
     ]
 
     ;
@@ -230,11 +219,7 @@ graph: function [
     ;--------------------------
 
     nodeFromId: function [nid][
-        results: performQuery 'nodeFromId {!sql
-            SELECT nodes.tag, nodes.properties 
-            FROM nodes 
-            WHERE nodes.id=?
-        } @[nid]
+        results: performQuery 'nodeFromId getNodeSQL @[nid]
         
         if empty? results ->
             return ø 
@@ -520,13 +505,7 @@ graph: function [
         loop nodeset [nd][
             'usedColors ++ addColorForNodeType nd usedColors
 
-            rezu: performQuery 'nodeFromIds {!sql
-                SELECT nodes.id, nodes.tag, nodes.properties, source, target, edges.tag AS label
-                FROM edges 
-                INNER JOIN nodes
-                ON nodes.id=edges.source OR nodes.id=edges.target
-                WHERE (source=? OR target=?) AND (nodes.id<>?)
-            } @[nd\id, nd\id, nd\id]
+            rezu: performQuery 'nodeFromIds getRelatedNodesSQL @[nd\id, nd\id, nd\id]
 
             loop rezu [rez][
                 appendable: #[
@@ -688,7 +667,7 @@ graph: function [
     if? or? not? null? attr "create"
             not? dbExisted [
         printDebug "creating database from scratch"
-        performQuery.noDebug 'main schema ø
+        performQuery.noDebug 'main schemaSQL ø
         
         metas: #[]
 
