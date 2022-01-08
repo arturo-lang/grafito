@@ -980,13 +980,19 @@ graph: function [
         printDebug "creating database from scratch"
         performQuery.noDebug "main" schema
         
+        metas: #[]
+
+        set metas 'version "undefined"
+        set metas 'mode "json"
+
         ; TODO(DB\Meta) script\version doesn't propagate when module is included
         ;  When it's run as a standalone app, it works fine
         ;  labels: bug
         if not? null? script -> 
-            setMeta 'version script\version
+            set metas 'version script\version
 
-        setMeta 'mode "json"
+        put'meta metas
+        pop.discard 1
     ] 
     else [
         printDebug "using existing database"
