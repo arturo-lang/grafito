@@ -481,7 +481,7 @@ graph: function [
         ;; returns: :dictionary
 
         edgeId: performQuery.id "edge" ~{!sql 
-            INSERT INTO edges (tag,source,target,direction) 
+            INSERT INTO edges (tag, source, target, direction) 
             VALUES ('|name|', |src\id|, |tgt\id|, 1)
         }
 
@@ -810,7 +810,7 @@ graph: function [
             'usedColors ++ addColorForNodeType nd usedColors
 
             qr: ~{!sql
-                SELECT nodes.id, nodes.tag, nodes.properties, source,target,edges.tag AS label
+                SELECT nodes.id, nodes.tag, nodes.properties, source, target, edges.tag AS label
                 FROM edges 
                 INNER JOIN nodes
                 ON nodes.id=edges.source OR nodes.id=edges.target
