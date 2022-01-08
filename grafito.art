@@ -348,13 +348,10 @@ graph: function [
     ; for graph nodes
 
     colori: [
-        'blue 'blueviolet 'brown 'cadetblue 'chocolate
-        'crimson 'darkblue 'darkgreen 'darkmagenta 'darkorchid
-        'darkred 'darkslategray 'dodgerblue
-        'green 'indigo 
-        'maroon 'mediumpurple 'midnightblue 'olive 'orange
-        'orangered 'peru 'purple 'seagreen 'steelblue 
-        'teal
+        'blue 'blueviolet 'brown 'cadetblue 'chocolate 'crimson 'darkblue 'darkgreen 
+        'darkmagenta 'darkorchid 'darkred 'darkslategray 'dodgerblue 'green 'indigo 
+        'maroon 'mediumpurple 'midnightblue 'olive 'orange 'orangered 'peru 'purple 
+        'seagreen 'steelblue 'teal
     ]
 
     ;==========================================
