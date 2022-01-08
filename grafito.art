@@ -70,15 +70,21 @@ graph: function [
     ; Perform query
     ;--------------------------
 
-    performQuery: function [ctx, qu][
+    performQuery: function [ctx, qu, params][
         if and? [Debug][null? attr 'noDebug] [
             context: to :string ctx
             prepend: " | "
             print color.bold #gray ">: " ++ context
             print color #gray prepend ++ join.with:"\n"++prepend split.lines qu
+
             print ""
         ]
-        query db qu
+        if? not? null? params [
+            query db .with: params qu
+        ]
+        else [
+            query db qu
+        ]
     ]
 
     ;
@@ -134,11 +140,10 @@ graph: function [
 
         att: attributes
         if not? dictionary? att -> att: #att
-
-        nodeId: performQuery.id 'put ~{!sql 
+        nodeId: performQuery.id 'put {!sql 
             INSERT INTO nodes (tag, properties) 
-            VALUES ('|name|', '|write.json ø att|')
-        }
+            VALUES (?, ?)
+        } @[name, write.json ø att]
 
         if verbose? [
             if? 1 = size att -> printDebug ~"created 1 node (@|nodeId|) with 1 property"
@@ -163,18 +168,17 @@ graph: function [
 
         qr: new []
 
-        append 'qr ~{!sql 
+        performQuery 'unput {!sql 
             DELETE 
             FROM nodes 
-            WHERE id=|nd\id|
-        }
-        append 'qr ~{!sql 
+            WHERE id=?
+        } @[nd\id]
+
+        performQuery 'unput {!sql 
             DELETE 
             FROM edges 
-            WHERE source=|nd\id| OR target=|nd\id|
-        }
-
-        performQuery 'unput qr
+            WHERE source=? OR target=?
+        } @[nd\id, nd\id]
     ]
 
     ;
@@ -189,10 +193,10 @@ graph: function [
         ;; description: « create edge from source to target node with given name
         ;; returns: :dictionary
 
-        edgeId: performQuery.id 'edge ~{!sql 
+        edgeId: performQuery.id 'edge {!sql 
             INSERT INTO edges (tag, source, target, direction) 
-            VALUES ('|name|', |src\id|, |tgt\id|, 1)
-        }
+            VALUES (?, ?, ?, 1)
+        } @[name, src\id, tgt\id]
 
         #[
             id: edgeId
@@ -216,8 +220,8 @@ graph: function [
         performQuery 'unedge ~{!sql 
             DELETE 
             FROM edges 
-            WHERE source=|src\id| AND target=|tgt\id|
-        }
+            WHERE source=? AND target=?
+        } @[src\id, tgt\id]
     ]
 
     ;
@@ -226,13 +230,11 @@ graph: function [
     ;--------------------------
 
     nodeFromId: function [nid][
-        qr: ~{!sql
+        results: performQuery 'nodeFromId {!sql
             SELECT nodes.tag, nodes.properties 
             FROM nodes 
-            WHERE nodes.id=|nid|
-        }
-
-        results: performQuery 'nodeFromId qr
+            WHERE nodes.id=?
+        } @[nid]
         
         if empty? results ->
             return ø 
@@ -478,7 +480,7 @@ graph: function [
 
         qr: qr ++ "\nCOLLATE NOCASE"
 
-        return map performQuery 'fetch qr 'x [
+        return map performQuery 'fetch qr ø 'x [
             #[
                 id: x\0
                 tag: x\1
@@ -518,15 +520,14 @@ graph: function [
         loop nodeset [nd][
             'usedColors ++ addColorForNodeType nd usedColors
 
-            qr: ~{!sql
+            rezu: performQuery 'nodeFromIds {!sql
                 SELECT nodes.id, nodes.tag, nodes.properties, source, target, edges.tag AS label
                 FROM edges 
                 INNER JOIN nodes
                 ON nodes.id=edges.source OR nodes.id=edges.target
-                WHERE (source=|nd\id| OR target=|nd\id|) AND (nodes.id<>|nd\id|)
-            }
+                WHERE (source=? OR target=?) AND (nodes.id<>?)
+            } @[nd\id, nd\id, nd\id]
 
-            rezu: performQuery 'nodeFromIds qr
             loop rezu [rez][
                 appendable: #[
                     id: rez\0
@@ -687,7 +688,7 @@ graph: function [
     if? or? not? null? attr "create"
             not? dbExisted [
         printDebug "creating database from scratch"
-        performQuery.noDebug 'main schema
+        performQuery.noDebug 'main schema ø
         
         metas: #[]
 
