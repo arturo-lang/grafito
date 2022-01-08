@@ -16,7 +16,7 @@
 ; The main library
 ;--------------------------
 
-Debug: false ; true
+Debug: true
 
 graph: function [
     dbpath :string :null
@@ -368,11 +368,11 @@ graph: function [
             if? block? qu [
                 print color #gray "..."
                 loop qu 'qq [
-                    dstr: dstr ++ @[join.with:"\n    " split.lines qq]
+                    dstr: dstr ++ @[join.with:"\n" split.lines qq]
                 ]
             ]
             else [
-                dstr: @[join.with:"\n    " split.lines qu]
+                dstr: @[join.with:"\n" split.lines qu]
             ]
             if not? empty? dstr [
                 loop dstr 'line [
@@ -853,21 +853,30 @@ graph: function [
         loop nodeset [nd][
             'usedColors ++ addColorForNodeType nd usedColors
 
-            qr: ~{!sql 
-                SELECT source,target,tag 
+            ; qr: ~{!sql 
+            ;     SELECT source,target,tag 
+            ;     FROM edges 
+            ;     WHERE source='|nd\id|' OR target='|nd\id|'
+            ; }
+
+            qr: ~{!sql
+                SELECT nodes.id, nodes.tag, nodes.properties, source,target,edges.tag AS label
                 FROM edges 
-                WHERE source='|nd\id|' OR target='|nd\id|'
+                INNER JOIN nodes
+                WHERE (source='|nd\id|' OR target='|nd\id|') AND (nodes.id=edges.source OR nodes.id=edges.target) AND (nodes.id<>'|nd\id|')
             }
 
             rezu: performQuery qr
             loop rezu [rez][
-                appendable: ø
-                if? nd\id <> rez\0 -> appendable: nodeFromId rez\0
-                else -> appendable: nodeFromId rez\1
+                appendable: #[
+                    id: rez\0
+                    tag: rez\1
+                    properties: read.json rez\2
+                ]
 
                 append 'clean appendable
                 'usedColors ++ addColorForNodeType appendable usedColors
-                append 'edz @[@[rez\0 rez\1 rez\2]]
+                append 'edz @[@[rez\3 rez\4 rez\5]]
             ]
             clean: unique clean
         ]
@@ -945,6 +954,7 @@ graph: function [
                     bench: benchmark.get [
                         currentNodes: new do command
                     ]
+                    inspect currentNodes
                     print ~"=== OK (|bench| ms)"
                     if? or? [not? block? currentNodes]
                             [and? [0 < size currentNodes][not? dictionary? first currentNodes]][
@@ -961,8 +971,6 @@ graph: function [
             ]
 
             "/nodeFromId"   [
-                ; append 'currentNodes nodeFromId ndid
-                ; currentDataset: new nodeFromIds currentNodes
                 newNodes: new nodeFromIds @[nodeFromId ndid]
                 write.json ø newNodes
             ]
