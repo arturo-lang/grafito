@@ -49,22 +49,13 @@ graph: function [
     schema: split.by:";" {!sql
         DROP TABLE IF EXISTS nodes;
         CREATE TABLE nodes (
-            id      INTEGER PRIMARY KEY,
-            tag     TEXT
+            id          INTEGER PRIMARY KEY,
+            tag         TEXT,
+            properties  JSON NOT NULL
         );
 
+        CREATE INDEX IF NOT EXISTS node_index ON NODES(id);
         CREATE INDEX IF NOT EXISTS node_tag_index ON nodes(tag);
-
-        DROP TABLE IF EXISTS properties;
-        CREATE TABLE properties (
-            node        INTEGER,
-            property    TEXT,
-            value       TEXT,
-            FOREIGN KEY (node) REFERENCES nodes(id)
-        );
-
-        CREATE INDEX IF NOT EXISTS property_node_index     ON properties(node);
-        CREATE INDEX IF NOT EXISTS property_property_index ON properties(property);
 
         DROP TABLE IF EXISTS edges;
         CREATE TABLE edges (
@@ -461,24 +452,15 @@ graph: function [
             if not? null? found -> return found
         ]
 
-        nodeId: query.id db ~{!sql 
-            INSERT INTO nodes (tag) 
-            VALUES ('|name|')
-        }
-
         att: attributes
         if not? dictionary? att -> att: #att
 
-        queries: new []
-    
-        loop att [k,v][
-            append 'queries ~{!sql 
-                INSERT INTO properties (node,property,value) 
-                VALUES (|nodeId|,'|k|','|v|')
-            }
-        ]
+        nodeId: query.id db ~{!sql 
+            INSERT INTO nodes (tag, properties) 
+            VALUES ('|name|', '|write.json ø att|')
+        }
 
-        performQuery queries
+        inspect att
 
         if verbose? [
             if? 1 = size att -> printDebug ~"created 1 node (@|nodeId|) with 1 property"
@@ -510,11 +492,6 @@ graph: function [
             DELETE 
             FROM nodes 
             WHERE id='|nd\id|'
-        }
-        append 'qr ~{!sql 
-            DELETE 
-            FROM properties 
-            WHERE node='|nd\id|'
         }
         append 'qr ~{!sql 
             DELETE 
@@ -584,29 +561,29 @@ graph: function [
             print color #gray "IN: nodeFromId"
         ]
         qr: ~{!sql:
-            SELECT nodes.tag, properties.property, properties.value 
+            SELECT nodes.tag, nodes.properties 
             FROM nodes 
-            INNER JOIN properties
-            ON properties.node=nodes.id
             WHERE nodes.id='|nid|'
         :}
 
         results: performQuery qr
+
+        inspect results
         
         if empty? results [ 
             return ø 
         ]
         
-        nprops: #[]
+        ; nprops: #[]
 
-        loop results [row][
-            set nprops row\1 row\2
-        ]
+        ; loop results [row][
+        ;     set nprops row\1 row\2
+        ; ]
 
         return #[
             id: nid
             tag: first first results
-            properties: nprops
+            properties: read.json last first results
         ]
     ]
 
@@ -729,42 +706,10 @@ graph: function [
         ;; ]
         ;; returns: :block
 
-        querySubset: function [nm, crit, getAny][
-            tableName: "properties"
-            onWhat: "properties.node"
-            onWhere: ""
-            countNum: ~" = |size crit|"
-            if not? null? attr 'edges [
-                tableName: "edges"
-                onWhat: "edges.source"
-            ]
-            if getAny [
-                countNum: " >= 1"
-            ]
-            if not? null? nm [
-                onWhere: ~"WHERE nodes.tag='|nm|'"
-            ]
-
-            return ~{!sql
-                SELECT nodes.id
-                FROM nodes 
-                INNER JOIN |tableName|
-                ON |onWhat|=nodes.id
-                |onWhere|
-                GROUP BY nodes.id 
-                HAVING COUNT( 
-                    CASE 
-                        WHEN |join.with:" OR " crit| 
-                        THEN 1 
-                    END 
-                ) |countNum|
-                COLLATE NOCASE
-            }
-        ]
-
         if and? [Debug][null? attr 'noDebug] [
             print color #gray "IN: fetch"
         ]
+        
         catchAny?: false
         if? not? null? attr "any" ->
             catchAny?: true
@@ -778,12 +723,7 @@ graph: function [
         ; HACK - to solve
         remove.key 'att 'n
         remove.key 'att 'a
-        ;inspect att
 
-        hasPropertyFilters?: false
-        hasEdgeFilters?: false
-
-        criteria: new []
         propertyFilters: new []
         edgeFilters: new []
 
@@ -792,19 +732,16 @@ graph: function [
                 case [equal? type v]
                     when? [:null][
                         ; it's an edge filter without criteria
-                        hasEdgeFilters?: true
                         append 'edgeFilters ~{!sql (edges.tag='|k|')}
                     ]
                     when? [:dictionary][
                         ; it's an edge filter
-                        hasEdgeFilters?: true
                         append 'edgeFilters ~{!sql (edges.tag='|k|' AND edges.target='|v\id|')}
                     ]
                     when? [:block][
                         if? and? 0 < size v 
                                  :dictionary = type first v [
                             ; it's an array of edge filters
-                            hasEdgeFilters?: true
                             orCriteria: new []
                             loop v [edgef][
                                 'orCriteria ++ ~{!sql (edges.tag='|k|' AND edges.target='|edgef\id|')}
@@ -813,8 +750,6 @@ graph: function [
                         ]
                         else [
                             ; it's a complex property filter
-                            hasPropertyFilters?: true
-
                             loop #v [filt,arg][
 
                                 symb: "="
@@ -842,49 +777,74 @@ graph: function [
                                         panic.code: 1 ~"filter: |filt| not recognized"
                                     ]
 
-                                append 'propertyFilters ~{!sql (properties.property='|k|' AND properties.value |symb| |val|)} 
+                                append 'propertyFilters ~{!sql (json_extract(nodes.properties, '$.|k|') |symb| |val|)} 
                             ]
                         ]
                     ]
                     when? [:boolean][
                         ; it's a simple property filter without criteria
-                        hasPropertyFilters?: true
                         append 'propertyFilters ~{!sql (properties.property='|k|')} 
                     ]
                     else [
                         ; it's a simple property filter
-                        hasPropertyFilters?: true
-                        append 'propertyFilters ~{!sql (properties.property='|k|' AND properties.value='|v|')} 
+                        append 'propertyFilters ~{!sql (json_extract(nodes.properties, '$.|k|')='|v|')} 
                     ]
             ]
         ]
 
-        if not? empty? propertyFilters ->
-            'criteria ++ querySubset name propertyFilters catchAny?
-
-        if not? empty? edgeFilters ->
-            'criteria ++ querySubset.edges name edgeFilters catchAny?
-
         qr: ""
 
-        if? empty? criteria [
-            qr: ~{!sql   
-                SELECT nodes.id
-                FROM nodes
-                WHERE nodes.tag='|name|'
-                COLLATE NOCASE
+        propies: ""
+        linker: " AND "
+
+        if catchAny? ->
+            linker: " OR "
+
+        if not? empty? propertyFilters ->
+            propies: ~{!sql AND (|join.with: linker propertyFilters|)}
+
+        qr: ~{!sql
+            SELECT nodes.id, nodes.tag, nodes.properties
+            FROM nodes
+        }
+
+        if not? empty? edgeFilters ->
+            qr: qr ++ "\n" ++ {!sql
+                INNER JOIN edges
+                ON edges.source=nodes.id
+            }
+
+        qr: qr ++ "\n" ++ ~{!sql
+            WHERE nodes.tag='|name|' |propies|
+        }
+
+        if not? empty? edgeFilters [
+            countNum: ~" = |size edgeFilters|"
+            if catchAny? [
+                countNum: " >= 1"
+            ]
+            qr: qr ++ "\n" ++ ~{!sql
+                GROUP BY nodes.id 
+                HAVING COUNT( 
+                    CASE 
+                        WHEN |join.with:" OR " edgeFilters| 
+                        THEN 1 
+                    END 
+                ) |countNum|
             }
         ]
-        else [
-            unifier: "INTERSECT"
-            if catchAny? ->
-                unifier: "UNION"
-            qr: join.with: ~"\n|unifier|\n" criteria
-        ]
 
-        ;print qr
-        got: map performQuery qr 'x [nodeFromId first x]
-        return got
+        qr: qr ++ "\nCOLLATE NOCASE"
+
+        print qr
+
+        return map performQuery qr 'x [
+            #[
+                id: x\0
+                tag: x\1
+                properties: read.json x\2
+            ]
+        ]
     ]
 
     ;
