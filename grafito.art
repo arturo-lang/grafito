@@ -554,9 +554,8 @@ graph: function [
 
         results: performQuery qr
         
-        if empty? results [ 
+        if empty? results ->
             return ø 
-        ]
 
         return #[
             id: nid
@@ -591,9 +590,8 @@ graph: function [
             ]
 
             sr: @ src
-            loop sr [s] [
+            loop sr [s]->
                 append 'edges edge s name tgt
-            ]
         
             if verbose? -> printDebug ~"created |size edges| edges"
 
@@ -603,16 +601,14 @@ graph: function [
             edges: []
             tg: @ tgt
             if? :dictionary = type src [
-                loop tg [t][
+                loop tg [t]->
                     append 'edges edge src name t
-                ]
             ]
             else [
                 sr: @ src
                 loop sr [s] [
-                    loop tg [t][
+                    loop tg [t]->
                         append 'edges edge s name t
-                    ]
                 ]
             ]
 
@@ -644,15 +640,13 @@ graph: function [
         ]
         else [
             if? :dictionary = type src [
-                loop tgt [t][
+                loop tgt [t]->
                     unedge src name t
-                ]
             ]
             else [
                 loop src [s] [
-                    loop tgt [t][
+                    loop tgt [t]->
                         unedge s name t
-                    ]
                 ]
             ]
 
