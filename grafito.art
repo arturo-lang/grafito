@@ -200,8 +200,6 @@ graph: function [
                     function drawGraph() {
                         var initial = window.dataset;
 
-                        //console.log(JSON.stringify({nodes: initial.nodes, edges: initial.edges}));
-
                         // create an array with nodes
                         var nodes = new vis.DataSet(
                             initial.nodes
@@ -218,8 +216,6 @@ graph: function [
                             nodes: nodes,
                             edges: edges,
                         };
-
-                        //console.log(JSON.stringify(window.data));
 
                         var options = {
                             autoResize: true,
@@ -259,18 +255,13 @@ graph: function [
                         $("#infobar").html(window.infotext);
 
                         db.on("doubleClick",function (x){
-                            console.log("selectNode: ", x);
                             $.post("/nodeFromId", {ndid: x.nodes[0] }, function (data){
                                 var dt = JSON.parse(data);
                                 for (var i=0; i<dt.nodes.length; i++){
-                                    //if (window.data.nodes.get(dt.nodes[i].id)==null){
-                                        window.data.nodes.update(dt.nodes[i]);
-                                    //}
+                                    window.data.nodes.update(dt.nodes[i]);
                                 }
                                 for (var i=0; i<dt.edges.length; i++){
-                                    //if (window.data.edges.get(dt.nodes[i].id)==null){
-                                        window.data.edges.update(dt.edges[i]);
-                                    //}
+                                    window.data.edges.update(dt.edges[i]);
                                 }
                             });
                         });
@@ -313,7 +304,7 @@ graph: function [
                     });
                     var commandInput = document.getElementById("command");
                     commandInput.addEventListener("keydown", function (e) {
-                        if (e.keyCode === 13) {  //checks whether the pressed key is "Enter"
+                        if (e.keyCode === 13) {
                             $.post( "/exec", {command: $("#command").val()}, function( data ) {
                                 if (data!="empty"){
                                     console.log("got:", data); 
