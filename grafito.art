@@ -448,8 +448,6 @@ graph: function [
             VALUES ('|name|', '|write.json ø att|')
         }
 
-        inspect att
-
         if verbose? [
             if? 1 = size att -> printDebug ~"created 1 node (@|nodeId|) with 1 property"
             else -> printDebug ~"created 1 node (@|nodeId|) with |size att| properties"
@@ -555,8 +553,6 @@ graph: function [
         :}
 
         results: performQuery qr
-
-        inspect results
         
         if empty? results [ 
             return ø 
