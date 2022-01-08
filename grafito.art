@@ -853,12 +853,6 @@ graph: function [
         loop nodeset [nd][
             'usedColors ++ addColorForNodeType nd usedColors
 
-            ; qr: ~{!sql 
-            ;     SELECT source,target,tag 
-            ;     FROM edges 
-            ;     WHERE source='|nd\id|' OR target='|nd\id|'
-            ; }
-
             qr: ~{!sql
                 SELECT nodes.id, nodes.tag, nodes.properties, source,target,edges.tag AS label
                 FROM edges 
