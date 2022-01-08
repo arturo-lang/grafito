@@ -979,11 +979,14 @@ graph: function [
             not? dbExisted [
         printDebug "creating database from scratch"
         performQuery.noDebug "main" schema
-        put'meta #[
-            version: script\version
-            mode: "json"
-        ]
-        pop.discard 1
+        
+        ; TODO(DB\Meta) script\version doesn't propagate when module is included
+        ;  When it's run as a standalone app, it works fine
+        ;  labels: bug
+        if not? null? script -> 
+            setMeta 'version script\version
+
+        setMeta 'mode "json"
     ] 
     else [
         printDebug "using existing database"
