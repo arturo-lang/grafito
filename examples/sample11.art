@@ -2,7 +2,7 @@
 ; Import Grafito
 ; and ... let's rock'n'roll! :)
 ;---------------------------------------------
-do.import {grafito.art}
+do.import {jgrafito.art}
 
 ; set aliases
 
