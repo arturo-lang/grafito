@@ -418,9 +418,6 @@ graph: function [
         ;; ]
         ;; returns: :dictionary
 
-        if and? [Debug][null? attr 'noDebug] [
-            print color #gray "IN: put"
-        ]
         if attr "unique" [
             found: what name attributes
             if not? null? found -> return found
@@ -455,9 +452,6 @@ graph: function [
     ][
         ;; description: « remove given node from graph
 
-        if and? [Debug][null? attr 'noDebug] [
-            print color #gray "IN: unput"
-        ]
         qr: new []
 
         append 'qr ~{!sql 
@@ -486,9 +480,6 @@ graph: function [
         ;; description: « create edge from source to target node with given name
         ;; returns: :dictionary
 
-        if and? [Debug][null? attr 'noDebug] [
-            print color #gray "IN: edge"
-        ]
         edgeId: performQuery.id "edge" ~{!sql 
             INSERT INTO edges (tag,source,target,direction) 
             VALUES ('|name|','|src\id|','|tgt\id|',1)
@@ -513,9 +504,6 @@ graph: function [
     ][
         ;; description: « delete edge from source to target node with given name
 
-        if and? [Debug][null? attr 'noDebug] [
-            print color #gray "IN: unedge"
-        ]
         performQuery "unedge" ~{!sql 
             DELETE 
             FROM edges 
@@ -529,9 +517,6 @@ graph: function [
     ;--------------------------
 
     nodeFromId: function [nid][
-        if and? [Debug][null? attr 'noDebug] [
-            print color #gray "IN: nodeFromId"
-        ]
         qr: ~{!sql:
             SELECT nodes.tag, nodes.properties 
             FROM nodes 
@@ -563,9 +548,6 @@ graph: function [
         ;; description: « create a connection from source to target node with given name
         ;; returns: :block :dictionary
 
-        if and? [Debug][null? attr 'noDebug] [
-            print color #gray "IN: link"
-        ]
         edgeId: 0
 
         if? :dictionary = type tgt [
@@ -615,9 +597,6 @@ graph: function [
     ][
         ;; description: « remove connection from source to target node with given name
 
-        if and? [Debug][null? attr 'noDebug] [
-            print color #gray "IN: unlink"
-        ]
         edgeId: 0
 
         if? :dictionary = type tgt [
@@ -663,10 +642,6 @@ graph: function [
         ;;      .any « try matching any of the attributes
         ;; ]
         ;; returns: :block
-
-        if and? [Debug][null? attr 'noDebug] [
-            print color #gray "IN: fetch"
-        ]
         
         catchAny?: false
         if? not? null? attr "any" ->
@@ -812,9 +787,6 @@ graph: function [
     ;--------------------------
 
     what: function [n,a][
-        if and? [Debug][null? attr 'noDebug] [
-            print color #gray "IN: what"
-        ]
         allresults: fetch n a
         if? 0 < size allresults -> first allresults
         else -> ø
