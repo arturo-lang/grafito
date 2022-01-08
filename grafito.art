@@ -557,12 +557,6 @@ graph: function [
         if empty? results [ 
             return ø 
         ]
-        
-        ; nprops: #[]
-
-        ; loop results [row][
-        ;     set nprops row\1 row\2
-        ; ]
 
         return #[
             id: nid
