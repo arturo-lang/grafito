@@ -457,12 +457,12 @@ graph: function [
         append 'qr ~{!sql 
             DELETE 
             FROM nodes 
-            WHERE id='|nd\id|'
+            WHERE id=|nd\id|
         }
         append 'qr ~{!sql 
             DELETE 
             FROM edges 
-            WHERE source='|nd\id|' OR target='|nd\id|'
+            WHERE source=|nd\id| OR target=|nd\id|
         }
 
         performQuery "unput" qr
@@ -482,7 +482,7 @@ graph: function [
 
         edgeId: performQuery.id "edge" ~{!sql 
             INSERT INTO edges (tag,source,target,direction) 
-            VALUES ('|name|','|src\id|','|tgt\id|',1)
+            VALUES ('|name|', |src\id|, |tgt\id|, 1)
         }
 
         #[
@@ -507,7 +507,7 @@ graph: function [
         performQuery "unedge" ~{!sql 
             DELETE 
             FROM edges 
-            WHERE source='|src\id|' AND target='|tgt\id|'
+            WHERE source=|src\id| AND target=|tgt\id|
         }
     ]
 
@@ -520,7 +520,7 @@ graph: function [
         qr: ~{!sql:
             SELECT nodes.tag, nodes.properties 
             FROM nodes 
-            WHERE nodes.id='|nid|'
+            WHERE nodes.id=|nid|
         :}
 
         results: performQuery "nodeFromId" qr
@@ -669,7 +669,7 @@ graph: function [
                     ]
                     when? [:dictionary][
                         ; it's an edge filter
-                        append 'edgeFilters ~{!sql (edges.tag='|k|' AND edges.target='|v\id|')}
+                        append 'edgeFilters ~{!sql (edges.tag='|k|' AND edges.target=|v\id|)}
                     ]
                     when? [:block][
                         if? and? 0 < size v 
@@ -677,7 +677,7 @@ graph: function [
                             ; it's an array of edge filters
                             orCriteria: new []
                             loop v [edgef][
-                                'orCriteria ++ ~{!sql (edges.tag='|k|' AND edges.target='|edgef\id|')}
+                                'orCriteria ++ ~{!sql (edges.tag='|k|' AND edges.target=|edgef\id|)}
                             ]
                             append 'edgeFilters "(" ++ (join.with:" OR " orCriteria) ++ ")"
                         ]
@@ -816,7 +816,7 @@ graph: function [
                 FROM edges 
                 INNER JOIN nodes
                 ON nodes.id=edges.source OR nodes.id=edges.target
-                WHERE (source='|nd\id|' OR target='|nd\id|') AND (nodes.id<>'|nd\id|')
+                WHERE (source=|nd\id| OR target=|nd\id|) AND (nodes.id<>|nd\id|)
             }
 
             rezu: performQuery "nodeFromIds" qr
