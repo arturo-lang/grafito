@@ -517,11 +517,11 @@ graph: function [
     ;--------------------------
 
     nodeFromId: function [nid][
-        qr: ~{!sql:
+        qr: ~{!sql
             SELECT nodes.tag, nodes.properties 
             FROM nodes 
             WHERE nodes.id=|nid|
-        :}
+        }
 
         results: performQuery "nodeFromId" qr
         
