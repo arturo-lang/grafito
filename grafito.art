@@ -151,8 +151,7 @@ graph: function [
         nodeId: performQuery.id 'put createNodeSQL @[name, write.json ø att]
 
         if verbose? [
-            if? 1 = size att -> printDebug ~"created 1 node (@|nodeId|) with 1 property"
-            else -> printDebug ~"created 1 node (@|nodeId|) with |size att| properties"
+            printDebug ~{created 1 node (@|nodeId|) with |size att| propert|if? 1 = size att -> "y" else -> "ies"|}
         ]
     
         return #[
