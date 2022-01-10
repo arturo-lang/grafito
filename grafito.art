@@ -52,6 +52,7 @@ graph: function [
     deleteNodeEdgesSQL: read "sql/deleteNodeEdges.sql"
     getNodeSQL:         read "sql/getNode.sql"
     getRelatedNodesSQL: read "sql/getRelatedNodes.sql"
+    getMaxNodeIdSQL:    read "sql/getMaxNodeId.sql"
 
     createEdgeSQL:      read "sql/createEdge.sql"
     deleteEdgeSQL:      read "sql/deleteEdge.sql"
@@ -83,7 +84,13 @@ graph: function [
             context: to :string ctx
             prepend: " | "
             print color.bold #gray ">: " ++ context
-            print color #gray prepend ++ join.with:"\n"++prepend split.lines qu
+            
+            queryString: qu
+            if block? qu [
+                queryString: join.with:"\n" qu
+            ]
+
+            print color #gray prepend ++ join.with:"\n"++prepend split.lines queryString
 
             print ""
         ]
@@ -135,30 +142,56 @@ graph: function [
         name :literal :string
         attributes :block :dictionary
     ][
-        ;; description: « insert new node to graph with given name and attributes
-        ;; options: 
-        ;;      unique: « add only if node doesn't already exist"
+        ;; description: « insert new node(s) to graph with given name and attributes
+        ;; options: [
+        ;;      unique: « add only if node doesn't already exist
+        ;;      many: « add multiple nodes at once
         ;; ]
-        ;; returns: :dictionary
+        ;; returns: :dictionary :block
 
         if attr "unique" [
             found: fetch name attributes
             if not? empty? found -> return found
         ]
 
-        att: attributes
-        if not? dictionary? att -> att: #att
-        nodeId: performQuery.id 'put createNodeSQL @[name, write.json ø att]
+        result: new []
 
-        if verbose? [
-            printDebug ~{created 1 node (@|nodeId|) with |size att| propert|if? 1 = size att -> "y" else -> "ies"|}
+        if? not? null? attr 'many [
+            lastId: to :integer first first performQuery 'put getMaxNodeIdSQL ø
+            queries: new []
+            vals: new []
+            loop attributes 'nd [
+                lastId: lastId + 1
+                att: nd
+                if not? dictionary? att -> att: #att
+                'queries ++ createNodeSQL
+                'vals ++  @[name, write.json ø att]
+                'result ++ #[
+                    id: lastId
+                    tag: name
+                    properties: att
+                ]
+            ]
+            performQuery 'put queries vals
+
+            if verbose? ->
+                 printDebug ~{created |size attributes| nodes}
+        ]
+        else [
+            att: attributes
+            if not? dictionary? att -> att: #att
+            nodeId: performQuery.id 'put createNodeSQL @[name, write.json ø att]
+            result: #[
+                id: nodeId
+                tag: name
+                properties: att
+            ]
+
+            if verbose? ->
+                printDebug ~{created 1 node (@|nodeId|) with |size att| propert|if? 1 = size att -> "y" else -> "ies"|}
         ]
     
-        return #[
-            id: nodeId
-            tag: name
-            properties: att
-        ]
+        return result
     ]
 
     ;
