@@ -45,17 +45,20 @@ graph: function [
 
     ; Global SQL scripts
 
-    schemaSQL:          split.by:";" read "sql/schema.sql"
+    schemaSQL:              split.by:";" read "sql/schema.sql"
 
-    createNodeSQL:      read "sql/createNode.sql"
-    deleteNodeSQL:      read "sql/deleteNode.sql"
-    deleteNodeEdgesSQL: read "sql/deleteNodeEdges.sql"
-    getNodeSQL:         read "sql/getNode.sql"
-    getRelatedNodesSQL: read "sql/getRelatedNodes.sql"
-    getMaxNodeIdSQL:    read "sql/getMaxNodeId.sql"
+    createNodeSQL:          read "sql/createNode.sql"
+    deleteNodeSQL:          read "sql/deleteNode.sql"
+    deleteNodeEdgesSQL:     read "sql/deleteNodeEdges.sql"
+    getNodeSQL:             read "sql/getNode.sql"
+    getRelatedNodesSQL:     read "sql/getRelatedNodes.sql"
+    getMaxNodeIdSQL:        read "sql/getMaxNodeId.sql"
 
-    createEdgeSQL:      read "sql/createEdge.sql"
-    deleteEdgeSQL:      read "sql/deleteEdge.sql"
+    createEdgeSQL:          read "sql/createEdge.sql"
+    deleteEdgeSQL:          read "sql/deleteEdge.sql"
+
+    fetchNodesSQL:          read "sql/fetchNodes.sql"
+    fetchNodesWithEdgesSQL: read "sql/fetchNodes.withEdges.sql"
 
     ; Global UI template
 
@@ -493,6 +496,9 @@ graph: function [
 
         propertyFilters: new []
         edgeFilters: new []
+        qvals: new @[name]
+        qpropvals: new []
+        qedgevals: new []
 
         if not? empty? att [
             loop att [k,v][
@@ -563,47 +569,26 @@ graph: function [
 
         propies: ""
         linker: " AND "
+        edgeLimit: ~" = |size edgeFilters|"
 
-        if catchAny? ->
+        if catchAny? [
             linker: " OR "
+            edgeLimit: " >= 1"
+        ]
 
         if not? empty? propertyFilters ->
             propies: ~{!sql AND (|join.with: linker propertyFilters|)}
 
-        qr: ~{!sql
-            SELECT nodes.id, nodes.tag, nodes.properties
-            FROM nodes
-        }
+        if? not? empty? edgeFilters [
+            edgies: join.with: " OR " edgeFilters
 
-        if not? empty? edgeFilters ->
-            qr: qr ++ "\n" ++ {!sql
-                INNER JOIN edges
-                ON edges.source=nodes.id
-            }
-
-        qr: qr ++ "\n" ++ ~{!sql
-            WHERE nodes.tag='|name|' |propies|
-        }
-
-        if not? empty? edgeFilters [
-            countNum: ~" = |size edgeFilters|"
-            if catchAny? [
-                countNum: " >= 1"
-            ]
-            qr: qr ++ "\n" ++ ~{!sql
-                GROUP BY nodes.id 
-                HAVING COUNT( 
-                    CASE 
-                        WHEN |join.with:" OR " edgeFilters| 
-                        THEN 1 
-                    END 
-                ) |countNum|
-            }
+            qr: ~ fetchNodesWithEdgesSQL
+        ]
+        else [
+            qr: ~ fetchNodesSQL
         ]
 
-        qr: qr ++ "\nCOLLATE NOCASE"
-
-        return map performQuery 'fetch qr ø 'x [
+        return map performQuery 'fetch qr qvals 'x [
             #[
                 id: x\0
                 tag: x\1
