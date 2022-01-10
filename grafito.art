@@ -142,8 +142,8 @@ graph: function [
         ;; returns: :dictionary
 
         if attr "unique" [
-            found: what name attributes
-            if not? null? found -> return found
+            found: fetch name attributes
+            if not? empty? found -> return found
         ]
 
         att: attributes
@@ -474,18 +474,6 @@ graph: function [
     ]
 
     ;
-    ; Get first result for tag
-    ; with given properties
-    ; and edges
-    ;--------------------------
-
-    what: function [n,a][
-        allresults: fetch n a
-        if? 0 < size allresults -> first allresults
-        else -> ø
-    ]
-
-    ;
     ; Get nodeset 
     ; for graph visualization
     ;--------------------------
@@ -739,7 +727,7 @@ if standalone? [
     ; methods
 
     launchTerminal: function [][
-        completions: ["what" "fetch" "put" "unput" "link" "unlink" "edge" "unedge"]
+        completions: ["fetch" "put" "unput" "link" "unlink" "edge" "unedge"]
         historyPath: join.path @[path\home ".arturo" "grafito-history.lst"]
 
         print ""
