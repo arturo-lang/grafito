@@ -60,6 +60,13 @@ graph: function [
     fetchNodesSQL:          read "sql/fetchNodes.sql"
     fetchNodesWithEdgesSQL: read "sql/fetchNodes.withEdges.sql"
 
+    ; Global SQL filters
+
+    hasEdgeFilter:              read "sql/filters/hasEdge.sql"
+    hasPropertyFilter:          read "sql/filters/hasProperty.sql"
+    edgeWithTargetFilter:       read "sql/filters/edgeWithTarget.sql"
+    propertyWithValueFilter:    read "sql/filters/propertyWithValue.sql"
+
     ; Global UI template
 
     app: read "ui/index.html"
@@ -505,12 +512,12 @@ graph: function [
                 case [equal? type v]
                     when? [:null][
                         ; it's an edge filter without criteria
-                        append 'edgeFilters {!sql (edges.tag=?)}
+                        append 'edgeFilters hasEdgeFilter
                         'qedgevals ++ @[k]
                     ]
                     when? [:dictionary][
                         ; it's an edge filter
-                        append 'edgeFilters {!sql (edges.tag=? AND edges.target=?)}
+                        append 'edgeFilters edgeWithTargetFilter
                         'qedgevals ++ @[k, v\id]
                     ]
                     when? [:block][
@@ -526,45 +533,43 @@ graph: function [
                         ]
                         else [
                             ; it's a complex property filter
-                            loop #v [filt,arg][
+                            loop #v [filt,rg][
 
-                                symb: "="
-                                val: ~"'|v|'"
+                                [symb,val]: @["=", v]
 
                                 case [equal? filt]
-                                    when? ["contains"]          [symb: "LIKE"   val: ~"'%|arg|%'"]
-                                    when? ["prefix"]            [symb: "LIKE"   val: ~"'|arg|%'"]
-                                    when? ["suffix"]            [symb: "LIKE"   val: ~"'%|arg|'"]
-                                    when? ["under"]             [symb: "<"      val: arg]
-                                    when? ["over"]              [symb: ">"      val: arg]
-                                    when? ["underOrEqual"]      [symb: "<="     val: arg]
-                                    when? ["overOrEqual"]       [symb: ">="     val: arg]
-                                    when? ["not"]               [     
-                                        if? block? arg [
-                                            symb: "NOT IN" val: ~{(|join.with:", " map arg [x]["'" ++ (to :string x) ++ "'"]|)}
-                                        ]
-                                        else [
-                                            symb: "!="
-                                            val: ~"'|arg|'"
-                                        ]   
+        
+                                    when? ["contains"]      -> [symb,val]: @["LIKE", ~"%|rg|%"]
+                                    when? ["prefix"]        -> [symb,val]: @["LIKE", ~"|rg|%"]
+                                    when? ["suffix"]        -> [symb,val]: @["LIKE", ~"%|rg|"]
+                                    when? ["under"]         -> [symb,val]: @["<", rg]
+                                    when? ["over"]          -> [symb,val]: @[">", rg]
+                                    when? ["underOrEqual"]  -> [symb,val]: @["<=", rg]
+                                    when? ["overOrEqual"]   -> [symb,val]: @[">=", rg]
+                                    when? ["in"]            -> [symb,val]: @["IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
+                                    when? ["not"][     
+                                        if? block? rg       -> [symb,val]: @["NOT IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
+                                        else                -> [symb,val]: @["!=", rg]
                                     ]
-                                    when? ["in"]                [symb: "IN"     val: ~{(|join.with:", " map arg [x]["'" ++ (to :string x) ++ "'"]|)}]
                                     else [
                                         panic.code: 1 ~"filter: |filt| not recognized"
                                     ]
 
-                                append 'propertyFilters ~{!sql (json_extract(nodes.properties, '$.|k|') |symb| |val|)} 
+                                append 'propertyFilters ~ propertyWithValueFilter
+                                'qpropvals ++ @[~"$.|k|", val]
                             ]
                         ]
                     ]
                     when? [:logical][
                         ; it's a simple property filter without criteria
-                        append 'propertyFilters ~{!sql (json_extract(nodes.properties, '$.|k|')!='')} 
+                        append 'propertyFilters hasPropertyFilter
+                        'qpropvals ++ @[~"$.|k|"]
                     ]
                     else [
                         ; it's a simple property filter
-                        append 'propertyFilters ~{!sql (json_extract(nodes.properties, '$.|k|')=?)} 
-                        'qpropvals ++ @[v]
+                        symb: "="
+                        append 'propertyFilters ~ propertyWithValueFilter
+                        'qpropvals ++ @[~"$.|k|", v]
                     ]
             ]
         ]
