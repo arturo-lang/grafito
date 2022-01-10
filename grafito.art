@@ -72,7 +72,7 @@ graph: function [
     ]
 
     ;==========================================
-    ; METHODS
+    ; HELPERS
     ;==========================================
 
     ;
@@ -133,6 +133,156 @@ graph: function [
             return null
         ]
     ]
+
+    ;
+    ; Create new edge
+    ;--------------------------
+
+    edge: function [
+        src :dictionary 
+        name :literal :string
+        tgt :dictionary
+    ][
+        ;; description: « create edge from source to target node with given name
+        ;; returns: :dictionary
+
+        edgeId: performQuery.id 'edge createEdgeSQL @[name, src\id, tgt\id]
+
+        #[
+            id: edgeId
+            tag: name
+            source: src
+            target: tgt
+        ]
+    ]
+
+    ;
+    ; Delete existing edge
+    ;--------------------------
+
+    unedge: function [
+        src :dictionary
+        name :literal :string
+        tgt :dictionary
+    ][
+        ;; description: « delete edge from source to target node with given name
+
+        performQuery 'unedge deleteEdgeSQL @[src\id, tgt\id]
+    ]
+
+    ;
+    ; Get node with properties
+    ; from ID
+    ;--------------------------
+
+    nodeFromId: function [nid][
+        results: performQuery 'nodeFromId getNodeSQL @[nid]
+        
+        if empty? results ->
+            return ø 
+
+        return #[
+            id: nid
+            tag: first first results
+            properties: read.json last first results
+        ]
+    ]
+
+    ;
+    ; Get nodeset 
+    ; for graph visualization
+    ;--------------------------
+
+    nodeFromIds: function [nodes][
+        nodeset: new nodes
+        if not? block? nodeset [
+            nodeset: new @[nodeset]
+        ]
+
+        clean: new nodeset
+
+        edz: new []
+        usedColors: new []
+
+        loop nodeset [nd][
+            'usedColors ++ addColorForNodeType nd usedColors
+
+            rezu: performQuery 'nodeFromIds getRelatedNodesSQL @[nd\id, nd\id, nd\id]
+
+            loop rezu [rez][
+                appendable: #[
+                    id: rez\0
+                    tag: rez\1
+                    properties: read.json rez\2
+                ]
+
+                append 'clean appendable
+                'usedColors ++ addColorForNodeType appendable usedColors
+                append 'edz @[@[rez\3 rez\4 rez\5]]
+            ]
+            clean: unique clean
+        ]
+
+        elements: new []
+
+        loop clean [nd][
+            t: nd\tag
+            props: nd\properties
+            nconf: nodeConfig\[t]
+            
+            append 'elements #[
+                id: to :integer nd\id
+                tag: t
+                properties: props
+                label: get props nconf\label
+                color: nconf\color
+            ]
+        ]
+
+        relations: new []
+
+        loop edz [ed][
+            append 'relations #[ 
+                id: ~"|ed\0|+|ed\1|+|ed\2|"
+                from: to :integer ed\0
+                to: to :integer ed\1
+                label: ed\2
+            ]
+        ]
+
+        return #[
+            nodes: unique elements
+            edges: unique relations
+        ]
+    ]
+
+    ;
+    ; Generate access helper
+    ;--------------------------
+    generateHelper: function [id,block][
+        if? not? null? attr 'new [
+            put id block
+        ]
+        else [
+            fetch id block
+        ]
+    ]
+
+    ;==========================================
+    ; REPL
+    ;==========================================
+
+    ;
+    ; Switch verbosity on/off
+    ;--------------------------
+
+    verbose: function [] .export:[verbose?] [
+        verbose?: not? verbose?
+    ]
+
+    ;==========================================
+    ; METHODS
+    ;==========================================
 
     ;
     ; Create new node
@@ -220,60 +370,6 @@ graph: function [
     ]
 
     ;
-    ; Create new edge
-    ;--------------------------
-
-    edge: function [
-        src :dictionary 
-        name :literal :string
-        tgt :dictionary
-    ][
-        ;; description: « create edge from source to target node with given name
-        ;; returns: :dictionary
-
-        edgeId: performQuery.id 'edge createEdgeSQL @[name, src\id, tgt\id]
-
-        #[
-            id: edgeId
-            tag: name
-            source: src
-            target: tgt
-        ]
-    ]
-
-    ;
-    ; Delete existing edge
-    ;--------------------------
-
-    unedge: function [
-        src :dictionary
-        name :literal :string
-        tgt :dictionary
-    ][
-        ;; description: « delete edge from source to target node with given name
-
-        performQuery 'unedge deleteEdgeSQL @[src\id, tgt\id]
-    ]
-
-    ;
-    ; Get node with properties
-    ; from ID
-    ;--------------------------
-
-    nodeFromId: function [nid][
-        results: performQuery 'nodeFromId getNodeSQL @[nid]
-        
-        if empty? results ->
-            return ø 
-
-        return #[
-            id: nid
-            tag: first first results
-            properties: read.json last first results
-        ]
-    ]
-
-    ;
     ; Link nodes with edges
     ;--------------------------
 
@@ -353,7 +449,7 @@ graph: function [
                 ]
             ]
 
-            ; if verbose? -> printDebug ~"created |size edges| edges"
+            if verbose? -> printDebug ~"removed |size edges| edges"
         ]
     ]
 
@@ -517,86 +613,6 @@ graph: function [
     ]
 
     ;
-    ; Get nodeset 
-    ; for graph visualization
-    ;--------------------------
-
-    nodeFromIds: function [nodes][
-        nodeset: new nodes
-        if not? block? nodeset [
-            nodeset: new @[nodeset]
-        ]
-
-        clean: new nodeset
-
-        edz: new []
-        usedColors: new []
-
-        loop nodeset [nd][
-            'usedColors ++ addColorForNodeType nd usedColors
-
-            rezu: performQuery 'nodeFromIds getRelatedNodesSQL @[nd\id, nd\id, nd\id]
-
-            loop rezu [rez][
-                appendable: #[
-                    id: rez\0
-                    tag: rez\1
-                    properties: read.json rez\2
-                ]
-
-                append 'clean appendable
-                'usedColors ++ addColorForNodeType appendable usedColors
-                append 'edz @[@[rez\3 rez\4 rez\5]]
-            ]
-            clean: unique clean
-        ]
-
-        elements: new []
-
-        loop clean [nd][
-            t: nd\tag
-            props: nd\properties
-            nconf: nodeConfig\[t]
-            
-            append 'elements #[
-                id: to :integer nd\id
-                tag: t
-                properties: props
-                label: get props nconf\label
-                color: nconf\color
-            ]
-        ]
-
-        relations: new []
-
-        loop edz [ed][
-            append 'relations #[ 
-                id: ~"|ed\0|+|ed\1|+|ed\2|"
-                from: to :integer ed\0
-                to: to :integer ed\1
-                label: ed\2
-            ]
-        ]
-
-        return #[
-            nodes: unique elements
-            edges: unique relations
-        ]
-    ]
-
-    ;
-    ; Generate access helper
-    ;--------------------------
-    generateHelper: function [id,block][
-        if? not? null? attr 'new [
-            put id block
-        ]
-        else [
-            fetch id block
-        ]
-    ]
-
-    ;
     ; Visualize given nodeset
     ;--------------------------
 
@@ -656,14 +672,6 @@ graph: function [
         else [
             serve.verbose routes
         ]
-    ]
-
-    ;
-    ; Switch verbosity on/off
-    ;--------------------------
-
-    verbose: function [] .export:[verbose?] [
-        verbose?: not? verbose?
     ]
 
     ;==========================================
