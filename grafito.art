@@ -178,8 +178,11 @@ graph: function [
             toDelete: new nd
 
         loop toDelete 'deletable [
-            performQuery 'unput deleteNodeSQL @[deletable\id]
-            performQuery 'unput deleteNodeEdgesSQL @[deletable\id, deletable\id]
+            performQuery 'unput @[
+                deleteNodeSQL, deleteNodeEdgesSQL
+            ] @[
+                deletable\id, deletable\id, deletable\id 
+            ]
         ]
     ]
 
