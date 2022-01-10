@@ -16,7 +16,7 @@
 ; The main library
 ;--------------------------
 
-Debug: false ; true
+Debug: true
 
 graph: function [
     dbpath :string :null
@@ -166,14 +166,21 @@ graph: function [
     ;--------------------------
 
     unput: function [
-        nd :dictionary
+        nd :dictionary :block
     ][
-        ;; description: « remove given node from graph
+        ;; description: « remove given node(s) from graph
 
-        qr: new []
+        toDelete: ø
 
-        performQuery 'unput deleteNodeSQL @[nd\id]
-        performQuery 'unput deleteNodeEdgesSQL @[nd\id, nd\id]
+        if? dictionary? nd ->
+            toDelete: @[nd]
+        else ->
+            toDelete: new nd
+
+        loop toDelete 'deletable [
+            performQuery 'unput deleteNodeSQL @[deletable\id]
+            performQuery 'unput deleteNodeEdgesSQL @[deletable\id, deletable\id]
+        ]
     ]
 
     ;
