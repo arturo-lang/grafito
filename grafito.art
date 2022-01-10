@@ -758,11 +758,11 @@ if standalone? [
     logoTxt: read "logo.txt"
 
     GrafitoHeader: join @[
-        print color #magenta replace.regex logoTxt "#(.+)" ((color #white "$1") ++ color.keep #magenta "")
+        print color #magenta replace.regex logoTxt "#(.+)" (color #white "$1") ++ color.keep #magenta ""
         print "  "
-        color #gray "-----------------------------------" BR
+        color #gray "-------------------------------------" BR
         color #gray ~"  system: v/|Versions\engine|, engine: v/|Versions\sqlite|" BR
-        color #gray "-----------------------------------" BR
+        color #gray "-------------------------------------" BR
     ]
 
     ; methods
