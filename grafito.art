@@ -505,11 +505,13 @@ graph: function [
                 case [equal? type v]
                     when? [:null][
                         ; it's an edge filter without criteria
-                        append 'edgeFilters ~{!sql (edges.tag='|k|')}
+                        append 'edgeFilters {!sql (edges.tag=?)}
+                        'qedgevals ++ @[k]
                     ]
                     when? [:dictionary][
                         ; it's an edge filter
-                        append 'edgeFilters ~{!sql (edges.tag='|k|' AND edges.target=|v\id|)}
+                        append 'edgeFilters {!sql (edges.tag=? AND edges.target=?)}
+                        'qedgevals ++ @[k, v\id]
                     ]
                     when? [:block][
                         if? and? 0 < size v 
@@ -517,7 +519,8 @@ graph: function [
                             ; it's an array of edge filters
                             orCriteria: new []
                             loop v [edgef][
-                                'orCriteria ++ ~{!sql (edges.tag='|k|' AND edges.target=|edgef\id|)}
+                                'orCriteria ++ {!sql (edges.tag=? AND edges.target=?)}
+                                'qedgevals ++ @[k, edgef\id]
                             ]
                             append 'edgeFilters "(" ++ (join.with:" OR " orCriteria) ++ ")"
                         ]
@@ -554,13 +557,14 @@ graph: function [
                             ]
                         ]
                     ]
-                    when? [:boolean][
+                    when? [:logical][
                         ; it's a simple property filter without criteria
-                        append 'propertyFilters ~{!sql (properties.property='|k|')} 
+                        append 'propertyFilters ~{!sql (json_extract(nodes.properties, '$.|k|')!='')} 
                     ]
                     else [
                         ; it's a simple property filter
-                        append 'propertyFilters ~{!sql (json_extract(nodes.properties, '$.|k|')='|v|')} 
+                        append 'propertyFilters ~{!sql (json_extract(nodes.properties, '$.|k|')=?)} 
+                        'qpropvals ++ @[v]
                     ]
             ]
         ]
@@ -578,9 +582,11 @@ graph: function [
 
         if not? empty? propertyFilters ->
             propies: ~{!sql AND (|join.with: linker propertyFilters|)}
+            'qvals ++ qpropvals
 
         if? not? empty? edgeFilters [
             edgies: join.with: " OR " edgeFilters
+            'qvals ++ qedgevals
 
             qr: ~ fetchNodesWithEdgesSQL
         ]
