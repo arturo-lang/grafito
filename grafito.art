@@ -226,9 +226,9 @@ graph: function [
                     properties: read.json rez\2
                 ]
 
-                append 'clean appendable
+                'clean ++ appendable
                 'usedColors ++ addColorForNodeType appendable usedColors
-                append 'edz @[@[rez\3 rez\4 rez\5]]
+                'edz ++ @[@[rez\3 rez\4 rez\5]]
             ]
             clean: unique clean
         ]
@@ -240,7 +240,7 @@ graph: function [
             props: nd\properties
             nconf: nodeConfig\[t]
             
-            append 'elements #[
+            'elements ++ #[
                 id: to :integer nd\id
                 tag: t
                 properties: props
@@ -252,7 +252,7 @@ graph: function [
         relations: new []
 
         loop edz [ed][
-            append 'relations #[ 
+            'relations ++ #[ 
                 id: ~"|ed\0|+|ed\1|+|ed\2|"
                 from: to :integer ed\0
                 to: to :integer ed\1
@@ -403,7 +403,7 @@ graph: function [
 
             sr: @ src
             loop sr [s]->
-                append 'edges edge s name tgt
+                'edges ++ edge s name tgt
         
             if verbose? -> printDebug ~"created |size edges| edges"
 
@@ -414,13 +414,13 @@ graph: function [
             tg: @ tgt
             if? :dictionary = type src [
                 loop tg [t]->
-                    append 'edges edge src name t
+                    'edges ++ edge src name t
             ]
             else [
                 sr: @ src
                 loop sr [s] [
                     loop tg [t]->
-                        append 'edges edge s name t
+                        'edges ++ edge s name t
                 ]
             ]
 
@@ -512,12 +512,12 @@ graph: function [
                 case [equal? type v]
                     when? [:null][
                         ; it's an edge filter without criteria
-                        append 'edgeFilters hasEdgeFilter
+                        'edgeFilters ++ hasEdgeFilter
                         'qedgevals ++ @[k]
                     ]
                     when? [:dictionary][
                         ; it's an edge filter
-                        append 'edgeFilters edgeWithTargetFilter
+                        'edgeFilters ++ edgeWithTargetFilter
                         'qedgevals ++ @[k, v\id]
                     ]
                     when? [:block][
@@ -529,7 +529,7 @@ graph: function [
                                 'orCriteria ++ {!sql (edges.tag=? AND edges.target=?)}
                                 'qedgevals ++ @[k, edgef\id]
                             ]
-                            append 'edgeFilters "(" ++ (join.with:" OR " orCriteria) ++ ")"
+                            'edgeFilters ++ "(" ++ (join.with:" OR " orCriteria) ++ ")"
                         ]
                         else [
                             ; it's a complex property filter
@@ -555,20 +555,20 @@ graph: function [
                                         panic.code: 1 ~"filter: |filt| not recognized"
                                     ]
 
-                                append 'propertyFilters ~ propertyWithValueFilter
+                                'propertyFilters ++ ~propertyWithValueFilter
                                 'qpropvals ++ @[~"$.|k|", val]
                             ]
                         ]
                     ]
                     when? [:logical][
                         ; it's a simple property filter without criteria
-                        append 'propertyFilters hasPropertyFilter
+                        'propertyFilters ++ hasPropertyFilter
                         'qpropvals ++ @[~"$.|k|"]
                     ]
                     else [
                         ; it's a simple property filter
                         symb: "="
-                        append 'propertyFilters ~ propertyWithValueFilter
+                        'propertyFilters ++ ~propertyWithValueFilter
                         'qpropvals ++ @[~"$.|k|", v]
                     ]
             ]
@@ -593,10 +593,10 @@ graph: function [
             edgies: join.with: " OR " edgeFilters
             'qvals ++ qedgevals
 
-            qr: ~ fetchNodesWithEdgesSQL
+            qr: ~fetchNodesWithEdgesSQL
         ]
         else [
-            qr: ~ fetchNodesSQL
+            qr: ~fetchNodesSQL
         ]
 
         return map performQuery 'fetch qr qvals 'x [
