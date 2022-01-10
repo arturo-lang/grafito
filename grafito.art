@@ -173,7 +173,7 @@ graph: function [
         qr: new []
 
         performQuery 'unput deleteNodeSQL @[nd\id]
-        performQuery 'unput deleNodeEdgesSQL @[nd\id, nd\id]
+        performQuery 'unput deleteNodeEdgesSQL @[nd\id, nd\id]
     ]
 
     ;
