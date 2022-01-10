@@ -1,1 +1,1 @@
-(json_extract(nodes.properties, ?) |symb| ?)
+(json_extract(nodes.properties, ?) |symb| |val|)
