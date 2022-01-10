@@ -195,16 +195,36 @@
                 });
                 db.on("hoverNode",function (x){
                     var nd = nodes.get(x.node);
+                    console.log(nd);
                     var props = [];
-                    props.push(`<li class="is-active"><a href="#"><b>id</b>: ${nd.id}</a></li>`);
+                    props.push(`
+                        <li class="is-active">
+                            <a href="#">
+                                <b>@</b>${nd.id}
+                            </a>
+                        </li>
+                    `);
                     for (var i=0; i<Object.keys(nd.properties).length; i++){
                         var prop = Object.keys(nd.properties)[i];
                         var propv = nd.properties[prop];
 
-                        props.push(`<li class="is-active"><a href="#"><b>${prop}</b>: ${propv}</a></li>`);
+                        props.push(`
+                            <li class="is-active">
+                                <a href="#">
+                                    <b>${prop}</b>: ${propv}
+                                </a>
+                            </li>
+                        `);
                     }
                     //$("#infobar").html(`<span class='infotag'>${nd.tag}</span>&nbsp;<span class="infoitem"><b>id</b>: ${nd.id}</span>&nbsp;${props.join("&nbsp;")}`);
-                    $("#infobar").html(`<nav class="breadcrumb has-bullet-separator"><ul>${props.join("&nbsp;")}</ul></nav>`);
+                    $("#infobar").html(`
+                        <span class="tag" style="background-color:${nd.color}; color: white;">${nd.tag}</span>
+                        <nav class="breadcrumb has-bullet-separator" style="display: inline-block; margin-left: 20px;">
+                                <ul>
+                                    ${props.join("")}
+                                </ul>
+                        </nav>
+                    `);
                     
                 });
 
