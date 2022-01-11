@@ -28,17 +28,17 @@
             }
             html,
             body,
-            #db, #db-container {
+            #db {
                 margin: 0px;
                 padding: 0px;
                 overflow-x: hidden;
                 overflow-y: hidden;
             }
 
-            #db, #db-container {
+            #db {
                 position: fixed;
                 left: 61px;
-                top: 48px;
+                top: 50px;
                 bottom: 30px;
                 right: 0;
                 bottom:20px;
@@ -99,7 +99,7 @@
                 border-top: 0;
                 font-family: 'Fira Code' !important;
                 /*border-top: 2px solid darkgray;*/
-                border-bottom: 2px solid darkgray;
+                border-bottom: 4px solid #AAA;
                 border-left: 0;
                 border-right: 0;
                 padding: 10px;
@@ -141,7 +141,7 @@
                 left: 0px;
                 width: 60px;
                 min-height: calc(100vh - 82px);
-                top: 46px;
+                top: 50px;
                 bottom: 30px;
                 background: #5a6169; /*url(https://besthqwallpapers.com/Uploads/23-7-2020/137991/thumb2-4k-gray-carbon-background-vector-textures-carbon-patterns-gray-carbon-texture.jpg);*/
                 border-right: 1px solid #EEE;
@@ -182,20 +182,18 @@
     </head>
     <body>
         <div class="command-icon"><i class="ph-arrow-circle-right"></i></div><input type="text" id="command" spellcheck="false" placeholder="Enter a command">
-        <div id="db-container">
-            <div id="left-col">
-                <div class="left-col-item active">
-                    <i class="ph-graph-fill"></i>
-                </div>
-                <div class="left-col-item">
-                    <i class="ph-table"></i>
-                </div>
-                <div class="left-col-item" style="margin-top: auto;">
-                    <i class="ph-sliders"></i>
-                </div>
+        <div id="left-col">
+            <div class="left-col-item active">
+                <i class="ph-graph-fill"></i>
             </div>
-            <div id="db">
+            <div class="left-col-item">
+                <i class="ph-table"></i>
             </div>
+            <div class="left-col-item" style="margin-top: auto;">
+                <i class="ph-sliders"></i>
+            </div>
+        </div>
+        <div id="db">
         </div>
         <div id="infobar"><nav class="breadcrumb has-bullet-separator"><ul><li class="is-active"><a href="#"><b>id</b>: 13</a></li>&nbsp;<li class="is-active"><a href="#"><b>name</b>: Curtis Hanson</a></li>&nbsp;<li class="is-active"><a href="#"><b>birthday</b>: 1945</a></li>&nbsp;<li class="is-active"><a href="#"><b>sex</b>: m</a></li></ul></nav></div>
         <script
@@ -467,7 +465,13 @@
                 makeHoverable("graph");
                 makeHoverable("table");
                 makeHoverable("sliders");
-
+                $("#command").on("focus", (e)=>{
+                    console.log("focused");
+                    $(".command-icon i").removeClass("ph-arrow-circle-right").addClass("ph-arrow-circle-right-fill");
+                });
+                $("#command").on("focusout", (e)=>{
+                    $(".command-icon i").addClass("ph-arrow-circle-right").removeClass("ph-arrow-circle-right-fill");
+                });
                 $("#command").on("keydown", (e)=>{
                     if (e.keyCode === 13) {
                         $.post( "/exec", {command: $("#command").val()}, (data)=>{
