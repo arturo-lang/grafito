@@ -633,12 +633,14 @@ graph: function [
 
             "/exec"         [
                 try? [
-                    print ["<==" command]
+                    if verbose? ->
+                        printDebug "<== " ++ command
                     currentNodes: ""
                     bench: benchmark.get [
                         currentNodes: new do command
                     ]
-                    print ~"=== OK (|bench| ms)"
+                    if verbose? -> 
+                        printDebug ~"==> OK (|bench| ms)"
                     if? or? [not? block? currentNodes]
                             [and? [0 < size currentNodes][not? dictionary? first currentNodes]][
                         "empty"
