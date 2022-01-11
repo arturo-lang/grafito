@@ -128,6 +128,10 @@
                 color: #666;
             }
 
+            .tag {
+                font-weight: 500;
+            }
+
         </style>
     </head>
     <body>
@@ -141,6 +145,38 @@
         <script type="text/javascript">
             var dataset = <||dataset||>;
             var infotext = "";
+            function showPath(items, tag, tagBg, tagFg="white"){
+                let pairs = items;
+
+                if (!(pairs instanceof Map))
+                    pairs = new Map(Object.entries(pairs));
+
+                let props = [];
+
+                for (var [key, val] of pairs){
+                    props.push(`
+                        <li class="is-active">
+                            <a href="#">
+                                <b>${key}:</b>&nbsp;${val}
+                            </a>
+                        </li>
+                    `);
+                }
+                         
+                $("#infobar").html(`
+                    <span class="tag" style="background-color:${tagBg}; color: ${tagFg};">${tag}</span>
+                    <nav class="breadcrumb">
+                        <ul>
+                            ${props.join('')}
+                        </ul>
+                    </nav>
+                `);
+            }
+            function showDefaultInfo(){
+                showPath({
+                    "Showing": `${data.nodes.length} nodes and ${data.edges.length} edges`
+                }, "INFO", "#CCC", "black");
+            }
             function drawGraph() {
                 let initial = window.dataset;
 
@@ -195,8 +231,7 @@
 
                 window.db = new vis.Network(container, window.data, options);
 
-                window.infotext = `Showing ${data.nodes.length} nodes and ${data.edges.length} edges`;
-                $("#infobar").html(window.infotext);
+                showDefaultInfo();
 
                 db.on("doubleClick", (x)=>{
                     $.post("/nodeFromId", {ndid: x.nodes[0] }, (data)=>{
@@ -210,51 +245,30 @@
                     });
                 });
                 db.on("hoverNode", (x)=>{
-                    let nd = nodes.get(x.node);
-                    console.log(nd);
-                    let props = [];
-                    props.push(`
-                        <li class="is-active">
-                            <a href="#">
-                                <b>id:</b>&nbsp;${nd.id}
-                            </a>
-                        </li>
-                    `);
-                    let propertyMap = new Map(Object.entries(nd.properties));
-                    for (var [key, val] of propertyMap){
-                        props.push(`
-                            <li class="is-active">
-                                <a href="#">
-                                    <b>${key}:</b>&nbsp;${val}
-                                </a>
-                            </li>
-                        `);
-                    }
-                    //$("#infobar").html(`<span class='infotag'>${nd.tag}</span>&nbsp;<span class="infoitem"><b>id</b>: ${nd.id}</span>&nbsp;${props.join("&nbsp;")}`);
-                    $("#infobar").html(`
-                        <span class="tag" style="background-color:${nd.color}; color: white;">${nd.tag}</span>
-                        <nav class="breadcrumb">
-                                <ul>
-                                    ${props.join("")}
-                                </ul>
-                        </nav>
-                    `);
-                    
+                    let node = nodes.get(x.node);
+                    console.log(node);
+
+                    showPath(node.properties, node.tag, node.color);    
                 });
 
-                db.on("hoverEdge", (x)=>{
-                    let ed = edges.get(x.edge);
-                    let nodeFrom = nodes.get(ed.from);
-                    let nodeTo = nodes.get(ed.to);
-                    $("#infobar").html(`<span class='infotag'>${ed.label}</span>&nbsp;<span class="infoitem"><b>from</b>: ${nodeFrom.tag} (${nodeFrom.id})</span>&nbsp;<span class="infoitem"><b>to</b>: ${nodeTo.tag} (${nodeTo.id})</span>`)
+                db.on("hoverEdge", (ev)=>{
+                    let edge = edges.get(ev.edge);
+                    let nodeFrom = nodes.get(edge.from);
+                    let nodeTo = nodes.get(edge.to);
+
+                    showPath({
+                        "from": `${nodeFrom.tag}&nbsp;(${nodeFrom.id})`,
+                        "to": `${nodeTo.tag}&nbsp;(${nodeTo.id})`
+                    }, edge.label, "black", "white");
+                    //$("#infobar").html(`<span class='infotag'>${edge.label}</span>&nbsp;<span class="infoitem"><b>from</b>: ${nodeFrom.tag} (${nodeFrom.id})</span>&nbsp;<span class="infoitem"><b>to</b>: ${nodeTo.tag} (${nodeTo.id})</span>`)
                 });
 
                 db.on("blurNode", (x)=>{
-                    $("#infobar").html(window.infotext);
+                    showDefaultInfo();
                 });
 
                 db.on("blurEdge", (x)=>{
-                    $("#infobar").html(window.infotext);
+                    showDefaultInfo();
                 });
             }
             function redrawGraph(dt){
