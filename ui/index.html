@@ -139,29 +139,29 @@
             integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
             crossorigin="anonymous"></script>
         <script type="text/javascript">
-            window.dataset = <||dataset||>;
-            window.infotext = "";
+            var dataset = <||dataset||>;
+            var infotext = "";
             function drawGraph() {
-                var initial = window.dataset;
+                let initial = window.dataset;
 
                 // create an array with nodes
-                var nodes = new vis.DataSet(
+                let nodes = new vis.DataSet(
                     initial.nodes
                 );
 
                 // create an array with edges
-                var edges = new vis.DataSet(
+                let edges = new vis.DataSet(
                     initial.edges
                 );
 
                 // create the graph
-                var container = document.getElementById("db");
+                let container = document.getElementById("db");
                 window.data = {
                     nodes: nodes,
                     edges: edges,
                 };
 
-                var options = {
+                let options = {
                     autoResize: true,
                     height: '100%',
                     width: '100%',
@@ -198,8 +198,8 @@
                 window.infotext = `Showing ${data.nodes.length} nodes and ${data.edges.length} edges`;
                 $("#infobar").html(window.infotext);
 
-                db.on("doubleClick",function (x){
-                    $.post("/nodeFromId", {ndid: x.nodes[0] }, function (data){
+                db.on("doubleClick", (x)=>{
+                    $.post("/nodeFromId", {ndid: x.nodes[0] }, (data)=>{
                         var dt = JSON.parse(data);
                         for (var i=0; i<dt.nodes.length; i++){
                             window.data.nodes.update(dt.nodes[i]);
@@ -209,10 +209,10 @@
                         }
                     });
                 });
-                db.on("hoverNode",function (x){
-                    var nd = nodes.get(x.node);
+                db.on("hoverNode", (x)=>{
+                    let nd = nodes.get(x.node);
                     console.log(nd);
-                    var props = [];
+                    let props = [];
                     props.push(`
                         <li class="is-active">
                             <a href="#">
@@ -221,8 +221,8 @@
                         </li>
                     `);
                     for (var i=0; i<Object.keys(nd.properties).length; i++){
-                        var prop = Object.keys(nd.properties)[i];
-                        var propv = nd.properties[prop];
+                        let prop = Object.keys(nd.properties)[i];
+                        let propv = nd.properties[prop];
 
                         props.push(`
                             <li class="is-active">
@@ -244,18 +244,18 @@
                     
                 });
 
-                db.on("hoverEdge",function (x){
-                    var ed = edges.get(x.edge);
-                    var nodeFrom = nodes.get(ed.from);
-                    var nodeTo = nodes.get(ed.to);
+                db.on("hoverEdge", (x)=>{
+                    let ed = edges.get(x.edge);
+                    let nodeFrom = nodes.get(ed.from);
+                    let nodeTo = nodes.get(ed.to);
                     $("#infobar").html(`<span class='infotag'>${ed.label}</span>&nbsp;<span class="infoitem"><b>from</b>: ${nodeFrom.tag} (${nodeFrom.id})</span>&nbsp;<span class="infoitem"><b>to</b>: ${nodeTo.tag} (${nodeTo.id})</span>`)
                 });
 
-                db.on("blurNode",function (x){
+                db.on("blurNode", (x)=>{
                     $("#infobar").html(window.infotext);
                 });
 
-                db.on("blurEdge",function (x){
+                db.on("blurEdge", (x)=>{
                     $("#infobar").html(window.infotext);
                 });
             }
@@ -270,9 +270,9 @@
                 drawGraph();
             });
             var commandInput = document.getElementById("command");
-            commandInput.addEventListener("keydown", function (e) {
+            commandInput.addEventListener("keydown", (e)=>{
                 if (e.keyCode === 13) {
-                    $.post( "/exec", {command: $("#command").val()}, function( data ) {
+                    $.post( "/exec", {command: $("#command").val()}, (data)=>{
                         if (data!="empty"){
                             console.log("got:", data); 
                             if (data=="error"){
@@ -300,9 +300,9 @@
                 }
             }
 
-            window.onbeforeunload = function(evt) {
-                $.post( "/exit", {}, function( data ) {});
-                var e = evt || window.event
+            window.onbeforeunload = (evt)=>{
+                $.post( "/exit", {}, (data)=>{});
+                let e = evt || window.event
                 e.returnValue = false;
                 return false;
             }
