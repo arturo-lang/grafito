@@ -313,7 +313,7 @@
                             if (data!="empty"){
                                 console.log("got:", data); 
                                 if (data=="error"){
-                                    alert("Internal error!");
+                                    showToast(`Something went wrong. Check your syntax!`, "error");
                                 }
                                 else {
                                     try {
