@@ -244,7 +244,7 @@ graph: function [
                 id: to :integer nd\id
                 tag: t
                 properties: props
-                label: get props nconf\label
+                label: truncate get props nconf\label 10
                 color: nconf\color
             ]
         ]
