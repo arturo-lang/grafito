@@ -141,13 +141,18 @@
                 left: 0px;
                 width: 60px;
                 min-height: calc(100vh - 82px);
-                top: 48px;
+                top: 46px;
                 bottom: 30px;
-                background: #3a4149; /*url(https://besthqwallpapers.com/Uploads/23-7-2020/137991/thumb2-4k-gray-carbon-background-vector-textures-carbon-patterns-gray-carbon-texture.jpg);*/
+                background: #5a6169; /*url(https://besthqwallpapers.com/Uploads/23-7-2020/137991/thumb2-4k-gray-carbon-background-vector-textures-carbon-patterns-gray-carbon-texture.jpg);*/
                 border-right: 1px solid #EEE;
                 display: flex;
                 flex-direction: column;
                 justify-content: flex-start;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+                box-shadow: -200px -141px 30px -200px rgba(0,0,0,0.39) inset;
+                -webkit-box-shadow: -200px -141px 30px -200px rgba(0,0,0,0.39) inset;
+                -moz-box-shadow: -200px -141px 30px -200px rgba(0,0,0,0.39) inset;
             }
 
             .left-col-item {
@@ -180,7 +185,7 @@
         <div id="db-container">
             <div id="left-col">
                 <div class="left-col-item active">
-                    <i class="ph-graph"></i>
+                    <i class="ph-graph-fill"></i>
                 </div>
                 <div class="left-col-item">
                     <i class="ph-table"></i>
@@ -429,19 +434,35 @@
             }
 
             function makeHoverable(icon){
-                $(`.ph-${icon}`).parent().mouseenter((ev)=>{
+                $(`.ph-${icon},.ph-${icon}-fill`).parent().mouseenter((ev)=>{
                     if (!($(ev.currentTarget).hasClass("active")))
                         $(ev.currentTarget).find("i").removeClass(`ph-${icon}`).addClass(`ph-${icon}-fill`);
                 }).mouseleave((ev)=>{
                     if (!($(ev.currentTarget).hasClass("active")))
                         $(ev.currentTarget).find("i").removeClass(`ph-${icon}-fill`).addClass(`ph-${icon}`);
                 }).click((ev)=>{
+                    $(".left-col-item i").each((idx,elem)=>{
+                        console.log(elem.classList);
+                        for (var i=0; i<elem.classList.length; i++){
+                            let m = elem.classList[i].match(/ph\-(.+)\-fill/);
+                            if ((m !== null)&&(m.length>0)){
+                                elem.classList.remove(`ph-${m[1]}-fill`);
+                                elem.classList.add(`ph-${m[1]}`);
+                                break;
+                            }
+                        }
+                    });
                     $(".left-col-item").removeClass("active");
                     $(ev.currentTarget).addClass("active");
+                    $(ev.currentTarget).find("i").removeClass(`ph-${icon}`).addClass(`ph-${icon}-fill`);
                 });
             }
             $(document).ready(function(){
                 drawGraph();
+
+                // $(".left-col-item i").each((x,elem)=>{
+                //     console.log(elem);
+                // });
                 
                 makeHoverable("graph");
                 makeHoverable("table");
