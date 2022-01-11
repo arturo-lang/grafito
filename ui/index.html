@@ -393,12 +393,12 @@
                                         showToast(`Query executed in ${dd["timeTaken"].toFixed(2)} ms`);
                                     }
                                     catch (e) {
-                                        alert(e);
+                                        showToast(`Something went wrong!`, "error");
                                     }
                                 }
                             }
                             else {
-                                alert("Done! :)");
+                                showToast(`Query performed`);
                             }
                         });
                     }
