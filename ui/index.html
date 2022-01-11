@@ -200,12 +200,12 @@
 
                 db.on("doubleClick", (x)=>{
                     $.post("/nodeFromId", {ndid: x.nodes[0] }, (data)=>{
-                        var dt = JSON.parse(data);
-                        for (var i=0; i<dt.nodes.length; i++){
-                            window.data.nodes.update(dt.nodes[i]);
+                        let dt = JSON.parse(data);
+                        for (var node of dt.nodes){
+                            window.data.nodes.update(node);
                         }
-                        for (var i=0; i<dt.edges.length; i++){
-                            window.data.edges.update(dt.edges[i]);
+                        for (var edge of dt.edges){
+                            window.data.edges.update(edge);
                         }
                     });
                 });
@@ -220,14 +220,12 @@
                             </a>
                         </li>
                     `);
-                    for (var i=0; i<Object.keys(nd.properties).length; i++){
-                        let prop = Object.keys(nd.properties)[i];
-                        let propv = nd.properties[prop];
-
+                    let propertyMap = new Map(Object.entries(nd.properties));
+                    for (var [key, val] of propertyMap){
                         props.push(`
                             <li class="is-active">
                                 <a href="#">
-                                    <b>${prop}:</b>&nbsp;${propv}
+                                    <b>${key}:</b>&nbsp;${val}
                                 </a>
                             </li>
                         `);
