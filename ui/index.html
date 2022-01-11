@@ -228,10 +228,34 @@
                     height: '100%',
                     width: '100%',
                     nodes: {
-                        font: { color: 'white', align: "center" },
+                        chosen: true,
+                        color: {
+                            border: 'green',
+                            background: '#97C2FC',
+                            highlight: {
+                                border: 'red',
+                                background: '#D2E5FF'
+                            },
+                            hover: {
+                                border: '#2B7CE9',
+                                background: '#D2E5FF'
+                            }
+                            },
+                        font: { 
+                            color: 'white', 
+                            face: 'Roboto',
+                            align: "center" 
+                        },
                         shape: 'circle',
                         widthConstraint: 60,
-                        borderWidth: 2
+                        heightConstraint: 60,
+                        // heightConstraint: true,
+                        // labelHighlightBold: false,
+                        borderWidth: 2,
+                        borderWidthSelected: 4,
+                        // shadow: {
+                        //     enabled: true
+                        // }
                     },
                     edges:{
                         arrows: {
@@ -271,7 +295,11 @@
                     });
                 });
                 db.on("hoverNode", (x)=>{
+                    console.log(x);
+                    var ne = db.body.nodes[x.node];
+                    console.log(ne);
                     let node = nodes.get(x.node);
+                    db.canvas.body.container.style.cursor = 'pointer';
                     console.log(node);
 
                     showPath(node.properties, node.tag, node.color);    
@@ -291,6 +319,7 @@
 
                 db.on("blurNode", (x)=>{
                     showDefaultInfo();
+                    db.canvas.body.container.style.cursor = 'default';
                 });
 
                 db.on("blurEdge", (x)=>{
