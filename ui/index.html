@@ -23,7 +23,7 @@
         <style type="text/css">
 
             * {
-                font-family: "Roboto";
+                font-family: "Roboto" !important;
             }
             html,
             body,
@@ -95,7 +95,7 @@
                 width:100%;
                 font-size: 20px;
                 border-top: 0;
-                font-family: 'Fira Code';
+                font-family: 'Fira Code' !important;
                 /*border-top: 2px solid darkgray;*/
                 border-bottom: 2px solid darkgray;
                 border-left: 0;
@@ -224,37 +224,19 @@
                 };
 
                 let options = {
-                    autoResize: true,
-                    height: '100%',
-                    width: '100%',
                     nodes: {
-                        chosen: true,
-                        color: {
-                            border: 'green',
-                            background: '#97C2FC',
-                            highlight: {
-                                border: 'red',
-                                background: '#D2E5FF'
-                            },
-                            hover: {
-                                border: '#2B7CE9',
-                                background: '#D2E5FF'
-                            }
-                            },
-                        font: { 
-                            color: 'white', 
-                            face: 'Roboto',
-                            align: "center" 
+                        shape: "circle",
+                        font: {
+                            face: "Roboto",
+                            color: "white",
+                            align: "center"
                         },
-                        shape: 'circle',
+                        //title: "Sometitle",
                         widthConstraint: 60,
-                        heightConstraint: 60,
-                        // heightConstraint: true,
-                        // labelHighlightBold: false,
-                        borderWidth: 2,
-                        borderWidthSelected: 4,
-                        // shadow: {
-                        //     enabled: true
+                        // color: {
+                        //     hover: {
+                        //         border: "#FF0000"
+                        //     }
                         // }
                     },
                     edges:{
@@ -267,9 +249,8 @@
                         },
                         length: 3.0
                     },
-                    interaction:{
-                        hover:true,
-                        hoverConnectedEdges:false
+                    interaction: {
+                        hover: true
                     },
                     physics: {
                         barnesHut: {
@@ -277,6 +258,59 @@
                             avoidOverlap: 0.2
                         }
                     }
+                    // autoResize: true,
+                    // height: '100%',
+                    // width: '100%',
+                    // // color: {
+                    // //         border: 'green',
+                    // //         background: '#97C2FC',
+                    // //         highlight: {
+                    // //             border: 'red',
+                    // //             background: '#D2E5FF'
+                    // //         },
+                    // //         hover: {
+                    // //             border: '#2B7CE9',
+                    // //             background: '#D2E5FF'
+                    // //         }
+                    // //     },
+                    // nodes: {
+                    //     chosen: true,
+                    //     font: { 
+                    //         color: "white", 
+                    //         face: "Roboto",
+                    //         align: "center" 
+                    //     },
+                    //     shape: "circle",
+                    //     widthConstraint: 60,
+                    //     heightConstraint: 60,
+                    //     // heightConstraint: true,
+                    //     // labelHighlightBold: false,
+                    //     borderWidth: 2,
+                    //     borderWidthSelected: 4,
+                    //     // shadow: {
+                    //     //     enabled: true
+                    //     // }
+                    // },
+                    // edges:{
+                    //     arrows: {
+                    //         to: {
+                    //             enabled: true,
+                    //             scaleFactor: 0.5,
+                    //             type: "arrow"
+                    //         }
+                    //     },
+                    //     length: 3.0
+                    // },
+                    // interaction:{
+                    //     hover:true,
+                    //     hoverConnectedEdges:false
+                    // },
+                    // physics: {
+                    //     barnesHut: {
+                    //         springConstant: 0.03,
+                    //         avoidOverlap: 0.2
+                    //     }
+                    // }
                 };
 
                 window.db = new vis.Network(container, window.data, options);
@@ -299,7 +333,14 @@
                     var ne = db.body.nodes[x.node];
                     console.log(ne);
                     let node = nodes.get(x.node);
-                    db.canvas.body.container.style.cursor = 'pointer';
+                    // ne.setOptions({
+                    //     color: {
+                    //         hover: {
+                    //             background: node.color
+                    //         }
+                    //     }
+                    // });
+                    //db.canvas.body.container.style.cursor = 'pointer';
                     console.log(node);
 
                     showPath(node.properties, node.tag, node.color);    
@@ -319,7 +360,7 @@
 
                 db.on("blurNode", (x)=>{
                     showDefaultInfo();
-                    db.canvas.body.container.style.cursor = 'default';
+                    //db.canvas.body.container.style.cursor = 'default';
                 });
 
                 db.on("blurEdge", (x)=>{
