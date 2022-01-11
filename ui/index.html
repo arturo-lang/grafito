@@ -144,6 +144,7 @@
             crossorigin="anonymous"></script>
         <script type="text/javascript">
             var dataset = <||dataset||>;
+            var timeTaken = 0;
             var infotext = "";
             function showPath(items, tag, tagBg, tagFg="white"){
                 let pairs = items;
@@ -173,9 +174,14 @@
                 `);
             }
             function showDefaultInfo(){
-                showPath({
-                    "Showing": `${data.nodes.length} nodes and ${data.edges.length} edges`
-                }, "INFO", "#CCC", "black");
+                let paths = {
+                    "Showing": `${data.nodes.length} nodes and ${data.edges.length} edges`,
+                    "Query executed in": `${timeTaken.toFixed(2)} ms`
+                }
+                if (timeTaken==0)
+                    delete paths["Query executed in"];
+
+                showPath(paths, "INFO", "#CCC", "black");
             }
             function drawGraph() {
                 let initial = window.dataset;
@@ -281,7 +287,7 @@
             $(document).ready(function(){
                 drawGraph();
 
-                $("#command").addEventListener("keydown", (e)=>{
+                $("#command").on("keydown", (e)=>{
                     if (e.keyCode === 13) {
                         $.post( "/exec", {command: $("#command").val()}, (data)=>{
                             if (data!="empty"){
@@ -291,7 +297,9 @@
                                 }
                                 else {
                                     try {
-                                        j = JSON.parse(data);
+                                        dd = JSON.parse(data);
+                                        j = dd["data"];
+                                        timeTaken = dd["timeTaken"];
                                         redrawGraph(j);
                                     }
                                     catch (e) {

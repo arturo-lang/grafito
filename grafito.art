@@ -645,7 +645,10 @@ graph: function [
                     ]
                     else [
                         currentDataset: new nodeFromIds currentNodes
-                        write.json ø currentDataset
+                        write.json ø #[
+                            data: currentDataset
+                            timeTaken: bench
+                        ]
                     ]
                 ]
                 else [
