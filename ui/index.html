@@ -293,12 +293,6 @@
                 });
             });
 
-            function execCommand(ele) {
-                if(event.key === 'Enter') {
-                    webview.executeQuery(ele.value);        
-                }
-            }
-
             window.onbeforeunload = (evt)=>{
                 $.post( "/exit", {}, (data)=>{});
                 let e = evt || window.event
