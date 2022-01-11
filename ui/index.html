@@ -146,7 +146,6 @@
             crossorigin="anonymous"></script>
         <script type="text/javascript">
             var dataset = <||dataset||>;
-            var timeTaken = 0;
             var infotext = "";
             function showPath(items, tag, tagBg, tagFg="white"){
                 let pairs = items;
@@ -176,14 +175,33 @@
                 `);
             }
             function showDefaultInfo(){
-                let paths = {
-                    "Showing": `${data.nodes.length} nodes and ${data.edges.length} edges`,
-                    "Query executed in": `${timeTaken.toFixed(2)} ms`
-                }
-                if (timeTaken==0)
-                    delete paths["Query executed in"];
+                showPath({
+                    "Showing": `${data.nodes.length} nodes and ${data.edges.length} edges`
+                }, "INFO", "#CCC", "black");
+            }
 
-                showPath(paths, "INFO", "#CCC", "black");
+            function showToast(msg, mode="success"){
+                if (mode=="success")
+                    iziToast.success({
+                        title: 'OK',
+                        message: msg,
+                    });
+                else if (mode=="warning")
+                    iziToast.warning({
+                        title: 'Hmm',
+                        message: msg
+                    })
+                else if (mode=="error")
+                    iziToast.error({
+                        title: 'Ooops',
+                        message: msg
+                    })
+                else {
+                    iziToast.info({
+                        title: "",
+                        message: msg
+                    })
+                }
             }
             function drawGraph() {
                 let initial = window.dataset;
@@ -301,8 +319,8 @@
                                     try {
                                         dd = JSON.parse(data);
                                         j = dd["data"];
-                                        timeTaken = dd["timeTaken"];
                                         redrawGraph(j);
+                                        showToast(`Query executed in ${dd["timeTaken"].toFixed(2)} ms`);
                                     }
                                     catch (e) {
                                         alert(e);
