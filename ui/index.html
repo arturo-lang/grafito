@@ -266,32 +266,33 @@
             }
             $(document).ready(function(){
                 drawGraph();
-            });
-            var commandInput = document.getElementById("command");
-            commandInput.addEventListener("keydown", (e)=>{
-                if (e.keyCode === 13) {
-                    $.post( "/exec", {command: $("#command").val()}, (data)=>{
-                        if (data!="empty"){
-                            console.log("got:", data); 
-                            if (data=="error"){
-                                alert("Internal error!");
+
+                $("#command").addEventListener("keydown", (e)=>{
+                    if (e.keyCode === 13) {
+                        $.post( "/exec", {command: $("#command").val()}, (data)=>{
+                            if (data!="empty"){
+                                console.log("got:", data); 
+                                if (data=="error"){
+                                    alert("Internal error!");
+                                }
+                                else {
+                                    try {
+                                        j = JSON.parse(data);
+                                        redrawGraph(j);
+                                    }
+                                    catch (e) {
+                                        alert(e);
+                                    }
+                                }
                             }
                             else {
-                                try {
-                                    j = JSON.parse(data);
-                                    redrawGraph(j);
-                                }
-                                catch (e) {
-                                    alert(e);
-                                }
+                                alert("Done! :)");
                             }
-                        }
-                        else {
-                            alert("Done! :)");
-                        }
-                    });
-                }
+                        });
+                    }
+                });
             });
+
             function execCommand(ele) {
                 if(event.key === 'Enter') {
                     webview.executeQuery(ele.value);        
