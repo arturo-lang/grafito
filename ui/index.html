@@ -188,7 +188,17 @@
             </div>
             <div id="db">
             </div>
-            <div id="infobar"></div>
+            <div id="infobar">
+                <nav class="breadcrumb">
+                    <ul>
+                        <li class="is-active" v-for="prop in props">
+                            <a href="#">
+                                <b>{{prop.key}}:</b>&nbsp;{{prop.value}}
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
         <script
             src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -215,19 +225,19 @@
                     `);
                 }
                          
-                $("#infobar").html(`
-                    <span class="tag" style="background-color:${tagBg}; color: ${tagFg};">${tag}</span>
-                    <nav class="breadcrumb">
-                        <ul>
-                            ${props.join('')}
-                        </ul>
-                    </nav>
-                `);
+                // $("#infobar").html(`
+                //     <span class="tag" style="background-color:${tagBg}; color: ${tagFg};">${tag}</span>
+                //     <nav class="breadcrumb">
+                //         <ul>
+                //             ${props.join('')}
+                //         </ul>
+                //     </nav>
+                // `);
             }
             function showDefaultInfo(){
-                showPath({
-                    "Showing": `${data.nodes.length} nodes and ${data.edges.length} edges`
-                }, "INFO", "#CCC", "black");
+                // showPath({
+                //     "Showing": `${data.nodes.length} nodes and ${data.edges.length} edges`
+                // }, "INFO", "#CCC", "black");
             }
 
             function showToast(msg, mode="success"){
@@ -500,6 +510,22 @@
                 e.returnValue = false;
                 return false;
             }
+
+            const Grafito = {
+                data() {
+                    return {
+                        props: [
+                            {key:"one", val: "two"},
+                            {key:"three", val: "four"}
+                        ]
+                    }
+                },
+                mounted() {
+
+                }
+            }
+
+            Vue.createApp(Grafito).mount('#app')
         </script>
     </body>
 </html>
