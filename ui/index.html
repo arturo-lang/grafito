@@ -22,28 +22,41 @@
     </head>
     <body>
         <div id="app">
-            <div class="command-icon"><i class="ph-arrow-circle-right"></i></div><input type="text" id="command" spellcheck="false" placeholder="Enter a command">
-            <ul class="sidebar">
-                <li v-for="sidebarItem in sidebar.items" 
-                    :class="sidebar.active==sidebarItem && 'active'" 
-                    @click="sidebar.active=sidebarItem">
-                    <i :class="sidebar.active==sidebarItem ? `ph-${sidebarItem}-fill` : `ph-${sidebarItem}`"></i>
-                </li>
-            </ul>
-            <div id="db">
-            </div>
-            <div id="infobar">
-                <span class="tag" :style="infobar.tag.style">{{infobar.tag.caption}}</span>
-                <nav class="breadcrumb">
-                    <ul>
-                        <li class="is-active" v-for="(value, key) in infobar.paths">
-                            <a href="#">
-                                <b>{{key}}:</b>&nbsp;{{value}}
-                            </a>
+            <header>
+                <div class="command">
+                    <div class="prompt">
+                        <i class="ph-arrow-circle-right"></i>
+                    </div>
+                    <input type="text" spellcheck="false" placeholder="Enter a command">
+                </div>
+            </header>
+            <main>
+                <aside>
+                    <ul class="sidebar">
+                        <li v-for="sidebarItem in sidebar.items" 
+                            :class="sidebar.active==sidebarItem && 'active'" 
+                            @click="sidebar.active=sidebarItem">
+                            <i :class="sidebar.active==sidebarItem ? `ph-${sidebarItem}-fill` : `ph-${sidebarItem}`"></i>
                         </li>
                     </ul>
-                </nav>
-            </div>
+                </aside>
+                <div id="db">
+                </div>
+            </main>
+            <footer>
+                <div id="infobar">
+                    <span class="tag" :style="infobar.tag.style">{{infobar.tag.caption}}</span>
+                    <nav class="breadcrumb">
+                        <ul>
+                            <li class="is-active" v-for="(value, key) in infobar.paths">
+                                <a href="#">
+                                    <b>{{key}}:</b>&nbsp;{{value}}
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </footer>
         </div>
         <script
             src="https://code.jquery.com/jquery-3.5.1.min.js"

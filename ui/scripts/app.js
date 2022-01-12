@@ -211,16 +211,16 @@ const Grafito = {
         // makeHoverable("graph");
         // makeHoverable("table");
         // makeHoverable("sliders");
-        $("#command").on("focus", (e)=>{
+        $(".command input").on("focus", (e)=>{
             console.log("focused");
-            $(".command-icon i").removeClass("ph-arrow-circle-right").addClass("ph-arrow-circle-right-fill");
+            $(".command .icon i").removeClass("ph-arrow-circle-right").addClass("ph-arrow-circle-right-fill");
         });
-        $("#command").on("focusout", (e)=>{
-            $(".command-icon i").addClass("ph-arrow-circle-right").removeClass("ph-arrow-circle-right-fill");
+        $(".command input").on("focusout", (e)=>{
+            $(".command .icon i").addClass("ph-arrow-circle-right").removeClass("ph-arrow-circle-right-fill");
         });
-        $("#command").on("keydown", (e)=>{
+        $(".command input").on("keydown", (e)=>{
             if (e.keyCode === 13) {
-                $.post( "/exec", {command: $("#command").val()}, (data)=>{
+                $.post( "/exec", {command: $(".command input").val()}, (data)=>{
                     if (data!="empty"){
                         console.log("got:", data); 
                         if (data=="error"){
