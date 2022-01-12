@@ -169,6 +169,12 @@ window.onbeforeunload = (evt)=>{
 const Grafito = {
     data() {
         return {
+            activeTab: "graph",
+            menu: [
+                "graph",
+                "table",
+                "sliders"
+            ],
             infobar: {
                 tag: {},
                 paths: []
@@ -200,9 +206,9 @@ const Grafito = {
             drawGraph();
         });
         
-        makeHoverable("graph");
-        makeHoverable("table");
-        makeHoverable("sliders");
+        // makeHoverable("graph");
+        // makeHoverable("table");
+        // makeHoverable("sliders");
         $("#command").on("focus", (e)=>{
             console.log("focused");
             $(".command-icon i").removeClass("ph-arrow-circle-right").addClass("ph-arrow-circle-right-fill");

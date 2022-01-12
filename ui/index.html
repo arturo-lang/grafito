@@ -23,14 +23,8 @@
         <div id="app">
             <div class="command-icon"><i class="ph-arrow-circle-right"></i></div><input type="text" id="command" spellcheck="false" placeholder="Enter a command">
             <div id="left-col">
-                <div class="left-col-item active">
-                    <i class="ph-graph-fill"></i>
-                </div>
-                <div class="left-col-item">
-                    <i class="ph-table"></i>
-                </div>
-                <div class="left-col-item" style="margin-top: auto;">
-                    <i class="ph-sliders"></i>
+                <div class="left-col-item" v-for="menuItem in menu" :class="activeTab==menuItem && 'active'">
+                    <i :class="activeTab==menuItem ? `ph-${menuItem}-fill` : `ph-${menuItem}`"></i>
                 </div>
             </div>
             <div id="db">
