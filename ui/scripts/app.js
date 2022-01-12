@@ -134,31 +134,6 @@ function redrawGraph(dt){
     drawGraph();
 }
 
-function makeHoverable(icon){
-    $(`.ph-${icon},.ph-${icon}-fill`).parent().mouseenter((ev)=>{
-        if (!($(ev.currentTarget).hasClass("active")))
-            $(ev.currentTarget).find("i").removeClass(`ph-${icon}`).addClass(`ph-${icon}-fill`);
-    }).mouseleave((ev)=>{
-        if (!($(ev.currentTarget).hasClass("active")))
-            $(ev.currentTarget).find("i").removeClass(`ph-${icon}-fill`).addClass(`ph-${icon}`);
-    }).click((ev)=>{
-        $(".left-col-item i").each((idx,elem)=>{
-            console.log(elem.classList);
-            for (var i=0; i<elem.classList.length; i++){
-                let m = elem.classList[i].match(/ph\-(.+)\-fill/);
-                if ((m !== null)&&(m.length>0)){
-                    elem.classList.remove(`ph-${m[1]}-fill`);
-                    elem.classList.add(`ph-${m[1]}`);
-                    break;
-                }
-            }
-        });
-        $(".left-col-item").removeClass("active");
-        $(ev.currentTarget).addClass("active");
-        $(ev.currentTarget).find("i").removeClass(`ph-${icon}`).addClass(`ph-${icon}-fill`);
-    });
-}
-
 window.onbeforeunload = (evt)=>{
     // $.post( "/exit", {}, (data)=>{});
     // let e = evt || window.event
@@ -170,6 +145,7 @@ const Grafito = {
     data() {
         return {
             sidebar: {
+                hovered: "",
                 active: "graph",
                 items: [
                     "graph",
@@ -208,9 +184,6 @@ const Grafito = {
             drawGraph();
         });
         
-        // makeHoverable("graph");
-        // makeHoverable("table");
-        // makeHoverable("sliders");
         $(".command input").on("focus", (e)=>{
             console.log("focused");
             $(".command .icon i").removeClass("ph-arrow-circle-right").addClass("ph-arrow-circle-right-fill");
