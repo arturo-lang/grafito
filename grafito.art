@@ -631,7 +631,10 @@ graph: function [
             ]
 
             "/startup" [
-                write.json ø currentDataset
+                write.json ø #[
+                    title: cleanpath
+                    data: currentDataset
+                ]
             ]
 
             "/exec"         [
