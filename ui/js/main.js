@@ -230,55 +230,10 @@ function makeHoverable(icon){
         $(ev.currentTarget).find("i").removeClass(`ph-${icon}`).addClass(`ph-${icon}-fill`);
     });
 }
-$(document).ready(function(){
-    $.post("/startup", {}, (data)=>{
-        console.log(data);
-        window.dataset = JSON.parse(data);
-        drawGraph();
-    });
+// $(document).ready(function(){
+//     console.log("Document.ready");
     
-
-    // $(".left-col-item i").each((x,elem)=>{
-    //     console.log(elem);
-    // });
-    
-    makeHoverable("graph");
-    makeHoverable("table");
-    makeHoverable("sliders");
-    $("#command").on("focus", (e)=>{
-        console.log("focused");
-        $(".command-icon i").removeClass("ph-arrow-circle-right").addClass("ph-arrow-circle-right-fill");
-    });
-    $("#command").on("focusout", (e)=>{
-        $(".command-icon i").addClass("ph-arrow-circle-right").removeClass("ph-arrow-circle-right-fill");
-    });
-    $("#command").on("keydown", (e)=>{
-        if (e.keyCode === 13) {
-            $.post( "/exec", {command: $("#command").val()}, (data)=>{
-                if (data!="empty"){
-                    console.log("got:", data); 
-                    if (data=="error"){
-                        showToast(`Something went wrong. Check your syntax!`, "error");
-                    }
-                    else {
-                        try {
-                            dd = JSON.parse(data);
-                            j = dd["data"];
-                            redrawGraph(j);
-                            showToast(`Query executed in ${dd["timeTaken"].toFixed(2)} ms`);
-                        }
-                        catch (e) {
-                            showToast(`Something went wrong!`, "error");
-                        }
-                    }
-                }
-                else {
-                    showToast(`Query performed`);
-                }
-            });
-        }
-    });
-});
+// });
 
 window.onbeforeunload = (evt)=>{
     // $.post( "/exit", {}, (data)=>{});
@@ -310,6 +265,57 @@ const Grafito = {
                 paths: paths
             }
         }
+    },
+    mounted(){
+        console.log("APP mounted");
+
+        $.post("/startup", {}, (dd)=>{
+            let obj = JSON.parse(dd);
+            document.title = `Grafito @ ${obj.title}`;
+            window.dataset = obj.data;
+            drawGraph();
+        });
+        
+        // $(".left-col-item i").each((x,elem)=>{
+        //     console.log(elem);
+        // });
+        
+        makeHoverable("graph");
+        makeHoverable("table");
+        makeHoverable("sliders");
+        $("#command").on("focus", (e)=>{
+            console.log("focused");
+            $(".command-icon i").removeClass("ph-arrow-circle-right").addClass("ph-arrow-circle-right-fill");
+        });
+        $("#command").on("focusout", (e)=>{
+            $(".command-icon i").addClass("ph-arrow-circle-right").removeClass("ph-arrow-circle-right-fill");
+        });
+        $("#command").on("keydown", (e)=>{
+            if (e.keyCode === 13) {
+                $.post( "/exec", {command: $("#command").val()}, (data)=>{
+                    if (data!="empty"){
+                        console.log("got:", data); 
+                        if (data=="error"){
+                            showToast(`Something went wrong. Check your syntax!`, "error");
+                        }
+                        else {
+                            try {
+                                dd = JSON.parse(data);
+                                j = dd["data"];
+                                redrawGraph(j);
+                                showToast(`Query executed in ${dd["timeTaken"].toFixed(2)} ms`);
+                            }
+                            catch (e) {
+                                showToast(`Something went wrong!`, "error");
+                            }
+                        }
+                    }
+                    else {
+                        showToast(`Query performed`);
+                    }
+                });
+            }
+        });
     }
 }
 
