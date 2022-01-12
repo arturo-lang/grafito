@@ -189,11 +189,12 @@
             <div id="db">
             </div>
             <div id="infobar">
+                <span class="tag" :style="infobar.tag.style">{{infobar.tag.caption}}</span>
                 <nav class="breadcrumb">
                     <ul>
-                        <li class="is-active" v-for="prop in props">
+                        <li class="is-active" v-for="(value, key) in infobar.paths">
                             <a href="#">
-                                <b>{{prop.key}}:</b>&nbsp;{{prop.value}}
+                                <b>{{key}}:</b>&nbsp;{{value}}
                             </a>
                         </li>
                     </ul>
@@ -206,38 +207,11 @@
             crossorigin="anonymous"></script>
         <script type="text/javascript">
             var dataset = <||dataset||>;
-            var infotext = "";
-            function showPath(items, tag, tagBg, tagFg="white"){
-                let pairs = items;
-
-                if (!(pairs instanceof Map))
-                    pairs = new Map(Object.entries(pairs));
-
-                let props = [];
-
-                for (var [key, val] of pairs){
-                    props.push(`
-                        <li class="is-active">
-                            <a href="#">
-                                <b>${key}:</b>&nbsp;${val}
-                            </a>
-                        </li>
-                    `);
-                }
-                         
-                // $("#infobar").html(`
-                //     <span class="tag" style="background-color:${tagBg}; color: ${tagFg};">${tag}</span>
-                //     <nav class="breadcrumb">
-                //         <ul>
-                //             ${props.join('')}
-                //         </ul>
-                //     </nav>
-                // `);
-            }
+            
             function showDefaultInfo(){
-                // showPath({
-                //     "Showing": `${data.nodes.length} nodes and ${data.edges.length} edges`
-                // }, "INFO", "#CCC", "black");
+                VM.updateInfo({
+                    "Showing": `${data.nodes.length} nodes and ${data.edges.length} edges`
+                });
             }
 
             function showToast(msg, mode="success"){
@@ -403,7 +377,7 @@
                     //db.canvas.body.container.style.cursor = 'pointer';
                     console.log(node);
 
-                    showPath(node.properties, node.tag, node.color);    
+                    VM.updateInfo(node.properties, node.tag, node.color); 
                 });
 
                 db.on("hoverEdge", (ev)=>{
@@ -411,10 +385,15 @@
                     let nodeFrom = nodes.get(edge.from);
                     let nodeTo = nodes.get(edge.to);
 
-                    showPath({
-                        "from": `${nodeFrom.tag}&nbsp;(${nodeFrom.id})`,
-                        "to": `${nodeTo.tag}&nbsp;(${nodeTo.id})`
+                    VM.updateInfo({
+                        "from": `${nodeFrom.tag} (${nodeFrom.id})`,
+                        "to": `${nodeTo.tag} (${nodeTo.id})`
                     }, edge.label, "black", "white");
+
+                    // showPath({
+                    //     "from": `${nodeFrom.tag}&nbsp;(${nodeFrom.id})`,
+                    //     "to": `${nodeTo.tag}&nbsp;(${nodeTo.id})`
+                    // }, edge.label, "black", "white");
                     //$("#infobar").html(`<span class='infotag'>${edge.label}</span>&nbsp;<span class="infoitem"><b>from</b>: ${nodeFrom.tag} (${nodeFrom.id})</span>&nbsp;<span class="infoitem"><b>to</b>: ${nodeTo.tag} (${nodeTo.id})</span>`)
                 });
 
@@ -514,18 +493,31 @@
             const Grafito = {
                 data() {
                     return {
-                        props: [
-                            {key:"one", val: "two"},
-                            {key:"three", val: "four"}
-                        ]
+                        infobar: {
+                            tag: {},
+                            paths: []
+                        }
                     }
                 },
-                mounted() {
-
+                methods: {
+                    updateInfo(paths, tag="INFO", tagBg="#CCC", tagFg="white"){
+                        console.log("updating info");
+                        this.infobar = {
+                            tag: {
+                                caption: tag,
+                                style: {
+                                    color: (tagBg=="#CCC" ? "black" : tagFg),
+                                    backgroundColor: tagBg
+                                }
+                            },
+                            paths: paths
+                        }
+                    }
                 }
             }
 
-            Vue.createApp(Grafito).mount('#app')
+            const App = Vue.createApp(Grafito);
+            const VM = App.mount('#app');
         </script>
     </body>
 </html>
