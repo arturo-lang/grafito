@@ -5,31 +5,12 @@
 * {
     font-family: "Roboto" !important;
 }
-html,
-body,
-#db {
+
+html, body {
     margin: 0px;
     padding: 0px;
     overflow-x: hidden;
     overflow-y: hidden;
-}
-
-#db {
-    position: fixed;
-    left: 61px;
-    top: 50px;
-    right: 0;
-    width: calc(100vw - 61px);
-    height: calc(100vh - 89px);
-    background: white;
-
-    &:focus {
-        outline: none;
-    }
-}
-
-.vis-network, .vis-network:focus, canvas, canvas:focus {
-    outline: none !important;
 }
 
 /****************************************************
@@ -68,25 +49,6 @@ body,
             outline: none;
         }
     }
-}
-
-.breadcrumb {
-    font-size: inherit;
-    display: inline-block; 
-    margin-left: 0.6em;
-
-    a {
-        padding: 0 .5em;
-        color: #666;
-    }
-
-    b {
-        font-weight: 500;
-    }
-}
-
-.tag {
-    font-weight: 500;
 }
 
 /****************************************************
@@ -138,6 +100,28 @@ ul.sidebar {
     }
 }
 
+section#content {
+    position: fixed;
+    left: 61px;
+    top: 50px;
+    right: 0;
+    width: calc(100vw - 61px);
+    height: calc(100vh - 89px);
+    background: white;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+    &:focus {
+        outline: none;
+    }
+
+    .vis-network, .vis-network:focus, canvas, canvas:focus {
+        outline: none !important;
+    }
+}
+
 /****************************************************
  Footer
  ****************************************************/
@@ -154,4 +138,23 @@ ul.sidebar {
     color: #666;
     font-size: 0.9em;
     border-top: 1px solid #DDD;
+
+    .tag {
+        font-weight: 500;
+    }    
+
+    .breadcrumb {
+        font-size: inherit;
+        display: inline-block; 
+        margin-left: 0.6em;
+    
+        a {
+            padding: 0 .5em;
+            color: #666;
+        }
+    
+        b {
+            font-weight: 500;
+        }
+    }
 }
