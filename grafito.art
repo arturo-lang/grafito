@@ -663,6 +663,10 @@ graph: function [
                 write.json ø newNodes
             ]
 
+            "/css/style.css"  [
+                read "ui/css/style.css"
+            ]
+
             ; "/exit": [
             ;     return ø
             ; ]
