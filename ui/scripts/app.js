@@ -42,7 +42,7 @@ function drawGraph() {
     );
 
     // create the graph
-    let container = document.getElementById("db");
+    let container = document.getElementById("content");
     window.data = {
         nodes: nodes,
         edges: edges,
