@@ -169,12 +169,14 @@ window.onbeforeunload = (evt)=>{
 const Grafito = {
     data() {
         return {
-            activeTab: "graph",
-            menu: [
-                "graph",
-                "table",
-                "sliders"
-            ],
+            sidebar: {
+                active: "graph",
+                items: [
+                    "graph",
+                    "table",
+                    "sliders"
+                ]
+            },
             infobar: {
                 tag: {},
                 paths: []
