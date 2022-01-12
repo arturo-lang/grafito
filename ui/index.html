@@ -37,8 +37,10 @@
                     <ul class="sidebar">
                         <li v-for="sidebarItem in sidebar.items" 
                             :class="sidebar.active==sidebarItem && 'active'" 
-                            @click="sidebar.active=sidebarItem">
-                            <i :class="sidebar.active==sidebarItem ? `ph-${sidebarItem}-fill` : `ph-${sidebarItem}`"></i>
+                            @click="sidebar.active=sidebarItem"
+                            @mouseenter="sidebar.hovered=sidebarItem"
+                            @mouseleave="sidebar.hovered=''">
+                            <i :class="(sidebar.active==sidebarItem || sidebar.hovered==sidebarItem) ? `ph-${sidebarItem}-fill` : `ph-${sidebarItem}`"></i>
                         </li>
                     </ul>
                 </aside>
