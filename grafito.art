@@ -669,6 +669,10 @@ graph: function [
                 write.json ø newNodes
             ]
 
+            "/css/style.less"  [
+                read "ui/css/style.less"
+            ]
+
             "/css/style.css"  [
                 read "ui/css/style.css"
             ]
