@@ -175,6 +175,31 @@ const Grafito = {
                 },
                 paths: paths
             }
+        },
+        processCommand(){
+            console.log("processing command");
+            $.post( "/exec", {command: $(".command input").val()}, (data)=>{
+                if (data!="empty"){
+                    console.log("got:", data); 
+                    if (data=="error"){
+                        showToast(`Something went wrong. Check your syntax!`, "error");
+                    }
+                    else {
+                        try {
+                            dd = JSON.parse(data);
+                            j = dd["data"];
+                            redrawGraph(j);
+                            showToast(`Query executed in ${dd["timeTaken"].toFixed(2)} ms`);
+                        }
+                        catch (e) {
+                            showToast(`Something went wrong!`, "error");
+                        }
+                    }
+                }
+                else {
+                    showToast(`Query performed`);
+                }
+            });
         }
     },
     mounted(){
@@ -194,32 +219,32 @@ const Grafito = {
         // $(".command input").on("focusout", (e)=>{
         //     $(".command .icon i").addClass("ph-arrow-circle-right").removeClass("ph-arrow-circle-right-fill");
         // });
-        $(".command input").on("keydown", (e)=>{
-            if (e.keyCode === 13) {
-                $.post( "/exec", {command: $(".command input").val()}, (data)=>{
-                    if (data!="empty"){
-                        console.log("got:", data); 
-                        if (data=="error"){
-                            showToast(`Something went wrong. Check your syntax!`, "error");
-                        }
-                        else {
-                            try {
-                                dd = JSON.parse(data);
-                                j = dd["data"];
-                                redrawGraph(j);
-                                showToast(`Query executed in ${dd["timeTaken"].toFixed(2)} ms`);
-                            }
-                            catch (e) {
-                                showToast(`Something went wrong!`, "error");
-                            }
-                        }
-                    }
-                    else {
-                        showToast(`Query performed`);
-                    }
-                });
-            }
-        });
+        // $(".command input").on("keydown", (e)=>{
+        //     if (e.keyCode === 13) {
+        //         $.post( "/exec", {command: $(".command input").val()}, (data)=>{
+        //             if (data!="empty"){
+        //                 console.log("got:", data); 
+        //                 if (data=="error"){
+        //                     showToast(`Something went wrong. Check your syntax!`, "error");
+        //                 }
+        //                 else {
+        //                     try {
+        //                         dd = JSON.parse(data);
+        //                         j = dd["data"];
+        //                         redrawGraph(j);
+        //                         showToast(`Query executed in ${dd["timeTaken"].toFixed(2)} ms`);
+        //                     }
+        //                     catch (e) {
+        //                         showToast(`Something went wrong!`, "error");
+        //                     }
+        //                 }
+        //             }
+        //             else {
+        //                 showToast(`Query performed`);
+        //             }
+        //         });
+        //     }
+        // });
     }
 }
 

@@ -31,6 +31,7 @@
                     </div>
                     <input @focus="command.focused=true"
                            @focusout="command.focused=false"
+                           @keydown.native.enter="processCommand()"
                            type="text" spellcheck="false" placeholder="Enter a command">
                 </div>
             </header>
