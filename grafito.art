@@ -677,8 +677,8 @@ graph: function [
                 read "ui/styles/app.css"
             ]
 
-            "/script/app.js" [
-                read "ui/script/app.js"
+            "/scripts/app.js" [
+                read "ui/scripts/app.js"
             ]
 
             ; "/exit": [
