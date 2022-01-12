@@ -1,121 +1,8 @@
 
-function showDefaultInfo(){
-    VM.updateInfo({
-        "Showing": `${data.nodes.length} nodes and ${data.edges.length} edges`
-    });
-}
-
 const toastSuccess = (msg)=>{ iziToast.success({title: 'OK', message: msg})};
 const toastWarning = (msg)=>{ iziToast.warning({title: 'Hmm', message: msg})};
 const toastError   = (msg)=>{ iziToast.error({title: 'Ooops', message: msg})};
 const toastInfo    = (msg)=>{ iziToast.info({title: '', message: msg})};
-
-
-function drawGraph() {
-    let initial = window.dataset;
-
-    // create an array with nodes
-    let nodes = new vis.DataSet(
-        initial.nodes
-    );
-
-    // create an array with edges
-    let edges = new vis.DataSet(
-        initial.edges
-    );
-
-    // create the graph
-    let container = document.getElementById("content");
-    window.data = {
-        nodes: nodes,
-        edges: edges,
-    };
-
-    let options = {
-        nodes: {
-            shape: "circle",
-            font: {
-                face: "Roboto",
-                color: "white",
-                align: "center"
-            },
-            widthConstraint: 60,
-        },
-        edges:{
-            arrows: {
-                to: {
-                    enabled: true,
-                    scaleFactor: 0.5,
-                    type: "arrow"
-                }
-            },
-            length: 3.0
-        },
-        interaction: {
-            hover: true
-        },
-        physics: {
-            barnesHut: {
-                springConstant: 0.03,
-                avoidOverlap: 0.2
-            }
-        }
-    };
-
-    window.db = new vis.Network(container, window.data, options);
-
-    showDefaultInfo();
-
-    db.on("doubleClick", (x)=>{
-        $.post("/nodeFromId", {ndid: x.nodes[0] }, (data)=>{
-            let dt = JSON.parse(data);
-            for (var node of dt.nodes){
-                window.data.nodes.update(node);
-            }
-            for (var edge of dt.edges){
-                window.data.edges.update(edge);
-            }
-        });
-    });
-    db.on("hoverNode", (x)=>{
-        console.log(x);
-        var ne = db.body.nodes[x.node];
-        console.log(ne);
-        let node = nodes.get(x.node);
-        //db.canvas.body.container.style.cursor = 'pointer';
-        console.log(node);
-
-        VM.updateInfo(node.properties, node.tag, node.color); 
-    });
-
-    db.on("hoverEdge", (ev)=>{
-        let edge = edges.get(ev.edge);
-        let nodeFrom = nodes.get(edge.from);
-        let nodeTo = nodes.get(edge.to);
-
-        VM.updateInfo({
-            "from": `${nodeFrom.tag} (${nodeFrom.id})`,
-            "to": `${nodeTo.tag} (${nodeTo.id})`
-        }, edge.label, "black", "white");
-    });
-
-    db.on("blurNode", (x)=>{
-        showDefaultInfo();
-        //db.canvas.body.container.style.cursor = 'default';
-    });
-
-    db.on("blurEdge", (x)=>{
-        showDefaultInfo();
-    });
-}
-
-function redrawGraph(dt){
-    window.backup = window.dataset;
-    window.dataset = dt;
-    data.nodes.clear();
-    data.edges.clear();
-    drawGraph();
-}
 
 window.onbeforeunload = (evt)=>{
     // $.post( "/exit", {}, (data)=>{});
@@ -128,6 +15,15 @@ const Grafito = {
     data() {
         return {
             working: false,
+            graph: {
+                dataset: {},
+                backup: {},
+                view: {},
+                data: {
+                    nodes: [],
+                    edges: []
+                }
+            },
             command: {
                 focused: false
             },
@@ -148,7 +44,8 @@ const Grafito = {
     },
     methods: {
         updateInfo(paths, tag="INFO", tagBg="#CCC", tagFg="white"){
-            console.log("updating info");
+            console.log("Grafito:: Updating info...");
+
             this.infobar = {
                 tag: {
                     caption: tag,
@@ -160,8 +57,16 @@ const Grafito = {
                 paths: paths
             }
         },
+
+        showDefaultInfo(){
+            this.updateInfo({
+                "Showing": `${this.graph.data.nodes.length} nodes and ${this.graph.data.edges.length} edges`
+            });
+        },
+
         processCommand(){
-            console.log("processing command");
+            console.log("Grafito:: Processing command...");
+
             this.working = true;
             $.post( "/exec", {command: $(".command input").val()}, (data)=>{
                 if (data!="empty"){
@@ -173,7 +78,7 @@ const Grafito = {
                         try {
                             dd = JSON.parse(data);
                             j = dd["data"];
-                            redrawGraph(j);
+                            this.redrawGraph(j);
                             toastSuccess(`Query executed in ${dd["timeTaken"].toFixed(2)} ms`);
                         }
                         catch (e) {
@@ -186,16 +91,123 @@ const Grafito = {
                 }
                 this.working = false;
             });
+        },
+
+        drawGraph(){
+            let initial = this.dataset;
+
+            // create an array with nodes
+            let nodes = new vis.DataSet(
+                initial.nodes
+            );
+
+            // create an array with edges
+            let edges = new vis.DataSet(
+                initial.edges
+            );
+
+            // create the graph
+            let container = document.getElementById("content");
+            this.graph.data = {
+                nodes: nodes,
+                edges: edges,
+            };
+
+            let options = {
+                nodes: {
+                    shape: "circle",
+                    font: {
+                        face: "Roboto",
+                        color: "white",
+                        align: "center"
+                    },
+                    widthConstraint: 60,
+                },
+                edges:{
+                    arrows: {
+                        to: {
+                            enabled: true,
+                            scaleFactor: 0.5,
+                            type: "arrow"
+                        }
+                    },
+                    length: 3.0
+                },
+                interaction: {
+                    hover: true
+                },
+                physics: {
+                    barnesHut: {
+                        springConstant: 0.03,
+                        avoidOverlap: 0.2
+                    }
+                }
+            };
+
+            this.graph.view = new vis.Network(container, this.graph.data, options);
+
+            this.showDefaultInfo();
+
+            this.graph.view.on("doubleClick", (x)=>{
+                $.post("/nodeFromId", {ndid: x.nodes[0] }, (data)=>{
+                    let dt = JSON.parse(data);
+                    for (var node of dt.nodes){
+                        this.graph.data.nodes.update(node);
+                    }
+                    for (var edge of dt.edges){
+                        this.graph.data.edges.update(edge);
+                    }
+                });
+            });
+            this.graph.view.on("hoverNode", (x)=>{
+                console.log(x);
+                var ne = this.graph.view.body.nodes[x.node];
+                console.log(ne);
+                let node = nodes.get(x.node);
+                //db.canvas.body.container.style.cursor = 'pointer';
+                console.log(node);
+
+                this.updateInfo(node.properties, node.tag, node.color); 
+            });
+
+            this.graph.view.on("hoverEdge", (ev)=>{
+                let edge = edges.get(ev.edge);
+                let nodeFrom = nodes.get(edge.from);
+                let nodeTo = nodes.get(edge.to);
+
+                this.updateInfo({
+                    "from": `${nodeFrom.tag} (${nodeFrom.id})`,
+                    "to": `${nodeTo.tag} (${nodeTo.id})`
+                }, edge.label, "black", "white");
+            });
+
+            this.graph.view.on("blurNode", (x)=>{
+                this.showDefaultInfo();
+                //db.canvas.body.container.style.cursor = 'default';
+            });
+
+            this.graph.view.on("blurEdge", (x)=>{
+                this.showDefaultInfo();
+            });
+        },
+
+        redrawGraph(dt){
+            this.backup = this.dataset;
+            this.dataset = dt;
+            this.graph.data.nodes.clear();
+            this.graph.data.edges.clear();
+            this.drawGraph();
         }
     },
+
     mounted(){
         console.log("Grafito:: App started");
 
         $.post("/startup", {}, (dd)=>{
             let obj = JSON.parse(dd);
             document.title = `Grafito @ ${obj.title}`;
-            window.dataset = obj.data;
-            drawGraph();
+            this.dataset = obj.data;
+            this.drawGraph();
         });
     }
 }
