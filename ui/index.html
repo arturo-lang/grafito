@@ -26,12 +26,13 @@
         <div id="app">
             <header>
                 <div class="command">
-                    <div class="prompt">
+                    <div @click="processCommand()" 
+                         class="prompt">
                         <i :class="command.focused ? 'ph-arrow-circle-right-fill' : 'ph-arrow-circle-right'"></i>
                     </div>
                     <input @focus="command.focused=true"
                            @focusout="command.focused=false"
-                           @keydown.native.enter="processCommand()"
+                           @keyup.native.enter="processCommand()"
                            type="text" spellcheck="false" placeholder="Enter a command">
                 </div>
             </header>
