@@ -505,10 +505,10 @@
             });
 
             window.onbeforeunload = (evt)=>{
-                $.post( "/exit", {}, (data)=>{});
-                let e = evt || window.event
-                e.returnValue = false;
-                return false;
+                // $.post( "/exit", {}, (data)=>{});
+                // let e = evt || window.event
+                // e.returnValue = false;
+                // return false;
             }
 
             const Grafito = {
