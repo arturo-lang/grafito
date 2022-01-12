@@ -5,29 +5,12 @@ function showDefaultInfo(){
     });
 }
 
-function showToast(msg, mode="success"){
-    if (mode=="success")
-        iziToast.success({
-            title: 'OK',
-            message: msg,
-        });
-    else if (mode=="warning")
-        iziToast.warning({
-            title: 'Hmm',
-            message: msg
-        })
-    else if (mode=="error")
-        iziToast.error({
-            title: 'Ooops',
-            message: msg
-        })
-    else {
-        iziToast.info({
-            title: "",
-            message: msg
-        })
-    }
-}
+const toastSuccess = (msg)=>{ iziToast.success({title: 'OK', message: msg})};
+const toastWarning = (msg)=>{ iziToast.warning({title: 'Hmm', message: msg})};
+const toastError   = (msg)=>{ iziToast.error({title: 'Ooops', message: msg})};
+const toastInfo    = (msg)=>{ iziToast.info({title: '', message: msg})};
+
+
 function drawGraph() {
     let initial = window.dataset;
 
@@ -182,28 +165,28 @@ const Grafito = {
                 if (data!="empty"){
                     console.log("got:", data); 
                     if (data=="error"){
-                        showToast(`Something went wrong. Check your syntax!`, "error");
+                        toastError("Something went wrong. Check your syntax!");
                     }
                     else {
                         try {
                             dd = JSON.parse(data);
                             j = dd["data"];
                             redrawGraph(j);
-                            showToast(`Query executed in ${dd["timeTaken"].toFixed(2)} ms`);
+                            toastSuccess(`Query executed in ${dd["timeTaken"].toFixed(2)} ms`);
                         }
                         catch (e) {
-                            showToast(`Something went wrong!`, "error");
+                            toastError("Something went wrong!");
                         }
                     }
                 }
                 else {
-                    showToast(`Query performed`);
+                    toastSuccess("Query performed");
                 }
             });
         }
     },
     mounted(){
-        console.log("APP mounted");
+        console.log("Grafito:: App started");
 
         $.post("/startup", {}, (dd)=>{
             let obj = JSON.parse(dd);
