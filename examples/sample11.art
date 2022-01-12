@@ -4,9 +4,6 @@
 ;---------------------------------------------
 do.import {grafito.art}
 
-; set aliases
-
-
 do [
     ;---------------------------------------------
     ; Set up a new graph environment
