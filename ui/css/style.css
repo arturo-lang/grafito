@@ -71,7 +71,6 @@ body,
     font-size: 20px;
     border-top: 0;
     font-family: 'Fira Code' !important;
-    /*border-top: 2px solid darkgray;*/
     border-bottom: 4px solid #AAA;
     border-left: 0;
     border-right: 0;
@@ -80,12 +79,10 @@ body,
     background-size: contain;
     background-repeat: no-repeat;
     background-position: calc(100% - 20px) center;
-    /*background-clip: content-box;*/
     padding-left: 65px;
 }
 
 #command:focus {
-    /*border-top: 2px solid #682A5D;*/
     border-bottom: 4px solid #682A5D;
     outline: none;
 }
@@ -115,7 +112,7 @@ ul.sidebar {
     width: 60px;
     height: calc(100vh - 89px);
     top: 50px;
-    background: #5a6169; /*url(https://besthqwallpapers.com/Uploads/23-7-2020/137991/thumb2-4k-gray-carbon-background-vector-textures-carbon-patterns-gray-carbon-texture.jpg);*/
+    background: #5a6169;
     border-right: 1px solid #EEE;
     display: flex;
     flex-direction: column;
