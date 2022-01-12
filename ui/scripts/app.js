@@ -160,12 +160,7 @@ const Grafito = {
                 });
             });
             this.graph.view.on("hoverNode", (x)=>{
-                console.log(x);
-                var ne = this.graph.view.body.nodes[x.node];
-                console.log(ne);
                 let node = nodes.get(x.node);
-                //db.canvas.body.container.style.cursor = 'pointer';
-                console.log(node);
 
                 this.updateInfo(node.properties, node.tag, node.color); 
             });
@@ -183,7 +178,6 @@ const Grafito = {
 
             this.graph.view.on("blurNode", (x)=>{
                 this.showDefaultInfo();
-                //db.canvas.body.container.style.cursor = 'default';
             });
 
             this.graph.view.on("blurEdge", (x)=>{
