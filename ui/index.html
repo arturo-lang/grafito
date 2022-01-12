@@ -22,8 +22,10 @@
     <body>
         <div id="app">
             <div class="command-icon"><i class="ph-arrow-circle-right"></i></div><input type="text" id="command" spellcheck="false" placeholder="Enter a command">
-            <ul id="sidebar">
-                <li class="sidebar-item" v-for="sidebarItem in sidebar.items" :class="sidebar.active==sidebarItem && 'active'" @click="sidebar.active=sidebarItem">
+            <ul class="sidebar">
+                <li v-for="sidebarItem in sidebar.items" 
+                    :class="sidebar.active==sidebarItem && 'active'" 
+                    @click="sidebar.active=sidebarItem">
                     <i :class="sidebar.active==sidebarItem ? `ph-${sidebarItem}-fill` : `ph-${sidebarItem}`"></i>
                 </li>
             </ul>
