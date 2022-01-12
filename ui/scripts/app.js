@@ -144,6 +144,9 @@ window.onbeforeunload = (evt)=>{
 const Grafito = {
     data() {
         return {
+            command: {
+                focused: false
+            },
             sidebar: {
                 hovered: "",
                 active: "graph",
@@ -184,13 +187,13 @@ const Grafito = {
             drawGraph();
         });
         
-        $(".command input").on("focus", (e)=>{
-            console.log("focused");
-            $(".command .icon i").removeClass("ph-arrow-circle-right").addClass("ph-arrow-circle-right-fill");
-        });
-        $(".command input").on("focusout", (e)=>{
-            $(".command .icon i").addClass("ph-arrow-circle-right").removeClass("ph-arrow-circle-right-fill");
-        });
+        // $(".command input").on("focus", (e)=>{
+        //     console.log("focused");
+        //     $(".command .icon i").removeClass("ph-arrow-circle-right").addClass("ph-arrow-circle-right-fill");
+        // });
+        // $(".command input").on("focusout", (e)=>{
+        //     $(".command .icon i").addClass("ph-arrow-circle-right").removeClass("ph-arrow-circle-right-fill");
+        // });
         $(".command input").on("keydown", (e)=>{
             if (e.keyCode === 13) {
                 $.post( "/exec", {command: $(".command input").val()}, (data)=>{

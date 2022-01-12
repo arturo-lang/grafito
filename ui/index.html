@@ -27,9 +27,11 @@
             <header>
                 <div class="command">
                     <div class="prompt">
-                        <i class="ph-arrow-circle-right"></i>
+                        <i :class="command.focused ? 'ph-arrow-circle-right-fill' : 'ph-arrow-circle-right'"></i>
                     </div>
-                    <input type="text" spellcheck="false" placeholder="Enter a command">
+                    <input @focus="command.focused=true"
+                           @focusout="command.focused=false"
+                           type="text" spellcheck="false" placeholder="Enter a command">
                 </div>
             </header>
             <main>
