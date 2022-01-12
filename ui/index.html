@@ -28,7 +28,7 @@
                 <div class="command">
                     <div @click="processCommand()" 
                          class="prompt">
-                        <i :class="command.focused ? 'ph-arrow-circle-right-fill' : 'ph-arrow-circle-right'"></i>
+                        <i :class="working ? ['ph-spinner-gap-fill', 'rotating'] : (command.focused ? 'ph-arrow-circle-right-fill' : 'ph-arrow-circle-right')"></i>
                     </div>
                     <input @focus="command.focused=true"
                            @focusout="command.focused=false"

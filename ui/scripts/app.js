@@ -127,6 +127,7 @@ window.onbeforeunload = (evt)=>{
 const Grafito = {
     data() {
         return {
+            working: false,
             command: {
                 focused: false
             },
@@ -161,6 +162,7 @@ const Grafito = {
         },
         processCommand(){
             console.log("processing command");
+            this.working = true;
             $.post( "/exec", {command: $(".command input").val()}, (data)=>{
                 if (data!="empty"){
                     console.log("got:", data); 
@@ -182,6 +184,7 @@ const Grafito = {
                 else {
                     toastSuccess("Query performed");
                 }
+                this.working = false;
             });
         }
     },
