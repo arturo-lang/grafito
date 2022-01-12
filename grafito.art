@@ -627,8 +627,11 @@ graph: function [
         
         routes: #.raw[
             "/"             [
-                dataset: write.json ø currentDataset
                 render.template app
+            ]
+
+            "/startup" [
+                write.json ø currentDataset
             ]
 
             "/exec"         [
@@ -665,6 +668,10 @@ graph: function [
 
             "/css/style.css"  [
                 read "ui/css/style.css"
+            ]
+
+            "/js/main.js" [
+                read "ui/js/main.js"
             ]
 
             ; "/exit": [
