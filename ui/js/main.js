@@ -56,13 +56,7 @@ function drawGraph() {
                 color: "white",
                 align: "center"
             },
-            //title: "Sometitle",
             widthConstraint: 60,
-            // color: {
-            //     hover: {
-            //         border: "#FF0000"
-            //     }
-            // }
         },
         edges:{
             arrows: {
@@ -83,59 +77,6 @@ function drawGraph() {
                 avoidOverlap: 0.2
             }
         }
-        // autoResize: true,
-        // height: '100%',
-        // width: '100%',
-        // // color: {
-        // //         border: 'green',
-        // //         background: '#97C2FC',
-        // //         highlight: {
-        // //             border: 'red',
-        // //             background: '#D2E5FF'
-        // //         },
-        // //         hover: {
-        // //             border: '#2B7CE9',
-        // //             background: '#D2E5FF'
-        // //         }
-        // //     },
-        // nodes: {
-        //     chosen: true,
-        //     font: { 
-        //         color: "white", 
-        //         face: "Roboto",
-        //         align: "center" 
-        //     },
-        //     shape: "circle",
-        //     widthConstraint: 60,
-        //     heightConstraint: 60,
-        //     // heightConstraint: true,
-        //     // labelHighlightBold: false,
-        //     borderWidth: 2,
-        //     borderWidthSelected: 4,
-        //     // shadow: {
-        //     //     enabled: true
-        //     // }
-        // },
-        // edges:{
-        //     arrows: {
-        //         to: {
-        //             enabled: true,
-        //             scaleFactor: 0.5,
-        //             type: "arrow"
-        //         }
-        //     },
-        //     length: 3.0
-        // },
-        // interaction:{
-        //     hover:true,
-        //     hoverConnectedEdges:false
-        // },
-        // physics: {
-        //     barnesHut: {
-        //         springConstant: 0.03,
-        //         avoidOverlap: 0.2
-        //     }
-        // }
     };
 
     window.db = new vis.Network(container, window.data, options);
@@ -158,13 +99,6 @@ function drawGraph() {
         var ne = db.body.nodes[x.node];
         console.log(ne);
         let node = nodes.get(x.node);
-        // ne.setOptions({
-        //     color: {
-        //         hover: {
-        //             background: node.color
-        //         }
-        //     }
-        // });
         //db.canvas.body.container.style.cursor = 'pointer';
         console.log(node);
 
@@ -180,12 +114,6 @@ function drawGraph() {
             "from": `${nodeFrom.tag} (${nodeFrom.id})`,
             "to": `${nodeTo.tag} (${nodeTo.id})`
         }, edge.label, "black", "white");
-
-        // showPath({
-        //     "from": `${nodeFrom.tag}&nbsp;(${nodeFrom.id})`,
-        //     "to": `${nodeTo.tag}&nbsp;(${nodeTo.id})`
-        // }, edge.label, "black", "white");
-        //$("#infobar").html(`<span class='infotag'>${edge.label}</span>&nbsp;<span class="infoitem"><b>from</b>: ${nodeFrom.tag} (${nodeFrom.id})</span>&nbsp;<span class="infoitem"><b>to</b>: ${nodeTo.tag} (${nodeTo.id})</span>`)
     });
 
     db.on("blurNode", (x)=>{
@@ -230,10 +158,6 @@ function makeHoverable(icon){
         $(ev.currentTarget).find("i").removeClass(`ph-${icon}`).addClass(`ph-${icon}-fill`);
     });
 }
-// $(document).ready(function(){
-//     console.log("Document.ready");
-    
-// });
 
 window.onbeforeunload = (evt)=>{
     // $.post( "/exit", {}, (data)=>{});
@@ -275,10 +199,6 @@ const Grafito = {
             window.dataset = obj.data;
             drawGraph();
         });
-        
-        // $(".left-col-item i").each((x,elem)=>{
-        //     console.log(elem);
-        // });
         
         makeHoverable("graph");
         makeHoverable("table");
