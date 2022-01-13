@@ -4,13 +4,6 @@ const toastWarning = (msg)=>{ iziToast.warning({title: 'Hmm', message: msg})};
 const toastError   = (msg)=>{ iziToast.error({title: 'Ooops', message: msg})};
 const toastInfo    = (msg)=>{ iziToast.info({title: '', message: msg})};
 
-window.onbeforeunload = (evt)=>{
-    // $.post( "/exit", {}, (data)=>{});
-    // let e = evt || window.event
-    // e.returnValue = false;
-    // return false;
-}
-
 const Grafito = {
     data() {
         return {
@@ -173,11 +166,11 @@ const Grafito = {
                 }, edge.label, "black", "white");
             });
 
-            this.graph.view.on("blurNode", (x)=>{
+            this.graph.view.on("blurNode", ()=>{
                 this.showDefaultInfo();
             });
 
-            this.graph.view.on("blurEdge", (x)=>{
+            this.graph.view.on("blurEdge", ()=>{
                 this.showDefaultInfo();
             });
         }
@@ -192,6 +185,11 @@ const Grafito = {
             document.title = `Grafito @ ${obj.title}`;
             this.drawGraph(obj.data);
         });
+
+        window.onbeforeunload = ()=>{
+            $.post( "/exit", {}, ()=>{});
+            return true;
+        };
     }
 }
 
