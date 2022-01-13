@@ -20,7 +20,8 @@
     <body>
         <div id="app">
             <header>
-                <div class="command">
+                <div class="command"
+                     :class="command.focused ? 'focused' : ''">
                     <div @click="processCommand()" 
                          class="prompt">
                         <i :class="working ? ['ph-spinner-gap-fill', 'rotating'] : (command.focused ? 'ph-arrow-circle-right-fill' : 'ph-arrow-circle-right')"></i>

@@ -62,12 +62,13 @@ html, body {
  Header
  ****************************************************/
 
-.command {
+.command {    
     .prompt {
         position: fixed;
         left: 15px;
         top: 8px;
         font-size: 1.8rem;
+        color: #888;
     }
 
     input {
@@ -88,10 +89,19 @@ html, body {
         background-repeat: no-repeat;
         background-position: calc(100% - 20px) center;
         padding-left: 65px;
+        color: #888;
 
         &:focus {
             border-bottom: 4px solid #682A5D;
             outline: none;
+        }
+    }
+
+    &.focused {
+        filter: drop-shadow(1px 2px 4px #D5D5D5);
+
+        .prompt, input {
+            color: black;
         }
     }
 }
