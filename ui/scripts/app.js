@@ -144,6 +144,10 @@ const Grafito = {
 
             this.showDefaultInfo();
 
+            this.graph.view.on("click", (x)=>{
+                console.log("node clicked");
+            });
+
             this.graph.view.on("doubleClick", (x)=>{
                 $.post("/nodeFromId", {ndid: x.nodes[0] }, (data)=>{
                     let dt = JSON.parse(data);
