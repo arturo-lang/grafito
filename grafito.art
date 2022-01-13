@@ -634,6 +634,7 @@ graph: function [
                 write.json ø #[
                     title: cleanpath
                     data: currentDataset
+                    rows: currentNodes
                 ]
             ]
 

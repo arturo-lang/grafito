@@ -216,6 +216,7 @@ const Grafito = {
 
             document.title = `Grafito @ ${obj.title}`;
             this.drawGraph(obj.data);
+            this.drawTable(obj.rows);
         });
 
         window.onbeforeunload = ()=>{
