@@ -21,6 +21,36 @@ const Grafito = {
                 data: {
                     nodes: [],
                     edges: []
+                },
+                config: {
+                    nodes: {
+                        shape: "circle",
+                        font: {
+                            face: "Roboto",
+                            color: "white",
+                            align: "center"
+                        },
+                        widthConstraint: 60,
+                    },
+                    edges:{
+                        arrows: {
+                            to: {
+                                enabled: true,
+                                scaleFactor: 0.5,
+                                type: "arrow"
+                            }
+                        },
+                        length: 3.0
+                    },
+                    interaction: {
+                        hover: true
+                    },
+                    physics: {
+                        barnesHut: {
+                            springConstant: 0.03,
+                            avoidOverlap: 0.2
+                        }
+                    }
                 }
             },
             command: {
@@ -113,38 +143,7 @@ const Grafito = {
                 edges: edges,
             };
 
-            let options = {
-                nodes: {
-                    shape: "circle",
-                    font: {
-                        face: "Roboto",
-                        color: "white",
-                        align: "center"
-                    },
-                    widthConstraint: 60,
-                },
-                edges:{
-                    arrows: {
-                        to: {
-                            enabled: true,
-                            scaleFactor: 0.5,
-                            type: "arrow"
-                        }
-                    },
-                    length: 3.0
-                },
-                interaction: {
-                    hover: true
-                },
-                physics: {
-                    barnesHut: {
-                        springConstant: 0.03,
-                        avoidOverlap: 0.2
-                    }
-                }
-            };
-
-            this.graph.view = new vis.Network(container, this.graph.data, options);
+            this.graph.view = new vis.Network(container, this.graph.data, this.graph.config);
 
             this.showDefaultInfo();
 
