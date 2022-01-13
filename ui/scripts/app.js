@@ -198,4 +198,5 @@ const Grafito = {
 }
 
 const App = Vue.createApp(Grafito);
+App.use(Quasar);
 const VM = App.mount('#app');
