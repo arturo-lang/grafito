@@ -77,7 +77,7 @@ const Grafito = {
                         try {
                             dd = JSON.parse(data);
                             j = dd["data"];
-                            this.redrawGraph(j);
+                            this.drawGraph(j, clean=true);
                             toastSuccess(`Query executed in ${dd["timeTaken"].toFixed(2)} ms`);
                         }
                         catch (e) {
@@ -92,18 +92,19 @@ const Grafito = {
             });
         },
 
-        drawGraph(){
-            let initial = this.dataset;
+        drawGraph(dataset, clean=false){
+            // if we're re-drawing the graph,
+            // let's first delete all previous data
+            if (clean){
+                this.graph.data.nodes.clear();
+                this.graph.data.edges.clear();
+            }
 
             // create an array with nodes
-            let nodes = new vis.DataSet(
-                initial.nodes
-            );
+            let nodes = new vis.DataSet(dataset.nodes);
 
             // create an array with edges
-            let edges = new vis.DataSet(
-                initial.edges
-            );
+            let edges = new vis.DataSet(initial.edges);
 
             // create the graph
             let container = document.getElementById("content");
@@ -182,13 +183,6 @@ const Grafito = {
             this.graph.view.on("blurEdge", (x)=>{
                 this.showDefaultInfo();
             });
-        },
-
-        redrawGraph(dt){
-            this.dataset = dt;
-            this.graph.data.nodes.clear();
-            this.graph.data.edges.clear();
-            this.drawGraph();
         }
     },
 
@@ -197,9 +191,9 @@ const Grafito = {
 
         $.post("/startup", {}, (dd)=>{
             let obj = JSON.parse(dd);
+
             document.title = `Grafito @ ${obj.title}`;
-            this.dataset = obj.data;
-            this.drawGraph();
+            this.drawGraph(obj.data);
         });
     }
 }
