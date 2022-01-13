@@ -47,7 +47,7 @@
                     </ul>
                 </aside>
                 <section id="content">
-                    <div id="editOptions">
+                    <div id="editOptions" v-show="graph.selected != null">
                         <div class="editOption"><i class="ph-pencil-fill"></i></div>
                     </div>
                     <div id="graph" v-show="sidebar.active=='graph'"></div>
