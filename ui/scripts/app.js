@@ -11,6 +11,7 @@ const Grafito = {
             graph: {
                 dataset: {},
                 view: {},
+                selected: null,
                 data: {
                     nodes: [],
                     edges: []
@@ -144,8 +145,12 @@ const Grafito = {
 
             this.showDefaultInfo();
 
-            this.graph.view.on("click", (x)=>{
-                console.log("node clicked");
+            this.graph.view.on("selectNode", (x)=>{
+                this.graph.selected = this.graph.data.nodes.get(x);
+            });
+
+            this.graph.view.on("deselectNode", (x)=>{
+                this.graph.selected = null;
             });
 
             this.graph.view.on("doubleClick", (x)=>{
