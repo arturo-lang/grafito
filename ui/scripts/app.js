@@ -7,6 +7,9 @@ const toastInfo    = (msg)=>{ iziToast.info({title: '', message: msg})};
 const Grafito = {
     data() {
         return {
+            config: {
+                fetchNeighbors: true
+            },
             working: false,
             graph: {
                 dataset: {},
