@@ -73,8 +73,6 @@ const Grafito = {
     },
     methods: {
         updateInfo(paths, tag="INFO", tagBg="#CCC", tagFg="white"){
-            console.log("Grafito:: Updating info...");
-
             this.infobar = {
                 tag: {
                     caption: tag,
