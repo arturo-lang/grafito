@@ -17,7 +17,6 @@ const Grafito = {
             working: false,
             graph: {
                 dataset: {},
-                backup: {},
                 view: {},
                 data: {
                     nodes: [],
@@ -186,7 +185,6 @@ const Grafito = {
         },
 
         redrawGraph(dt){
-            this.backup = this.dataset;
             this.dataset = dt;
             this.graph.data.nodes.clear();
             this.graph.data.edges.clear();
