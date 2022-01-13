@@ -227,7 +227,9 @@ const Grafito = {
 
     updated(){
         if (this.table.needsInitialization){
-            $("#table table").DataTable();
+            $("#table table").DataTable({
+                
+            });
             this.table.needsInitialization = false;
         }
     }
