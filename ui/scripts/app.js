@@ -128,7 +128,7 @@ const Grafito = {
             let edges = new vis.DataSet(dataset.edges);
 
             // create the graph
-            let container = document.getElementById("content");
+            let container = document.getElementById("graph");
             this.graph.data = {
                 nodes: nodes,
                 edges: edges,
