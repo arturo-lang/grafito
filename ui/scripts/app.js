@@ -46,6 +46,10 @@ const Grafito = {
                     }
                 }
             },
+            table: {
+                keys: [],
+                rows: []
+            },
             command: {
                 focused: false
             },
@@ -97,11 +101,12 @@ const Grafito = {
                     else {
                         try {
                             dd = JSON.parse(data);
-                            j = dd["data"];
-                            this.drawGraph(j, clean=true);
+                            this.drawGraph(dd["data"], clean=true);
+                            this.drawTable(dd["rows"]);
                             toastSuccess(`Query executed in ${dd["timeTaken"].toFixed(2)} ms`);
                         }
                         catch (e) {
+                            console.log(e);
                             toastError("Something went wrong!");
                         }
                     }
@@ -173,6 +178,30 @@ const Grafito = {
             this.graph.view.on("blurEdge", ()=>{
                 this.showDefaultInfo();
             });
+        },
+
+        drawTable(rows){
+            var keys = Object.keys(rows[0].properties);
+            for (var row of rows){
+                keys = keys.filter(value => Object.keys(row.properties).includes(value));
+            }
+            for (var row of rows){
+                for (var prop of Object.keys(row.properties)){
+                    if (!keys.includes(prop)){
+                        keys.push(prop);
+                    }
+                }
+            }
+            keys.unshift("id");
+            keys.unshift("tag");
+
+            this.table.keys = keys;
+            this.table.rows = rows.map(row=>
+                Object.assign({
+                    tag: row.tag,
+                    id: row.id
+                }, row.properties)
+            );
         }
     },
 

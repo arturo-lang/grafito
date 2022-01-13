@@ -655,6 +655,7 @@ graph: function [
                         currentDataset: new nodeFromIds currentNodes
                         write.json ø #[
                             data: currentDataset
+                            rows: currentNodes
                             timeTaken: bench
                         ]
                     ]

@@ -46,6 +46,20 @@
                 </aside>
                 <section id="content">
                     <div id="graph" v-show="sidebar.active=='graph'"></div>
+                    <div id="table" v-show="sidebar.active=='table'">
+                        <table class="table is-fullwidth is-striped is-hoverable display">
+                            <thead>
+                                <tr>
+                                    <th v-for="tableKey in table.keys">{{tableKey}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="tableRow in table.rows">
+                                    <td v-for="tableKey in table.keys">{{tableRow[tableKey]}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </section>
             </main>
             <footer>
