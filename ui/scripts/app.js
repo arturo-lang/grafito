@@ -196,11 +196,4 @@ const Grafito = {
 }
 
 const App = Vue.createApp(Grafito);
-App.use(Quasar, {
-    config: {
-      loadingBar: {
-          color: "deep-purple"
-      }
-    }
-});
 const VM = App.mount('#app');
