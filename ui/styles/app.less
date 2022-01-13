@@ -5,6 +5,9 @@
 @mainTop: 50px;
 @mainPushDown: 89px;
 
+@sidebarWidth: 60px;
+@sidebarBorder: 1px;
+
 /****************************************************
  Global styles
  ****************************************************/
@@ -115,11 +118,11 @@ main {
     ul.sidebar {
         position: fixed;
         left: 0px;
-        width: 60px;
+        width: @sidebarWidth;
         height: calc(100vh - @mainPushDown);
         top: @mainTop;
         background: #5a6169;
-        border-right: 1px solid #EEE;
+        border-right: @sidebarBorder solid #EEE;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -157,12 +160,12 @@ main {
         }
     }
 
-    section#content {
+    #content {
         position: fixed;
-        left: 61px;
+        left: (@sidebarWidth+@sidebarBorder) - 2px;
         top: @mainTop;
         right: 0;
-        width: calc(100vw - 61px);
+        width: calc(100vw - (@sidebarWidth+@sidebarBorder) + 1px);
         height: calc(100vh - @mainPushDown);
         background: white;
         margin: 0px;
@@ -174,8 +177,19 @@ main {
             outline: none;
         }
 
-        .vis-network, .vis-network:focus, canvas, canvas:focus {
-            outline: none !important;
+        #graph {
+            left: 0px;
+            top: 0px;
+            right: 0px;
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+            overflow: hidden;
+
+            .vis-network, .vis-network:focus, canvas, canvas:focus {
+                outline: none !important;
+            }
         }
     }
 }
