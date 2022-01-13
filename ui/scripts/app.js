@@ -47,6 +47,7 @@ const Grafito = {
                 }
             },
             table: {
+                needsInitialization: false,
                 keys: [],
                 rows: []
             },
@@ -202,6 +203,8 @@ const Grafito = {
                     id: row.id
                 }, row.properties)
             );
+
+            this.table.needsInitialization = true;
         }
     },
 
@@ -219,6 +222,13 @@ const Grafito = {
             $.post( "/exit", {}, ()=>{});
             return true;
         };
+    },
+
+    updated(){
+        if (this.table.needsInitialization){
+            $("#table table").DataTable();
+            this.table.needsInitialization = false;
+        }
     }
 }
 
