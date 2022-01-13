@@ -199,8 +199,79 @@ main {
 
         #table {
             .stretched();
-            
+
             padding: 2rem;
+            overflow-y: auto;
+
+            .dataTables_wrapper {
+                table.dataTable {
+                    &>thead .sorting:before, 
+                    &>thead .sorting_asc:before, 
+                    &>thead .sorting_desc:before, 
+                    &>thead .sorting_asc_disabled:before, 
+                    &>thead .sorting_desc_disabled:before {
+                        right: 1.4em;
+                        top: 0.7rem;
+                    }
+    
+                    &>thead .sorting:after, 
+                    &>thead .sorting_asc:after, 
+                    &>thead .sorting_desc:after, 
+                    &>thead .sorting_asc_disabled:after, 
+                    &>thead .sorting_desc_disabled:after {
+                        right: 0.95em;
+                        top: 0.7rem;
+                    }
+
+                    tbody {
+                        th, td {
+                            padding: .5em 1em !important;
+                        }
+                    }
+
+                    &.stripe tbody tr.odd, &.display tbody tr.odd {
+                        background-color: inherit;
+                    }
+                }
+
+                .dataTables_length {
+                    padding-bottom: 1rem;
+
+                    select {
+                        margin-left: 5px;
+                        margin-right: 5px;
+                        font-size: 1rem;
+                    }
+                }
+
+                .dataTables_filter {
+                    padding-bottom: 1rem;
+                    padding-top: 0.2rem;
+
+                    input {
+                        margin-left: 10px;
+                    }
+                }
+
+                .dataTables_info {
+                    padding-top: 1.6rem;
+                }
+
+                .dataTables_paginate {
+                    padding-top: 1rem;
+
+                    .paginate_button {
+                        border-radius: 50% !important;
+                    }
+                }
+
+                input, select {
+                    &:focus-visible {
+                        outline: none;
+                        border-color: #5fbff9;
+                    }
+                }
+            }
         }
     }
 }
