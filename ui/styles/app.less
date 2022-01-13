@@ -9,6 +9,18 @@
 @sidebarBorder: 1px;
 
 /****************************************************
+ Global mixins
+ ****************************************************/
+
+.stretched {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+}
+
+/****************************************************
  Global styles
  ****************************************************/
 
@@ -178,18 +190,15 @@ main {
         }
 
         #graph {
-            left: 0px;
-            top: 0px;
-            right: 0px;
-            width: 100%;
-            height: 100%;
-            margin: 0px;
-            padding: 0px;
-            overflow: hidden;
+            .stretched();
 
             .vis-network, .vis-network:focus, canvas, canvas:focus {
                 outline: none !important;
             }
+        }
+
+        #table {
+            .stretched();
         }
     }
 }
