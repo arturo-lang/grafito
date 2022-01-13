@@ -35,6 +35,10 @@ html, body {
     overflow-y: hidden;
 }
 
+/****************************************************
+ Global animations
+ ****************************************************/
+
 @-webkit-keyframes rotating {
     from {
         -webkit-transform: rotate(0deg);
@@ -71,6 +75,20 @@ html, body {
     -ms-animation: rotating 2s linear infinite;
     -o-animation: rotating 2s linear infinite;
     animation: rotating 2s linear infinite;
+}
+
+.slide-left-enter-active {
+    transition: all 0.3s ease-out;
+}
+  
+.slide-left-leave-active {
+    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+  
+.slide-left-enter-from,
+.slide-left-leave-to {
+    transform: translateX(50px);
+    opacity: 0;
 }
 
 /****************************************************
