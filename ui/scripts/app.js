@@ -251,9 +251,24 @@ const Grafito = {
                 },
                 //lengthChange: false,
                 searchBuilder: true,
-                buttons: ['csv', 'excel', 'pdf', 
+                buttons: [
                     {
-                        text: '<i class="ph-file-csv-fill"></i>',
+                        extend:    'csvHtml5',
+                        text:      '<i class="ph-file-csv"></i>',
+                        titleAttr: 'Export as CSV spreadsheet'
+                    },
+                    {
+                        extend:    'excelHtml5',
+                        text:      '<i class="ph-file-xls"></i>',
+                        titleAttr: 'Export as Excel spreadsheet'
+                    },
+                    {
+                        extend:    'pdfHtml5',
+                        text:      '<i class="ph-file-pdf"></i>',
+                        titleAttr: 'Export as PDF'
+                    },
+                    {
+                        text: '<i class="ph-file-js"></i>',
                         action: function ( e, dt, button, config ) {
                             var data = dt.buttons.exportData();
         
