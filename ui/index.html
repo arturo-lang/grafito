@@ -90,7 +90,7 @@
             <footer>
                 <div class="infobar">
                     <div class="graph-info"
-                         v-if="sidebar.active=='graph'">
+                         v-show="sidebar.active=='graph'">
                         <span class="tag" 
                             :style="infobar.tag.style">{{infobar.tag.caption}}</span>
                         <nav class="breadcrumb">
@@ -104,7 +104,7 @@
                         </nav>
                     </div>
                     <div class="table-info"
-                         v-if="sidebar.active=='table'">
+                         v-show="sidebar.active=='table'">
 
                     </div>
                 </div>
