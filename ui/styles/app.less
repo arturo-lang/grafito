@@ -257,7 +257,7 @@ main {
                     &>thead .sorting_desc:before, 
                     &>thead .sorting_asc_disabled:before, 
                     &>thead .sorting_desc_disabled:before {
-                        right: 1.4em;
+                        right: 1.2em;
                         top: 0.7rem;
                     }
     
@@ -266,8 +266,14 @@ main {
                     &>thead .sorting_desc:after, 
                     &>thead .sorting_asc_disabled:after, 
                     &>thead .sorting_desc_disabled:after {
-                        right: 0.95em;
+                        right: 0.75em;
                         top: 0.7rem;
+                    }
+
+                    thead {
+                        .sorting_asc, .sorting_desc, .sorting {
+                            background-image: none !important;
+                        }
                     }
 
                     tbody {
