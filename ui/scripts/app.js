@@ -239,7 +239,10 @@ const Grafito = {
 
     updated(){
         if (this.table.needsInitialization){
-            $("#table table").DataTable();
+            let table = $("#table table").DataTable({
+                searchBuilder: true
+            });
+            table.searchBuilder.container().prependTo(table.table().container());
             this.table.needsInitialization = false;
         }
     }
