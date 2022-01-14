@@ -8,6 +8,8 @@
 @sidebarWidth: 60px;
 @sidebarBorder: 1px;
 
+@grafitoPurple: #682a5d;
+
 /****************************************************
  Global mixins
  ****************************************************/
@@ -375,5 +377,15 @@ main {
     .table-info {
         text-align: right;
         margin-right: 1.5rem;
+
+        .dt-button {
+            border: 0;
+            font-size: 1.5rem;
+            cursor: pointer;
+
+            &:hover {
+                color: @grafitoPurple;
+            }
+        }
     }
 }
