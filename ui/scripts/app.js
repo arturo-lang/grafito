@@ -306,7 +306,8 @@ const Grafito = {
             filterButton.appendTo($(".dataTables_filter label"));
 
             tippy("[data-tippy-content]",{
-                offset: [0, 20]
+                offset: [0, 20],
+                delay: [500, 0]
             });
 
             this.performInitialSetup = false;
