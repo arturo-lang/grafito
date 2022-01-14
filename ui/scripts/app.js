@@ -52,6 +52,7 @@ const Grafito = {
                 }
             },
             table: {
+                showSearchBuilder: false,
                 keys: [],
                 rows: []
             },
@@ -239,17 +240,16 @@ const Grafito = {
     updated(){
         if (this.performInitialSetup){
             let table = $("#table table").DataTable({
-                "language": {
-                    "lengthMenu": 
+                language: {
+                    lengthMenu: 
                         'Display <select>'+
                             '<option value="10">10</option>'+
                             '<option value="25">25</option>'+
                             '<option value="50">50</option>'+
                             '<option value="100">100</option>'+
                             '<option value="-1">All</option>'+
-                        '</select> results'
+                        '</select> results',
                 },
-                //lengthChange: false,
                 searchBuilder: true,
                 buttons: [
                     {
@@ -279,11 +279,18 @@ const Grafito = {
                         text:      '<i class="ph-file-pdf"></i>',
                         titleAttr: 'Export as PDF'
                     }
-                ]
+                ],
+                dom: "fltip"
             });
             table.searchBuilder.container().prependTo(table.table().container());
-            //table.buttons().container().appendTo($("div.column.is-half", table.table().container()).eq(0));
             table.buttons().container().appendTo($(".table-info"));
+
+            $(".dtsb-searchBuilder").attr("v-if='table.showSearchBuilder'");
+            let filterButton = $("<button class='button is-white is-small' style='font-size:0.79rem;'><i class='ph-funnel-fill'></i></button>");
+            filterButton.click(()=>{
+                $(".dtsb-searchBuilder").toggleClass("hidden");
+            });
+            filterButton.appendTo($(".dataTables_filter"));
 
             this.performInitialSetup = false;
         }

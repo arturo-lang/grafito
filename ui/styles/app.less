@@ -281,12 +281,19 @@ main {
                     }
                 }
 
-                .dtsb-titleRow {
-                    display: none !important;
+                .dtsb-searchBuilder {
+                    .dtsb-titleRow {
+                        display: none !important;
+                    }
+
+                    &.hidden {
+                        display: none;
+                    }
                 }
 
                 .dataTables_length {
                     padding-bottom: 1rem;
+                    float: right;
 
                     select {
                         margin-left: 5px;
@@ -299,6 +306,7 @@ main {
                 .dataTables_filter {
                     padding-bottom: 1rem;
                     text-align: center !important;
+                    float: left;
 
                     input {
                         margin-left: 10px;
