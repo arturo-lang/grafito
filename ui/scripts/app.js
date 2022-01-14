@@ -253,6 +253,18 @@ const Grafito = {
                 searchBuilder: true,
                 buttons: [
                     {
+                        text: '<i class="ph-brackets-curly"></i>',
+                        action: function ( e, dt, button, config ) {
+                            var data = dt.buttons.exportData();
+        
+                            $.fn.dataTable.fileSave(
+                                new Blob( [ JSON.stringify( data ) ] ),
+                                'Export.json'
+                            );
+                        },
+                        titleAttr: "Export as JSON"
+                    },
+                    {
                         extend:    'csvHtml5',
                         text:      '<i class="ph-file-csv"></i>',
                         titleAttr: 'Export as CSV spreadsheet'
@@ -266,18 +278,6 @@ const Grafito = {
                         extend:    'pdfHtml5',
                         text:      '<i class="ph-file-pdf"></i>',
                         titleAttr: 'Export as PDF'
-                    },
-                    {
-                        text: '<i class="ph-file-js"></i>',
-                        action: function ( e, dt, button, config ) {
-                            var data = dt.buttons.exportData();
-        
-                            $.fn.dataTable.fileSave(
-                                new Blob( [ JSON.stringify( data ) ] ),
-                                'Export.json'
-                            );
-                        },
-                        titleAttr: "Export as JSON"
                     }
                 ]
             });

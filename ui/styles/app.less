@@ -375,17 +375,21 @@ main {
     }
 
     .table-info {
-        text-align: right;
-        margin-right: 1.5rem;
 
-        .dt-button {
-            border: 0;
-            font-size: 1.5rem;
-            cursor: pointer;
+        .dt-buttons {
+            display: flex;
+            justify-content: center;
 
-            &:hover {
-                color: @grafitoPurple;
+            .dt-button {
+                border: 0;
+                font-size: 1.4rem;
+                cursor: pointer;
+                background: transparent;
+
+                &:hover {
+                    color: @grafitoPurple;
+                }
             }
-        }
+        } 
     }
 }
