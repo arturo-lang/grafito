@@ -308,14 +308,20 @@ main {
                         display: none !important;
                     }
 
-                    div.dtsb-group div.dtsb-criteria select.dtsb-value, 
-                    div.dtsb-group div.dtsb-criteria input.dtsb-value {
-                        border-color: #AAAAAA;
-                        height: 2.5rem;
-                        border-width: 1px;
-                        border-radius: .375em;
-                        background-color: #fff;
-                        padding-right: 2.5em;
+                    div.dtsb-group div.dtsb-criteria {
+
+                        select.dtsb-value, input.dtsb-value {
+                            border-color: #AAAAAA;
+                            height: 2.5rem;
+                            border-width: 1px;
+                            border-radius: .375em;
+                            background-color: #fff;
+                            padding-right: 2.5em;
+                        }
+
+                        select.dtsb-data, select.dtsb-condition {
+                            border-color: inherit !important;
+                        }
                     }
 
                     &.hidden {
@@ -388,7 +394,7 @@ main {
 
 .infobar {
     .noselect();
-    
+
     position: fixed;
     left: 0px;
     right: 0px;
