@@ -7,6 +7,7 @@ const toastInfo    = (msg)=>{ iziToast.info({title: '', message: msg})};
 const Grafito = {
     data() {
         return {
+            performInitialSetup: false,
             config: {
                 fetchNeighbors: true
             },
@@ -226,17 +227,24 @@ const Grafito = {
             document.title = `Grafito @ ${obj.title}`;
             this.drawGraph(obj.data);
             this.drawTable(obj.rows);
-            
-            let table = $("#table table").DataTable({
-                searchBuilder: true
-            });
-            table.searchBuilder.container().prependTo(table.table().container());
+            this.performInitialSetup = true;
         });
 
         window.onbeforeunload = ()=>{
             $.post( "/exit", {}, ()=>{});
             return true;
         };
+    },
+
+    updated(){
+        if (this.performInitialSetup){
+            let table = $("#table table").DataTable({
+                searchBuilder: true
+            });
+            table.searchBuilder.container().prependTo(table.table().container());
+
+            this.performInitialSetup = false;
+        }
     }
 }
 
