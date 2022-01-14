@@ -89,8 +89,11 @@
             </main>
             <footer>
                 <div class="infobar">
-                    <span class="tag" :style="infobar.tag.style">{{infobar.tag.caption}}</span>
-                    <nav class="breadcrumb">
+                    <span class="tag" 
+                          :style="infobar.tag.style"
+                          v-if="sidebar.active=='graph'">{{infobar.tag.caption}}</span>
+                    <nav class="breadcrumb"
+                         v-if="sidebar.active=='graph'">
                         <ul>
                             <li class="is-active" v-for="(value, key) in infobar.paths">
                                 <a href="#">

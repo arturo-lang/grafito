@@ -239,9 +239,13 @@ const Grafito = {
     updated(){
         if (this.performInitialSetup){
             let table = $("#table table").DataTable({
-                searchBuilder: true
+                //lengthChange: false,
+                //searchBuilder: true,
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'json']
             });
-            table.searchBuilder.container().prependTo(table.table().container());
+            //table.searchBuilder.container().prependTo(table.table().container());
+            //table.buttons().container().appendTo($("div.column.is-half", table.table().container()).eq(0));
+            table.buttons().container().appendTo($(".infobar"));
 
             this.performInitialSetup = false;
         }
