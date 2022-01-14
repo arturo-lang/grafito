@@ -58,9 +58,30 @@
                 <section id="content">
                     <transition name="slide-left">
                         <div id="editOptions" v-show="(graph.selected != null) && (sidebar.active=='graph')">
-                            <div class="editOption"><i class="ph-arrows-out-fill"></i></div>
-                            <div class="editOption"><i class="ph-pencil-fill"></i></div>
-                            <div class="editOption"><i class="ph-trash-fill"></i></div>
+                            <div class="editOption"
+                                 data-tippy-placement="left"
+                                 data-tippy-theme="light"
+                                 data-tippy-content="Expand neighboring nodes">
+                                 <i class="ph-arrows-out-fill"></i>
+                            </div>
+                            <div class="editOption"
+                                 data-tippy-placement="left"
+                                 data-tippy-theme="light"
+                                 data-tippy-content="Remove from graph view">
+                                 <i class="ph-eraser-fill"></i>
+                            </div>
+                            <div class="editOption"
+                                 data-tippy-placement="left"
+                                 data-tippy-theme="light"
+                                 data-tippy-content="Edit selected node">
+                                 <i class="ph-pencil-fill"></i>
+                            </div>
+                            <div class="editOption"
+                                 data-tippy-placement="left"
+                                 data-tippy-theme="light"
+                                 data-tippy-content="Delete selected node">
+                                 <i class="ph-trash-fill"></i>
+                            </div>
                         </div>
                     </transition>
                     <div id="graph" v-show="sidebar.active=='graph'"></div>
