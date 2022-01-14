@@ -253,7 +253,7 @@ const Grafito = {
                 searchBuilder: true,
                 buttons: ['csv', 'excel', 'pdf', 
                     {
-                        text: 'JSON',
+                        text: '<i class="ph-file-csv-fill"></i>',
                         action: function ( e, dt, button, config ) {
                             var data = dt.buttons.exportData();
         
@@ -261,7 +261,8 @@ const Grafito = {
                                 new Blob( [ JSON.stringify( data ) ] ),
                                 'Export.json'
                             );
-                        }
+                        },
+                        titleAttr: "Export as JSON"
                     }
                 ]
             });
