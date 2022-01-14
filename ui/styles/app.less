@@ -47,6 +47,10 @@ html, body {
     overflow-y: hidden;
 }
 
+:focus, input:focus{
+    outline: none !important;
+}
+
 /****************************************************
  Global animations
  ****************************************************/
@@ -311,9 +315,8 @@ main {
                     div.dtsb-group div.dtsb-criteria {
 
                         select.dtsb-value, input.dtsb-value {
-                            border-color: #AAAAAA;
-                            height: 2.5rem;
-                            border-width: 1px;
+                            border: 1px solid black;
+                            height: 2.4rem;
                             border-radius: .375em;
                             background-color: #fff;
                             padding-right: 2.5em;
