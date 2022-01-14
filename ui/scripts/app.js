@@ -62,11 +62,11 @@ const Grafito = {
             sidebar: {
                 hovered: "",
                 active: "graph",
-                items: [
-                    "graph",
-                    "table",
-                    "sliders"
-                ]
+                items: {
+                    "graph": "Graph view",
+                    "table": "Table view",
+                    "sliders": "Global settings"
+                }
             },
             infobar: {
                 tag: {},
@@ -261,23 +261,19 @@ const Grafito = {
                                 new Blob( [ JSON.stringify( data ) ] ),
                                 'Export.json'
                             );
-                        },
-                        titleAttr: "Export as JSON"
+                        }
                     },
                     {
                         extend:    'csvHtml5',
-                        text:      '<i class="ph-file-csv"></i>',
-                        titleAttr: 'Export as CSV spreadsheet'
+                        text:      '<i class="ph-file-csv"></i>'
                     },
                     {
                         extend:    'excelHtml5',
-                        text:      '<i class="ph-file-xls"></i>',
-                        titleAttr: 'Export as Excel spreadsheet'
+                        text:      '<i class="ph-file-xls"></i>'
                     },
                     {
                         extend:    'pdfHtml5',
-                        text:      '<i class="ph-file-pdf"></i>',
-                        titleAttr: 'Export as PDF'
+                        text:      '<i class="ph-file-pdf"></i>'
                     }
                 ],
                 dom: "fltip"
@@ -285,7 +281,11 @@ const Grafito = {
 
             table.buttons().container().appendTo($(".table-info"));
             table.searchBuilder.container().insertBefore($("table.dataTable"));
-            
+            $($(".dt-button")[0]).addClass("tippy-up").attr("data-tippy-content","Export as JSON");
+            $($(".dt-button")[1]).addClass("tippy-up").attr("data-tippy-content","Export as CSV spreadsheet");
+            $($(".dt-button")[2]).addClass("tippy-up").attr("data-tippy-content","Export as Excel spreadsheet");
+            $($(".dt-button")[3]).addClass("tippy-up").attr("data-tippy-content","Export as PDF");
+
             $(".dtsb-searchBuilder").addClass("hidden");
             let filterButton = $(`
                 <input id="filterSwitch" type="checkbox" class="switch is-small is-info">
@@ -299,6 +299,14 @@ const Grafito = {
                 }
             });
             filterButton.appendTo($(".dataTables_filter label"));
+
+            tippy(".tippy-right[data-tippy-content]",{
+                placement: "right"
+            });
+
+            tippy(".tippy-up[data-tippy-content]",{
+                placement: "top"
+            });
 
             this.performInitialSetup = false;
         }

@@ -41,11 +41,13 @@
             <main>
                 <aside>
                     <ul class="sidebar">
-                        <li v-for="sidebarItem in sidebar.items" 
+                        <li v-for="(sidebarTip, sidebarItem) in sidebar.items" 
+                            class="tippy-right"
                             :class="sidebar.active==sidebarItem && 'active'" 
                             @click="sidebar.active=sidebarItem"
                             @mouseenter="sidebar.hovered=sidebarItem"
-                            @mouseleave="sidebar.hovered=''">
+                            @mouseleave="sidebar.hovered=''"
+                            :data-tippy-content="sidebarTip">
                             <i :class="(sidebar.active==sidebarItem || sidebar.hovered==sidebarItem) ? `ph-${sidebarItem}-fill` : `ph-${sidebarItem}`"></i>
                         </li>
                     </ul>
