@@ -251,7 +251,19 @@ const Grafito = {
                 },
                 //lengthChange: false,
                 //searchBuilder: true,
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'json']
+                buttons: ['csv', 'excel', 'pdf', 
+                    {
+                        text: 'JSON',
+                        action: function ( e, dt, button, config ) {
+                            var data = dt.buttons.exportData();
+        
+                            $.fn.dataTable.fileSave(
+                                new Blob( [ JSON.stringify( data ) ] ),
+                                'Export.json'
+                            );
+                        }
+                    }
+                ]
             });
             //table.searchBuilder.container().prependTo(table.table().container());
             //table.buttons().container().appendTo($("div.column.is-half", table.table().container()).eq(0));
