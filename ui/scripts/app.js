@@ -282,9 +282,10 @@ const Grafito = {
                 ],
                 dom: "fltip"
             });
-            table.searchBuilder.container().prependTo(table.table().container());
-            table.buttons().container().appendTo($(".table-info"));
 
+            table.buttons().container().appendTo($(".table-info"));
+            table.searchBuilder.container().insertBefore($("table.dataTable"));
+            
             $(".dtsb-searchBuilder").addClass("hidden");
             let filterButton = $(`
                 <input id="filterSwitch" type="checkbox" class="switch is-small is-info">
