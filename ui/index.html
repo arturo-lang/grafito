@@ -20,6 +20,8 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/searchbuilder/1.3.0/css/searchBuilder.bulma.min.css" type="text/css">
         <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.1/css/dataTables.dateTime.min.css" type="text/css">
         <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.bulma.min.css" type="text/css">
+        <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.7/animations/perspective-extreme.css" type="text/css">
+        <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.3.7/themes/light.css" type="text/css">
         <link rel="stylesheet/less" href="/styles/app.less" type="text/css">
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/less@4.1.1" ></script>
     </head>
@@ -42,11 +44,12 @@
                 <aside>
                     <ul class="sidebar">
                         <li v-for="(sidebarTip, sidebarItem) in sidebar.items" 
-                            class="tippy-right"
                             :class="sidebar.active==sidebarItem && 'active'" 
                             @click="sidebar.active=sidebarItem"
                             @mouseenter="sidebar.hovered=sidebarItem"
                             @mouseleave="sidebar.hovered=''"
+                            data-tippy-placement="right"
+                            data-tippy-animation="perspective-extreme"
                             :data-tippy-content="sidebarTip">
                             <i :class="(sidebar.active==sidebarItem || sidebar.hovered==sidebarItem) ? `ph-${sidebarItem}-fill` : `ph-${sidebarItem}`"></i>
                         </li>

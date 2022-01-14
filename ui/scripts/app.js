@@ -281,10 +281,15 @@ const Grafito = {
 
             table.buttons().container().appendTo($(".table-info"));
             table.searchBuilder.container().insertBefore($("table.dataTable"));
-            $($(".dt-button")[0]).addClass("tippy-up").attr("data-tippy-content","Export as JSON");
-            $($(".dt-button")[1]).addClass("tippy-up").attr("data-tippy-content","Export as CSV spreadsheet");
-            $($(".dt-button")[2]).addClass("tippy-up").attr("data-tippy-content","Export as Excel spreadsheet");
-            $($(".dt-button")[3]).addClass("tippy-up").attr("data-tippy-content","Export as PDF");
+            let tooltips = ["Export as JSON", "Export as CSV spreadsheet", "Export as Excel spreadsheet", "Export as PDF"];
+            for (let [idx,elem] of $(".dt-button").toArray().entries()){
+                console.log($(elem));
+                $(elem).attr({
+                    "data-tippy-content": tooltips[idx],
+                    "data-tippy-placement": "top",
+                    "data-tippy-theme": "light"
+                });
+            }
 
             $(".dtsb-searchBuilder").addClass("hidden");
             let filterButton = $(`
@@ -300,12 +305,8 @@ const Grafito = {
             });
             filterButton.appendTo($(".dataTables_filter label"));
 
-            tippy(".tippy-right[data-tippy-content]",{
-                placement: "right"
-            });
-
-            tippy(".tippy-up[data-tippy-content]",{
-                placement: "top"
+            tippy("[data-tippy-content]",{
+                offset: [0, 20]
             });
 
             this.performInitialSetup = false;
