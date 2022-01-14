@@ -250,7 +250,7 @@ const Grafito = {
                         '</select> results'
                 },
                 //lengthChange: false,
-                //searchBuilder: true,
+                searchBuilder: true,
                 buttons: ['csv', 'excel', 'pdf', 
                     {
                         text: 'JSON',
@@ -265,7 +265,7 @@ const Grafito = {
                     }
                 ]
             });
-            //table.searchBuilder.container().prependTo(table.table().container());
+            table.searchBuilder.container().prependTo(table.table().container());
             //table.buttons().container().appendTo($("div.column.is-half", table.table().container()).eq(0));
             table.buttons().container().appendTo($(".table-info"));
 
