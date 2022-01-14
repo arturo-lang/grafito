@@ -239,13 +239,23 @@ const Grafito = {
     updated(){
         if (this.performInitialSetup){
             let table = $("#table table").DataTable({
+                "language": {
+                    "lengthMenu": 
+                        'Display <select>'+
+                            '<option value="10">10</option>'+
+                            '<option value="25">25</option>'+
+                            '<option value="50">50</option>'+
+                            '<option value="100">100</option>'+
+                            '<option value="-1">All</option>'+
+                        '</select> results'
+                },
                 //lengthChange: false,
                 //searchBuilder: true,
                 buttons: ['copy', 'csv', 'excel', 'pdf', 'json']
             });
             //table.searchBuilder.container().prependTo(table.table().container());
             //table.buttons().container().appendTo($("div.column.is-half", table.table().container()).eq(0));
-            table.buttons().container().appendTo($(".infobar"));
+            table.buttons().container().appendTo($(".table-info"));
 
             this.performInitialSetup = false;
         }
