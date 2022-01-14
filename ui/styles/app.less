@@ -286,20 +286,18 @@ main {
                         display: none !important;
                     }
 
+                    div.dtsb-group div.dtsb-criteria select.dtsb-value, 
+                    div.dtsb-group div.dtsb-criteria input.dtsb-value {
+                        border-color: #AAAAAA;
+                        height: 2.5rem;
+                        border-width: 1px;
+                        border-radius: .375em;
+                        background-color: #fff;
+                        padding-right: 2.5em;
+                    }
+
                     &.hidden {
                         display: none;
-                    }
-                }
-
-                .dataTables_length {
-                    padding-bottom: 1rem;
-                    float: right;
-
-                    select {
-                        margin-left: 5px;
-                        margin-right: 5px;
-                        font-size: 1rem;
-                        width: 5rem;
                     }
                 }
 
@@ -312,6 +310,24 @@ main {
                         margin-left: 10px;
                         font-size: 1rem;
                         width: 15rem;
+                        vertical-align: inherit !important;
+                    }
+
+                    #filterLabel {
+                        margin-left: 1rem;
+                    }
+                }
+
+                .dataTables_length {
+                    padding-bottom: 1rem;
+                    float: right;
+
+                    select {
+                        margin-left: 5px;
+                        margin-right: 5px;
+                        font-size: 1rem;
+                        width: 5rem;
+                        vertical-align: inherit !important;
                     }
                 }
 

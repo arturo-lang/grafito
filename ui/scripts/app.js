@@ -285,12 +285,19 @@ const Grafito = {
             table.searchBuilder.container().prependTo(table.table().container());
             table.buttons().container().appendTo($(".table-info"));
 
-            $(".dtsb-searchBuilder").attr("v-if='table.showSearchBuilder'");
-            let filterButton = $("<button class='button is-white is-small' style='font-size:0.79rem;'><i class='ph-funnel-fill'></i></button>");
-            filterButton.click(()=>{
-                $(".dtsb-searchBuilder").toggleClass("hidden");
+            $(".dtsb-searchBuilder").addClass("hidden");
+            let filterButton = $(`
+                <input id="filterSwitch" type="checkbox" class="switch is-small is-info">
+                <label id="filterLabel" for="filterSwitch">Additional filters</label>
+            `);
+            filterButton.change(()=>{
+                if ($("#filterSwitch").is(":checked"))
+                    $(".dtsb-searchBuilder").removeClass("hidden");
+                else {
+                    $(".dtsb-searchBuilder").addClass("hidden");
+                }
             });
-            filterButton.appendTo($(".dataTables_filter"));
+            filterButton.appendTo($(".dataTables_filter label"));
 
             this.performInitialSetup = false;
         }
