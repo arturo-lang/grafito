@@ -51,7 +51,6 @@ const Grafito = {
                 }
             },
             table: {
-                needsInitialization: false,
                 keys: [],
                 rows: []
             },
@@ -215,8 +214,6 @@ const Grafito = {
                     id: row.id
                 }, row.properties)
             );
-
-            this.table.needsInitialization = true;
         }
     },
 
@@ -229,22 +226,17 @@ const Grafito = {
             document.title = `Grafito @ ${obj.title}`;
             this.drawGraph(obj.data);
             this.drawTable(obj.rows);
+            
+            let table = $("#table table").DataTable({
+                searchBuilder: true
+            });
+            table.searchBuilder.container().prependTo(table.table().container());
         });
 
         window.onbeforeunload = ()=>{
             $.post( "/exit", {}, ()=>{});
             return true;
         };
-    },
-
-    updated(){
-        if (this.table.needsInitialization){
-            let table = $("#table table").DataTable({
-                searchBuilder: true
-            });
-            table.searchBuilder.container().prependTo(table.table().container());
-            this.table.needsInitialization = false;
-        }
     }
 }
 
