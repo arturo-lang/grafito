@@ -91,17 +91,14 @@
                                         <p class="panel-heading">
                                             Graph View
                                         </p>
-                                        <div class="panel-block">
-                                            <input v-model="config.showEdgesOnDrag"
+                                        <div v-for="(setting,key) in config"
+                                             class="panel-block">
+                                            <input v-model="config[key].value"
                                                    @change="updateGraphView()"
-                                                   type="checkbox" name="showEdgesOnDrag" class="switchable" >
-                                            <label for="showEdgesOnDrag">Keep showing edges when dragging</label>
-                                        </div>
-                                        <div class="panel-block">
-                                            <input v-model="config.showEdgesOnZoom"
-                                                   @change="updateGraphView()"
-                                                   type="checkbox" name="showEdgesOnZoom" class="switchable" >
-                                            <label for="showEdgesOnZoom">Keep showing edges when zooming</label>
+                                                   :name="key"
+                                                   type="checkbox"
+                                                   class="switchable" >
+                                            <label :for="key">{{setting.description}}</label>
                                         </div>
                                     </article>
                                 </div>
