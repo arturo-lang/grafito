@@ -58,29 +58,12 @@
                 <section id="content">
                     <transition name="slide-left">
                         <div id="editOptions" v-show="(graph.selected != null) && (sidebar.active=='graph')">
-                            <div class="editOption"
+                            <div v-for="editOption in graph.editOptions"
+                                 :data-tippy-content="editOption.tip"
+                                 class="editOption"
                                  data-tippy-placement="left"
-                                 data-tippy-theme="light"
-                                 data-tippy-content="Expand neighboring nodes">
-                                 <i class="ph-arrows-out-fill"></i>
-                            </div>
-                            <div class="editOption"
-                                 data-tippy-placement="left"
-                                 data-tippy-theme="light"
-                                 data-tippy-content="Remove from graph view">
-                                 <i class="ph-eraser-fill"></i>
-                            </div>
-                            <div class="editOption"
-                                 data-tippy-placement="left"
-                                 data-tippy-theme="light"
-                                 data-tippy-content="Edit selected node">
-                                 <i class="ph-pencil-fill"></i>
-                            </div>
-                            <div class="editOption"
-                                 data-tippy-placement="left"
-                                 data-tippy-theme="light"
-                                 data-tippy-content="Delete selected node">
-                                 <i class="ph-trash-fill"></i>
+                                 data-tippy-theme="light">
+                                 <i :class="`ph-${editOption.icon}-fill`"></i>
                             </div>
                         </div>
                     </transition>
