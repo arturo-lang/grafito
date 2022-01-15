@@ -133,7 +133,6 @@ const Grafito = {
         expandNodeNeighbors(nodeId){
             $.post("/nodeFromId", {ndid: nodeId }, (data)=>{
                 let dt = JSON.parse(data);
-                console.log(dt);
                 for (var node of dt.nodes){
                     this.graph.data.nodes.update(node);
                 }
@@ -181,28 +180,36 @@ const Grafito = {
             });
 
             this.graph.view.on("hoverNode", (x)=>{
-                let node = nodes.get(x.node);
+                if (this.graph.selected == null){
+                    let node = nodes.get(x.node);
 
-                this.updateInfo(node.properties, node.tag, node.color); 
+                    this.updateInfo(node.properties, node.tag, node.color); 
+                }
             });
 
             this.graph.view.on("hoverEdge", (ev)=>{
-                let edge = edges.get(ev.edge);
-                let nodeFrom = nodes.get(edge.from);
-                let nodeTo = nodes.get(edge.to);
+                if (this.graph.selected == null){
+                    let edge = edges.get(ev.edge);
+                    let nodeFrom = nodes.get(edge.from);
+                    let nodeTo = nodes.get(edge.to);
 
-                this.updateInfo({
-                    "from": `${nodeFrom.tag} (${nodeFrom.id})`,
-                    "to": `${nodeTo.tag} (${nodeTo.id})`
-                }, edge.label, "black", "white");
+                    this.updateInfo({
+                        "from": `${nodeFrom.tag} (${nodeFrom.id})`,
+                        "to": `${nodeTo.tag} (${nodeTo.id})`
+                    }, edge.label, "black", "white");
+                }
             });
 
             this.graph.view.on("blurNode", ()=>{
-                this.showDefaultInfo();
+                if (this.graph.selected == null){
+                    this.showDefaultInfo();
+                }
             });
 
             this.graph.view.on("blurEdge", ()=>{
-                this.showDefaultInfo();
+                if (this.graph.selected == null){
+                    this.showDefaultInfo();
+                }
             });
         },
 
