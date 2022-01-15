@@ -131,8 +131,6 @@ const Grafito = {
         },
 
         expandNodeNeighbors(nodeId){
-            console.log(this.graph.selected);
-            /*
             $.post("/nodeFromId", {ndid: nodeId }, (data)=>{
                 let dt = JSON.parse(data);
                 for (var node of dt.nodes){
@@ -141,7 +139,7 @@ const Grafito = {
                 for (var edge of dt.edges){
                     this.graph.data.edges.update(edge);
                 }
-            });*/
+            });
         },
 
         drawGraph(dataset, clean=false){
