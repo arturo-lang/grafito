@@ -133,6 +133,7 @@ const Grafito = {
         expandNodeNeighbors(nodeId){
             $.post("/nodeFromId", {ndid: nodeId }, (data)=>{
                 let dt = JSON.parse(data);
+                console.log(dt);
                 for (var node of dt.nodes){
                     this.graph.data.nodes.update(node);
                 }
