@@ -244,6 +244,8 @@ const Grafito = {
             );
         },
 
+        // TODO(updateGraphView) Graph view becomes too slow after updating
+        //  labels: bug
         updateGraphView() {
             console.log("updating graph view...");
         
@@ -251,8 +253,12 @@ const Grafito = {
 
             this.graph.view.setOptions(this.graph.config); 
 
+            // this helps to make it clean again, 
+            // but it's off-centered
             //this.drawGraph(this.graph.dataset, clean=true);
-            //this.graph.view.fit();
+
+            // this doesn't work (I guess, it should be fired only when the graph.view is visible)
+            // this.graph.view.fit();
         }
     },
 
