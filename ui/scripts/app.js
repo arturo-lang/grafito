@@ -168,7 +168,9 @@ const Grafito = {
             this.showDefaultInfo();
 
             this.graph.view.on("selectNode", (x)=>{
-                this.graph.selected = this.graph.data.nodes.get(x.nodes[0]);
+                let node = this.graph.data.nodes.get(x.nodes[0])
+                this.graph.selected = node;
+                this.updateInfo(node.properties, node.tag, node.color);
             });
 
             this.graph.view.on("deselectNode", (x)=>{
