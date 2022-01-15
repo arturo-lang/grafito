@@ -130,6 +130,18 @@ const Grafito = {
             });
         },
 
+        expandNodeNeighbors(nodeId){
+            $.post("/nodeFromId", {ndid: nodeId }, (data)=>{
+                let dt = JSON.parse(data);
+                for (var node of dt.nodes){
+                    this.graph.data.nodes.update(node);
+                }
+                for (var edge of dt.edges){
+                    this.graph.data.edges.update(edge);
+                }
+            });
+        },
+
         drawGraph(dataset, clean=false){
             // if we're re-drawing the graph,
             // let's first delete all previous data
@@ -164,16 +176,9 @@ const Grafito = {
             });
 
             this.graph.view.on("doubleClick", (x)=>{
-                $.post("/nodeFromId", {ndid: x.nodes[0] }, (data)=>{
-                    let dt = JSON.parse(data);
-                    for (var node of dt.nodes){
-                        this.graph.data.nodes.update(node);
-                    }
-                    for (var edge of dt.edges){
-                        this.graph.data.edges.update(edge);
-                    }
-                });
+                this.expandNodeNeighbors(x.nodes[0]);
             });
+
             this.graph.view.on("hoverNode", (x)=>{
                 let node = nodes.get(x.node);
 
