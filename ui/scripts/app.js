@@ -148,7 +148,11 @@ const Grafito = {
             if (clean){
                 this.graph.data.nodes.clear();
                 this.graph.data.edges.clear();
+                this.graph.view.destroy();
             }
+
+            // store dataset 
+            this.graph.dataset = dataset;
 
             // create an array with nodes
             let nodes = new vis.DataSet(dataset.nodes);
@@ -241,11 +245,14 @@ const Grafito = {
         },
 
         updateGraphView() {
-            this.graph.view.setOptions({
-                interaction: {
-                    hideEdgesOnDrag: this.config.showEdgesOnDrag
-                }
-            })
+            console.log("updating graph view...");
+        
+            this.graph.config.interaction.hideEdgesOnDrag = !this.config.showEdgesOnDrag;
+
+            this.graph.view.setOptions(this.graph.config); 
+
+            //this.drawGraph(this.graph.dataset, clean=true);
+            //this.graph.view.fit();
         }
     },
 
