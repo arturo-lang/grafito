@@ -9,7 +9,7 @@ const Grafito = {
         return {
             performInitialSetup: false,
             config: {
-                fetchNeighbors: true
+                showEdgesOnDrag: true
             },
             working: false,
             graph: {
@@ -238,6 +238,14 @@ const Grafito = {
                     id: row.id
                 }, row.properties)
             );
+        },
+
+        updateGraphView() {
+            this.graph.view.setOptions({
+                interaction: {
+                    hideEdgesOnDrag: this.config.showEdgesOnDrag
+                }
+            })
         }
     },
 
