@@ -173,6 +173,7 @@ const Grafito = {
 
             this.graph.view.on("deselectNode", (x)=>{
                 this.graph.selected = null;
+                this.showDefaultInfo();
             });
 
             this.graph.view.on("doubleClick", (x)=>{
