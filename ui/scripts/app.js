@@ -15,7 +15,7 @@ const Grafito = {
             graph: {
                 dataset: {},
                 editOptions: [
-                    {icon: "arrows-out", tip: "Expand neighboring nodes", action: null},
+                    {icon: "arrows-out", tip: "Expand neighboring nodes", action: this.expandNodeNeighbors},
                     {icon: "eraser", tip: "Remove from graph view", action: null},
                     {icon: "pencil", tip: "Edit selected node", action: null},
                     {icon: "trash", tip: "Delete selected node", action: null}
@@ -131,6 +131,8 @@ const Grafito = {
         },
 
         expandNodeNeighbors(nodeId){
+            console.log(this.graph.selected);
+            /*
             $.post("/nodeFromId", {ndid: nodeId }, (data)=>{
                 let dt = JSON.parse(data);
                 for (var node of dt.nodes){
@@ -139,7 +141,7 @@ const Grafito = {
                 for (var edge of dt.edges){
                     this.graph.data.edges.update(edge);
                 }
-            });
+            });*/
         },
 
         drawGraph(dataset, clean=false){
@@ -168,6 +170,9 @@ const Grafito = {
             this.showDefaultInfo();
 
             this.graph.view.on("selectNode", (x)=>{
+                console.log("selectNode:");
+                console.log("x = ", x);
+                console.log("GOT => ", this.graph.data.nodes.get(x));
                 this.graph.selected = this.graph.data.nodes.get(x);
             });
 
