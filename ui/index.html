@@ -97,6 +97,12 @@
                                                    type="checkbox" name="showEdgesOnDrag" class="switchable" >
                                             <label for="showEdgesOnDrag">Keep showing edges when dragging</label>
                                         </div>
+                                        <div class="panel-block">
+                                            <input v-model="config.showEdgesOnZoom"
+                                                   @change="updateGraphView()"
+                                                   type="checkbox" name="showEdgesOnZoom" class="switchable" >
+                                            <label for="showEdgesOnZoom">Keep showing edges when zooming</label>
+                                        </div>
                                     </article>
                                 </div>
                                 <div class="column is-6">TWO</div>

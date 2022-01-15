@@ -9,7 +9,8 @@ const Grafito = {
         return {
             performInitialSetup: false,
             config: {
-                showEdgesOnDrag: true
+                showEdgesOnDrag: true,
+                showEdgesOnZoom: true
             },
             working: false,
             graph: {
@@ -250,6 +251,7 @@ const Grafito = {
             console.log("updating graph view...");
         
             this.graph.config.interaction.hideEdgesOnDrag = !this.config.showEdgesOnDrag;
+            this.graph.config.interaction.hideEdgesOnZoom = !this.config.showEdgesOnZoom;
 
             this.graph.view.setOptions(this.graph.config); 
 
