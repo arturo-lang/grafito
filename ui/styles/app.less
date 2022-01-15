@@ -10,6 +10,8 @@
 
 @grafitoPurple: #682a5d;
 
+@switchableBg: #06842c;//@grafitoPurple;
+
 /****************************************************
  Global mixins
  ****************************************************/
@@ -387,6 +389,52 @@ main {
             .stretched();
 
             padding: 2rem;
+
+            .panel {
+                box-shadow: 0 0.2em 1em -0.125em rgb(10 10 10 / 3%), 
+                            0 0 0 1px rgb(10 10 10 / 3%);
+
+                .panel-block {
+                    padding: 2rem;
+
+                    .switchable {
+                        position: relative;
+                        width: 1.8em;
+                        height: 1.8em;
+                        color: black;
+                        border: 1px solid gray;
+                        border-radius: 4px;
+                        appearance: none;
+                        outline: 0;
+                        cursor: pointer;
+                        transition: background 175ms cubic-bezier(0.1, 0.1, 0.25, 1);
+                        box-sizing: border-box;
+                        &::before {
+                            position: absolute;
+                            content: '';
+                            display: block;
+                            top: 2px;
+                            left: 7px;
+                            width: 8px;
+                            height: 14px;
+                            border-style: solid;
+                            border-color: white;
+                            border-width: 0 2px 2px 0;
+                            transform: rotate(45deg);
+                            opacity: 0;
+                            box-sizing: border-box;
+                        }
+                        &:checked {
+                            color: white;
+                            border-color: @switchableBg;
+                            background: @switchableBg;
+                            &::before {
+                                opacity: 1;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

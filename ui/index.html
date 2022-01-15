@@ -86,13 +86,21 @@
                     <div id="sliders" v-show="sidebar.active=='sliders'">
                         <div class="container">
                             <div class="columns">
-                                <div class="column is-5">
-                                    <label class="checkbox">
-                                        <input type="checkbox" v-model="config.fetchNeighbors">
-                                        Hide nodes on drag
-                                    </label>
+                                <div class="column is-6">
+                                    <article class="panel">
+                                        <p class="panel-heading">
+                                            Graph View
+                                        </p>
+                                        <div class="panel-block">
+
+                                            <input v-model="config.showEdgesOnDrag"
+                                                   @change="updateGraphView()"
+                                                   type="checkbox" name="showEdgesOnDrag" class="switchable" >
+                                            <label for="showEdgesOnDrag">Keep showing edges when dragging</label>
+                                        </div>
+                                    </article>
                                 </div>
-                                <div class="column is-7">TWO</div>
+                                <div class="column is-6">TWO</div>
                             </div>
                         </div>
                     </div>
