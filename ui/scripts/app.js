@@ -170,10 +170,7 @@ const Grafito = {
             this.showDefaultInfo();
 
             this.graph.view.on("selectNode", (x)=>{
-                console.log("selectNode:");
-                console.log("x = ", x);
-                console.log("GOT => ", this.graph.data.nodes.get(x));
-                this.graph.selected = this.graph.data.nodes.get(x);
+                this.graph.selected = this.graph.data.nodes.get(x.nodes[0]);
             });
 
             this.graph.view.on("deselectNode", (x)=>{
