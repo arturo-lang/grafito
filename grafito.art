@@ -780,7 +780,7 @@ graph: function [
 
         set metas 'version "undefined"
         set metas 'mode "json"
-        set metas 'version Grafito\version
+        set metas 'version Grafito\Version
 
         put'meta metas
         pop.discard 1
