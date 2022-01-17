@@ -355,6 +355,32 @@ graph: function [
     ]
 
     ;
+    ; Update existing node
+    ;--------------------------
+
+    reput: function [
+        nd :dictionary :block
+        attributes :block :dictionary
+    ][
+        ;; description: « remove given node(s) from graph
+
+        toDelete: ø
+
+        if? dictionary? nd ->
+            toDelete: @[nd]
+        else ->
+            toDelete: new nd
+
+        loop toDelete 'deletable [
+            performQuery 'unput @[
+                deleteNodeSQL, deleteNodeEdgesSQL
+            ] @[
+                deletable\id, deletable\id, deletable\id 
+            ]
+        ]
+    ]
+
+    ;
     ; Delete existing node
     ;--------------------------
 
