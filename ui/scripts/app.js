@@ -23,7 +23,7 @@ const Grafito = {
                     ],
                     database: [
                         {icon: "pencil-fill", tip: "Edit selected node", action: null},
-                        {icon: "link-bold", tip: "Link select node", action: null},
+                        {icon: "link-bold", tip: "Link selected node", action: null},
                         {icon: "trash-fill", tip: "Delete selected node", action: null}
                     ]
                 },
