@@ -251,10 +251,13 @@ const Grafito = {
             // store datarows
             this.table.datarows = rows;
 
+            // get common property keys as table headers
             var keys = Object.keys(rows[0].properties);
             for (var row of rows){
                 keys = keys.filter(value => Object.keys(row.properties).includes(value));
             }
+
+            // add the missing ones
             for (var row of rows){
                 for (var prop of Object.keys(row.properties)){
                     if (!keys.includes(prop)){
@@ -262,10 +265,16 @@ const Grafito = {
                     }
                 }
             }
+
+            // let's remove "id" and "tag"
+            // we do want them, but with our own preferred order
             keys.unshift("id");
             keys.unshift("tag");
 
+            // set table header
             this.table.keys = keys;
+
+            // set table rows
             this.table.rows = rows.map(row=>
                 Object.assign({
                     tag: row.tag,
