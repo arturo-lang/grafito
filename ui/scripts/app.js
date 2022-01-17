@@ -77,6 +77,7 @@ const Grafito = {
             },
             table: {
                 showSearchBuilder: false,
+                datarows: [],
                 keys: [],
                 rows: []
             },
@@ -247,6 +248,9 @@ const Grafito = {
         },
 
         drawTable(rows){
+            // store datarows
+            this.table.datarows = rows;
+
             var keys = Object.keys(rows[0].properties);
             for (var row of rows){
                 keys = keys.filter(value => Object.keys(row.properties).includes(value));
