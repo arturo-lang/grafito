@@ -671,8 +671,8 @@ graph: function [
         currentDataset: new nodeFromIds currentNodes
 
         Versions: #[
-            sqlite: to :version first split.by:" " execute "sqlite3 --version"
-            engine: Grafito\version
+            engine: to :version first split.by:" " execute "sqlite3 --version"
+            system: Grafito\Version
         ]
         
         routes: #.raw[
@@ -823,8 +823,8 @@ if standalone? [
     ; helpers & templates
 
     Versions: #[
-        sqlite: to :version first split.by:" " execute "sqlite3 --version"
-        engine: script\version
+        engine: to :version first split.by:" " execute "sqlite3 --version"
+        system: script\version
     ]
 
     BR: "\n"
@@ -835,7 +835,7 @@ if standalone? [
         print color #magenta replace.regex logoTxt "#(.+)" (color #white "$1") ++ color.keep #magenta ""
         print "  "
         color #gray "-------------------------------------" BR
-        color #gray ~"  system: v/|Versions\engine|, engine: v/|Versions\sqlite|" BR
+        color #gray ~"  system: v/|Versions\system|, engine: v/|Versions\engine|" BR
         color #gray "-------------------------------------" BR
     ]
 
