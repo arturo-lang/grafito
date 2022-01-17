@@ -780,12 +780,7 @@ graph: function [
 
         set metas 'version "undefined"
         set metas 'mode "json"
-
-        ; TODO(DB\Meta) script\version doesn't propagate when module is included
-        ;  When it's run as a standalone app, it works fine
-        ;  labels: bug
-        if not? null? script -> 
-            set metas 'version script\version
+        set metas 'version Grafito\version
 
         put'meta metas
         pop.discard 1
