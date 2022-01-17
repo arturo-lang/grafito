@@ -53,6 +53,7 @@ const Grafito = {
                     layout: {
 
                     },
+                    manipulation: false,
                     physics: {
                         barnesHut: {
                             springConstant: 0.03,
@@ -255,18 +256,8 @@ const Grafito = {
         
             this.graph.config.interaction.hideEdgesOnDrag = !this.config.showEdgesOnDrag.value;
             this.graph.config.interaction.hideEdgesOnZoom = !this.config.showEdgesOnZoom.value;
-            this.graph.config.layout.randomSeed = this.graph.view.getSeed();
 
-            this.drawGraph(this.graph.dataset, clean=true);
-
-            //this.graph.view.setOptions(this.graph.config); 
-
-            // this helps to make it clean again, 
-            // but it's off-centered
-            //this.drawGraph(this.graph.dataset, clean=true);
-
-            // this doesn't work (I guess, it should be fired only when the graph.view is visible)
-            // this.graph.view.fit();
+            this.graph.view.setOptions(this.graph.config);
         }
     },
 
