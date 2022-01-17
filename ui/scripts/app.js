@@ -9,8 +9,9 @@ const Grafito = {
         return {
             performInitialSetup: false,
             config: {
+                showNodesOnDrag: {value: true, description: "Keep showing nodes when dragging"},
                 showEdgesOnDrag: {value: true, description: "Keep showing edges when dragging"},
-                showEdgesOnZoom: {value: true, description: "Keep showing edges when zooming"}
+                showEdgesOnZoom: {value: true, description: "Keep showing edges when zooming"},
             },
             working: false,
             graph: {
@@ -264,6 +265,7 @@ const Grafito = {
         updateGraphView() {
             console.log("updating graph view...");
         
+            this.graph.config.interaction.hideNodesOnDrag = !this.config.showNodesOnDrag.value;
             this.graph.config.interaction.hideEdgesOnDrag = !this.config.showEdgesOnDrag.value;
             this.graph.config.interaction.hideEdgesOnZoom = !this.config.showEdgesOnZoom.value;
 
