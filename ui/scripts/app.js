@@ -15,12 +15,16 @@ const Grafito = {
             working: false,
             graph: {
                 dataset: {},
-                editOptions: [
-                    {icon: "arrows-out", tip: "Expand neighboring nodes", action: this.expandNodeNeighbors},
-                    {icon: "eraser", tip: "Remove from graph view", action: this.removeSelectedNode},
-                    {icon: "pencil", tip: "Edit selected node", action: null},
-                    {icon: "trash", tip: "Delete selected node", action: null}
-                ],
+                editOptions: {
+                    visualization: [
+                        {icon: "arrows-out", tip: "Expand neighboring nodes", action: this.expandNodeNeighbors},
+                        {icon: "eraser", tip: "Remove from graph view", action: this.removeSelectedNode}
+                    ],
+                    database: [
+                        {icon: "pencil", tip: "Edit selected node", action: null},
+                        {icon: "trash", tip: "Delete selected node", action: null}
+                    ]
+                },
                 view: {},
                 selected: null,
                 data: {
