@@ -362,21 +362,22 @@ graph: function [
         nd :dictionary :block
         attributes :block :dictionary
     ][
-        ;; description: « remove given node(s) from graph
+        ;; description: « update given node(s) with attributes
 
-        toDelete: ø
+        toUpdate: ø
 
         if? dictionary? nd ->
-            toDelete: @[nd]
+            toUpdate: @[nd]
         else ->
-            toDelete: new nd
+            toUpdate: new nd
 
-        loop toDelete 'deletable [
-            performQuery 'unput @[
-                deleteNodeSQL, deleteNodeEdgesSQL
-            ] @[
-                deletable\id, deletable\id, deletable\id 
-            ]
+        additional: attributes
+        if block? additional ->
+            additional: # additional
+
+        loop toUpdate 'updateable [
+            newAttributes: extend updateable\properties additional
+            performQuery 'reput updateNodeSQL @[updateable\id, write.json ø newAttributes]
         ]
     ]
 
