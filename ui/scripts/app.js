@@ -249,8 +249,6 @@ const Grafito = {
             );
         },
 
-        // TODO(updateGraphView) Graph view becomes too slow after updating
-        //  labels: bug
         updateGraphView() {
             console.log("updating graph view...");
         
