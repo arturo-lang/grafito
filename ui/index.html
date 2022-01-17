@@ -104,7 +104,7 @@
                                              class="panel-block">
                                             <input v-model="config[key].value"
                                                    @change="updateGraphView()"
-                                                   :name="key"
+                                                   :id="key"
                                                    type="checkbox"
                                                    class="switchable" >
                                             <label :for="key">{{setting.description}}</label>
