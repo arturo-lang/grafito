@@ -153,6 +153,9 @@ const Grafito = {
 
         removeSelectedNode(nodeId){
             this.graph.data.nodes.remove(nodeId);
+            if ((this.graph.selected!=null)&&(this.graph.selected.id==nodeId)){
+                this.graph.selected = null;
+            }
         },
 
         drawGraph(dataset, clean=false){
