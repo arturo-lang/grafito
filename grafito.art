@@ -669,6 +669,11 @@ graph: function [
 
         currentNodes: new nodeset
         currentDataset: new nodeFromIds currentNodes
+
+        Versions: #[
+            sqlite: to :version first split.by:" " execute "sqlite3 --version"
+            engine: Grafito\version
+        ]
         
         routes: #.raw[
             "/"             [
@@ -680,6 +685,7 @@ graph: function [
                     title: cleanpath
                     data: currentDataset
                     rows: currentNodes
+                    system: Versions
                 ]
             ]
 
