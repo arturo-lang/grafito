@@ -112,9 +112,9 @@
                                         <p class="panel-heading">
                                             Graph View
                                         </p>
-                                        <div v-for="(setting,key) in config"
+                                        <div v-for="(setting,key) in config.graphView"
                                              class="panel-block">
-                                            <input v-model="config[key].value"
+                                            <input v-model="config.graphView[key].value"
                                                    @change="updateGraphView()"
                                                    :id="key"
                                                    type="checkbox"
@@ -123,7 +123,22 @@
                                         </div>
                                     </article>
                                 </div>
-                                <div class="column is-6">TWO</div>
+                                <div class="column is-6">
+                                    <article class="panel">
+                                        <p class="panel-heading">
+                                            Engine
+                                        </p>
+                                        <div v-for="(setting,key) in config.engine"
+                                             class="panel-block">
+                                            <input v-model="config.engine[key].value"
+                                                   @change="updateEngineSettings()"
+                                                   :id="key"
+                                                   type="checkbox"
+                                                   class="switchable" >
+                                            <label :for="key">{{setting.description}}</label>
+                                        </div>
+                                    </article>
+                                </div>
                             </div>
                         </div>
                     </div>
