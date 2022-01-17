@@ -359,7 +359,7 @@ graph: function [
     ; Update existing node
     ;--------------------------
 
-    reput: function [
+    edit: function [
         nd :dictionary :block
         attributes :block :dictionary
     ][
