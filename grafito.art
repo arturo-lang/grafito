@@ -364,6 +364,10 @@ graph: function [
         attributes :block :dictionary
     ][
         ;; description: « update given node(s) with attributes
+        ;; options: [
+        ;;      replace: « replace entire object properties with given ones
+        ;; ]
+        ;; returns: :nothing
 
         toUpdate: ø
 
@@ -372,12 +376,20 @@ graph: function [
         else ->
             toUpdate: new nd
 
+        doReplace?: not? null? attr 'replace
+
         additional: attributes
         if block? additional ->
             additional: # additional
 
         loop toUpdate 'updateable [
-            newAttributes: extend updateable\properties additional
+            newAttributes: ø
+
+            if? doReplace? ->
+                newAttributes: additional
+            else ->
+                newAttributes: extend updateable\properties additional
+
             updateable\properties: newAttributes
             performQuery 'reput updateNodeSQL @[write.json ø newAttributes, updateable\id]
         ]
