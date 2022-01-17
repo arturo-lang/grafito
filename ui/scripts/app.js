@@ -17,15 +17,21 @@ const Grafito = {
             graph: {
                 dataset: {},
                 editOptions: {
-                    visualization: [
-                        {icon: "arrows-out-fill", tip: "Expand neighboring nodes", action: this.expandNodeNeighbors},
-                        {icon: "eraser-fill", tip: "Remove from graph view", action: this.removeSelectedNode}
+                    main: [
+                        {icon: "plus-bold", tip: "Add new node", action: null},
+                        {icon: "arrows-clockwise-bold", tip: "Refresh view", action: null}
                     ],
-                    database: [
-                        {icon: "pencil-fill", tip: "Edit selected node", action: null},
-                        {icon: "link-bold", tip: "Link selected node", action: null},
-                        {icon: "trash-fill", tip: "Delete selected node", action: null}
-                    ]
+                    item: {
+                        visualization: [
+                            {icon: "arrows-out-fill", tip: "Expand neighboring nodes", action: this.expandNodeNeighbors},
+                            {icon: "eraser-fill", tip: "Remove from graph view", action: this.removeSelectedNode}
+                        ],
+                        database: [
+                            {icon: "pencil-fill", tip: "Edit selected node", action: null},
+                            {icon: "link-bold", tip: "Link selected node", action: null},
+                            {icon: "trash-fill", tip: "Delete selected node", action: null}
+                        ]
+                    }
                 },
                 view: {},
                 selected: null,
