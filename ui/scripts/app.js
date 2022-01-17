@@ -330,8 +330,12 @@ const Grafito = {
                     {
                         text: '<i class="ph-brackets-curly"></i>',
                         action: function ( e, dt, button, config ) {
+                            console.log("saving as JSON");
+                            console.log(VM);
+                            console.log(VM.table.datarows);
+                            console.log(JSON.stringify(VM.table.datarows));
                             $.fn.dataTable.fileSave(
-                                new Blob( [ JSON.stringify( this.table.datarows ) ] ),
+                                new Blob( [ JSON.stringify(VM.table.datarows, null, 4) ] ),
                                 'Export.json'
                             );
                         }
