@@ -276,10 +276,10 @@ const Grafito = {
             this.performInitialSetup = true;
         });
 
-        window.onbeforeunload = ()=>{
-            $.post( "/exit", {}, ()=>{});
-            return true;
-        };
+        // window.onbeforeunload = ()=>{
+        //     $.post( "/exit", {}, ()=>{});
+        //     return true;
+        // };
     },
 
     updated(){
