@@ -403,6 +403,7 @@ graph: function [
         nd :dictionary :block
     ][
         ;; description: « remove given node(s) from graph
+        ;; returns: :nothing
 
         toDelete: ø
 
