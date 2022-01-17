@@ -378,7 +378,7 @@ graph: function [
 
         loop toUpdate 'updateable [
             newAttributes: extend updateable\properties additional
-            performQuery 'reput updateNodeSQL @[updateable\id, write.json ø newAttributes]
+            performQuery 'reput updateNodeSQL @[write.json ø newAttributes, updateable\id]
         ]
     ]
 
