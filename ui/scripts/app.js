@@ -255,12 +255,11 @@ const Grafito = {
         
             this.graph.config.interaction.hideEdgesOnDrag = !this.config.showEdgesOnDrag.value;
             this.graph.config.interaction.hideEdgesOnZoom = !this.config.showEdgesOnZoom.value;
+            this.graph.config.layout.randomSeed = this.graph.view.getSeed();
 
+            this.drawGraph(this.graph.dataset, clean=true);
 
-
-            this.drawG
-
-            this.graph.view.setOptions(this.graph.config); 
+            //this.graph.view.setOptions(this.graph.config); 
 
             // this helps to make it clean again, 
             // but it's off-centered
