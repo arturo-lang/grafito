@@ -11,7 +11,7 @@ const Grafito = {
             config: {
                 showNodesOnDrag: {value: true, description: "Keep showing nodes when dragging"},
                 showEdgesOnDrag: {value: true, description: "Keep showing edges when dragging"},
-                showEdgesOnZoom: {value: true, description: "Keep showing edges when zooming"},
+                showEdgesOnZoom: {value: false, description: "Keep showing edges when zooming"},
             },
             working: false,
             graph: {
@@ -60,7 +60,8 @@ const Grafito = {
                         length: 3.0
                     },
                     interaction: {
-                        hover: true
+                        hover: true,
+                        hideEdgesOnZoom: true
                     },
                     layout: {
 
