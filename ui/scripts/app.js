@@ -346,8 +346,14 @@ const Grafito = {
                     {
                         text: '<i class="ph-brackets-curly"></i>',
                         action: function ( e, dt, button, config ) {
+                            let bl = null;
+                            if (VM.config.tableView.prettifyJson.value)
+                                bl = JSON.stringify(VM.table.datarows, null, 4);
+                            else
+                                bl = JSON.stringify(VM.table.datarows);
+                                
                             $.fn.dataTable.fileSave(
-                                new Blob( [ JSON.stringify(VM.table.datarows, null, 4) ] ),
+                                new Blob([bl]),
                                 'Export.json'
                             );
                         }
