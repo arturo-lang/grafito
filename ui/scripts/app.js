@@ -9,6 +9,7 @@ const Grafito = {
         return {
             performInitialSetup: false,
             config: {
+                versions: {},
                 graphView: {
                     showNodesOnDrag: {value: true, description: "Keep showing nodes when dragging"},
                     showEdgesOnDrag: {value: true, description: "Keep showing edges when dragging"},

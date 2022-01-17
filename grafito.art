@@ -685,7 +685,7 @@ graph: function [
                     title: cleanpath
                     data: currentDataset
                     rows: currentNodes
-                    system: Versions
+                    versions: Versions
                 ]
             ]
 
