@@ -16,7 +16,7 @@
 ; The main library
 ;--------------------------
 
-Debug: false ;true
+Debug: true
 
 graph: function [
     dbpath :string :null
