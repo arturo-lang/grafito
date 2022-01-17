@@ -48,6 +48,7 @@ graph: function [
     schemaSQL:              split.by:";" read "sql/schema.sql"
 
     createNodeSQL:          read "sql/createNode.sql"
+    updateNodeSQL:          read "sql/updateNode.sql"
     deleteNodeSQL:          read "sql/deleteNode.sql"
     deleteNodeEdgesSQL:     read "sql/deleteNodeEdges.sql"
     getNodeSQL:             read "sql/getNode.sql"
