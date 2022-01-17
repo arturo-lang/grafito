@@ -18,12 +18,13 @@ const Grafito = {
                 dataset: {},
                 editOptions: {
                     visualization: [
-                        {icon: "arrows-out", tip: "Expand neighboring nodes", action: this.expandNodeNeighbors},
-                        {icon: "eraser", tip: "Remove from graph view", action: this.removeSelectedNode}
+                        {icon: "arrows-out-fill", tip: "Expand neighboring nodes", action: this.expandNodeNeighbors},
+                        {icon: "eraser-fill", tip: "Remove from graph view", action: this.removeSelectedNode}
                     ],
                     database: [
-                        {icon: "pencil", tip: "Edit selected node", action: null},
-                        {icon: "trash", tip: "Delete selected node", action: null}
+                        {icon: "pencil-fill", tip: "Edit selected node", action: null},
+                        {icon: "link-bold", tip: "Link select node", action: null},
+                        {icon: "trash-fill", tip: "Delete selected node", action: null}
                     ]
                 },
                 view: {},
