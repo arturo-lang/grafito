@@ -10,7 +10,7 @@
 
 @grafitoPurple: #682a5d;
 
-@switchableBg: #06842c;//@grafitoPurple;
+@switchableBg: #06842c;
 
 /****************************************************
  Global mixins
@@ -412,6 +412,12 @@ main {
             .stretched();
 
             padding: 2rem;
+
+            .hero {
+                .title {
+                    color: @grafitoPurple;
+                }
+            }
 
             .panel {
                 box-shadow: 0 0.2em 1em -0.125em rgb(10 10 10 / 3%), 
