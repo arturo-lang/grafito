@@ -16,7 +16,10 @@
 ; The main library
 ;--------------------------
 
-Debug: false ;true
+Grafito: #[
+    Debug: false ;true
+    Version: 0.2.8
+]
 
 graph: function [
     dbpath :string :null
@@ -91,7 +94,7 @@ graph: function [
     ;--------------------------
 
     performQuery: function [ctx, qu, params][
-        if and? [Debug][null? attr 'noDebug] [
+        if and? [Grafito\Debug][null? attr 'noDebug] [
             context: to :string ctx
             prepend: " | "
             print color.bold #gray ">: " ++ context
