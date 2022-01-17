@@ -134,6 +134,19 @@
                                 <div class="column is-6">
                                     <article class="panel">
                                         <p class="panel-heading">
+                                            Table View
+                                        </p>
+                                        <div v-for="(setting,key) in config.tableView"
+                                             class="panel-block">
+                                            <input v-model="config.tableView[key].value"
+                                                   :id="key"
+                                                   type="checkbox"
+                                                   class="switchable" >
+                                            <label :for="key">{{setting.description}}</label>
+                                        </div>
+                                    </article>
+                                    <article class="panel">
+                                        <p class="panel-heading">
                                             Engine
                                         </p>
                                         <div v-for="(setting,key) in config.engine"

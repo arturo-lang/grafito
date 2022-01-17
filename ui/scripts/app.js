@@ -15,7 +15,9 @@ const Grafito = {
                     showEdgesOnDrag: {value: true, description: "Keep showing edges when dragging"},
                     showEdgesOnZoom: {value: false, description: "Keep showing edges when zooming"}
                 },
-
+                tableView: {
+                    prettifyJson: {value: true, description: "Prettify exported JSON data"}
+                },
                 engine: {
                     caseSensitive: {value: false, description: "Queries should be case-sensitive"}
                 }
