@@ -50,6 +50,9 @@ const Grafito = {
                     interaction: {
                         hover: true
                     },
+                    layout: {
+
+                    },
                     physics: {
                         barnesHut: {
                             springConstant: 0.03,
@@ -252,6 +255,10 @@ const Grafito = {
         
             this.graph.config.interaction.hideEdgesOnDrag = !this.config.showEdgesOnDrag.value;
             this.graph.config.interaction.hideEdgesOnZoom = !this.config.showEdgesOnZoom.value;
+
+
+
+            this.drawG
 
             this.graph.view.setOptions(this.graph.config); 
 
