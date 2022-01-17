@@ -17,7 +17,7 @@ const Grafito = {
                 dataset: {},
                 editOptions: [
                     {icon: "arrows-out", tip: "Expand neighboring nodes", action: this.expandNodeNeighbors},
-                    {icon: "eraser", tip: "Remove from graph view", action: null},
+                    {icon: "eraser", tip: "Remove from graph view", action: this.removeSelectedNode},
                     {icon: "pencil", tip: "Edit selected node", action: null},
                     {icon: "trash", tip: "Delete selected node", action: null}
                 ],
@@ -145,6 +145,10 @@ const Grafito = {
                     this.graph.data.edges.update(edge);
                 }
             });
+        },
+
+        removeSelectedNode(nodeId){
+            this.graph.data.nodes.remove(nodeId);
         },
 
         drawGraph(dataset, clean=false){
