@@ -44,7 +44,7 @@ const Grafito = {
                         database: [
                             {icon: "pencil-fill", tip: "Edit selected node", effect: "modifying", action: null},
                             {icon: "link-bold", tip: "Link selected node", effect: "modifying", action: null},
-                            {icon: "trash-fill", tip: "Delete selected node", effect: "destructive", action: null}
+                            {icon: "trash-fill", tip: "Delete selected node", effect: "destructive", action: this.deleteSelectedNode}
                         ]
                     },
                     edge: {
@@ -205,6 +205,12 @@ const Grafito = {
                 this.graph.selected.node = null;
                 this.showDefaultInfo();
             }
+        },
+
+        deleteSelectedNode(nodeId){
+            $.post("/deleteNode", {ndid: nodeId }, ()=>{
+                this.removeSelectedNode(nodeId);
+            });
         },
 
         removeSelectedEdge(edgeId){
