@@ -1,0 +1,1 @@
+PRAGMA case_sensitive_like = 0
