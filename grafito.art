@@ -438,23 +438,25 @@ graph: function [
     ;--------------------------
 
     unput: function [
-        nd :dictionary :block
+        nd :integer :dictionary :block
     ][
         ;; description: « remove given node(s) from graph
         ;; returns: :nothing
 
         toDelete: ø
 
-        if? dictionary? nd ->
-            toDelete: @[nd]
-        else ->
+        if? block? nd ->
             toDelete: new nd
+        else ->
+            toDelete: @[nd]
 
         loop toDelete 'deletable [
+            nodeId: (dictionary? deletable) ? -> deletable\id -> deletable
+
             performQuery 'unput @[
                 deleteNodeSQL, deleteNodeEdgesSQL
             ] @[
-                deletable\id, deletable\id, deletable\id 
+                nodeId, nodeId, nodeId
             ]
         ]
     ]
