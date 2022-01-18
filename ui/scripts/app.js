@@ -241,7 +241,6 @@ const Grafito = {
             this.showDefaultInfo();
 
             this.graph.view.on("selectNode", (x)=>{
-                console.log("in selectNode");
                 let node = this.graph.data.nodes.get(x.nodes[0]);
                 this.graph.selected.node = node;
                 this.graph.selected.edge = null;
@@ -249,14 +248,12 @@ const Grafito = {
             });
 
             this.graph.view.on("deselectNode", (x)=>{
-                console.log("in deselectNode");
                 this.graph.selected.node = null;
                 this.graph.selected.edge = null;
                 this.showDefaultInfo();
             });
 
             this.graph.view.on("selectEdge", (x)=>{
-                console.log("in selectEdge");
                 let edge = this.graph.data.edges.get(x.edges[0]);
                 console.log(edge);
                 this.graph.selected.node = null;
@@ -272,7 +269,6 @@ const Grafito = {
             });
 
             this.graph.view.on("deselectEdge", (x)=>{
-                console.log("in deselectEdge");
                 this.graph.selected.node = null;
                 this.graph.selected.edge = null;
                 this.showDefaultInfo();
