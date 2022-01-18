@@ -274,6 +274,19 @@ main {
             .vis-network, .vis-network:focus, canvas, canvas:focus {
                 outline: none !important;
             }
+
+            .vis-network {
+                .vis-navigation {
+                    .vis-button {
+                        filter: opacity(0.3) grayscale(1);
+
+                        &:hover {
+                            filter: opacity(1) grayscale(1); //hue-rotate(-213deg) saturate(5);
+                            box-shadow: none !important;
+                        }
+                    }
+                }
+            }
         }
 
         #table {
