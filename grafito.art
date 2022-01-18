@@ -806,6 +806,10 @@ graph: function [
         printDebug "using existing database"
     ]
 
+    ; setup pragmas
+    if caseSensitive? ->
+        performQuery 'main caseSensitiveLikePragma ø
+
     ; create helpers, if any
     entities: attr "helpers"
     if null? entities -> entities: []
