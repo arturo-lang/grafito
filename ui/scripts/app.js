@@ -306,7 +306,7 @@ const Grafito = {
             this.graph.config.interaction.hideEdgesOnDrag = !this.config.graphView.showEdgesOnDrag.value;
             this.graph.config.interaction.hideEdgesOnZoom = !this.config.graphView.showEdgesOnZoom.value;
             
-            this.graph.config.edges.font = (this.config.graphView.showEdgeLabels.value) ? 12 : 0;
+            this.graph.config.edges.font.size = (this.config.graphView.showEdgeLabels.value) ? 12 : 0;
 
             this.graph.view.setOptions(this.graph.config);
         },
