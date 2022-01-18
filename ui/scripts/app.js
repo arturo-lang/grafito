@@ -322,10 +322,10 @@ const Grafito = {
             this.performInitialSetup = true;
         });
 
-        // window.onbeforeunload = ()=>{
-        //     $.post( "/exit", {}, ()=>{});
-        //     return true;
-        // };
+        window.onbeforeunload = ()=>{
+            $.post( "/exit", {}, ()=>{});
+            return true;
+        };
     },
 
     updated(){
@@ -351,7 +351,7 @@ const Grafito = {
                                 bl = JSON.stringify(VM.table.datarows, null, 4);
                             else
                                 bl = JSON.stringify(VM.table.datarows);
-                                
+
                             $.fn.dataTable.fileSave(
                                 new Blob([bl]),
                                 'Export.json'
