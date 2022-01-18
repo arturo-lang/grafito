@@ -647,9 +647,10 @@ graph: function [
             qr: ~fetchNodesSQL
         ]
 
-        if not? caseSensitive? ->
+        if not? caseSensitive? [
             print "adding COLLATE NOCASE"
             qr: qr ++ "\nCOLLATE NOCASE"
+        ]
 
         return map performQuery 'fetch qr qvals 'x [
             #[
