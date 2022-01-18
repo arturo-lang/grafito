@@ -36,7 +36,7 @@ const Grafito = {
                             {icon: "plus-bold", tip: "Add new node", action: null}
                         ]
                     },
-                    item: {
+                    node: {
                         visualization: [
                             {icon: "arrows-out-fill", tip: "Expand neighboring nodes", action: this.expandNodeNeighbors},
                             {icon: "eraser-fill", tip: "Remove from graph view", action: this.removeSelectedNode}
