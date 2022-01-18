@@ -66,6 +66,7 @@ graph: function [
 
     createEdgeSQL:          read "sql/createEdge.sql"
     deleteEdgeSQL:          read "sql/deleteEdge.sql"
+    deleteEdgeByIdSQL:      read "sql/deleteEdgeById.sql"
 
     fetchNodesSQL:          read "sql/fetchNodes.sql"
     fetchNodesWithEdgesSQL: read "sql/fetchNodes.withEdges.sql"
