@@ -699,7 +699,7 @@ graph: function [
                 ]
             ]
 
-            "/exec"         [
+            "/exec"         [;[command]
                 try? [
                     if verbose? ->
                         printDebug "<== " ++ command
@@ -727,7 +727,7 @@ graph: function [
                 ]
             ]
 
-            "/nodeFromId"   [
+            "/nodeFromId"   [;[ndid]
                 newNodes: new nodeFromIds @[nodeFromId ndid]
                 write.json ø newNodes
             ]
