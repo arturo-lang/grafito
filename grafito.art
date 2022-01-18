@@ -765,7 +765,7 @@ graph: function [
             ]
 
             "/deleteNode"   [;[ndid]]
-                unput ndid
+                unput to :integer ndid
                 ""
             ]
 
