@@ -305,7 +305,11 @@ const Grafito = {
         updateEngineSettings() {
             console.log("updating enging settings");
 
-            console.log(this.config.engine);
+            $.post("/updateEngine", {
+                caseSensitive: this.config.engine.caseSensitive.value 
+            }, ()=>{
+                console.log("done")
+            });
         }
     },
 
@@ -320,6 +324,7 @@ const Grafito = {
             this.drawTable(obj.rows);
             this.config.versions = obj.versions;
             this.performInitialSetup = true;
+            this.config.engine.caseSensitive.value = obj.caseSensitive;
         });
 
         window.onbeforeunload = ()=>{
