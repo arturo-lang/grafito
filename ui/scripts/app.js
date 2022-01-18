@@ -46,6 +46,15 @@ const Grafito = {
                             {icon: "link-bold", tip: "Link selected node", action: null},
                             {icon: "trash-fill", tip: "Delete selected node", action: null}
                         ]
+                    },
+                    edge: {
+                        visualization: [
+                            {icon: "eraser-fill", tip: "Remove from graph view", action: this.removeSelectedNode}
+                        ],
+                        database: [
+                            {icon: "pencil-fill", tip: "Edit selected edge", action: null},
+                            {icon: "trash-fill", tip: "Delete selected edge", action: null}
+                        ]
                     }
                 },
                 view: {},
@@ -214,11 +223,16 @@ const Grafito = {
             // create the graph
             let container = document.getElementById("graph");
             this.graph.data = {
+                nodes: nodes,
+                edges: edges,
+            };
+
+            this.graph.dataview = {
                 nodes: new vis.DataView(nodes),
                 edges: new vis.DataView(edges),
             };
 
-            this.graph.view = new vis.Network(container, this.graph.data, this.graph.config);
+            this.graph.view = new vis.Network(container, this.graph.dataview, this.graph.config);
 
             this.showDefaultInfo();
 
