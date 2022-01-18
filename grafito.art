@@ -767,8 +767,6 @@ graph: function [
     verbose?: not? null? attr 'verbose
     caseSensitive?: not? null? attr 'case
 
-    print ["caseSensitive? set to " caseSensitive?]
-
     dbPath: ""
     cleanpath: "in-memory"
     dbExisted: false
