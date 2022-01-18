@@ -206,8 +206,8 @@ const Grafito = {
             // create the graph
             let container = document.getElementById("graph");
             this.graph.data = {
-                nodes: nodes,
-                edges: edges,
+                nodes: new vis.DataView(nodes),
+                edges: new vis.DataView(edges),
             };
 
             this.graph.view = new vis.Network(container, this.graph.data, this.graph.config);
