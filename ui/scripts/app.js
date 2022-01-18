@@ -237,36 +237,46 @@ const Grafito = {
             this.showDefaultInfo();
 
             this.graph.view.on("selectNode", (x)=>{
-                let node = this.graph.data.nodes.get(x.nodes[0])
+                console.log("in selectNode");
+                let node = this.graph.data.nodes.get(x.nodes[0]);
                 this.graph.selected.node = node;
+                this.graph.selected.edge = null;
                 this.updateInfo(node.properties, node.tag, node.color);
             });
 
             this.graph.view.on("deselectNode", (x)=>{
+                console.log("in deselectNode");
                 this.graph.selected.node = null;
-                this.showDefaultInfo();
-            });
-
-            this.graph.view.on("selectEdge", (x)=>{
-                let edge = this.graph.data.edges.get(x.edges[0])
-                this.graph.selected.edge = edge;
-                this.updateInfo({
-                    "from": `${nodeFrom.tag} (${nodeFrom.id})`,
-                    "to": `${nodeTo.tag} (${nodeTo.id})`
-                }, edge.label, "black", "white");
-            });
-
-            this.graph.view.on("deselectEdge", (x)=>{
                 this.graph.selected.edge = null;
                 this.showDefaultInfo();
             });
+
+            // this.graph.view.on("selectEdge", (x)=>{
+            //     console.log("in selectEdge");
+            //     let edge = this.graph.data.edges.get(x.edges[0]);
+            //     console.log(edge);
+            //     this.graph.selected.node = null;
+            //     this.graph.selected.edge = edge;
+                
+            //     this.updateInfo({
+            //         "from": `${nodeFrom.tag} (${nodeFrom.id})`,
+            //         "to": `${nodeTo.tag} (${nodeTo.id})`
+            //     }, edge.label, "black", "white");
+            // });
+
+            // this.graph.view.on("deselectEdge", (x)=>{
+            //     console.log("in deselectEdge");
+            //     this.graph.selected.node = null;
+            //     this.graph.selected.edge = null;
+            //     this.showDefaultInfo();
+            // });
 
             this.graph.view.on("doubleClick", (x)=>{
                 this.expandNodeNeighbors(x.nodes[0]);
             });
 
             this.graph.view.on("hoverNode", (x)=>{
-                if (this.graph.selected.node == null){
+                if ((this.graph.selected.node == null)&&(this.graph.selected.edge == null)){
                     let node = nodes.get(x.node);
 
                     this.updateInfo(node.properties, node.tag, node.color); 
@@ -274,7 +284,7 @@ const Grafito = {
             });
 
             this.graph.view.on("hoverEdge", (ev)=>{
-                if (this.graph.selected.node == null){
+                if ((this.graph.selected.node == null)&&(this.graph.selected.edge == null)){
                     let edge = edges.get(ev.edge);
                     let nodeFrom = nodes.get(edge.from);
                     let nodeTo = nodes.get(edge.to);
@@ -287,13 +297,13 @@ const Grafito = {
             });
 
             this.graph.view.on("blurNode", ()=>{
-                if (this.graph.selected.node == null){
+                if ((this.graph.selected.node == null)&&(this.graph.selected.edge == null)){
                     this.showDefaultInfo();
                 }
             });
 
             this.graph.view.on("blurEdge", ()=>{
-                if (this.graph.selected.node == null){
+                if ((this.graph.selected.node == null)&&(this.graph.selected.edge == null)){
                     this.showDefaultInfo();
                 }
             });
