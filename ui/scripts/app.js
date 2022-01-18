@@ -245,7 +245,7 @@ const Grafito = {
                 let node = this.graph.data.nodes.get(x.nodes[0]);
                 this.graph.selected.node = node;
                 this.graph.selected.edge = null;
-                this.updateInfo(node.properties, node.tag, node.color);
+                this.updateInfo(node.properties, node.tag, node.color.background);
             });
 
             this.graph.view.on("deselectNode", (x)=>{
@@ -255,12 +255,30 @@ const Grafito = {
                 this.showDefaultInfo();
             });
 
+            // this.graph.view.on("click", (x)=>{
+            //     console.log("in click");
+            //     console.log(x);
+            //     if (x.edges.length == 1){
+            //         let edge = this.graph.data.edges.get(x.edges[0]);
+            //         this.graph.selected.node = null;
+            //         this.graph.selected.edge = null;
+
+            //         this.updateInfo({
+            //             "from": `${nodeFrom.tag} (${nodeFrom.id})`,
+            //             "to": `${nodeTo.tag} (${nodeTo.id})`
+            //         }, edge.label, "black", "white");
+            //     }
+            // });
+
             this.graph.view.on("selectEdge", (x)=>{
                 console.log("in selectEdge");
                 let edge = this.graph.data.edges.get(x.edges[0]);
                 console.log(edge);
                 this.graph.selected.node = null;
                 this.graph.selected.edge = edge;
+
+                let nodeFrom = nodes.get(edge.from);
+                let nodeTo = nodes.get(edge.to);
                 
                 this.updateInfo({
                     "from": `${nodeFrom.tag} (${nodeFrom.id})`,
