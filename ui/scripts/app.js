@@ -28,6 +28,7 @@ const Grafito = {
                 dataset: {},
                 editOptions: {
                     main: [
+                        {icon: "funnel-bold", tip: "Filter visible nodes", action: null},
                         {icon: "plus-bold", tip: "Add new node", action: null},
                         {icon: "arrows-clockwise-bold", tip: "Refresh view", action: null}
                     ],
