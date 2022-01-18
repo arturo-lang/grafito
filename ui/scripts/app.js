@@ -247,6 +247,20 @@ const Grafito = {
                 this.showDefaultInfo();
             });
 
+            this.graph.view.on("selectEdge", (x)=>{
+                let edge = this.graph.data.edges.get(x.edges[0])
+                this.graph.selected.edge = edge;
+                this.updateInfo({
+                    "from": `${nodeFrom.tag} (${nodeFrom.id})`,
+                    "to": `${nodeTo.tag} (${nodeTo.id})`
+                }, edge.label, "black", "white");
+            });
+
+            this.graph.view.on("deselectEdge", (x)=>{
+                this.graph.selected.edge = null;
+                this.showDefaultInfo();
+            });
+
             this.graph.view.on("doubleClick", (x)=>{
                 this.expandNodeNeighbors(x.nodes[0]);
             });
