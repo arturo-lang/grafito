@@ -74,8 +74,8 @@ const Grafito = {
                             color: "white",
                             align: "center"
                         },
-                        widthConstraint: 60,
-                        borderWidthSelected: 3
+                        widthConstraint: 70,
+                        borderWidthSelected: 5
                     },
                     edges:{
                         arrows: {
