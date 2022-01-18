@@ -49,7 +49,10 @@ const Grafito = {
                     }
                 },
                 view: {},
-                selected: null,
+                selected: {
+                    node: null,
+                    edge: null
+                },
                 data: {
                     nodes: [],
                     edges: []
@@ -184,8 +187,8 @@ const Grafito = {
 
         removeSelectedNode(nodeId){
             this.graph.data.nodes.remove(nodeId);
-            if ((this.graph.selected!=null)&&(this.graph.selected.id==nodeId)){
-                this.graph.selected = null;
+            if ((this.graph.selected.node!=null)&&(this.graph.selected.node.id==nodeId)){
+                this.graph.selected.node = null;
                 this.showDefaultInfo();
             }
         },
@@ -221,12 +224,12 @@ const Grafito = {
 
             this.graph.view.on("selectNode", (x)=>{
                 let node = this.graph.data.nodes.get(x.nodes[0])
-                this.graph.selected = node;
+                this.graph.selected.node = node;
                 this.updateInfo(node.properties, node.tag, node.color);
             });
 
             this.graph.view.on("deselectNode", (x)=>{
-                this.graph.selected = null;
+                this.graph.selected.node = null;
                 this.showDefaultInfo();
             });
 
@@ -235,7 +238,7 @@ const Grafito = {
             });
 
             this.graph.view.on("hoverNode", (x)=>{
-                if (this.graph.selected == null){
+                if (this.graph.selected.node == null){
                     let node = nodes.get(x.node);
 
                     this.updateInfo(node.properties, node.tag, node.color); 
@@ -243,7 +246,7 @@ const Grafito = {
             });
 
             this.graph.view.on("hoverEdge", (ev)=>{
-                if (this.graph.selected == null){
+                if (this.graph.selected.node == null){
                     let edge = edges.get(ev.edge);
                     let nodeFrom = nodes.get(edge.from);
                     let nodeTo = nodes.get(edge.to);
@@ -256,13 +259,13 @@ const Grafito = {
             });
 
             this.graph.view.on("blurNode", ()=>{
-                if (this.graph.selected == null){
+                if (this.graph.selected.node == null){
                     this.showDefaultInfo();
                 }
             });
 
             this.graph.view.on("blurEdge", ()=>{
-                if (this.graph.selected == null){
+                if (this.graph.selected.node == null){
                     this.showDefaultInfo();
                 }
             });
