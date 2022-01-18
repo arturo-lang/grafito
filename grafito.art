@@ -17,7 +17,7 @@
 ;--------------------------
 
 Grafito: #[
-    Debug: false ;true
+    Debug: true
     Version: 0.2.8
 ]
 
@@ -648,6 +648,7 @@ graph: function [
         ]
 
         if not? caseSensitive? ->
+            print "adding COLLATE NOCASE"
             qr: qr ++ "\nCOLLATE NOCASE"
 
         return map performQuery 'fetch qr qvals 'x [
@@ -760,6 +761,8 @@ graph: function [
     ; basic setup
     verbose?: not? null? attr 'verbose
     caseSensitive?: not? null? attr 'case
+
+    print ["caseSensitive? set to " caseSensitive?]
 
     dbPath: ""
     cleanpath: "in-memory"
