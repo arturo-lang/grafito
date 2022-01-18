@@ -30,7 +30,7 @@ const Grafito = {
                     main: {
                         visualization: [
                             {icon: "funnel-bold", tip: "Filter visible nodes", action: null},
-                            {icon: "arrows-clockwise-bold", tip: "Refresh view", action: null}
+                            {icon: "arrows-clockwise-bold", tip: "Refresh view", action: this.refreshGraph}
                         ],
                         database: [
                             {icon: "plus-bold", tip: "Add new node", action: null}
@@ -354,6 +354,10 @@ const Grafito = {
                     id: row.id
                 }, row.properties)
             );
+        },
+
+        refreshGraph() {
+            this.drawGraph(this.graph.dataset, clean=true);
         },
 
         updateGraphView() {
