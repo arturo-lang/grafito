@@ -27,11 +27,15 @@ const Grafito = {
             graph: {
                 dataset: {},
                 editOptions: {
-                    main: [
-                        {icon: "funnel-bold", tip: "Filter visible nodes", action: null},
-                        {icon: "plus-bold", tip: "Add new node", action: null},
-                        {icon: "arrows-clockwise-bold", tip: "Refresh view", action: null}
-                    ],
+                    main: {
+                        visualization: [
+                            {icon: "funnel-bold", tip: "Filter visible nodes", action: null},
+                            {icon: "arrows-clockwise-bold", tip: "Refresh view", action: null}
+                        ],
+                        database: [
+                            {icon: "plus-bold", tip: "Add new node", action: null}
+                        ]
+                    },
                     item: {
                         visualization: [
                             {icon: "arrows-out-fill", tip: "Expand neighboring nodes", action: this.expandNodeNeighbors},
