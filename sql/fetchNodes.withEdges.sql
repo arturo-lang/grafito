@@ -10,4 +10,3 @@ HAVING COUNT(
         THEN 1 
     END 
 ) |edgeLimit|
-COLLATE NOCASE
