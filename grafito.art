@@ -17,8 +17,13 @@
 ;--------------------------
 
 Grafito: #[
-    Debug: true
+    ; version
     Version: 0.2.8
+
+    ; configuration
+    Debug?: true
+    verbose?: true
+    caseSensitive?: false
 ]
 
 graph: function [
@@ -74,6 +79,7 @@ graph: function [
 
     ; Global SQL pragmas
 
+    caseInsensitiveLikePragma:  read "sql/pragmas/caseInsensitiveLike.sql"
     caseSensitiveLikePragma:    read "sql/pragmas/caseSensitiveLike.sql"
 
     ; Global UI template
@@ -99,7 +105,7 @@ graph: function [
     ;--------------------------
 
     performQuery: function [ctx, qu, params][
-        if and? [Grafito\Debug][null? attr 'noDebug] [
+        if and? [Grafito\Debug?][null? attr 'noDebug] [
             context: to :string ctx
             prepend: " | "
             print color.bold #gray ">: " ++ context
@@ -295,8 +301,8 @@ graph: function [
     ; Switch verbosity on/off
     ;--------------------------
 
-    verbose: function [] .export:[verbose?] [
-        verbose?: not? verbose?
+    verbose: function [] [
+        Grafito\verbose?: not? Grafito\verbose?
     ]
 
     ;==========================================
@@ -343,7 +349,7 @@ graph: function [
             ]
             performQuery 'put queries vals
 
-            if verbose? ->
+            if Grafito\verbose? ->
                  printDebug ~{created |size attributes| nodes}
         ]
         else [
@@ -356,7 +362,7 @@ graph: function [
                 properties: att
             ]
 
-            if verbose? ->
+            if Grafito\verbose? ->
                 printDebug ~{created 1 node (@|nodeId|) with |size att| propert|if? 1 = size att -> "y" else -> "ies"|}
         ]
     
@@ -455,7 +461,7 @@ graph: function [
             loop sr [s]->
                 'edges ++ edge s name tgt
         
-            if verbose? -> printDebug ~"created |size edges| edges"
+            if Grafito\verbose? -> printDebug ~"created |size edges| edges"
 
             return edges
         ]
@@ -474,7 +480,7 @@ graph: function [
                 ]
             ]
 
-            if verbose? -> printDebug ~"created |size edges| edges"
+            if Grafito\verbose? -> printDebug ~"created |size edges| edges"
 
             return edges
         ]
@@ -495,7 +501,7 @@ graph: function [
 
         if? :dictionary = type tgt [
             unedge src name tgt
-            if verbose? -> printDebug ~"removed 1 edge"
+            if Grafito\verbose? -> printDebug ~"removed 1 edge"
         ]
         else [
             if? :dictionary = type src [
@@ -509,7 +515,7 @@ graph: function [
                 ]
             ]
 
-            if verbose? -> printDebug ~"removed |size edges| edges"
+            if Grafito\verbose? -> printDebug ~"removed |size edges| edges"
         ]
     ]
 
@@ -651,10 +657,8 @@ graph: function [
             qr: ~fetchNodesSQL
         ]
 
-        if not? caseSensitive? [
-            print "adding COLLATE NOCASE"
+        if not? Grafito\caseSensitive? ->
             qr: qr ++ "\nCOLLATE NOCASE"
-        ]
 
         return map performQuery 'fetch qr qvals 'x [
             #[
@@ -696,18 +700,19 @@ graph: function [
                     data: currentDataset
                     rows: currentNodes
                     versions: Versions
+                    caseSensitive: Grafito\caseSensitive?
                 ]
             ]
 
             "/exec"         [;[command]
                 try? [
-                    if verbose? ->
+                    if Grafito\verbose? ->
                         printDebug "<== " ++ command
                     currentNodes: ""
                     bench: benchmark.get [
                         currentNodes: new do command
                     ]
-                    if verbose? -> 
+                    if Grafito\verbose? -> 
                         printDebug ~"==> OK (|bench| ms)"
                     if? or? [not? block? currentNodes]
                             [and? [0 < size currentNodes][not? dictionary? first currentNodes]][
@@ -730,6 +735,18 @@ graph: function [
             "/nodeFromId"   [;[ndid]
                 newNodes: new nodeFromIds @[nodeFromId ndid]
                 write.json ø newNodes
+            ]
+
+            "/updateEngine" [;[caseSensitive]
+                if? to :logical caseSensitive [
+                    Grafito\caseSensitive?: true
+                    performQuery 'main caseSensitiveLikePragma ø
+                ]
+                else [
+                    Grafito\caseSensitive?: false
+                    performQuery 'main caseInsensitiveLikePragma ø
+                ]
+                ""
             ]
 
             "/styles/app.less"  [
@@ -764,8 +781,8 @@ graph: function [
     ;==========================================
 
     ; basic setup
-    verbose?: not? null? attr 'verbose
-    caseSensitive?: not? null? attr 'case
+    Grafito\verbose?: not? null? attr 'verbose
+    Grafito\caseSensitive?: not? null? attr 'case
 
     dbPath: ""
     cleanpath: "in-memory"
@@ -807,7 +824,7 @@ graph: function [
     ]
 
     ; setup pragmas
-    if caseSensitive? ->
+    if Grafito\caseSensitive? ->
         performQuery 'main caseSensitiveLikePragma ø
 
     ; create helpers, if any
