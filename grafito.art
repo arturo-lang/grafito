@@ -157,7 +157,7 @@ graph: function [
                 ]
                 label: get keys nn\properties 0
             ]
-            props\color\highlight\border: "#CCCCCC"
+            props\color\highlight\border: as.code darken to :color to :string cl 0.2
             props\color\highlight\background: cl
 
             set nodeConfig nn\tag props
