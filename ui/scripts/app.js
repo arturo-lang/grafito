@@ -66,6 +66,9 @@ const Grafito = {
                                 type: "arrow"
                             }
                         },
+                        font: {
+                            size: 12
+                        },
                         smooth: {
                             type: 'dynamic'
                         },
