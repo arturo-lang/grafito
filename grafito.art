@@ -148,10 +148,34 @@ graph: function [
             ]
             ;print ~"picked |cl|"
             remove 'colori cl
-            set nodeConfig nn\tag #[
-                color: cl
+            props: #[
+                color: #[
+                    border: cl,
+                    background: cl,
+                    highlight: #[],
+                    hover: cl
+                ]
                 label: get keys nn\properties 0
             ]
+            props\color\highlight\border: "#CCCCCC"
+            props\color\highlight\background: cl
+
+            set nodeConfig nn\tag props
+            ; #[
+            ;     color: #[
+            ;         border: cl,
+            ;         background: cl,
+            ;         highlight: #[
+            ;             border: "#AAAAAA",
+            ;             background: cl
+            ;         ],
+            ;         hover: #[
+            ;             border: cl,
+            ;             background: cl
+            ;         ]
+            ;     ]
+            ;     label: get keys nn\properties 0
+            ; ]
             return cl
         ]
         else [
