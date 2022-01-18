@@ -13,7 +13,8 @@ const Grafito = {
                 graphView: {
                     showNodesOnDrag: {value: true, description: "Keep showing nodes when dragging"},
                     showEdgesOnDrag: {value: true, description: "Keep showing edges when dragging"},
-                    showEdgesOnZoom: {value: false, description: "Keep showing edges when zooming"}
+                    showEdgesOnZoom: {value: false, description: "Keep showing edges when zooming"},
+                    showEdgeLabels: {value: true, description: "Show edge labels"}
                 },
                 tableView: {
                     prettifyJson: {value: true, description: "Prettify exported JSON data"}
@@ -304,6 +305,8 @@ const Grafito = {
             this.graph.config.interaction.hideNodesOnDrag = !this.config.graphView.showNodesOnDrag.value;
             this.graph.config.interaction.hideEdgesOnDrag = !this.config.graphView.showEdgesOnDrag.value;
             this.graph.config.interaction.hideEdgesOnZoom = !this.config.graphView.showEdgesOnZoom.value;
+            
+            this.graph.config.edges.font = (this.config.graphView.showEdgeLabels.value) ? 12 : 0;
 
             this.graph.view.setOptions(this.graph.config);
         },
