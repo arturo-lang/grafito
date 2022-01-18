@@ -95,7 +95,9 @@ const Grafito = {
                     },
                     interaction: {
                         hover: true,
-                        hideEdgesOnZoom: true
+                        hideEdgesOnZoom: true,
+                        hoverConnectedEdges: true,
+                        selectConnectedEdges: false,
                     },
                     layout: {
 
