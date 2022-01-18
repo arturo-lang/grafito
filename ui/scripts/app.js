@@ -33,7 +33,7 @@ const Grafito = {
                             {icon: "arrows-clockwise-bold", tip: "Refresh view", action: this.refreshGraph}
                         ],
                         database: [
-                            {icon: "plus-bold", tip: "Add new node", action: null}
+                            {icon: "plus-bold", tip: "Add new node", effect: "modifying", action: null}
                         ]
                     },
                     node: {
@@ -42,9 +42,9 @@ const Grafito = {
                             {icon: "eraser-fill", tip: "Remove from graph view", action: this.removeSelectedNode}
                         ],
                         database: [
-                            {icon: "pencil-fill", tip: "Edit selected node", action: null},
-                            {icon: "link-bold", tip: "Link selected node", action: null},
-                            {icon: "trash-fill", tip: "Delete selected node", action: null}
+                            {icon: "pencil-fill", tip: "Edit selected node", effect: "modifying", action: null},
+                            {icon: "link-bold", tip: "Link selected node", effect: "modifying", action: null},
+                            {icon: "trash-fill", tip: "Delete selected node", effect: "destructive", action: null}
                         ]
                     },
                     edge: {
@@ -52,8 +52,8 @@ const Grafito = {
                             {icon: "eraser-fill", tip: "Remove from graph view", action: this.removeSelectedEdge}
                         ],
                         database: [
-                            {icon: "pencil-fill", tip: "Edit selected edge", action: null},
-                            {icon: "trash-fill", tip: "Delete selected edge", action: null}
+                            {icon: "pencil-fill", tip: "Edit selected edge", effect: "modifying", action: null},
+                            {icon: "trash-fill", tip: "Delete selected edge", effect: "destructive", action: null}
                         ]
                     }
                 },

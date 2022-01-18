@@ -71,6 +71,7 @@
                                 @click="editOption.action()"
                                 :data-tippy-content="editOption.tip"
                                 class="editOption"
+                                :class="editOption.effect"
                                 data-tippy-placement="left"
                                 data-tippy-theme="light">
                                 <i :class="`ph-${editOption.icon}`"></i>
@@ -92,6 +93,7 @@
                                  @click="editOption.action(graph.selected.node.id)"
                                  :data-tippy-content="editOption.tip"
                                  class="editOption"
+                                 :class="editOption.effect"
                                  data-tippy-placement="left"
                                  data-tippy-theme="light">
                                  <i :class="`ph-${editOption.icon}`"></i>
@@ -113,6 +115,7 @@
                                  @click="editOption.action(graph.selected.edge.id)"
                                  :data-tippy-content="editOption.tip"
                                  class="editOption"
+                                 :class="editOption.effect"
                                  data-tippy-placement="left"
                                  data-tippy-theme="light">
                                  <i :class="`ph-${editOption.icon}`"></i>
