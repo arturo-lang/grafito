@@ -58,7 +58,16 @@
                 <section id="content">
                     <transition name="slide-left">
                         <div id="mainEditOptions" class="editOptions" v-show="(graph.selected == null) && (sidebar.active=='graph')">
-                            <div v-for="editOption in graph.editOptions.main"
+                            <div v-for="editOption in graph.editOptions.main.visualization"
+                                @click="editOption.action(graph.selected.id)"
+                                :data-tippy-content="editOption.tip"
+                                class="editOption"
+                                data-tippy-placement="left"
+                                data-tippy-theme="light">
+                                <i :class="`ph-${editOption.icon}`"></i>
+                            </div>
+                            <div class="editOption-separator"></div>
+                            <div v-for="editOption in graph.editOptions.main.database"
                                 @click="editOption.action(graph.selected.id)"
                                 :data-tippy-content="editOption.tip"
                                 class="editOption"
@@ -69,8 +78,8 @@
                         </div>
                     </transition>
                     <transition name="slide-left">
-                        <div id="itemEditOptions" class="editOptions" v-show="(graph.selected != null) && (sidebar.active=='graph')">
-                            <div v-for="editOption in graph.editOptions.item.visualization"
+                        <div id="nodeEditOptions" class="editOptions" v-show="(graph.selected != null) && (sidebar.active=='graph')">
+                            <div v-for="editOption in graph.editOptions.node.visualization"
                                  @click="editOption.action(graph.selected.id)"
                                  :data-tippy-content="editOption.tip"
                                  class="editOption"
@@ -79,7 +88,7 @@
                                  <i :class="`ph-${editOption.icon}`"></i>
                             </div>
                             <div class="editOption-separator"></div>
-                            <div v-for="editOption in graph.editOptions.item.database"
+                            <div v-for="editOption in graph.editOptions.node.database"
                                  @click="editOption.action(graph.selected.id)"
                                  :data-tippy-content="editOption.tip"
                                  class="editOption"
