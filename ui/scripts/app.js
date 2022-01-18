@@ -255,21 +255,6 @@ const Grafito = {
                 this.showDefaultInfo();
             });
 
-            // this.graph.view.on("click", (x)=>{
-            //     console.log("in click");
-            //     console.log(x);
-            //     if (x.edges.length == 1){
-            //         let edge = this.graph.data.edges.get(x.edges[0]);
-            //         this.graph.selected.node = null;
-            //         this.graph.selected.edge = null;
-
-            //         this.updateInfo({
-            //             "from": `${nodeFrom.tag} (${nodeFrom.id})`,
-            //             "to": `${nodeTo.tag} (${nodeTo.id})`
-            //         }, edge.label, "black", "white");
-            //     }
-            // });
-
             this.graph.view.on("selectEdge", (x)=>{
                 console.log("in selectEdge");
                 let edge = this.graph.data.edges.get(x.edges[0]);
