@@ -399,7 +399,7 @@ graph: function [
                 newAttributes: extend updateable\properties additional
 
             updateable\properties: newAttributes
-            performQuery 'reput updateNodeSQL @[write.json ø newAttributes, updateable\id]
+            performQuery 'edit updateNodeSQL @[write.json ø newAttributes, updateable\id]
         ]
     ]
 
