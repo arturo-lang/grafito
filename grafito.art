@@ -72,6 +72,10 @@ graph: function [
     edgeWithTargetFilter:       read "sql/filters/edgeWithTarget.sql"
     propertyWithValueFilter:    read "sql/filters/propertyWithValue.sql"
 
+    ; Global SQL pragmas
+
+    caseSensitiveLikePragma:    read "sql/pragmas/caseSensitiveLike.sql"
+
     ; Global UI template
 
     app: read "ui/index.html"
