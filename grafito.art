@@ -764,6 +764,11 @@ graph: function [
                 write.json ø newNodes
             ]
 
+            "/deleteNode"   [;[ndid]]
+                unput ndid
+                ""
+            ]
+
             "/updateEngine" [;[caseSensitive]
                 if? to :logical caseSensitive [
                     Grafito\caseSensitive?: true
