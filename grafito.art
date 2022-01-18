@@ -563,6 +563,10 @@ graph: function [
         qpropvals: new []
         qedgevals: new []
 
+        collator: ""
+        if not? Grafito\caseSensitive? ->
+            collator: " COLLATE NOCASE"
+
         if not? empty? att [
             loop att [k,v][
                 case [equal? type v]
@@ -591,21 +595,21 @@ graph: function [
                             ; it's a complex property filter
                             loop #v [filt,rg][
 
-                                [symb,val]: @["=", v]
+                                [collate,symb,val]: @[collator, "=", v]
 
                                 case [equal? filt]
         
-                                    when? ["contains"]      -> [symb,val]: @["LIKE", ~"%|rg|%"]
-                                    when? ["prefix"]        -> [symb,val]: @["LIKE", ~"|rg|%"]
-                                    when? ["suffix"]        -> [symb,val]: @["LIKE", ~"%|rg|"]
-                                    when? ["under"]         -> [symb,val]: @["<", rg]
-                                    when? ["over"]          -> [symb,val]: @[">", rg]
-                                    when? ["underOrEqual"]  -> [symb,val]: @["<=", rg]
-                                    when? ["overOrEqual"]   -> [symb,val]: @[">=", rg]
-                                    when? ["in"]            -> [symb,val]: @["IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
+                                    when? ["contains"]      -> [collate,symb,val]: @["", "LIKE", ~"%|rg|%"]
+                                    when? ["prefix"]        -> [collate,symb,val]: @["", "LIKE", ~"|rg|%"]
+                                    when? ["suffix"]        -> [collate,symb,val]: @["", "LIKE", ~"%|rg|"]
+                                    when? ["under"]         -> [collate,symb,val]: @["", "<", rg]
+                                    when? ["over"]          -> [collate,symb,val]: @["", ">", rg]
+                                    when? ["underOrEqual"]  -> [collate,symb,val]: @["", "<=", rg]
+                                    when? ["overOrEqual"]   -> [collate,symb,val]: @["", ">=", rg]
+                                    when? ["in"]            -> [collate,symb,val]: @[collator, "IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
                                     when? ["not"][     
-                                        if? block? rg       -> [symb,val]: @["NOT IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
-                                        else                -> [symb,val]: @["!=", rg]
+                                        if? block? rg       -> [collate,symb,val]: @[collator, "NOT IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
+                                        else                -> [collate,symb,val]: @[collator, "!=", rg]
                                     ]
                                     else [
                                         panic.code: 1 ~"filter: |filt| not recognized"
@@ -624,8 +628,8 @@ graph: function [
                     ]
                     else [
                         ; it's a simple property filter
-                        symb: "="
-                        val: as.code v
+                        [collate,symb,val]: @[collator, "=", as.code v]
+        
                         'propertyFilters ++ ~propertyWithValueFilter
                         'qpropvals ++ @[~"$.|k|"]
                     ]
@@ -656,9 +660,6 @@ graph: function [
         else [
             qr: ~fetchNodesSQL
         ]
-
-        if not? Grafito\caseSensitive? ->
-            qr: qr ++ "\nCOLLATE NOCASE"
 
         return map performQuery 'fetch qr qvals 'x [
             #[
