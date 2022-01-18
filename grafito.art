@@ -28,6 +28,7 @@ graph: function [
     ;; description: « initiate a new graph environment with given name and body
     ;; options: [
     ;;      create: « recreate database from scratch, even if it exists
+    ;;      case: « queries should be case-sensitive
     ;;      verbose: « show messages regarding database operations
     ;; ]
     ;; returns: :any
@@ -755,6 +756,7 @@ graph: function [
 
     ; basic setup
     verbose?: not? null? attr 'verbose
+    caseSensitive?: not? null? attr 'case
 
     dbPath: ""
     cleanpath: "in-memory"
