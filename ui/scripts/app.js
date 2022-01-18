@@ -272,8 +272,8 @@ const Grafito = {
                 let nodeTo = nodes.get(edge.to);
                 
                 this.updateInfo({
-                    "from": `${nodeFrom.tag} (${nodeFrom.id})`,
-                    "to": `${nodeTo.tag} (${nodeTo.id})`
+                    "from": `${nodeFrom.tag} (${nodeFrom.label})`,
+                    "to": `${nodeTo.tag} (${nodeTo.label})`
                 }, edge.label, "black", "white");
             });
 
@@ -302,8 +302,8 @@ const Grafito = {
                     let nodeTo = nodes.get(edge.to);
 
                     this.updateInfo({
-                        "from": `${nodeFrom.tag} (${nodeFrom.id})`,
-                        "to": `${nodeTo.tag} (${nodeTo.id})`
+                        "from": `${nodeFrom.tag} (${nodeFrom.label})`,
+                        "to": `${nodeTo.tag} (${nodeTo.label})`
                     }, edge.label, "black", "white");
                 }
             });
