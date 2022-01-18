@@ -57,7 +57,7 @@
                 </aside>
                 <section id="content">
                     <transition name="slide-left">
-                        <div id="mainEditOptions" class="editOptions" v-show="(graph.selected.node == null) && (sidebar.active=='graph')">
+                        <div id="mainEditOptions" class="editOptions" v-show="(graph.selected.node == null) && (graph.selected.edge == null) && (sidebar.active=='graph')">
                             <div v-for="editOption in graph.editOptions.main.visualization"
                                 @click="editOption.action(graph.selected.node.id)"
                                 :data-tippy-content="editOption.tip"
