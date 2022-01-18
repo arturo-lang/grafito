@@ -49,7 +49,7 @@ const Grafito = {
                     },
                     edge: {
                         visualization: [
-                            {icon: "eraser-fill", tip: "Remove from graph view", action: this.removeSelectedNode}
+                            {icon: "eraser-fill", tip: "Remove from graph view", action: this.removeSelectedEdge}
                         ],
                         database: [
                             {icon: "pencil-fill", tip: "Edit selected edge", action: null},
@@ -202,6 +202,14 @@ const Grafito = {
             this.graph.data.nodes.remove(nodeId);
             if ((this.graph.selected.node!=null)&&(this.graph.selected.node.id==nodeId)){
                 this.graph.selected.node = null;
+                this.showDefaultInfo();
+            }
+        },
+
+        removeSelectedEdge(edgeId){
+            this.graph.data.edges.remove(edgeId);
+            if ((this.graph.selected.edge!=null)&&(this.graph.selected.edge.id==edgeId)){
+                this.graph.selected.edge = null;
                 this.showDefaultInfo();
             }
         },
