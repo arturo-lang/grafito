@@ -540,18 +540,18 @@ graph: function [
         edgeId: 0
 
         if? :dictionary = type tgt [
-            unedge src name tgt
+            unedge src\id name tgt\id
             if Grafito\verbose? -> printDebug ~"removed 1 edge"
         ]
         else [
             if? :dictionary = type src [
                 loop tgt [t]->
-                    unedge src name t
+                    unedge src\id name t\id
             ]
             else [
                 loop src [s] [
                     loop tgt [t]->
-                        unedge s name t
+                        unedge s\id name t\id
                 ]
             ]
 
