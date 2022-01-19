@@ -10,7 +10,6 @@ do [
     ; with a local database named "sample11"
     ;---------------------------------------------
     graph .create
-          .case
           .helpers: [person movie country book] 
           "sample11" 
     [
