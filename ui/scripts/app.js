@@ -353,12 +353,16 @@ const Grafito = {
                 edges: edges,
             };
 
+            // setup filter for nodes
             const nodeFilter = (node)=>{
-                return true;
+                if (typeof this.graph.filter.nodes === 'object')
+                    return this.graph.filter.nodes[node.tag];
+                else
+                    return this.graph.filter.nodes;
             }
 
+            // setup filter for edges
             const edgeFilter = (edge)=>{
-                console.log(edge);
                 if (typeof this.graph.filter.edges === 'object')
                     return this.graph.filter.edges[edge.label];
                 else
