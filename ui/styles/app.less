@@ -104,7 +104,7 @@ html, body {
 }
 
 .switchable-wrapper {
-    display: inline-flex;
+    display: flex;
     flex-direction: row;
 
     label {
@@ -528,6 +528,14 @@ main {
         }
 
         .modal-card {
+            .modal-card-title {
+                display: inline-flex;
+
+                i {
+                    margin-right: 0.5rem;
+                }
+            }
+
             .modal-card-foot {
                 justify-content: flex-end !important;
             }
