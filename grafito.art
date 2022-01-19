@@ -217,7 +217,7 @@ graph: function [
     ][
         ;; description: « delete edge from source to target node with given name
 
-        performQuery 'unedge deleteEdgeSQL @[src\id, tgt\id]
+        performQuery 'unedge deleteEdgeSQL @[name, src\id, tgt\id]
     ]
 
     ;
