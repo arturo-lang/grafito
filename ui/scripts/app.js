@@ -29,7 +29,7 @@ const Grafito = {
                 editOptions: {
                     main: {
                         visualization: [
-                            {icon: "funnel-bold", tip: "Filter visible nodes", action: null},
+                            {icon: "funnel-bold", tip: "Filter visible elements", action: null},
                             {icon: "arrows-clockwise-bold", tip: "Refresh view", action: this.refreshGraph}
                         ],
                         database: [
