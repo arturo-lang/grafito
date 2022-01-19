@@ -211,13 +211,13 @@ graph: function [
     ;--------------------------
 
     unedge: function [
-        src :dictionary
+        src :integer
         name :literal :string
-        tgt :dictionary
+        tgt :integer
     ][
         ;; description: « delete edge from source to target node with given name
 
-        performQuery 'unedge deleteEdgeSQL @[name, src\id, tgt\id]
+        performQuery 'unedge deleteEdgeSQL @[name, src, tgt]
     ]
 
         ;
