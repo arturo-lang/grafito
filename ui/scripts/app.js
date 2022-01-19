@@ -39,21 +39,21 @@ const Grafito = {
                     node: {
                         visualization: [
                             {icon: "arrows-out-fill", tip: "Expand neighboring nodes", action: this.expandNodeNeighbors},
-                            {icon: "eye-slash-bold", tip: "Hide from graph view", action: this.removeSelectedNode}
+                            {icon: "eye-slash-bold", tip: "Hide from graph view", action: this.removeNode}
                         ],
                         database: [
                             {icon: "pencil-fill", tip: "Edit selected node", effect: "modifying", action: null},
                             {icon: "link-bold", tip: "Link selected node", effect: "modifying", action: null},
-                            {icon: "trash-fill", tip: "Delete selected node", effect: "destructive", action: this.deleteSelectedNode}
+                            {icon: "trash-fill", tip: "Delete selected node", effect: "destructive", action: this.deleteNode}
                         ]
                     },
                     edge: {
                         visualization: [
-                            {icon: "eye-slash-bold", tip: "Hide from graph view", action: this.removeSelectedEdge}
+                            {icon: "eye-slash-bold", tip: "Hide from graph view", action: this.removeEdge}
                         ],
                         database: [
                             {icon: "pencil-fill", tip: "Edit selected edge", effect: "modifying", action: null},
-                            {icon: "trash-fill", tip: "Delete selected edge", effect: "destructive", action: this.deleteSelectedEdge}
+                            {icon: "trash-fill", tip: "Delete selected edge", effect: "destructive", action: this.deleteEdge}
                         ]
                     }
                 },
@@ -187,7 +187,10 @@ const Grafito = {
             });
         },
 
-        expandNodeNeighbors(nodeId){
+        expandNodeNeighbors(nodeId=null){
+            if (nodeId==null) 
+                nodeId = this.graph.selected.node.id;
+
             $.post("/nodeFromId", {ndid: nodeId }, (data)=>{
                 let dt = JSON.parse(data);
                 for (var node of dt.nodes){
@@ -199,7 +202,10 @@ const Grafito = {
             });
         },
 
-        removeSelectedNode(nodeId){
+        removeNode(nodeId=null){
+            if (nodeId==null) 
+                nodeId = this.graph.selected.node.id;
+
             this.graph.data.nodes.remove(nodeId);
             if ((this.graph.selected.node!=null)&&(this.graph.selected.node.id==nodeId)){
                 this.graph.selected.node = null;
@@ -207,13 +213,19 @@ const Grafito = {
             }
         },
 
-        deleteSelectedNode(nodeId){
+        deleteNode(nodeId=null){
+            if (nodeId==null) 
+                nodeId = this.graph.selected.node.id;
+
             $.post("/deleteNode", {ndid: nodeId }, ()=>{
                 this.removeSelectedNode(nodeId);
             });
         },
 
-        removeSelectedEdge(edgeId){
+        removeEdge(edgeId=null){
+            if (edgeId==null) 
+                edgeId = this.graph.selected.edge.id;
+
             this.graph.data.edges.remove(edgeId);
             if ((this.graph.selected.edge!=null)&&(this.graph.selected.edge.id==edgeId)){
                 this.graph.selected.edge = null;
@@ -221,7 +233,9 @@ const Grafito = {
             }
         },
 
-        deleteSelectedEdge(edgeId){
+        deleteEdge(edgeId=null){
+            if (edgeId==null) 
+                edgeId = this.graph.selected.edge.id;
             console.log(this.graph.data.edges.get(edgeId));
             $.post("/deleteEdge", {egid: edgeId }, ()=>{
                 this.removeSelectedEdge(edgeId);
