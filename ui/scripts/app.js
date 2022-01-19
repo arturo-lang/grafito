@@ -297,6 +297,7 @@ const Grafito = {
             this.modal.title = "Filter elements";
             this.modal.mode = "filter";
             this.modal.accept.button = "Done"
+            this.modal.accept.style = "";
             this.modal.accept.action = ()=>{};
             this.modal.showCancel = false;
             this.modal.icon = "funnel-bold";
