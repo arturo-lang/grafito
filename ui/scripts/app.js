@@ -432,10 +432,10 @@ const Grafito = {
             this.config.engine.caseSensitive.value = obj.caseSensitive;
         });
 
-        window.onbeforeunload = ()=>{
-            $.post( "/exit", {}, ()=>{});
-            return true;
-        };
+        // window.onbeforeunload = ()=>{
+        //     $.post( "/exit", {}, ()=>{});
+        //     return true;
+        // };
     },
 
     updated(){
