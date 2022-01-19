@@ -161,11 +161,12 @@
                         </div>
                     </div>
                 </section>
-                <div class="modal is-active">
+                <div class="modal"
+                     :class="(modal.active) ? 'is-active' : ''">
                     <div class="modal-background"></div>
                     <div class="modal-card">
                       <header class="modal-card-head">
-                        <p class="modal-card-title">Modal title</p>
+                        <p class="modal-card-title">{{modal.title}}</p>
                         <button class="delete" aria-label="close"></button>
                       </header>
                       <section class="modal-card-body">
@@ -174,7 +175,10 @@
                         <p>Fusce auctor lorem euismod, tristique nibh a, suscipit leo. Aliquam porta turpis ex, id ornare nulla pharetra quis. Ut malesuada tristique urna. Fusce vitae mauris porta, accumsan neque non, sagittis lectus. Praesent a enim bibendum, malesuada sem sit amet, egestas orci. Sed vulputate nulla vel odio placerat posuere. Morbi id luctus massa. Sed sagittis ex facilisis bibendum volutpat. Sed non quam ipsum.</p>
                       </section>
                       <footer class="modal-card-foot">
-                        <button class="button is-success">Save changes</button>
+                        <button class="button is-success"
+                                @click="modal.accept.action()">
+                            {{modal.accept.button}}
+                        </button>
                         <button class="button">Cancel</button>
                       </footer>
                     </div>
