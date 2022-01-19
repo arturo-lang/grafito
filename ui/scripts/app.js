@@ -221,6 +221,12 @@ const Grafito = {
             }
         },
 
+        deleteSelectedEdge(edgeId){
+            $.post("/deleteEdge", {egid: edgeId }, ()=>{
+                this.removeSelectedEdge(edgeId);
+            });
+        },
+
         drawGraph(dataset, clean=false){
             // if we're re-drawing the graph,
             // let's first delete all previous data
