@@ -220,6 +220,12 @@ const Grafito = {
                 for (var edge of dt.edges){
                     this.graph.data.edges.update(edge);
                 }
+                // FIX: Something weird going on with 
+                // graph.data & graph.dataview synchronization
+                
+                // this.resetFilterData(nomatterwhat=false);
+                // this.graph.dataview.nodes.refresh();
+                // this.graph.dataview.edges.refresh();
             });
         },
 
@@ -329,6 +335,30 @@ const Grafito = {
             console.log("UNIMPLEMENTED");
         },
 
+        resetFilterData(nomatterwhat=false){
+            if (nomatterwhat) this.graph.filter.nodes = {};
+
+            for (var node of [...new Set(VM.graph.dataset.nodes.map((x) => x.tag))].sort()){
+                if (nomatterwhat)
+                    this.graph.filter.nodes[node] = true; 
+                else {
+                    if (!(node in this.graph.filter.nodes))
+                    this.graph.filter.nodes[node] = true; 
+                }
+            }
+
+            if (nomatterwhat) this.graph.filter.edges = {};
+
+            for (var edge of [...new Set(VM.graph.dataset.edges.map((x) => x.label))].sort()){
+                if (nomatterwhat)
+                    this.graph.filter.edges[edge] = true; 
+                else {
+                    if (!(edge in this.graph.filter.edges))
+                    this.graph.filter.edges[edge] = true; 
+                }
+            }
+        },
+
         drawGraph(dataset, clean=false, firstDraw=false){
             // if we're re-drawing the graph,
             // let's first delete all previous data
@@ -343,13 +373,7 @@ const Grafito = {
 
             // set filter data
             if (clean && firstDraw){
-                this.graph.filter.edges = {};
-                for (var edge of [...new Set(VM.graph.dataset.edges.map((x) => x.label))].sort())
-                    this.graph.filter.edges[edge] = true; 
-
-                this.graph.filter.nodes = {};
-                for (var node of [...new Set(VM.graph.dataset.nodes.map((x) => x.tag))].sort())
-                    this.graph.filter.nodes[node] = true; 
+                this.resetFilterData();
             }
 
             // create an array with nodes
