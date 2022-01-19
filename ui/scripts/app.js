@@ -218,7 +218,7 @@ const Grafito = {
                 nodeId = this.graph.selected.node.id;
 
             $.post("/deleteNode", {ndid: nodeId }, ()=>{
-                this.removeSelectedNode(nodeId);
+                this.removeNode(nodeId);
             });
         },
 
@@ -238,7 +238,7 @@ const Grafito = {
                 edgeId = this.graph.selected.edge.id;
             console.log(this.graph.data.edges.get(edgeId));
             $.post("/deleteEdge", {egid: edgeId }, ()=>{
-                this.removeSelectedEdge(edgeId);
+                this.removeEdge(edgeId);
             });
         },
 
