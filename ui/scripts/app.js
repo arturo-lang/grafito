@@ -186,7 +186,7 @@ const Grafito = {
                         try {
                             dd = JSON.parse(data);
 
-                            this.drawGraph(dd["data"], clean=true);
+                            this.drawGraph(dd["data"], clean=true, firstDraw=true);
                             this.drawTable(dd["rows"]);
                             toastSuccess(`Query executed in ${dd["timeTaken"].toFixed(2)} ms`);
                         }
@@ -291,10 +291,9 @@ const Grafito = {
         showFilterDialog(){
             this.modal.title = "Filter elements";
             this.modal.mode = "filter";
+            this.modal.accept.button = "Done"
+            this.modal.accept.action = ()=>{};
             this.modal.active = true;
-
-
-            console.log("UNIMPLEMENTED");
         },
 
         showAddNodeDialog(){
@@ -318,7 +317,7 @@ const Grafito = {
             console.log("UNIMPLEMENTED");
         },
 
-        drawGraph(dataset, clean=false){
+        drawGraph(dataset, clean=false, firstDraw=false){
             // if we're re-drawing the graph,
             // let's first delete all previous data
             if (clean && this.graph.initialized){
@@ -331,7 +330,7 @@ const Grafito = {
             this.graph.dataset = dataset;
 
             // set filter data
-            if (clean){
+            if (clean && firstDraw){
                 this.graph.filter.edges = {};
                 for (var edge of [...new Set(VM.graph.dataset.edges.map((x) => x.label))].sort())
                     this.graph.filter.edges[edge] = true; 
@@ -521,7 +520,7 @@ const Grafito = {
             let obj = JSON.parse(dd);
 
             document.title = `Grafito @ ${obj.title}`;
-            this.drawGraph(obj.data, clean=true);
+            this.drawGraph(obj.data, clean=true, firstDraw=true);
             this.drawTable(obj.rows);
             this.config.versions = obj.versions;
             this.performInitialSetup = true;
