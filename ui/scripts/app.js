@@ -205,6 +205,9 @@ const Grafito = {
             });
         },
 
+        // TODO(expandNodeNeighbors) Seems buggy
+        //  To check & re-visit
+
         expandNodeNeighbors(nodeId=null){
             if (nodeId==null) 
                 nodeId = this.graph.selected.node.id;
