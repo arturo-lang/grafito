@@ -125,7 +125,10 @@
                                                    :id="key"
                                                    type="checkbox"
                                                    class="switchable" >
-                                            <label :for="key">{{setting.description}}</label>
+                                            <label :for="key"
+                                                   :class="(config.graphView[key].value) ? '' : 'inactive'">
+                                                {{setting.description}}
+                                            </label>
                                         </div>
                                     </article>
                                 </div>
@@ -140,7 +143,10 @@
                                                    :id="key"
                                                    type="checkbox"
                                                    class="switchable" >
-                                            <label :for="key">{{setting.description}}</label>
+                                            <label :for="key"
+                                                   :class="(config.tableView[key].value) ? '' : 'inactive'">
+                                                {{setting.description}}
+                                            </label>
                                         </div>
                                     </article>
                                     <article class="panel">
@@ -154,7 +160,10 @@
                                                    :id="key"
                                                    type="checkbox"
                                                    class="switchable" >
-                                            <label :for="key">{{setting.description}}</label>
+                                            <label :for="key"
+                                                   :class="(config.engine[key].value) ? '' : 'inactive'">
+                                                {{setting.description}}
+                                            </label>
                                         </div>
                                     </article>
                                 </div>
@@ -186,7 +195,10 @@
                                                 :id="key"
                                                 type="checkbox"
                                                 class="switchable" >
-                                        <label :for="key">{{key}}</label>
+                                        <label :for="key"
+                                               :class="(graph.filter.nodes[key]) ? '' : 'inactive'">
+                                             {{key}}
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="column is-6">
@@ -197,7 +209,10 @@
                                                 :id="key"
                                                 type="checkbox"
                                                 class="switchable" >
-                                        <label :for="key">{{key}}</label>
+                                        <label :for="key"
+                                               :class="(graph.filter.edges[key]) ? '' : 'inactive'">
+                                              {{key}}
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -211,6 +226,7 @@
                             {{modal.accept.button}}
                         </button>
                         <button @click="modal.active=false"
+                                v-if="modal.showCancel"
                                 class="button">
                             Cancel
                         </button>
