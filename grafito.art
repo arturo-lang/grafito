@@ -783,7 +783,7 @@ graph: function [
                 ""
             ]
 
-            "deleteEdge" [;[egid]
+            "/deleteEdge" [;[egid]
                 unedgeById to :integer egid
                 ""
             ]
