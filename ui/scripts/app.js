@@ -222,8 +222,8 @@ const Grafito = {
                 }
                 // FIX: Something weird going on with 
                 // graph.data & graph.dataview synchronization
-                
-                // this.resetFilterData(nomatterwhat=false);
+
+                this.resetFilterData(nomatterwhat=false);
                 // this.graph.dataview.nodes.refresh();
                 // this.graph.dataview.edges.refresh();
             });
@@ -392,7 +392,10 @@ const Grafito = {
             // setup filter for nodes
             const nodeFilter = (node)=>{
                 if (typeof this.graph.filter.nodes === 'object')
-                    return this.graph.filter.nodes[node.tag];
+                    if (node.tag in this.graph.filter.nodes)
+                        return this.graph.filter.nodes[node.tag];
+                    else
+                        return true;
                 else
                     return this.graph.filter.nodes;
             }
@@ -400,7 +403,10 @@ const Grafito = {
             // setup filter for edges
             const edgeFilter = (edge)=>{
                 if (typeof this.graph.filter.edges === 'object')
-                    return this.graph.filter.edges[edge.label];
+                    if (edge.label in this.graph.filter.edges)
+                        return this.graph.filter.edges[edge.label];
+                    else
+                        return true;
                 else
                     return this.graph.filter.edges;
             }
