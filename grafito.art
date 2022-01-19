@@ -540,7 +540,7 @@ graph: function [
         nodesFrom: new []
         nodesTo: new []
 
-        case [(type src)]
+        case [(type src)=]
             when? -> :dictionary -> nodesFrom: @[src\id]
             when? -> :integer -> nodesFrom: @[src]
             else  -> nodesFrom: new map src 'n [
@@ -548,9 +548,9 @@ graph: function [
                 else -> n
             ]
 
-        case [(type tgt)]
+        case [(type tgt)=]
             when? -> :dictionary -> nodesTo: @[tgt\id]
-            when? -> :integer -> nodesFrom: @[tgt]
+            when? -> :integer -> nodesTo: @[tgt]
             else  -> nodesTo: new map tgt 'n [
                 if? dictionary? n -> n\id
                 else -> n
