@@ -190,7 +190,14 @@
                                     </div>
                                 </div>
                                 <div class="column is-6">
-                                    
+                                    <div v-for="(value,key) in graph.filter.edges">
+                                        <input v-model="graph.filter.edges[key]"
+                                                @change="graph.dataview.edges.refresh()"
+                                                :id="key"
+                                                type="checkbox"
+                                                class="switchable" >
+                                        <label :for="key">{{key}}</label>
+                                    </div>
                                 </div>
                             </div>
                             
