@@ -53,7 +53,7 @@ const Grafito = {
                         ],
                         database: [
                             {icon: "pencil-fill", tip: "Edit selected edge", effect: "modifying", action: null},
-                            {icon: "trash-fill", tip: "Delete selected edge", effect: "destructive", action: null}
+                            {icon: "trash-fill", tip: "Delete selected edge", effect: "destructive", action: this.deleteSelectedEdge}
                         ]
                     }
                 },
