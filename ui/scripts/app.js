@@ -169,7 +169,7 @@ const Grafito = {
 
         showDefaultInfo(){
             this.updateInfo({
-                "Showing": `${this.graph.data.nodes.length} nodes and ${this.graph.data.edges.length} edges`
+                "Showing": `${this.graph.dataview.nodes.length} nodes and ${this.graph.dataview.edges.length} edges`
             });
         },
 
