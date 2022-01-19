@@ -537,25 +537,35 @@ graph: function [
     ][
         ;; description: « remove connection from source to target node with given name
 
-        edgeId: 0
+        nodesFrom: new []
+        nodesTo: new []
 
-        if? :dictionary = type tgt [
-            unedge src\id name tgt\id
-            if Grafito\verbose? -> printDebug ~"removed 1 edge"
+        case [(type src)]
+            when? -> :dictionary -> nodesFrom: @[src\id]
+            when? -> :integer -> nodesFrom: @[src]
+            else  -> nodesFrom: new map src 'n [
+                if? dictionary? n -> n\id
+                else -> n
+            ]
+
+        case [(type tgt)]
+            when? -> :dictionary -> nodesTo: @[tgt\id]
+            when? -> :integer -> nodesFrom: @[tgt]
+            else  -> nodesTo: new map tgt 'n [
+                if? dictionary? n -> n\id
+                else -> n
+            ]
+
+        loop nodesFrom 'nf [
+            loop nodesTo 'nt [
+                unedge nf name nt
+            ]
         ]
-        else [
-            if? :dictionary = type src [
-                loop tgt [t]->
-                    unedge src\id name t\id
-            ]
-            else [
-                loop src [s] [
-                    loop tgt [t]->
-                        unedge s\id name t\id
-                ]
-            ]
 
-            if Grafito\verbose? -> printDebug ~"removed |size edges| edges"
+        if Grafito\verbose? [
+            totalEdges: mul size nodesFrom size nodesTo
+            edgeLabel: (totalEdges = 1) ? -> "edge" -> "edges"
+            printDebug ~"removed |totalEdges| |edgeLabel|"
         ]
     ]
 
