@@ -230,7 +230,7 @@ graph: function [
     ][
         ;; description: « delete edge with given id
 
-        performQuery 'unedge deleteEdgeByIdSQL @[eid]
+        performQuery 'unedgeById deleteEdgeByIdSQL @[eid]
     ]
 
     ;
