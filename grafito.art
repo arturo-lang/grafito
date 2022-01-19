@@ -783,6 +783,11 @@ graph: function [
                 ""
             ]
 
+            "deleteEdge" [;[egid]
+                unedgeById to :integer egid
+                ""
+            ]
+
             "/updateEngine" [;[caseSensitive]
                 if? to :logical caseSensitive [
                     Grafito\caseSensitive?: true
