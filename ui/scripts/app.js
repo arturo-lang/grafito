@@ -138,6 +138,7 @@ const Grafito = {
             modal: {
                 active: false,
                 title: "Some title",
+                mode: null,
                 accept: {
                     button: "Yes, I accept it",
                     action: ()=> {console.log("modal action clicked!");}
