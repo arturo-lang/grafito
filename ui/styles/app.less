@@ -56,6 +56,49 @@ html, body {
     outline: none !important;
 }
 
+.switchable {
+    position: relative;
+    width: 1.8em;
+    height: 1.8em;
+    color: black;
+    border: 1px solid gray;
+    border-radius: 4px;
+    appearance: none;
+    outline: 0;
+    cursor: pointer;
+    transition: background 175ms cubic-bezier(0.1, 0.1, 0.25, 1);
+    box-sizing: border-box;
+    transform: scale(0.8);
+
+    &::before {
+        position: absolute;
+        content: '';
+        display: block;
+        top: 2px;
+        left: 7px;
+        width: 8px;
+        height: 14px;
+        border-style: solid;
+        border-color: white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        opacity: 0;
+        box-sizing: border-box;
+    }
+    &:checked {
+        color: white;
+        border-color: @switchableBg;
+        background: @switchableBg;
+        &::before {
+            opacity: 1;
+        }
+    }
+
+    & + label {
+        cursor: pointer;
+    }
+}
+
 /****************************************************
  Global animations
  ****************************************************/
@@ -460,49 +503,6 @@ main {
 
                 .panel-block {
                     padding: 1rem 1rem;
-
-                    .switchable {
-                        position: relative;
-                        width: 1.8em;
-                        height: 1.8em;
-                        color: black;
-                        border: 1px solid gray;
-                        border-radius: 4px;
-                        appearance: none;
-                        outline: 0;
-                        cursor: pointer;
-                        transition: background 175ms cubic-bezier(0.1, 0.1, 0.25, 1);
-                        box-sizing: border-box;
-                        transform: scale(0.8);
-
-                        &::before {
-                            position: absolute;
-                            content: '';
-                            display: block;
-                            top: 2px;
-                            left: 7px;
-                            width: 8px;
-                            height: 14px;
-                            border-style: solid;
-                            border-color: white;
-                            border-width: 0 2px 2px 0;
-                            transform: rotate(45deg);
-                            opacity: 0;
-                            box-sizing: border-box;
-                        }
-                        &:checked {
-                            color: white;
-                            border-color: @switchableBg;
-                            background: @switchableBg;
-                            &::before {
-                                opacity: 1;
-                            }
-                        }
-
-                        & + label {
-                            cursor: pointer;
-                        }
-                    }
                 }
             }
         }
