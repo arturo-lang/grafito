@@ -177,6 +177,24 @@
                         <div v-if="modal.mode=='confirmation'">
                             <p>This action is going to delete the selected element from the graph database and is not reversible. Are you sure you want to proceed?</p>
                         </div>
+                        <div v-if="modal.mode=='filter'">
+                            <div class="columns">
+                                <div class="column is-6">
+                                    <div v-for="(value,key) in graph.filter.nodes">
+                                        <input v-model="graph.filter.nodes[key]"
+                                                @change="graph.dataview.nodes.refresh()"
+                                                :id="key"
+                                                type="checkbox"
+                                                class="switchable" >
+                                        <label :for="key">{{key}}</label>
+                                    </div>
+                                </div>
+                                <div class="column is-6">
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
                       </section>
                       <footer class="modal-card-foot">
                         <button class="button"
