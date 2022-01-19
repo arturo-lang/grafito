@@ -142,6 +142,7 @@ const Grafito = {
                 mode: null,
                 accept: {
                     button: "Yes, I accept it",
+                    style: "",
                     action: ()=> {console.log("modal action clicked!");}
                 }
             }
@@ -272,9 +273,11 @@ const Grafito = {
             console.log("UNIMPLEMENTED");
         },
 
-        showConfirmationDialog(title, callback){
+        showConfirmationDialog(title, callback, button="Delete", style="is-danger"){
             this.modal.title = title;
             this.modal.mode = "confirmation";
+            this.modal.accept.button = button;
+            this.modal.accept.style = style;
             this.modal.accept.action = callback;
             this.modal.active = true;
         },
