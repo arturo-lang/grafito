@@ -175,13 +175,13 @@
                       </header>
                       <section class="modal-card-body">
                         <div v-if="modal.mode=='confirmation'">
-                            <p>This action is going to delete the selected element from the graph database and is not reversible.</p>
-                            <p>Are you sure you want to proceed?</p>
+                            <p>This action is going to delete the selected element from the graph database and is not reversible. Are you sure you want to proceed?</p>
                         </div>
                       </section>
                       <footer class="modal-card-foot">
-                        <button class="button is-success"
-                                @click="modal.accept.action()">
+                        <button class="button"
+                                :class="modal.accept.style"
+                                @click="modal.accept.action(); modal.active=false">
                             {{modal.accept.button}}
                         </button>
                         <button @click="modal.active=false"
