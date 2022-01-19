@@ -60,8 +60,8 @@ const Grafito = {
                 },
                 view: {},
                 filter: {
-                    edges: true,
-                    nodes: true
+                    edges: {},
+                    nodes: {}
                 },
                 selected: {
                     node: null,
@@ -71,6 +71,7 @@ const Grafito = {
                     nodes: [],
                     edges: []
                 },
+                initialized: false,
                 config: {
                     nodes: {
                         shape: "circle",
@@ -320,7 +321,7 @@ const Grafito = {
         drawGraph(dataset, clean=false){
             // if we're re-drawing the graph,
             // let's first delete all previous data
-            if (clean){
+            if (clean && this.graph.initialized){
                 this.graph.data.nodes.clear();
                 this.graph.data.edges.clear();
                 this.graph.view.destroy();
@@ -520,11 +521,12 @@ const Grafito = {
             let obj = JSON.parse(dd);
 
             document.title = `Grafito @ ${obj.title}`;
-            this.drawGraph(obj.data);
+            this.drawGraph(obj.data, clean=true);
             this.drawTable(obj.rows);
             this.config.versions = obj.versions;
             this.performInitialSetup = true;
             this.config.engine.caseSensitive.value = obj.caseSensitive;
+            this.graph.initialized = true;
         });
 
         // window.onbeforeunload = ()=>{
