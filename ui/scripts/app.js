@@ -281,7 +281,7 @@ const Grafito = {
             console.log("UNIMPLEMENTED");
         },
 
-        showConfirmationDialog(title, callback, button="Delete", style="is-danger"){
+        showConfirmationDialog(title, callback, button="Delete", style="is-destructive"){
             this.modal.title = title;
             this.modal.mode = "confirmation";
             this.modal.accept.button = button;

@@ -14,6 +14,8 @@
 
 @grafitoPurple: #682a5d;
 @switchableBg: #06842c;
+@modifyingColor: green;
+@destructiveColor: #AA0000;
 
 /****************************************************
  Global mixins
@@ -316,15 +318,15 @@ main {
 
                 &.modifying {
                     &:hover {
-                        border-color: green;
-                        color: green;
+                        border-color: @modifyingColor;
+                        color: @modifyingColor;
                     }
                 }
 
                 &.destructive {
                     &:hover {
-                        border-color: #AA0000;
-                        color: #AA0000;
+                        border-color: @destructiveColor;
+                        color: @destructiveColor;
                     }
                 }
             }
@@ -541,6 +543,30 @@ main {
                 justify-content: flex-end !important;
                 padding-top: 8px;
                 padding-bottom: 8px;
+
+                button {
+                    &.is-modifying {
+                        border-color: @modifyingColor;
+                        color: @modifyingColor;
+
+                        &:hover, &:focus {
+                            background-color: @modifyingColor;
+                            border-color: @modifyingColor;
+                            color: #fff;
+                        }
+                    }
+
+                    &.is-destructive {
+                        border-color: @destructiveColor;
+                        color: @destructiveColor;
+
+                        &:hover, &:focus {
+                            background-color: @destructiveColor;
+                            border-color: @destructiveColor;
+                            color: #fff;
+                        }
+                    }
+                }
             }
         }
     }
