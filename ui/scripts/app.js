@@ -149,7 +149,8 @@ const Grafito = {
                     button: "Yes, I accept it",
                     style: "",
                     action: ()=> {console.log("modal action clicked!");}
-                }
+                },
+                showCancel: true
             }
         }
     },
@@ -285,6 +286,8 @@ const Grafito = {
             this.modal.accept.button = button;
             this.modal.accept.style = style;
             this.modal.accept.action = callback;
+            this.modal.showCancel = true;
+
             this.modal.active = true;
         },
 
@@ -293,6 +296,8 @@ const Grafito = {
             this.modal.mode = "filter";
             this.modal.accept.button = "Done"
             this.modal.accept.action = ()=>{};
+            this.modal.showCancel = false;
+
             this.modal.active = true;
         },
 
