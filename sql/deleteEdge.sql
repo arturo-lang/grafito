@@ -1,3 +1,3 @@
 DELETE 
 FROM edges 
-WHERE source=? AND target=?
+WHERE tag=? AND source=? AND target=?

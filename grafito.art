@@ -66,6 +66,7 @@ graph: function [
 
     createEdgeSQL:          read "sql/createEdge.sql"
     deleteEdgeSQL:          read "sql/deleteEdge.sql"
+    deleteEdgeByIdSQL:      read "sql/deleteEdgeById.sql"
 
     fetchNodesSQL:          read "sql/fetchNodes.sql"
     fetchNodesWithEdgesSQL: read "sql/fetchNodes.withEdges.sql"
@@ -216,7 +217,20 @@ graph: function [
     ][
         ;; description: « delete edge from source to target node with given name
 
-        performQuery 'unedge deleteEdgeSQL @[src\id, tgt\id]
+        performQuery 'unedge deleteEdgeSQL @[name, src\id, tgt\id]
+    ]
+
+        ;
+    ; Delete existing edge 
+    ; by id
+    ;--------------------------
+
+    unedgeById: function [
+        eid :integer
+    ][
+        ;; description: « delete edge with given id
+
+        performQuery 'unedge deleteEdgeByIdSQL @[eid]
     ]
 
     ;
