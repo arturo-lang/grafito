@@ -59,7 +59,7 @@
                     <transition v-for="(editOptions,optionGroup) in graph.editOptions"
                                 name="slide-left">
                         <div class="editOptions" 
-                             :id="`${optionGroup}EditOptions" 
+                             :id="`${optionGroup}EditOptions`" 
                              v-show="
                              (sidebar.active=='graph') && (
                                 ((optionGroup=='main') && (graph.selected.node == null) && (graph.selected.edge == null)) ||
@@ -185,7 +185,8 @@
                 </div>
             </footer>
         </div>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+        <!-- RE-ENABLE: <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>-->
         <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
         <script type="text/javascript" src="https://unpkg.com/phosphor-icons"></script>
