@@ -144,6 +144,7 @@ const Grafito = {
             modal: {
                 active: false,
                 title: "Some title",
+                icon: "",
                 mode: null,
                 accept: {
                     button: "Yes, I accept it",
@@ -287,6 +288,7 @@ const Grafito = {
             this.modal.accept.style = style;
             this.modal.accept.action = callback;
             this.modal.showCancel = true;
+            this.modal.icon = "trash-fill";
 
             this.modal.active = true;
         },
@@ -297,6 +299,7 @@ const Grafito = {
             this.modal.accept.button = "Done"
             this.modal.accept.action = ()=>{};
             this.modal.showCancel = false;
+            this.modal.icon = "funnel-bold";
 
             this.modal.active = true;
         },
