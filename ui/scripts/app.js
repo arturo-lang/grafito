@@ -14,7 +14,8 @@ const Grafito = {
                     showNodesOnDrag: {value: true, description: "Keep showing nodes when dragging"},
                     showEdgesOnDrag: {value: true, description: "Keep showing edges when dragging"},
                     showEdgesOnZoom: {value: false, description: "Keep showing edges when zooming"},
-                    showEdgeLabels: {value: true, description: "Show edge labels"}
+                    showEdgeLabels: {value: true, description: "Show edge labels"},
+                    askForConfirmation: {value: true, description: "Always request confirmation before deleting elements"}
                 },
                 tableView: {
                     prettifyJson: {value: true, description: "Prettify exported JSON data"}
@@ -222,12 +223,19 @@ const Grafito = {
         },
 
         deleteNode(nodeId=null){
-            if (nodeId==null) 
-                nodeId = this.graph.selected.node.id;
+            let doDelete = ()=>{
+                if (nodeId==null) 
+                    nodeId = this.graph.selected.node.id;
 
-            $.post("/deleteNode", {ndid: nodeId }, ()=>{
-                this.removeNode(nodeId);
-            });
+                $.post("/deleteNode", {ndid: nodeId }, ()=>{
+                    this.removeNode(nodeId);
+                });
+            }
+            
+            if (this.config.graphView.askForConfirmation.value) 
+                this.showConfirmationDialog("Delete selected node", doDelete);
+            else
+                doDelete();
         },
 
         removeEdge(edgeId=null){
@@ -242,12 +250,19 @@ const Grafito = {
         },
 
         deleteEdge(edgeId=null){
-            if (edgeId==null) 
-                edgeId = this.graph.selected.edge.id;
+            let doDelete = ()=>{
+                if (edgeId==null) 
+                    edgeId = this.graph.selected.edge.id;
 
-            $.post("/deleteEdge", {egid: edgeId }, ()=>{
-                this.removeEdge(edgeId);
-            });
+                $.post("/deleteEdge", {egid: edgeId }, ()=>{
+                    this.removeEdge(edgeId);
+                });
+            }
+            
+            if (this.config.graphView.askForConfirmation.value) 
+                this.showConfirmationDialog("Delete selected edge", doDelete);
+            else
+                doDelete();
         },
 
         linkNodeMode(nodeId=null){
@@ -255,6 +270,13 @@ const Grafito = {
                 nodeId = this.graph.selected.node.id;
 
             console.log("UNIMPLEMENTED");
+        },
+
+        showConfirmationDialog(title, callback){
+            this.modal.title = title;
+            this.modal.mode = "confirmation";
+            this.modal.accept.action = callback;
+            this.modal.active = true;
         },
 
         showFilterDialog(){
