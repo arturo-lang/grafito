@@ -39,7 +39,7 @@ const Grafito = {
                     node: {
                         visualization: [
                             {icon: "arrows-out-fill", tip: "Expand neighboring nodes", action: this.expandNodeNeighbors},
-                            {icon: "eye-slash-bold", tip: "Hide from graph view", action: this.removeNode}
+                            {icon: "eye-slash-bold", tip: "Hide node from graph view", action: this.removeNode}
                         ],
                         database: [
                             {icon: "pencil-fill", tip: "Edit selected node", effect: "modifying", action: null},
@@ -49,7 +49,7 @@ const Grafito = {
                     },
                     edge: {
                         visualization: [
-                            {icon: "eye-slash-bold", tip: "Hide from graph view", action: this.removeEdge}
+                            {icon: "eye-slash-bold", tip: "Hide edge from graph view", action: this.removeEdge}
                         ],
                         database: [
                             {icon: "pencil-fill", tip: "Edit selected edge", effect: "modifying", action: null},
