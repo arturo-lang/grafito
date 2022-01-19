@@ -531,8 +531,8 @@ graph: function [
     ;--------------------------
 
     unlink: function [
-        name :literal :string
         src :dictionary
+        name :literal :string
         tgt :dictionary
     ][
         ;; description: « remove connection from source to target node with given name
