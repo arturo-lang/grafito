@@ -182,7 +182,7 @@
                                 <div class="column is-6">
                                     <div v-for="(value,key) in graph.filter.nodes">
                                         <input v-model="graph.filter.nodes[key]"
-                                                @change="graph.dataview.nodes.refresh()"
+                                                @change="graph.dataview.nodes.refresh(); showDefaultInfo()"
                                                 :id="key"
                                                 type="checkbox"
                                                 class="switchable" >
@@ -192,7 +192,7 @@
                                 <div class="column is-6">
                                     <div v-for="(value,key) in graph.filter.edges">
                                         <input v-model="graph.filter.edges[key]"
-                                                @change="graph.dataview.edges.refresh()"
+                                                @change="graph.dataview.edges.refresh(); showDefaultInfo()"
                                                 :id="key"
                                                 type="checkbox"
                                                 class="switchable" >
