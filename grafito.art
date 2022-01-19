@@ -220,6 +220,19 @@ graph: function [
         performQuery 'unedge deleteEdgeSQL @[name, src\id, tgt\id]
     ]
 
+        ;
+    ; Delete existing edge 
+    ; by id
+    ;--------------------------
+
+    unedgeById: function [
+        eid :integer
+    ][
+        ;; description: « delete edge with given id
+
+        performQuery 'unedge deleteEdgeByIdSQL @[eid]
+    ]
+
     ;
     ; Get node with properties
     ; from ID
