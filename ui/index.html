@@ -174,9 +174,10 @@
                         </button>
                       </header>
                       <section class="modal-card-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc a tempus nisi, non facilisis arcu. Vivamus egestas lobortis eros eget interdum.</p>
-                        <p>Nullam a fermentum dui. Proin viverra sapien eu tempor aliquet. Quisque eu sapien nec dui fringilla dictum eu sed arcu.</p> 
-                        <p>Fusce auctor lorem euismod, tristique nibh a, suscipit leo. Aliquam porta turpis ex, id ornare nulla pharetra quis. Ut malesuada tristique urna. Fusce vitae mauris porta, accumsan neque non, sagittis lectus. Praesent a enim bibendum, malesuada sem sit amet, egestas orci. Sed vulputate nulla vel odio placerat posuere. Morbi id luctus massa. Sed sagittis ex facilisis bibendum volutpat. Sed non quam ipsum.</p>
+                        <div v-if="modal.mode=='confirmation'">
+                            <p>This action is going to delete the selected element from the graph database and is not reversible.</p>
+                            <p>Are you sure you want to proceed?</p>
+                        </div>
                       </section>
                       <footer class="modal-card-foot">
                         <button class="button is-success"
