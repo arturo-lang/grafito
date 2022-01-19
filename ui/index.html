@@ -190,7 +190,8 @@
                                     </div>
                                 </div>
                                 <div class="column is-6">
-                                    <div v-for="(value,key) in graph.filter.edges">
+                                    <div class="switchable-wrapper"
+                                         v-for="(value,key) in graph.filter.edges">
                                         <input v-model="graph.filter.edges[key]"
                                                 @change="graph.dataview.edges.refresh(); showDefaultInfo()"
                                                 :id="key"
