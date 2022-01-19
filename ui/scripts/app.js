@@ -134,6 +134,14 @@ const Grafito = {
             infobar: {
                 tag: {},
                 paths: []
+            },
+            modal: {
+                active: false,
+                title: "Some title",
+                accept: {
+                    button: "Yes, I accept it",
+                    action: ()=> {console.log("modal action clicked!");}
+                }
             }
         }
     },
