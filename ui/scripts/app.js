@@ -59,6 +59,10 @@ const Grafito = {
                     }
                 },
                 view: {},
+                filter: {
+                    edges: true,
+                    nodes: true
+                },
                 selected: {
                     node: null,
                     edge: null
@@ -180,6 +184,7 @@ const Grafito = {
                     else {
                         try {
                             dd = JSON.parse(data);
+
                             this.drawGraph(dd["data"], clean=true);
                             this.drawTable(dd["rows"]);
                             toastSuccess(`Query executed in ${dd["timeTaken"].toFixed(2)} ms`);
@@ -284,7 +289,9 @@ const Grafito = {
 
         showFilterDialog(){
             this.modal.title = "Filter elements";
+            this.modal.mode = "filter";
             this.modal.active = true;
+
 
             console.log("UNIMPLEMENTED");
         },
@@ -322,6 +329,17 @@ const Grafito = {
             // store dataset 
             this.graph.dataset = dataset;
 
+            // set filter data
+            if (clean){
+                this.graph.filter.edges = {};
+                for (var edge of [...new Set(VM.graph.dataset.edges.map((x) => x.label))].sort())
+                    this.graph.filter.edges[edge] = true; 
+
+                this.graph.filter.nodes = {};
+                for (var node of [...new Set(VM.graph.dataset.nodes.map((x) => x.tag))].sort())
+                    this.graph.filter.nodes[node] = true; 
+            }
+
             // create an array with nodes
             let nodes = new vis.DataSet(dataset.nodes);
 
@@ -335,9 +353,21 @@ const Grafito = {
                 edges: edges,
             };
 
+            const nodeFilter = (node)=>{
+                return true;
+            }
+
+            const edgeFilter = (edge)=>{
+                console.log(edge);
+                if (typeof this.graph.filter.edges === 'object')
+                    return this.graph.filter.edges[edge.label];
+                else
+                    return this.graph.filter.edges;
+            }
+
             this.graph.dataview = {
-                nodes: new vis.DataView(nodes),
-                edges: new vis.DataView(edges),
+                nodes: new vis.DataView(nodes, { filter: nodeFilter }),
+                edges: new vis.DataView(edges, { filter: edgeFilter })
             };
 
             this.graph.view = new vis.Network(container, this.graph.dataview, this.graph.config);
