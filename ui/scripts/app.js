@@ -163,7 +163,6 @@ const Grafito = {
             this.working = true;
             $.post( "/exec", {command: $(".command input").val()}, (data)=>{
                 if (data!="empty"){
-                    console.log("got:", data); 
                     if (data=="error"){
                         toastError("Something went wrong. Check your syntax!");
                     }
@@ -236,7 +235,7 @@ const Grafito = {
         deleteEdge(edgeId=null){
             if (edgeId==null) 
                 edgeId = this.graph.selected.edge.id;
-            console.log(this.graph.data.edges.get(edgeId));
+
             $.post("/deleteEdge", {egid: edgeId }, ()=>{
                 this.removeEdge(edgeId);
             });
@@ -291,7 +290,7 @@ const Grafito = {
 
             this.graph.view.on("selectEdge", (x)=>{
                 let edge = this.graph.data.edges.get(x.edges[0]);
-                console.log(edge);
+
                 this.graph.selected.node = null;
                 this.graph.selected.edge = edge;
 
@@ -389,7 +388,7 @@ const Grafito = {
         },
 
         updateGraphView() {
-            console.log("updating graph view...");
+            console.log("Grafito:: updating graph view...");
         
             this.graph.config.interaction.hideNodesOnDrag = !this.config.graphView.showNodesOnDrag.value;
             this.graph.config.interaction.hideEdgesOnDrag = !this.config.graphView.showEdgesOnDrag.value;
@@ -401,12 +400,12 @@ const Grafito = {
         },
 
         updateEngineSettings() {
-            console.log("updating enging settings");
+            console.log("Grafito:: updating enging settings");
 
             $.post("/updateEngine", {
                 caseSensitive: this.config.engine.caseSensitive.value 
             }, ()=>{
-                console.log("done")
+                console.log("Grafito:: done")
             });
         }
     },
@@ -481,7 +480,6 @@ const Grafito = {
             table.searchBuilder.container().insertBefore($("table.dataTable"));
             let tooltips = ["Export as JSON", "Export as CSV spreadsheet", "Export as Excel spreadsheet", "Export as PDF"];
             for (let [idx,elem] of $(".dt-button").toArray().entries()){
-                console.log($(elem));
                 $(elem).attr({
                     "data-tippy-content": tooltips[idx],
                     "data-tippy-placement": "top",
