@@ -794,7 +794,8 @@ graph: function [
             ]
 
             "/deleteEdge" [;[egid]
-                unedgeById to :integer egid
+                edgeParts: split.by:"+" egid
+                unlink edgeParts\0 edgeParts\2 edgeParts\1
                 ""
             ]
 
