@@ -162,10 +162,10 @@
                         </div>
                     </div>
                 </section>
-                <div class="modal animate__animated animate__fadeIn"
+                <div class="modal"
                      :class="(modal.active) ? 'is-active' : ''">
-                    <div class="modal-background"></div>
-                    <div class="modal-card">
+                    <div class="modal-background animate__animated animate__fadeIn animate__faster"></div>
+                    <div class="modal-card animate__animated animate__slideInDown animate__faster">
                       <header class="modal-card-head">
                         <p class="modal-card-title">{{modal.title}}</p>
                         <button @click="modal.active=false"
