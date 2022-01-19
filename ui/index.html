@@ -167,7 +167,10 @@
                     <div class="modal-card">
                       <header class="modal-card-head">
                         <p class="modal-card-title">{{modal.title}}</p>
-                        <button class="delete" aria-label="close"></button>
+                        <button @click="modal.active=false"
+                                class="delete" 
+                                aria-label="close" >
+                        </button>
                       </header>
                       <section class="modal-card-body">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc a tempus nisi, non facilisis arcu. Vivamus egestas lobortis eros eget interdum.</p>
@@ -179,7 +182,10 @@
                                 @click="modal.accept.action()">
                             {{modal.accept.button}}
                         </button>
-                        <button class="button">Cancel</button>
+                        <button @click="modal.active=false"
+                                class="button">
+                            Cancel
+                        </button>
                       </footer>
                     </div>
                   </div>
