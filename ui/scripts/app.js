@@ -222,6 +222,7 @@ const Grafito = {
         },
 
         deleteSelectedEdge(edgeId){
+            console.log(this.graph.data.edges.get(edgeId));
             $.post("/deleteEdge", {egid: edgeId }, ()=>{
                 this.removeSelectedEdge(edgeId);
             });
