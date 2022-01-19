@@ -29,11 +29,11 @@ const Grafito = {
                 editOptions: {
                     main: {
                         visualization: [
-                            {icon: "funnel-bold", tip: "Filter visible elements", action: null},
+                            {icon: "funnel-bold", tip: "Filter visible elements", action: this.showFilterDialog},
                             {icon: "arrows-clockwise-bold", tip: "Refresh view", action: this.refreshGraph}
                         ],
                         database: [
-                            {icon: "plus-bold", tip: "Add new node", effect: "modifying", action: null}
+                            {icon: "plus-bold", tip: "Add new node", effect: "modifying", action: this.showAddNodeDialog}
                         ]
                     },
                     node: {
@@ -42,8 +42,8 @@ const Grafito = {
                             {icon: "eye-slash-bold", tip: "Hide node from graph view", action: this.removeNode}
                         ],
                         database: [
-                            {icon: "pencil-fill", tip: "Edit selected node", effect: "modifying", action: null},
-                            {icon: "link-bold", tip: "Link selected node", effect: "modifying", action: null},
+                            {icon: "pencil-fill", tip: "Edit selected node", effect: "modifying", action: this.showEditNodeDialog},
+                            {icon: "link-bold", tip: "Link selected node", effect: "modifying", action: this.linkNodeMode},
                             {icon: "trash-fill", tip: "Delete selected node", effect: "destructive", action: this.deleteNode}
                         ]
                     },
@@ -52,7 +52,7 @@ const Grafito = {
                             {icon: "eye-slash-bold", tip: "Hide edge from graph view", action: this.removeEdge}
                         ],
                         database: [
-                            {icon: "pencil-fill", tip: "Edit selected edge", effect: "modifying", action: null},
+                            {icon: "pencil-fill", tip: "Edit selected edge", effect: "modifying", action: this.showEditEdgeDialog},
                             {icon: "trash-fill", tip: "Delete selected edge", effect: "destructive", action: this.deleteEdge}
                         ]
                     }
@@ -247,6 +247,41 @@ const Grafito = {
             $.post("/deleteEdge", {egid: edgeId }, ()=>{
                 this.removeEdge(edgeId);
             });
+        },
+
+        linkNodeMode(nodeId=null){
+            if (nodeId==null) 
+                nodeId = this.graph.selected.node.id;
+
+            console.log("UNIMPLEMENTED");
+        },
+
+        showFilterDialog(){
+            this.modal.title = "Filter elements";
+            this.modal.active = true;
+
+            console.log("UNIMPLEMENTED");
+        },
+
+        showAddNodeDialog(){
+            this.modal.title = "Add node";
+            this.modal.active = true;
+
+            console.log("UNIMPLEMENTED");
+        },
+
+        showEditNodeDialog(){
+            this.modal.title = "Edit node";
+            this.modal.active = true;
+
+            console.log("UNIMPLEMENTED");
+        },
+
+        showEditEdgeDialog(){
+            this.modal.title = "Edit edge";
+            this.modal.active = true;
+
+            console.log("UNIMPLEMENTED");
         },
 
         drawGraph(dataset, clean=false){
