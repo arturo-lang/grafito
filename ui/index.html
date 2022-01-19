@@ -176,7 +176,10 @@
                     <div class="modal-background animate__animated animate__fadeIn animate__faster"></div>
                     <div class="modal-card animate__animated animate__slideInDown animate__faster">
                       <header class="modal-card-head">
-                        <p class="modal-card-title">{{modal.title}}</p>
+                        <p class="modal-card-title">
+                            <i :class="(modal.icon=='') ? '' : `ph-${modal.icon}`"></i>
+                            {{modal.title}}
+                        </p>
                         <button @click="modal.active=false"
                                 class="delete" 
                                 aria-label="close" >
@@ -189,7 +192,8 @@
                         <div v-if="modal.mode=='filter'">
                             <div class="columns">
                                 <div class="column is-6">
-                                    <div v-for="(value,key) in graph.filter.nodes">
+                                    <div class="switchable-wrapper"
+                                         v-for="(value,key) in graph.filter.nodes">
                                         <input v-model="graph.filter.nodes[key]"
                                                 @change="graph.dataview.nodes.refresh(); showDefaultInfo()"
                                                 :id="key"
