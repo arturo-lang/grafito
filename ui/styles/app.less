@@ -2,14 +2,17 @@
  Global variables
  ****************************************************/
 
+// Measurements
+
 @mainTop: 50px;
 @mainPushDown: 89px;
-
 @sidebarWidth: 60px;
 @sidebarBorder: 1px;
+@infobarHeight: 39px;
+
+// Colors
 
 @grafitoPurple: #682a5d;
-
 @switchableBg: #06842c;
 
 /****************************************************
@@ -504,6 +507,12 @@ main {
             }
         }
     }
+
+    .modal {
+        .modal-background {
+            bottom: @infobarHeight;
+        }
+    }
 }
 
 /****************************************************
@@ -516,7 +525,7 @@ main {
     position: fixed;
     left: 0px;
     right: 0px;
-    top: calc(100vh - 39px);
+    top: calc(100vh - @infobarHeight);
     bottom: 0px;
     background: #F3F3F3;
     padding: 7px;
