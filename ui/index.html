@@ -224,14 +224,14 @@
                         </div>
                       </section>
                       <footer class="modal-card-foot">
-                        <button class="button"
+                        <button class="button is-outlined"
                                 :class="modal.accept.style"
                                 @click="modal.accept.action(); modal.active=false">
                             {{modal.accept.button}}
                         </button>
                         <button @click="modal.active=false"
                                 v-if="modal.showCancel"
-                                class="button">
+                                class="button is-light">
                             Cancel
                         </button>
                       </footer>
