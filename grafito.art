@@ -571,7 +571,7 @@ graph: function [
 
     fetch: function [
         name :literal :string
-        attributes :null :block :dictionary
+        attributes :null :string :block :dictionary
     ][
         ;; description: « retrieves nodes with name that match all given attributes
         ;; options: [
@@ -579,19 +579,15 @@ graph: function [
         ;; ]
         ;; returns: :block
         
+        ;; setup main variables
+
         catchAny?: false
         if? not? null? attr "any" ->
             catchAny?: true
 
-        att: new attributes
-
-        if and? not? dictionary? att 
-                not? null? att ->
-            att: #att
-
-        ; HACK - to solve
-        remove.key 'att 'n
-        remove.key 'att 'a
+        collator: ""
+        if not? Grafito\caseSensitive? ->
+            collator: " COLLATE NOCASE"
 
         propertyFilters: new []
         edgeFilters: new []
@@ -599,76 +595,99 @@ graph: function [
         qpropvals: new []
         qedgevals: new []
 
-        collator: ""
-        if not? Grafito\caseSensitive? ->
-            collator: " COLLATE NOCASE"
+        att: new attributes
 
-        if not? empty? att [
-            loop att [k,v][
-                case [equal? type v]
-                    when? [:null][
-                        ; it's an edge filter without criteria
-                        'edgeFilters ++ hasEdgeFilter
-                        'qedgevals ++ @[k]
-                    ]
-                    when? [:dictionary][
-                        ; it's an edge filter
-                        'edgeFilters ++ edgeWithTargetFilter
-                        'qedgevals ++ @[k, v\id]
-                    ]
-                    when? [:block][
-                        if? and? 0 < size v 
-                                 :dictionary = type first v [
-                            ; it's an array of edge filters
-                            orCriteria: new []
-                            loop v [edgef][
-                                'orCriteria ++ {!sql (edges.tag=? AND edges.target=?)}
-                                'qedgevals ++ @[k, edgef\id]
+        if? string? att [
+            [collate,symb,val]: @[collator, "=", as.code att]
+            
+            ; add it once (to check for `name`)
+            'propertyFilters ++ ~propertyWithValueFilter
+            'qpropvals ++ @[~"$.name"]
+
+            ; add it once more (to check for `title`)
+            'propertyFilters ++ ~propertyWithValueFilter
+            'qpropvals ++ @[~"$.title"]
+
+            ; we won't it to be valid when any of the two criteria above is true
+            ; so we'll have to forcefully set `catchAny?` to true
+            catchAny?: true
+        ]
+        else [
+            if and? not? dictionary? att 
+                    not? null? att ->
+                att: #att
+
+            ; HACK - to solve
+            remove.key 'att 'n
+            remove.key 'att 'a
+
+            if not? empty? att [
+                loop att [k,v][
+                    case [equal? type v]
+                        when? [:null][
+                            ; it's an edge filter without criteria
+                            'edgeFilters ++ hasEdgeFilter
+                            'qedgevals ++ @[k]
+                        ]
+                        when? [:dictionary][
+                            ; it's an edge filter
+                            'edgeFilters ++ edgeWithTargetFilter
+                            'qedgevals ++ @[k, v\id]
+                        ]
+                        when? [:block][
+                            if? and? 0 < size v 
+                                    :dictionary = type first v [
+                                ; it's an array of edge filters
+                                orCriteria: new []
+                                loop v [edgef][
+                                    'orCriteria ++ {!sql (edges.tag=? AND edges.target=?)}
+                                    'qedgevals ++ @[k, edgef\id]
+                                ]
+                                'edgeFilters ++ "(" ++ (join.with:" OR " orCriteria) ++ ")"
                             ]
-                            'edgeFilters ++ "(" ++ (join.with:" OR " orCriteria) ++ ")"
+                            else [
+                                ; it's a complex property filter
+                                loop #v [filt,rg][
+
+                                    [collate,symb,val]: @[collator, "=", v]
+
+                                    case [equal? filt]
+            
+                                        when? ["contains"]      -> [collate,symb,val]: @["", "LIKE", ~"%|rg|%"]
+                                        when? ["prefix"]        -> [collate,symb,val]: @["", "LIKE", ~"|rg|%"]
+                                        when? ["suffix"]        -> [collate,symb,val]: @["", "LIKE", ~"%|rg|"]
+                                        when? ["under"]         -> [collate,symb,val]: @["", "<", rg]
+                                        when? ["over"]          -> [collate,symb,val]: @["", ">", rg]
+                                        when? ["underOrEqual"]  -> [collate,symb,val]: @["", "<=", rg]
+                                        when? ["overOrEqual"]   -> [collate,symb,val]: @["", ">=", rg]
+                                        when? ["in"]            -> [collate,symb,val]: @[collator, "IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
+                                        when? ["not"][     
+                                            if? block? rg       -> [collate,symb,val]: @[collator, "NOT IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
+                                            else                -> [collate,symb,val]: @[collator, "!=", rg]
+                                        ]
+                                        else [
+                                            panic.code: 1 ~"filter: |filt| not recognized"
+                                        ]
+                                    
+                                    val: as.code val
+                                    'propertyFilters ++ ~propertyWithValueFilter
+                                    'qpropvals ++ @[~"$.|k|"]
+                                ]
+                            ]
+                        ]
+                        when? [:logical][
+                            ; it's a simple property filter without criteria
+                            'propertyFilters ++ hasPropertyFilter
+                            'qpropvals ++ @[~"$.|k|"]
                         ]
                         else [
-                            ; it's a complex property filter
-                            loop #v [filt,rg][
-
-                                [collate,symb,val]: @[collator, "=", v]
-
-                                case [equal? filt]
-        
-                                    when? ["contains"]      -> [collate,symb,val]: @["", "LIKE", ~"%|rg|%"]
-                                    when? ["prefix"]        -> [collate,symb,val]: @["", "LIKE", ~"|rg|%"]
-                                    when? ["suffix"]        -> [collate,symb,val]: @["", "LIKE", ~"%|rg|"]
-                                    when? ["under"]         -> [collate,symb,val]: @["", "<", rg]
-                                    when? ["over"]          -> [collate,symb,val]: @["", ">", rg]
-                                    when? ["underOrEqual"]  -> [collate,symb,val]: @["", "<=", rg]
-                                    when? ["overOrEqual"]   -> [collate,symb,val]: @["", ">=", rg]
-                                    when? ["in"]            -> [collate,symb,val]: @[collator, "IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
-                                    when? ["not"][     
-                                        if? block? rg       -> [collate,symb,val]: @[collator, "NOT IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
-                                        else                -> [collate,symb,val]: @[collator, "!=", rg]
-                                    ]
-                                    else [
-                                        panic.code: 1 ~"filter: |filt| not recognized"
-                                    ]
-                                
-                                val: as.code val
-                                'propertyFilters ++ ~propertyWithValueFilter
-                                'qpropvals ++ @[~"$.|k|"]
-                            ]
+                            ; it's a simple property filter
+                            [collate,symb,val]: @[collator, "=", as.code v]
+            
+                            'propertyFilters ++ ~propertyWithValueFilter
+                            'qpropvals ++ @[~"$.|k|"]
                         ]
-                    ]
-                    when? [:logical][
-                        ; it's a simple property filter without criteria
-                        'propertyFilters ++ hasPropertyFilter
-                        'qpropvals ++ @[~"$.|k|"]
-                    ]
-                    else [
-                        ; it's a simple property filter
-                        [collate,symb,val]: @[collator, "=", as.code v]
-        
-                        'propertyFilters ++ ~propertyWithValueFilter
-                        'qpropvals ++ @[~"$.|k|"]
-                    ]
+                ]
             ]
         ]
 
