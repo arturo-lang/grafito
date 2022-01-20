@@ -610,6 +610,64 @@ ul.sidebar {
                 background: @darkBg !important;
             }
         }
+
+        .dtsb-searchBuilder {
+            button {
+                background-color: black;
+                border-color: black;
+                color: @darkFg;
+
+                &.is-hovered, &:hover {
+                    background-color: @darkBgDarker;
+                    color: white;
+                }
+            }
+        }
+
+        .dataTables_length, .dataTables_filter, .dataTables_info, 
+        .dataTables_processing, .dataTables_paginate {
+            color: @darkFgDarker;
+        }
+
+        .dataTables_paginate {
+            .paginate_button {
+                background: black;
+                color: @darkFgDarker;
+
+                &:hover {
+                    color: @darkFg;
+                }
+
+                &.current {
+                    color: @darkFg !important;
+                }
+            }
+        }
+
+        input, select {
+            color: @darkFg;
+
+            &.dtsb-value {
+                background: @darkBg !important;
+                color: @darkFg !important;
+                border-color: @darkFg !important;
+            }
+        }
+
+        .switch[type=checkbox].is-small+label::before, 
+        .switch[type=checkbox].is-small+label:before {
+            background: @darkBgDarker !important;
+        }
+
+        .switch[type=checkbox].is-info:checked+label::before,
+        .switch[type=checkbox].is-info:checked+label:before {
+            background: #209cee !important;
+        }
+
+        select {
+            color: @darkFg;
+            background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+        }
     }
 }
 
