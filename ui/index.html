@@ -248,7 +248,7 @@
                                         <div class="field">
                                             <div class="control">
                                                 <input v-model="modal.fields[key]" 
-                                                       :type="isNaN(value) ? (typeof value == 'boolean') ? 'checkbox' : 'text') : 'number'"
+                                                       :type="getInputTypeForValue(value)"
                                                        class="input">
                                             </div>
                                         </div>

@@ -181,6 +181,13 @@ const Grafito = {
             });
         },
 
+        getInputTypeForValue(val){
+            if (!isNaN(val)) return "number";
+            if (typeof val == 'boolean') return "checkbox";
+
+            return "text";
+        },
+
         processCommand(){
             console.log("Grafito:: Processing command...");
 
