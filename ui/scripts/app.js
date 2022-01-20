@@ -22,6 +22,9 @@ const Grafito = {
                 },
                 engine: {
                     caseSensitive: {value: false, description: "Queries should be case-sensitive"}
+                },
+                general: {
+                    darkTheme: {value: false, description: "Enable dark theme"}
                 }
             },
             working: false,
