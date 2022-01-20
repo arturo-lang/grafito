@@ -247,9 +247,18 @@
                                     <div class="field-body">
                                         <div class="field">
                                             <div class="control">
-                                                <input v-model="modal.fields[key]" 
+                                                <div v-if="typeof value == 'boolean'"
+                                                     class="inline-switchable-container">
+                                                    <input v-model="modal.fields[key]"
+                                                           :id="key"
+                                                           type="checkbox"
+                                                           class="switchable" >
+                                                </div>
+                                                <div v-else>
+                                                    <input v-model="modal.fields[key]" 
                                                        :type="getInputTypeForValue(value)"
                                                        class="input">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
