@@ -27,256 +27,257 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/less@4.1.1" ></script>
     </head>
     <body>
-        <div id="app"
-             :class="config.general.darkTheme.value ? 'dark' : ''">
-            <header>
-                <div class="command"
-                     :class="command.focused ? 'focused' : ''">
-                    <div @click="processCommand()" 
-                         class="prompt">
-                        <i :class="working ? ['ph-spinner-gap-fill', 'rotating'] : (command.focused ? 'ph-arrow-circle-right-fill' : 'ph-arrow-circle-right')"></i>
+        <div id="app">
+            <div :class="config.general.darkTheme.value ? 'dark' : ''">
+                <header>
+                    <div class="command"
+                        :class="command.focused ? 'focused' : ''">
+                        <div @click="processCommand()" 
+                            class="prompt">
+                            <i :class="working ? ['ph-spinner-gap-fill', 'rotating'] : (command.focused ? 'ph-arrow-circle-right-fill' : 'ph-arrow-circle-right')"></i>
+                        </div>
+                        <input @focus="command.focused=true"
+                            @focusout="command.focused=false"
+                            @keyup.native.enter="processCommand()"
+                            type="text" spellcheck="false" placeholder="Enter a command">
                     </div>
-                    <input @focus="command.focused=true"
-                           @focusout="command.focused=false"
-                           @keyup.native.enter="processCommand()"
-                           type="text" spellcheck="false" placeholder="Enter a command">
-                </div>
-            </header>
-            <main>
-                <aside>
-                    <ul class="sidebar">
-                        <li v-for="(sidebarTip, sidebarItem) in sidebar.items" 
-                            :class="sidebar.active==sidebarItem && 'active'" 
-                            @click="sidebar.active=sidebarItem"
-                            @mouseenter="sidebar.hovered=sidebarItem"
-                            @mouseleave="sidebar.hovered=''"
-                            data-tippy-placement="right"
-                            data-tippy-animation="perspective-extreme"
-                            :data-tippy-content="sidebarTip">
-                            <i :class="(sidebar.active==sidebarItem || sidebar.hovered==sidebarItem) ? `ph-${sidebarItem}-fill` : `ph-${sidebarItem}`"></i>
-                        </li>
-                    </ul>
-                </aside>
-                <section id="content">
-                    <transition v-for="(editOptions,optionGroup) in graph.editOptions"
-                                name="slide-left">
-                        <div class="editOptions" 
-                             :id="`${optionGroup}EditOptions`" 
-                             v-show="
-                             (sidebar.active=='graph') && (
-                                ((optionGroup=='main') && (graph.selected.node == null) && (graph.selected.edge == null)) ||
-                                ((optionGroup=='node') && (graph.selected.node != null)) ||
-                                ((optionGroup=='edge') && (graph.selected.edge != null))
-                            )">
-                            <div v-for="editOption in editOptions.visualization"
-                                @click="editOption.action()"
-                                :data-tippy-content="editOption.tip"
-                                class="editOption"
-                                data-tippy-placement="left"
-                                data-tippy-theme="light">
-                                <i :class="`ph-${editOption.icon}`"></i>
+                </header>
+                <main>
+                    <aside>
+                        <ul class="sidebar">
+                            <li v-for="(sidebarTip, sidebarItem) in sidebar.items" 
+                                :class="sidebar.active==sidebarItem && 'active'" 
+                                @click="sidebar.active=sidebarItem"
+                                @mouseenter="sidebar.hovered=sidebarItem"
+                                @mouseleave="sidebar.hovered=''"
+                                data-tippy-placement="right"
+                                data-tippy-animation="perspective-extreme"
+                                :data-tippy-content="sidebarTip">
+                                <i :class="(sidebar.active==sidebarItem || sidebar.hovered==sidebarItem) ? `ph-${sidebarItem}-fill` : `ph-${sidebarItem}`"></i>
+                            </li>
+                        </ul>
+                    </aside>
+                    <section id="content">
+                        <transition v-for="(editOptions,optionGroup) in graph.editOptions"
+                                    name="slide-left">
+                            <div class="editOptions" 
+                                :id="`${optionGroup}EditOptions`" 
+                                v-show="
+                                (sidebar.active=='graph') && (
+                                    ((optionGroup=='main') && (graph.selected.node == null) && (graph.selected.edge == null)) ||
+                                    ((optionGroup=='node') && (graph.selected.node != null)) ||
+                                    ((optionGroup=='edge') && (graph.selected.edge != null))
+                                )">
+                                <div v-for="editOption in editOptions.visualization"
+                                    @click="editOption.action()"
+                                    :data-tippy-content="editOption.tip"
+                                    class="editOption"
+                                    data-tippy-placement="left"
+                                    data-tippy-theme="light">
+                                    <i :class="`ph-${editOption.icon}`"></i>
+                                </div>
+                                <div class="editOption-separator"></div>
+                                <div v-for="editOption in editOptions.database"
+                                    @click="editOption.action()"
+                                    :data-tippy-content="editOption.tip"
+                                    class="editOption"
+                                    :class="editOption.effect"
+                                    data-tippy-placement="left"
+                                    data-tippy-theme="light">
+                                    <i :class="`ph-${editOption.icon}`"></i>
+                                </div>
                             </div>
-                            <div class="editOption-separator"></div>
-                            <div v-for="editOption in editOptions.database"
-                                @click="editOption.action()"
-                                :data-tippy-content="editOption.tip"
-                                class="editOption"
-                                :class="editOption.effect"
-                                data-tippy-placement="left"
-                                data-tippy-theme="light">
-                                <i :class="`ph-${editOption.icon}`"></i>
+                        </transition>
+                        <div id="graph" v-show="sidebar.active=='graph'"></div>
+                        <div id="table" v-show="sidebar.active=='table'">
+                            <table class="table is-fullwidth is-striped is-hoverable display">
+                                <thead>
+                                    <tr>
+                                        <th v-for="tableKey in table.keys">{{tableKey}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="tableRow in table.rows">
+                                        <td v-for="tableKey in table.keys">{{tableRow[tableKey]}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="sliders" v-show="sidebar.active=='sliders'">
+                            <section class="hero">
+                                <div class="hero-body">
+                                    <div class="container has-text-centered">
+                                        <p class="title">Grafito</p>
+                                        <p class="subtitle">system: v/{{config.versions.system}} &bull; engine: v/{{config.versions.engine}}</p>
+                                    </div>
+                                </div>
+                            </section>
+                            <div class="container">
+                                <div class="columns">
+                                    <div class="column is-6">
+                                        <article class="panel">
+                                            <p class="panel-heading">
+                                                General
+                                            </p>
+                                            <div v-for="(setting,key) in config.general"
+                                                class="panel-block">
+                                                <input v-model="config.general[key].value"
+                                                    :id="key"
+                                                    type="checkbox"
+                                                    class="switchable" >
+                                                <label :for="key"
+                                                    :class="(config.general[key].value) ? '' : 'inactive'">
+                                                    {{setting.description}}
+                                                </label>
+                                            </div>
+                                        </article>
+                                        <article class="panel">
+                                            <p class="panel-heading">
+                                                Graph View
+                                            </p>
+                                            <div v-for="(setting,key) in config.graphView"
+                                                class="panel-block">
+                                                <input v-model="config.graphView[key].value"
+                                                    @change="updateGraphView()"
+                                                    :id="key"
+                                                    type="checkbox"
+                                                    class="switchable" >
+                                                <label :for="key"
+                                                    :class="(config.graphView[key].value) ? '' : 'inactive'">
+                                                    {{setting.description}}
+                                                </label>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <div class="column is-6">
+                                        <article class="panel">
+                                            <p class="panel-heading">
+                                                Table View
+                                            </p>
+                                            <div v-for="(setting,key) in config.tableView"
+                                                class="panel-block">
+                                                <input v-model="config.tableView[key].value"
+                                                    :id="key"
+                                                    type="checkbox"
+                                                    class="switchable" >
+                                                <label :for="key"
+                                                    :class="(config.tableView[key].value) ? '' : 'inactive'">
+                                                    {{setting.description}}
+                                                </label>
+                                            </div>
+                                        </article>
+                                        <article class="panel">
+                                            <p class="panel-heading">
+                                                Engine
+                                            </p>
+                                            <div v-for="(setting,key) in config.engine"
+                                                class="panel-block">
+                                                <input v-model="config.engine[key].value"
+                                                    @change="updateEngineSettings()"
+                                                    :id="key"
+                                                    type="checkbox"
+                                                    class="switchable" >
+                                                <label :for="key"
+                                                    :class="(config.engine[key].value) ? '' : 'inactive'">
+                                                    {{setting.description}}
+                                                </label>
+                                            </div>
+                                        </article>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </transition>
-                    <div id="graph" v-show="sidebar.active=='graph'"></div>
-                    <div id="table" v-show="sidebar.active=='table'">
-                        <table class="table is-fullwidth is-striped is-hoverable display">
-                            <thead>
-                                <tr>
-                                    <th v-for="tableKey in table.keys">{{tableKey}}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="tableRow in table.rows">
-                                    <td v-for="tableKey in table.keys">{{tableRow[tableKey]}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="sliders" v-show="sidebar.active=='sliders'">
-                        <section class="hero">
-                            <div class="hero-body">
-                                <div class="container has-text-centered">
-                                    <p class="title">Grafito</p>
-                                    <p class="subtitle">system: v/{{config.versions.system}} &bull; engine: v/{{config.versions.engine}}</p>
+                    </section>
+                    <div class="modal"
+                        :class="(modal.active) ? 'is-active' : ''">
+                        <div class="modal-background animate__animated animate__fadeIn animate__faster"></div>
+                        <div class="modal-card animate__animated animate__slideInDown animate__faster">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title">
+                                <i :class="(modal.icon=='') ? '' : `ph-${modal.icon}`"></i>
+                                {{modal.title}}
+                            </p>
+                            <button @click="modal.active=false"
+                                    class="delete" 
+                                    aria-label="close" >
+                            </button>
+                        </header>
+                        <section class="modal-card-body">
+                            <div v-if="modal.mode=='confirmation'">
+                                <p>This action is going to delete the selected element from the graph database and is not reversible. Are you sure you want to proceed?</p>
+                            </div>
+                            <div v-if="modal.mode=='filter'">
+                                <div class="columns">
+                                    <div class="column is-6">
+                                        <div class="switchable-wrapper"
+                                            v-for="(value,key) in graph.filter.nodes">
+                                            <input v-model="graph.filter.nodes[key]"
+                                                    @change="graph.dataview.nodes.refresh(); showDefaultInfo()"
+                                                    :id="key"
+                                                    type="checkbox"
+                                                    class="switchable" >
+                                            <label :for="key"
+                                                :class="(graph.filter.nodes[key]) ? '' : 'inactive'">
+                                                {{key}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="column is-6">
+                                        <div class="switchable-wrapper"
+                                            v-for="(value,key) in graph.filter.edges">
+                                            <input v-model="graph.filter.edges[key]"
+                                                    @change="graph.dataview.edges.refresh(); showDefaultInfo()"
+                                                    :id="key"
+                                                    type="checkbox"
+                                                    class="switchable" >
+                                            <label :for="key"
+                                                :class="(graph.filter.edges[key]) ? '' : 'inactive'">
+                                                {{key}}
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
+                                
                             </div>
                         </section>
-                        <div class="container">
-                            <div class="columns">
-                                <div class="column is-6">
-                                    <article class="panel">
-                                        <p class="panel-heading">
-                                            General
-                                        </p>
-                                        <div v-for="(setting,key) in config.general"
-                                             class="panel-block">
-                                            <input v-model="config.general[key].value"
-                                                   :id="key"
-                                                   type="checkbox"
-                                                   class="switchable" >
-                                            <label :for="key"
-                                                   :class="(config.general[key].value) ? '' : 'inactive'">
-                                                {{setting.description}}
-                                            </label>
-                                        </div>
-                                    </article>
-                                    <article class="panel">
-                                        <p class="panel-heading">
-                                            Graph View
-                                        </p>
-                                        <div v-for="(setting,key) in config.graphView"
-                                             class="panel-block">
-                                            <input v-model="config.graphView[key].value"
-                                                   @change="updateGraphView()"
-                                                   :id="key"
-                                                   type="checkbox"
-                                                   class="switchable" >
-                                            <label :for="key"
-                                                   :class="(config.graphView[key].value) ? '' : 'inactive'">
-                                                {{setting.description}}
-                                            </label>
-                                        </div>
-                                    </article>
-                                </div>
-                                <div class="column is-6">
-                                    <article class="panel">
-                                        <p class="panel-heading">
-                                            Table View
-                                        </p>
-                                        <div v-for="(setting,key) in config.tableView"
-                                             class="panel-block">
-                                            <input v-model="config.tableView[key].value"
-                                                   :id="key"
-                                                   type="checkbox"
-                                                   class="switchable" >
-                                            <label :for="key"
-                                                   :class="(config.tableView[key].value) ? '' : 'inactive'">
-                                                {{setting.description}}
-                                            </label>
-                                        </div>
-                                    </article>
-                                    <article class="panel">
-                                        <p class="panel-heading">
-                                            Engine
-                                        </p>
-                                        <div v-for="(setting,key) in config.engine"
-                                             class="panel-block">
-                                            <input v-model="config.engine[key].value"
-                                                   @change="updateEngineSettings()"
-                                                   :id="key"
-                                                   type="checkbox"
-                                                   class="switchable" >
-                                            <label :for="key"
-                                                   :class="(config.engine[key].value) ? '' : 'inactive'">
-                                                {{setting.description}}
-                                            </label>
-                                        </div>
-                                    </article>
-                                </div>
-                            </div>
+                        <footer class="modal-card-foot">
+                            <button class="button is-outlined"
+                                    :class="modal.accept.style"
+                                    @click="modal.accept.action(); modal.active=false">
+                                {{modal.accept.button}}
+                            </button>
+                            <button @click="modal.active=false"
+                                    v-if="modal.showCancel"
+                                    class="button is-light">
+                                Cancel
+                            </button>
+                        </footer>
                         </div>
                     </div>
-                </section>
-                <div class="modal"
-                     :class="(modal.active) ? 'is-active' : ''">
-                    <div class="modal-background animate__animated animate__fadeIn animate__faster"></div>
-                    <div class="modal-card animate__animated animate__slideInDown animate__faster">
-                      <header class="modal-card-head">
-                        <p class="modal-card-title">
-                            <i :class="(modal.icon=='') ? '' : `ph-${modal.icon}`"></i>
-                            {{modal.title}}
-                        </p>
-                        <button @click="modal.active=false"
-                                class="delete" 
-                                aria-label="close" >
-                        </button>
-                      </header>
-                      <section class="modal-card-body">
-                        <div v-if="modal.mode=='confirmation'">
-                            <p>This action is going to delete the selected element from the graph database and is not reversible. Are you sure you want to proceed?</p>
+                </main>
+                <footer>
+                    <div class="infobar">
+                        <div class="graph-info"
+                            v-show="sidebar.active=='graph'">
+                            <span class="tag" 
+                                :style="infobar.tag.style">{{infobar.tag.caption}}</span>
+                            <nav class="breadcrumb">
+                                <ul>
+                                    <li class="is-active" v-for="(value, key) in infobar.paths">
+                                        <a href="#">
+                                            <b>{{key}}:</b>&nbsp;{{value}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
-                        <div v-if="modal.mode=='filter'">
-                            <div class="columns">
-                                <div class="column is-6">
-                                    <div class="switchable-wrapper"
-                                         v-for="(value,key) in graph.filter.nodes">
-                                        <input v-model="graph.filter.nodes[key]"
-                                                @change="graph.dataview.nodes.refresh(); showDefaultInfo()"
-                                                :id="key"
-                                                type="checkbox"
-                                                class="switchable" >
-                                        <label :for="key"
-                                               :class="(graph.filter.nodes[key]) ? '' : 'inactive'">
-                                             {{key}}
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="column is-6">
-                                    <div class="switchable-wrapper"
-                                         v-for="(value,key) in graph.filter.edges">
-                                        <input v-model="graph.filter.edges[key]"
-                                                @change="graph.dataview.edges.refresh(); showDefaultInfo()"
-                                                :id="key"
-                                                type="checkbox"
-                                                class="switchable" >
-                                        <label :for="key"
-                                               :class="(graph.filter.edges[key]) ? '' : 'inactive'">
-                                              {{key}}
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                      </section>
-                      <footer class="modal-card-foot">
-                        <button class="button is-outlined"
-                                :class="modal.accept.style"
-                                @click="modal.accept.action(); modal.active=false">
-                            {{modal.accept.button}}
-                        </button>
-                        <button @click="modal.active=false"
-                                v-if="modal.showCancel"
-                                class="button is-light">
-                            Cancel
-                        </button>
-                      </footer>
-                    </div>
-                  </div>
-            </main>
-            <footer>
-                <div class="infobar">
-                    <div class="graph-info"
-                         v-show="sidebar.active=='graph'">
-                        <span class="tag" 
-                            :style="infobar.tag.style">{{infobar.tag.caption}}</span>
-                        <nav class="breadcrumb">
-                            <ul>
-                                <li class="is-active" v-for="(value, key) in infobar.paths">
-                                    <a href="#">
-                                        <b>{{key}}:</b>&nbsp;{{value}}
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="table-info"
-                         v-show="sidebar.active=='table'">
+                        <div class="table-info"
+                            v-show="sidebar.active=='table'">
 
+                        </div>
                     </div>
-                </div>
-            </footer>
+                </footer>
+            </div>
         </div>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
         <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>-->
