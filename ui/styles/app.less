@@ -633,6 +633,12 @@ ul.sidebar {
             background-color: @darkBgDarker;
             color: @darkFgDarker;
         }
+
+        .panel-block {
+            &:not(:last-child) {
+                border-bottom: 1px solid @darkBgDarker;
+            }
+        }
     }
 }
 
