@@ -9,8 +9,7 @@ do [
     ; Set up a new graph environment
     ; with a local database named "sample11"
     ;---------------------------------------------
-    graph .create
-          .helpers: [person movie country book] 
+    graph .helpers: [person movie country book] 
           "sample11" 
     [
         ;---------------------------------------------
