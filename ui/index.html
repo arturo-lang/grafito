@@ -133,6 +133,25 @@
                                         </article>
                                         <article class="panel">
                                             <p class="panel-heading">
+                                                Engine
+                                            </p>
+                                            <div v-for="(setting,key) in config.engine"
+                                                class="panel-block">
+                                                <input v-model="config.engine[key].value"
+                                                    @change="updateEngineSettings()"
+                                                    :id="key"
+                                                    type="checkbox"
+                                                    class="switchable" >
+                                                <label :for="key"
+                                                    :class="(config.engine[key].value) ? '' : 'inactive'">
+                                                    {{setting.description}}
+                                                </label>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <div class="column is-6">
+                                        <article class="panel">
+                                            <p class="panel-heading">
                                                 Graph View
                                             </p>
                                             <div v-for="(setting,key) in config.graphView"
@@ -148,8 +167,6 @@
                                                 </label>
                                             </div>
                                         </article>
-                                    </div>
-                                    <div class="column is-6">
                                         <article class="panel">
                                             <p class="panel-heading">
                                                 Table View
@@ -162,23 +179,6 @@
                                                     class="switchable" >
                                                 <label :for="key"
                                                     :class="(config.tableView[key].value) ? '' : 'inactive'">
-                                                    {{setting.description}}
-                                                </label>
-                                            </div>
-                                        </article>
-                                        <article class="panel">
-                                            <p class="panel-heading">
-                                                Engine
-                                            </p>
-                                            <div v-for="(setting,key) in config.engine"
-                                                class="panel-block">
-                                                <input v-model="config.engine[key].value"
-                                                    @change="updateEngineSettings()"
-                                                    :id="key"
-                                                    type="checkbox"
-                                                    class="switchable" >
-                                                <label :for="key"
-                                                    :class="(config.engine[key].value) ? '' : 'inactive'">
                                                     {{setting.description}}
                                                 </label>
                                             </div>
