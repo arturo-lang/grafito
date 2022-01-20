@@ -21,7 +21,7 @@ Grafito: #[
     Version: 0.2.8
 
     ; configuration
-    Debug?: false
+    Debug?: true
     verbose?: true
     caseSensitive?: false
 ]
@@ -800,6 +800,7 @@ graph: function [
 
             "/updateNode"   [;[ndid,props]
                 nd: nodeFromId ndid
+                inspect read.json props
                 edit nd read.json props
                 ""
             ]
