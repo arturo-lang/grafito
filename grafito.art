@@ -798,8 +798,9 @@ graph: function [
                 ""
             ]
 
-            "/updateNode"   [;[ndid]
-                inspect ndid
+            "/updateNode"   [;[ndid,props]
+                nd: nodeFromId ndid
+                edit nd read.json props
                 ""
             ]
 
