@@ -373,11 +373,11 @@ const Grafito = {
             this.modal.accept.button = "Save";
             
             this.modal.accept.action = ()=>{
-                edge.tag = this.modal.fields.tag;
+                edge.label = this.modal.fields.label;
                 this.graph.data.edges.update(edge);
 
-                let nodeFrom = nodes.get(edge.from);
-                let nodeTo = nodes.get(edge.to);
+                let nodeFrom = this.graph.data.nodes.get(edge.from);
+                let nodeTo = this.graph.data.nodes.get(edge.to);
                 
                 this.updateInfo({
                     "from": `${nodeFrom.tag} (${nodeFrom.label})`,
