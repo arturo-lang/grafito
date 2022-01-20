@@ -583,6 +583,16 @@ graph: function [
         if? not? null? attr "any" ->
             catchAny?: true
 
+        collator: ""
+        if not? Grafito\caseSensitive? ->
+            collator: " COLLATE NOCASE"
+
+        propertyFilters: new []
+        edgeFilters: new []
+        qvals: new @[name]
+        qpropvals: new []
+        qedgevals: new []
+
         att: new attributes
 
         if and? not? dictionary? att 
@@ -592,16 +602,6 @@ graph: function [
         ; HACK - to solve
         remove.key 'att 'n
         remove.key 'att 'a
-
-        propertyFilters: new []
-        edgeFilters: new []
-        qvals: new @[name]
-        qpropvals: new []
-        qedgevals: new []
-
-        collator: ""
-        if not? Grafito\caseSensitive? ->
-            collator: " COLLATE NOCASE"
 
         if not? empty? att [
             loop att [k,v][
