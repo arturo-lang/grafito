@@ -357,8 +357,6 @@ const Grafito = {
                     ndid: nodeId, 
                     props: JSON.stringify(node.properties) 
                 }, ()=>{
-                    console.log("called /updateNode");
-
                     this.graph.data.nodes.update(node);
                     this.updateInfo(node.properties, node.tag, node.color.background);
                 });
