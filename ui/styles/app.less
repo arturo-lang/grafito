@@ -18,7 +18,9 @@
 @destructiveColor: #AA0000;
 
 @darkFg: #DDDDDD;
+@darkFgDarker: #BBB;
 @darkBg: #2A2C33;
+@darkBgDarker: #222222;
 @darkGrafitoPurple: lighten(@grafitoPurple, 30%);
 
 /****************************************************
@@ -364,6 +366,23 @@ ul.sidebar {
     }
 }
 
+.dark .editOptions {
+    .editOption {
+        background: @darkBgDarker;
+        border-color: #999;
+        color: #999;
+
+        &:not(.modifying):not(.destructive):hover {
+            border-color: @darkFgDarker;
+            color: @darkFg;
+        }
+    }
+
+    .editOption-separator {
+        border-color: @darkFgDarker;
+    }
+}
+
 /****************************************************
  Graph view
  ****************************************************/
@@ -391,6 +410,18 @@ ul.sidebar {
 
 .dark #graph {
     background: @darkBg;
+
+    .vis-network {
+        .vis-navigation {
+            .vis-button {
+                filter: opacity(0.3) invert(1) grayscale(1);
+
+                &:hover {
+                    filter: opacity(1) invert(1) grayscale(1);
+                }
+            }
+        }
+    }
 }
 
 /****************************************************
@@ -576,8 +607,8 @@ ul.sidebar {
         box-shadow: 0 0.2em 1em -0.125em rgb(250 250 250 / 3%), 0 0 0 1px rgb(250 250 250 / 3%);
 
         .panel-heading {
-            background-color: #222;
-            color: #BBB;
+            background-color: @darkBgDarker;
+            color: @darkFgDarker;
         }
     }
 }
