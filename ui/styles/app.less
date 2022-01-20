@@ -17,7 +17,9 @@
 @modifyingColor: green;
 @destructiveColor: #AA0000;
 
+@darkFg: #DDDDDD;
 @darkBg: #2A2C33;
+@darkGrafitoPurple: lighten(@grafitoPurple, 30%);
 
 /****************************************************
  Global mixins
@@ -100,6 +102,16 @@ html, body {
 
     & + label {
         cursor: pointer;
+
+        &.inactive {
+            color: darkgray;
+        }
+    }
+}
+
+.dark .switchable {
+    & + label {
+        color: @darkFg;
 
         &.inactive {
             color: darkgray;
@@ -553,6 +565,21 @@ ul.sidebar {
 
 .dark #sliders {
     background: @darkBg;
+    
+    .hero {
+        .title {
+            color: @darkGrafitoPurple;
+        }
+    }
+
+    .panel {
+        box-shadow: 0 0.2em 1em -0.125em rgb(250 250 250 / 3%), 0 0 0 1px rgb(250 250 250 / 3%);
+
+        .panel-heading {
+            background-color: #222;
+            color: #BBB;
+        }
+    }
 }
 
 /****************************************************
