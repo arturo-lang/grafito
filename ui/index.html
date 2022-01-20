@@ -257,13 +257,13 @@
                                                 <div v-else>
                                                     <input v-model="modal.fields[key]" 
                                                        :type="getInputTypeForValue(value)"
-                                                       @click="delete modal.fields[key]"
                                                        class="input"
                                                        spellcheck="false">
                                                 </div>
                                             </div>
                                             <div class="control">
-                                                <button class="button">
+                                                <button class="button"
+                                                        @click="delete modal.fields[key]">
                                                     <span class="icon is-small">
                                                         <i class="ph-backspace-bold"></i>
                                                     </span>
