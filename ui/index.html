@@ -252,12 +252,13 @@
                                                     <input v-model="modal.fields[key]"
                                                            :id="key"
                                                            type="checkbox"
-                                                           class="switchable" >
+                                                           class="switchable">
                                                 </div>
                                                 <div v-else>
                                                     <input v-model="modal.fields[key]" 
                                                        :type="getInputTypeForValue(value)"
-                                                       class="input">
+                                                       class="input"
+                                                       spellcheck="false">
                                                 </div>
                                             </div>
                                         </div>
