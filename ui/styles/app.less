@@ -240,9 +240,6 @@ html, body {
 }
 
 .dark .command {
-    .prompt {
-
-    }
 
     input {
         background-color: @darkBg;
@@ -751,5 +748,29 @@ ul.sidebar {
                 }
             }
         } 
+    }
+}
+
+.dark .infobar {
+    color: @darkFgDarker;
+    background: @darkBgDarker;
+    border-color: black;
+
+    .graph-info {
+        .breadcrumb {
+            a {
+                color: @darkFgDarker;
+            }
+        }
+    }
+
+    .table-info {
+        .dt-buttons {
+            .dt-button {
+                &:hover {
+                    color: @darkGrafitoPurple;
+                }
+            }
+        }
     }
 }
