@@ -154,6 +154,9 @@ const Grafito = {
                     style: "",
                     action: ()=> {console.log("modal action clicked!");}
                 },
+                fields: {
+
+                },
                 showCancel: true
             }
         }
@@ -326,6 +329,20 @@ const Grafito = {
 
         showEditNodeDialog(){
             this.modal.title = "Edit node";
+            this.modal.mode = "edit";
+            this.modal.accept.button = "Save";
+            this.modal.accept.style = "is-modifying";
+            this.modal.accept.action = ()=>{};
+            this.modal.showCancel = true;
+            this.modal.icon = "pencil-fill";
+
+            let nodeId = this.graph.selected.node.id;
+            let node = this.graph.data.nodes.get(nodeId);
+
+            this.modal.fields = Object.assign({
+                tag: node.tag,
+            }, node.properties);
+
             this.modal.active = true;
 
             console.log("UNIMPLEMENTED");
@@ -333,6 +350,15 @@ const Grafito = {
 
         showEditEdgeDialog(){
             this.modal.title = "Edit edge";
+            this.modal.mode = "edit";
+            this.modal.accept.button = "Save";
+            this.modal.accept.style = "is-modifying";
+            this.modal.accept.action = ()=>{};
+            this.modal.showCancel = true;
+            this.modal.icon = "pencil-fill";
+
+            this.modal.fields = {};
+
             this.modal.active = true;
 
             console.log("UNIMPLEMENTED");
