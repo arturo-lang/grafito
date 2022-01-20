@@ -227,6 +227,7 @@ const Grafito = {
 
             $.post("/nodeFromId", {ndid: nodeId }, (data)=>{
                 let dt = JSON.parse(data);
+                console.log(dt);
                 for (var node of dt.nodes){
                     this.graph.data.nodes.update(node);
                 }
@@ -335,24 +336,33 @@ const Grafito = {
         },
 
         showEditNodeDialog(){
+            let nodeId = this.graph.selected.node.id;
+            let node = this.graph.data.nodes.get(nodeId);
+
             this.modal.title = "Edit node";
             this.modal.mode = "edit";
             this.modal.accept.button = "Save";
+            // TODO(updating edited field) fields appearing empty 
+            //  mainly the Name field; weird...
+            //  labels: bug, ui 
+
+            this.modal.accept.action = ()=>{
+                console.log("Saving result");
+                node.tag = this.modal.fields.tag;
+                delete this.modal.fields.tag;
+                node.properties = this.modal.fields;
+                this.graph.data.nodes.update(node);
+                this.updateInfo(node.properties, node.tag, node.color.background);
+            };
             this.modal.accept.style = "is-modifying";
-            this.modal.accept.action = ()=>{};
             this.modal.showCancel = true;
             this.modal.icon = "pencil-fill";
-
-            let nodeId = this.graph.selected.node.id;
-            let node = this.graph.data.nodes.get(nodeId);
 
             this.modal.fields = Object.assign({
                 tag: node.tag,
             }, node.properties);
 
             this.modal.active = true;
-
-            console.log("UNIMPLEMENTED");
         },
 
         showEditEdgeDialog(){
