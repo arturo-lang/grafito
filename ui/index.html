@@ -257,6 +257,7 @@
                                                 <div v-else>
                                                     <input v-model="modal.fields[key]" 
                                                        :type="getInputTypeForValue(value)"
+                                                       @click="delete modal.fields[key]"
                                                        class="input"
                                                        spellcheck="false">
                                                 </div>
