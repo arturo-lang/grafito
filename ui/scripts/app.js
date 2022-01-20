@@ -343,14 +343,16 @@ const Grafito = {
             this.modal.mode = "edit";
             this.modal.accept.button = "Save";
 
-            // TODO(updating edited field in node) fields appearing empty 
+            // TODO(edit node) fields appearing empty 
             //  mainly the Name field; weird...
             //  labels: bug, ui 
+
             this.modal.accept.action = ()=>{
                 node.tag = this.modal.fields.tag;
                 delete this.modal.fields.tag;
                 node.properties = this.modal.fields;
 
+                // TODO(edit node) should be able to set tag as well
                 $.post("/updateNode", {
                     ndid: nodeId, 
                     props: JSON.stringify(node.properties) 
