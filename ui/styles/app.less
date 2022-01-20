@@ -779,6 +779,10 @@ ul.sidebar {
 }
 
 .dark .modal {
+    .modal-background {
+        background-color: rgba(10,10,10,.7) !important;
+    }
+    
     .modal-card {
         .modal-card-head {
             border-color: black !important;
@@ -797,7 +801,7 @@ ul.sidebar {
         }
 
         .modal-card-body {
-            background: lighten(@darkBg, 10%);
+            background: lighten(@darkBg, 5%);
             color: @darkFgDarker !important;
         }
 
