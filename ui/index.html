@@ -247,7 +247,9 @@
                                     <div class="field-body">
                                         <div class="field">
                                             <div class="control">
-                                                <input class="input" type="text" :value="value">
+                                                <input v-model="modal.fields[key]" 
+                                                       :type="isNaN(value) ? 'text' : 'number'"
+                                                       class="input">
                                             </div>
                                         </div>
                                     </div>
