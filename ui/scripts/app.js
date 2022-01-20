@@ -504,8 +504,8 @@ const Grafito = {
                 this.graph.selected.node = null;
                 this.graph.selected.edge = edge;
 
-                let nodeFrom = nodes.get(edge.from);
-                let nodeTo = nodes.get(edge.to);
+                let nodeFrom = this.graph.data.nodes.get(edge.from);
+                let nodeTo = this.graph.data.nodes.get(edge.to);
                 
                 this.updateInfo({
                     "from": `${nodeFrom.tag} (${nodeFrom.label})`,
@@ -534,8 +534,8 @@ const Grafito = {
             this.graph.view.on("hoverEdge", (ev)=>{
                 if ((this.graph.selected.node == null)&&(this.graph.selected.edge == null)){
                     let edge = edges.get(ev.edge);
-                    let nodeFrom = nodes.get(edge.from);
-                    let nodeTo = nodes.get(edge.to);
+                    let nodeFrom = this.graph.data.nodes.get(edge.from);
+                    let nodeTo = this.graph.data.nodes.get(edge.to);
 
                     this.updateInfo({
                         "from": `${nodeFrom.tag} (${nodeFrom.label})`,
