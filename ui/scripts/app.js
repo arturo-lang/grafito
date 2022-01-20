@@ -342,12 +342,11 @@ const Grafito = {
             this.modal.title = "Edit node";
             this.modal.mode = "edit";
             this.modal.accept.button = "Save";
+            
             // TODO(updating edited field) fields appearing empty 
             //  mainly the Name field; weird...
             //  labels: bug, ui 
-
             this.modal.accept.action = ()=>{
-                console.log("Saving result");
                 node.tag = this.modal.fields.tag;
                 delete this.modal.fields.tag;
                 node.properties = this.modal.fields;
