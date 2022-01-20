@@ -350,8 +350,13 @@ const Grafito = {
                 node.tag = this.modal.fields.tag;
                 delete this.modal.fields.tag;
                 node.properties = this.modal.fields;
-                this.graph.data.nodes.update(node);
-                this.updateInfo(node.properties, node.tag, node.color.background);
+
+                $.post("/updateNode", {ndid: nodeId }, ()=>{
+                    console.log("called /updateNode");
+
+                    this.graph.data.nodes.update(node);
+                    this.updateInfo(node.properties, node.tag, node.color.background);
+                });
             };
             this.modal.accept.style = "is-modifying";
             this.modal.showCancel = true;
