@@ -351,7 +351,10 @@ const Grafito = {
                 delete this.modal.fields.tag;
                 node.properties = this.modal.fields;
 
-                $.post("/updateNode", {ndid: nodeId }, ()=>{
+                $.post("/updateNode", {
+                    ndid: nodeId, 
+                    props: JSON.stringify(node.properties) 
+                }, ()=>{
                     console.log("called /updateNode");
 
                     this.graph.data.nodes.update(node);
