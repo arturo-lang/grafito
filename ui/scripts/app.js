@@ -342,8 +342,8 @@ const Grafito = {
             this.modal.title = "Edit node";
             this.modal.mode = "edit";
             this.modal.accept.button = "Save";
-            
-            // TODO(updating edited field) fields appearing empty 
+
+            // TODO(updating edited field in node) fields appearing empty 
             //  mainly the Name field; weird...
             //  labels: bug, ui 
             this.modal.accept.action = ()=>{
@@ -365,19 +365,34 @@ const Grafito = {
         },
 
         showEditEdgeDialog(){
+            let edgeId = this.graph.selected.edge.id;
+            let edge = this.graph.data.nodes.get(edgeId);
+
             this.modal.title = "Edit edge";
             this.modal.mode = "edit";
             this.modal.accept.button = "Save";
+            
+            this.modal.accept.action = ()=>{
+                edge.tag = this.modal.fields.tag;
+                this.graph.data.edges.update(edge);
+
+                let nodeFrom = nodes.get(edge.from);
+                let nodeTo = nodes.get(edge.to);
+                
+                this.updateInfo({
+                    "from": `${nodeFrom.tag} (${nodeFrom.label})`,
+                    "to": `${nodeTo.tag} (${nodeTo.label})`
+                }, edge.label, "black", "white");
+            };
             this.modal.accept.style = "is-modifying";
-            this.modal.accept.action = ()=>{};
             this.modal.showCancel = true;
             this.modal.icon = "pencil-fill";
 
-            this.modal.fields = {};
+            this.modal.fields = {
+                label: edge.label
+            }
 
             this.modal.active = true;
-
-            console.log("UNIMPLEMENTED");
         },
 
         resetFilterData(nomatterwhat=false){
