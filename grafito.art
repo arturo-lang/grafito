@@ -798,6 +798,11 @@ graph: function [
                 ""
             ]
 
+            "/updateNode"   [;[ndid]
+                inspect ndid
+                ""
+            ]
+
             "/deleteEdge" [;[egid]
                 edgeParts: split.by:"+" egid
                 unlink to :integer edgeParts\0 
