@@ -878,13 +878,13 @@ graph: function [
     printDebug ~"DB = |cleanpath|"
     db: open dbPath
 
-    dbExists?: false
+    dbExists?: true
 
     ; and initialize it
     ; with the given schema (if necessary)
     if? or? not? null? attr "create"
             not? dbExisted [
-        dbExists?: true
+        dbExists?: false
         printDebug "creating database from scratch"
         performQuery.noDebug 'main schemaSQL ø
         
