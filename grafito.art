@@ -793,7 +793,7 @@ graph: function [
                 write.json ø newNodes
             ]
 
-            "/deleteNode"   [;[ndid]]
+            "/deleteNode"   [;[ndid]
                 unput to :integer ndid
                 ""
             ]
