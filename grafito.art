@@ -571,7 +571,7 @@ graph: function [
 
     fetch: function [
         name :literal :string
-        attributes :null :block :dictionary
+        attributes :null :string :block :dictionary
     ][
         ;; description: « retrieves nodes with name that match all given attributes
         ;; options: [
