@@ -465,7 +465,7 @@ const Grafito = {
                 if ((this.graph.selected.node == null)&&(this.graph.selected.edge == null)){
                     let node = nodes.get(x.node);
 
-                    this.updateInfo(node.properties, node.tag, node.color); 
+                    this.updateInfo(node.properties, node.tag, node.color.background); 
                 }
             });
 
