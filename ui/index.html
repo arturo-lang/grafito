@@ -245,8 +245,8 @@
                                         <label class="label">{{key}}</label>
                                     </div>
                                     <div class="field-body">
-                                        <div class="field">
-                                            <div class="control">
+                                        <div class="field has-addons">
+                                            <div class="control is-expanded">
                                                 <div v-if="typeof value == 'boolean'"
                                                      class="inline-switchable-container">
                                                     <input v-model="modal.fields[key]"
@@ -261,6 +261,11 @@
                                                        spellcheck="false">
                                                 </div>
                                             </div>
+                                            <button class="button">
+                                                <span class="icon is-small">
+                                                    <i class="ph-backspace-bold"></i>
+                                                </span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
