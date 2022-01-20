@@ -794,6 +794,14 @@ ul.sidebar {
             .field-label {
                 align-self: center;
             }
+
+            button {
+                &.is-hovered, &:hover {
+                    border-color: #dbdbdb !important;
+                    background: #F6F6F6;
+                    color: @destructiveColor;
+                }
+            }
         }
 
         .modal-card-foot {
@@ -862,6 +870,18 @@ ul.sidebar {
                 background-color: @darkBgDarker;
                 color: @darkFgDarker;
                 border-color: black;
+            }
+
+            button {
+                background-color: black;
+                border-color: black;
+                color: @darkFg;
+
+                &.is-hovered, &:hover {
+                    background-color: lighten(black, 7%);
+                    border-color: black !important;
+                    color: @destructiveColor;
+                }
             }
         }
 
