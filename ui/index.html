@@ -237,7 +237,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+                            </div>
+                            <div v-if="modal.mode=='edit'">
+                                <div v-for="(value,key) in modal.fields"
+                                        class="field is-horizontal">
+                                    <label class="label">{{key}}</label>
+                                    <div class="control">
+                                        <input class="input is-success" type="text" :value="value">
+                                    </div>
+                                </div>
                             </div>
                         </section>
                         <footer class="modal-card-foot">
