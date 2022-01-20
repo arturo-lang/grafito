@@ -346,13 +346,9 @@ const Grafito = {
             let nodeId = this.graph.selected.node.id;
             let node = this.graph.data.nodes.get(nodeId);
 
-            console.log(node);
-
             this.modal.fields = Object.assign({
                 tag: node.tag,
             }, node.properties);
-
-            console.log(this.modal.fields);
 
             this.modal.active = true;
 
