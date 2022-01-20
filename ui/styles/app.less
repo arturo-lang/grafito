@@ -582,6 +582,35 @@ ul.sidebar {
 
 .dark #table {
     background: @darkBg;
+
+    .dataTables_wrapper {
+        table.dataTable {
+            color: @darkFg;
+            background: @darkBgDarker;
+
+            thead td, thead th {
+                color: @darkFg;
+            }
+
+            td, th {
+                border-color: black !important;
+            }
+
+            *:not(.sorting_1):not(.sorting_2):not(.sorting_3) {
+                td, th {
+                    border-color: @darkBg !important;
+                }
+            }
+
+            .sorting_1, .sorting_2, .sorting_3 {
+                background: black !important;
+            }
+
+            tbody tr:not(.is-selected):nth-child(even) {
+                background: @darkBg !important;
+            }
+        }
+    }
 }
 
 /****************************************************
