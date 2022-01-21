@@ -284,17 +284,26 @@
                                 </button>
                                 <div v-if="modal.showAddActive"
                                      class="field has-addons">
+                                     <div class="control">
+                                        <span class="select">
+                                          <select v-model="modal.addFieldType">
+                                            <option>String</option>
+                                            <option>Number</option>
+                                            <option>Boolean</option>
+                                          </select>
+                                        </span>
+                                    </div>
                                     <div class="control is-expanded">
                                         <input
                                         v-model="modal.addField"
-                                        type="text"
+                                        :type="modal.addFieldType"
                                         class="input"
                                         spellcheck="false">
                                     </div>
                                     <div class="control">
                                         <button class="button"
-                                                @click="if (!(modal.addField in modal.fields)) modal.fields[modal.addField]='  '; modal.showAddActive=false">
-                                            Add field
+                                                @click="addNewNodeField()">
+                                            Add
                                         </button>
                                     </div>
                                 </div>
