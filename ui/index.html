@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="editOption-separator"></div>
                                 <div v-for="editOption in editOptions.database">
-                                     <div v-if="(!editOption.onlyForSingle) || ((graph.selected.node.length==1) != (graph.selected.edge.length==1))"
+                                     <template v-if="(!editOption.onlyForSingle) || ((graph.selected.node.length==1) != (graph.selected.edge.length==1))"
                                           @click="editOption.action()"
                                           :data-tippy-content="editOption.tip"
                                           class="editOption"
@@ -89,7 +89,7 @@
                                           data-tippy-placement="left"
                                           data-tippy-theme="light">
                                         <i :class="`ph-${editOption.icon}`"></i>
-                                    </div>
+                                    </template>
                                 </div>
                             </div>
                         </transition>
@@ -208,10 +208,10 @@
                             </button>
                         </header>
                         <section class="modal-card-body">
-                            <div v-if="modal.mode=='confirmation'">
+                            <template v-if="modal.mode=='confirmation'">
                                 <p>This action is going to delete the selected element from the graph database and is not reversible. Are you sure you want to proceed?</p>
-                            </div>
-                            <div v-if="modal.mode=='filter'">
+                            </template>
+                            <template v-if="modal.mode=='filter'">
                                 <div class="columns">
                                     <div class="column is-6">
                                         <div class="switchable-wrapper"
@@ -242,8 +242,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div v-if="modal.mode=='edit'">
+                            </template>
+                            <template v-if="modal.mode=='edit'">
                                 <div v-for="(value,key) in modal.fields"
                                         class="field is-horizontal">
                                     <div class="field-label">
@@ -277,7 +277,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </template>
                         </section>
                         <footer class="modal-card-foot">
                             <div v-if="modal.showAdd"
