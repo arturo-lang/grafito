@@ -159,6 +159,7 @@ const Grafito = {
                 },
                 showAdd: false,
                 addField: "",
+                addFieldType: "String",
                 showAddActive: false,
                 showCancel: true
             }
@@ -340,6 +341,19 @@ const Grafito = {
             console.log("UNIMPLEMENTED");
         },
 
+        addNewNodeField(){
+            if (this.modal.addFieldType=='String') 
+                this.modal.fields[this.modal.addField]=''; 
+            else if (this.modal.addFieldType=='Number') 
+                this.modal.fields[this.modal.addField]=0;
+            else
+                this.modal.fields[this.modal.addField]=false; 
+
+            this.modal.showAddActive=false;
+            this.modal.addField = '';
+            this.modal.addFieldType = 'String';
+        },
+
         showEditNodeDialog(){
             let nodeId = this.graph.selected.node.id;
             let node = this.graph.data.nodes.get(nodeId);
@@ -368,6 +382,8 @@ const Grafito = {
             };
             this.modal.accept.style = "is-modifying";
             this.modal.showAdd = true;
+            this.modal.addField = "";
+            this.modal.addFieldType = "String";
             this.modal.showCancel = true;
             this.modal.icon = "pencil-fill";
 
