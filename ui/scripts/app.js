@@ -170,10 +170,6 @@ const Grafito = {
                     "sliders": "Global settings"
                 }
             },
-            infobar: {
-                tag: {},
-                paths: []
-            },
             modal: {
                 active: false,
                 title: "Some title",
@@ -196,39 +192,6 @@ const Grafito = {
         }
     },
     methods: {
-        updateInfo(paths, tag="INFO", tagBg="#CCC", tagFg="white"){
-            this.infobar = {
-                tag: {
-                    caption: tag,
-                    style: {
-                        color: (tagBg=="#CCC" ? "black" : tagFg),
-                        backgroundColor: tagBg
-                    }
-                },
-                paths: paths
-            }
-        },
-
-        showDefaultInfo(){
-            this.updateInfo({
-                "Showing": `${this.graph.dataview.nodes.length} nodes and ${this.graph.dataview.edges.length} edges`
-            });
-        },
-
-        showNodeInfo(node){
-            this.updateInfo(node.properties, node.tag, node.color.background);
-        },
-
-        showEdgeInfo(edge){
-            let nodeFrom = this.graph.data.nodes.get(edge.from);
-            let nodeTo = this.graph.data.nodes.get(edge.to);
-            
-            this.updateInfo({
-                "from": `${nodeFrom.tag} (${nodeFrom.label})`,
-                "to": `${nodeTo.tag} (${nodeTo.label})`
-            }, edge.label, "black", "white");
-        },
-
         getInputTypeForValue(val){
             if (typeof val == "boolean") return "checkbox";
             if (typeof val == "string") return "text";
@@ -298,7 +261,6 @@ const Grafito = {
             this.graph.data.nodes.remove(nodeId);
             if ((this.graph.selected.node!=null)&&(this.graph.selected.node.id==nodeId)){
                 this.graph.selected.node = null;
-                this.showDefaultInfo();
             }
         },
 
@@ -325,7 +287,6 @@ const Grafito = {
             this.graph.data.edges.remove(edgeId);
             if ((this.graph.selected.edge!=null)&&(this.graph.selected.edge.id==edgeId)){
                 this.graph.selected.edge = null;
-                this.showDefaultInfo();
             }
         },
 
@@ -421,7 +382,6 @@ const Grafito = {
                     props: JSON.stringify(node.properties) 
                 }, ()=>{
                     this.graph.data.nodes.update(node);
-                    this.showNodeInfo(node);
                 });
             };
             this.modal.accept.style = "is-modifying";
@@ -547,8 +507,6 @@ const Grafito = {
 
             this.graph.view = new vis.Network(container, this.graph.dataview, this.graph.config);
 
-            this.showDefaultInfo();
-
             const updateSelected = (x)=>{
                 this.graph.selected.node = x.nodes.map((e) => this.graph.data.nodes.get(e));
                 this.graph.selected.edge = x.edges.map((e) => this.graph.data.edges.get(e));
@@ -567,7 +525,6 @@ const Grafito = {
                 if ((this.graph.selected.node.length == 0)&&(this.graph.selected.edge.length == 0)){
                     let node = nodes.get(x.node);
 
-                    this.showNodeInfo(node);
                 }
             });
 
@@ -575,20 +532,19 @@ const Grafito = {
                 if ((this.graph.selected.node.length == 0)&&(this.graph.selected.edge.length == 0)){
                     let edge = edges.get(ev.edge);
 
-                    this.showEdgeInfo(edge);
                 }
             });
 
             this.graph.view.on("blurNode", ()=>{
-                if ((this.graph.selected.node.length == 0)&&(this.graph.selected.edge.length == 0)){
-                    this.showDefaultInfo();
-                }
+                // if ((this.graph.selected.node.length == 0)&&(this.graph.selected.edge.length == 0)){
+                //     this.showDefaultInfo();
+                // }
             });
 
             this.graph.view.on("blurEdge", ()=>{
-                if ((this.graph.selected.node.length == 0)&&(this.graph.selected.edge.length == 0)){
-                    this.showDefaultInfo();
-                }
+                // if ((this.graph.selected.node.length == 0)&&(this.graph.selected.edge.length == 0)){
+                //     this.showDefaultInfo();
+                // }
             });
         },
 
