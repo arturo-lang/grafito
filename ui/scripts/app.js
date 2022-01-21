@@ -287,13 +287,15 @@ const Grafito = {
         },
 
         removeEdge(edgeId=null){
-            if (edgeId==null) 
-                edgeId = this.graph.selected.edge.id;
+            let list = [];
 
-            this.graph.data.edges.remove(edgeId);
-            if ((this.graph.selected.edge!=null)&&(this.graph.selected.edge.id==edgeId)){
-                this.graph.selected.edge = null;
-            }
+            if (edgeId==null) 
+                list = this.graph.selected.edge.map((x)=> x.id);
+
+            for (var edge of list)
+                this.graph.data.edges.remove(edge);
+
+            this.graph.selected.edge = this.graph.selected.edge.filter((x)=> !list.includes(x.id));
         },
 
         deleteEdge(edgeId=null){
