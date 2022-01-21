@@ -356,10 +356,10 @@
                                         </template>
                                         <template v-else-if="graph.hovered.edge != null">
                                             <li class="is-active">
-                                                <a><b>From:</b>{{graph.data.nodes.get(graph.hovered.edge.from).tag}} ({{graph.data.nodes.get(graph.hovered.edge.from).label}})</a>
+                                                <a><b>From:</b>{{graph.data.nodes.get(graph.hovered.edge.from).label}} (<i>{{graph.data.nodes.get(graph.hovered.edge.from).tag}}</i>)</a>
                                             </li>
                                             <li class="is-active">
-                                                <a><b>To:</b>{{graph.data.nodes.get(graph.hovered.edge.to).tag}} ({{graph.data.nodes.get(graph.hovered.edge.to).label}})</a>
+                                                <a><b>To:</b>{{graph.data.nodes.get(graph.hovered.edge.to).label}} (<i>{{graph.data.nodes.get(graph.hovered.edge.to).tag}}</i>)</a>
                                             </li>
                                         </template>
                                         <template v-else>
@@ -377,10 +377,10 @@
                                     </template>
                                     <template v-else-if="graph.selected.node.length==0 && graph.selected.edge.length==1">
                                         <li class="is-active">
-                                            <a><b>From:</b>{{graph.data.nodes.get(graph.selected.edge[0].from).tag}} ({{graph.data.nodes.get(graph.selected.edge[0].from).label}})</a>
+                                            <a><b>From:</b>{{graph.data.nodes.get(graph.hovered.edge.from).label}} (<i>{{graph.data.nodes.get(graph.hovered.edge.from).tag}}</i>)</a>
                                         </li>
                                         <li class="is-active">
-                                            <a><b>To:</b>{{graph.data.nodes.get(graph.selected.edge[0].to).tag}} ({{graph.data.nodes.get(graph.selected.edge[0].to).label}})</a>
+                                            <a><b>To:</b>{{graph.data.nodes.get(graph.hovered.edge.to).label}} (<i>{{graph.data.nodes.get(graph.hovered.edge.to).tag}}</i>)</a>
                                         </li>
                                     </template>
                                     <template v-else>
