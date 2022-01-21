@@ -182,11 +182,13 @@ graph: function [
         ;; description: « create edge from source to target node with given name
         ;; returns: :dictionary
 
-        edgeId: performQuery.id 'edge createEdgeSQL @[lower name, src\id, tgt\id]
+        nameT: lower to :string name
+
+        edgeId: performQuery.id 'edge createEdgeSQL @[nameT, src\id, tgt\id]
 
         #[
             id: edgeId
-            tag: lower name
+            tag: nameT
             source: src
             target: tgt
         ]
@@ -203,7 +205,9 @@ graph: function [
     ][
         ;; description: « delete edge from source to target node with given name
 
-        performQuery 'unedge deleteEdgeSQL @[lower name, src, tgt]
+        nameT: lower to :string name
+
+        performQuery 'unedge deleteEdgeSQL @[nameT, src, tgt]
     ]
 
         ;
@@ -349,8 +353,10 @@ graph: function [
         ;; ]
         ;; returns: :dictionary :block
 
+        nameT: lower to :string name
+
         if attr "unique" [
-            found: fetch name attributes
+            found: fetch nameT attributes
             if not? empty? found -> return found
         ]
 
@@ -365,10 +371,10 @@ graph: function [
                 att: nd
                 if not? dictionary? att -> att: #att
                 'queries ++ createNodeSQL
-                'vals ++ @[lower name, write.json ø att]
+                'vals ++ @[nameT, write.json ø att]
                 'result ++ #[
                     id: lastId
-                    tag: lower name
+                    tag: nameT
                     properties: att
                 ]
             ]
@@ -380,10 +386,10 @@ graph: function [
         else [
             att: attributes
             if not? dictionary? att -> att: #att
-            nodeId: performQuery.id 'put createNodeSQL @[lower name, write.json ø att]
+            nodeId: performQuery.id 'put createNodeSQL @[nameT, write.json ø att]
             result: #[
                 id: nodeId
-                tag: lower name
+                tag: nameT
                 properties: att
             ]
 
@@ -593,9 +599,11 @@ graph: function [
         if not? Grafito\caseSensitive? ->
             collator: " COLLATE NOCASE"
 
+        nameT: lower to :string name
+
         propertyFilters: new []
         edgeFilters: new []
-        qvals: new @[lower name]
+        qvals: new @[nameT]
         qpropvals: new []
         qedgevals: new []
 
