@@ -284,6 +284,7 @@ graph: function [
                 tag: t
                 properties: props
                 label: truncate get props nconf\label 10
+                fullLabel: get props nconf\label
                 color: nconf\color
             ]
         ]
