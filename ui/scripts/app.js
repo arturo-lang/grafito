@@ -272,12 +272,12 @@ const Grafito = {
 
         deleteNode(nodeId=null){
             let doDelete = ()=>{
-                let list = [];
+                let list = [nodeId];
 
                 if (nodeId==null) 
                     list = this.graph.selected.node.map((x)=> x.id);
 
-                for (var node of list)
+                for (let node of list)
                     $.post("/deleteNode", {ndid: node }, ()=>{
                         this.removeNode(node);
                     });
@@ -303,12 +303,15 @@ const Grafito = {
 
         deleteEdge(edgeId=null){
             let doDelete = ()=>{
-                if (edgeId==null) 
-                    edgeId = this.graph.selected.edge.id;
+                let list = [edgeId];
 
-                $.post("/deleteEdge", {egid: edgeId }, ()=>{
-                    this.removeEdge(edgeId);
-                });
+                if (edgeId==null) 
+                    list = this.graph.selected.edge.map((x)=> x.id);
+
+                for (let edge of list)
+                    $.post("/deleteEdge", {egid: edge }, ()=>{
+                        this.removeEdge(edge);
+                    });
             }
             
             if (this.config.graphView.askForConfirmation.value) 
