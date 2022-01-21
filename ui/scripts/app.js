@@ -520,7 +520,7 @@ const Grafito = {
             });
 
             this.graph.view.on("deselectNode", (x)=>{
-                this.graph.selected.node = [];
+                this.graph.selected.node = this.graph.selected.node.filter((e)=> e !== x);
                 this.graph.selected.edge = [];
                 this.showDefaultInfo();
             });
@@ -551,7 +551,7 @@ const Grafito = {
             });
 
             this.graph.view.on("hoverNode", (x)=>{
-                if ((this.graph.selected.node == [])&&(this.graph.selected.edge == [])){
+                if ((this.graph.selected.node.length == 0)&&(this.graph.selected.edge.length == 0)){
                     let node = nodes.get(x.node);
 
                     this.updateInfo(node.properties, node.tag, node.color.background); 
@@ -559,7 +559,7 @@ const Grafito = {
             });
 
             this.graph.view.on("hoverEdge", (ev)=>{
-                if ((this.graph.selected.node == [])&&(this.graph.selected.edge == [])){
+                if ((this.graph.selected.node.length == 0)&&(this.graph.selected.edge.length == 0)){
                     let edge = edges.get(ev.edge);
                     let nodeFrom = this.graph.data.nodes.get(edge.from);
                     let nodeTo = this.graph.data.nodes.get(edge.to);
@@ -572,13 +572,13 @@ const Grafito = {
             });
 
             this.graph.view.on("blurNode", ()=>{
-                if ((this.graph.selected.node == [])&&(this.graph.selected.edge == [])){
+                if ((this.graph.selected.node.length == 0)&&(this.graph.selected.edge.length == 0)){
                     this.showDefaultInfo();
                 }
             });
 
             this.graph.view.on("blurEdge", ()=>{
-                if ((this.graph.selected.node == [])&&(this.graph.selected.edge == [])){
+                if ((this.graph.selected.node.length == 0)&&(this.graph.selected.edge.length == 0)){
                     this.showDefaultInfo();
                 }
             });
