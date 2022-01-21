@@ -377,7 +377,7 @@ const Grafito = {
         },
 
         showEditNodeDialog(){
-            let nodeId = this.graph.selected.node.id;
+            let nodeId = this.graph.selected.node[0].id;
             let node = this.graph.data.nodes.get(nodeId);
 
             this.modal.title = "Edit node";
@@ -416,7 +416,7 @@ const Grafito = {
         },
 
         showEditEdgeDialog(){
-            let edgeId = this.graph.selected.edge.id;
+            let edgeId = this.graph.selected.edge[0].id;
             let edge = this.graph.data.edges.get(edgeId);
 
             this.modal.title = "Edit edge";
