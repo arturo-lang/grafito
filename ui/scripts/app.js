@@ -30,6 +30,10 @@ const Grafito = {
             working: false,
             graph: {
                 dataset: {},
+                dataview: {
+                    nodes: [],
+                    edges: []
+                },
                 editOptions: {
                     main: {
                         visualization: [
