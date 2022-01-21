@@ -182,11 +182,13 @@ graph: function [
         ;; description: « create edge from source to target node with given name
         ;; returns: :dictionary
 
-        edgeId: performQuery.id 'edge createEdgeSQL @[name, src\id, tgt\id]
+        nameT: lower to :string name
+
+        edgeId: performQuery.id 'edge createEdgeSQL @[nameT, src\id, tgt\id]
 
         #[
             id: edgeId
-            tag: name
+            tag: nameT
             source: src
             target: tgt
         ]
@@ -203,7 +205,9 @@ graph: function [
     ][
         ;; description: « delete edge from source to target node with given name
 
-        performQuery 'unedge deleteEdgeSQL @[name, src, tgt]
+        nameT: lower to :string name
+
+        performQuery 'unedge deleteEdgeSQL @[nameT, src, tgt]
     ]
 
         ;
@@ -349,8 +353,10 @@ graph: function [
         ;; ]
         ;; returns: :dictionary :block
 
+        nameT: lower to :string name
+
         if attr "unique" [
-            found: fetch name attributes
+            found: fetch nameT attributes
             if not? empty? found -> return found
         ]
 
@@ -363,12 +369,12 @@ graph: function [
             loop attributes 'nd [
                 lastId: lastId + 1
                 att: nd
-                if not? dictionary? att -> att: #att
+                if not? dictionary? att -> att: #.lower att
                 'queries ++ createNodeSQL
-                'vals ++ @[name, write.json ø att]
+                'vals ++ @[nameT, write.json ø att]
                 'result ++ #[
                     id: lastId
-                    tag: name
+                    tag: nameT
                     properties: att
                 ]
             ]
@@ -379,11 +385,11 @@ graph: function [
         ]
         else [
             att: attributes
-            if not? dictionary? att -> att: #att
-            nodeId: performQuery.id 'put createNodeSQL @[name, write.json ø att]
+            if not? dictionary? att -> att: #.lower att
+            nodeId: performQuery.id 'put createNodeSQL @[nameT, write.json ø att]
             result: #[
                 id: nodeId
-                tag: name
+                tag: nameT
                 properties: att
             ]
 
@@ -422,7 +428,7 @@ graph: function [
 
         additional: attributes
         if block? additional ->
-            additional: # additional
+            additional: #.lower additional
 
         loop toUpdate 'updateable [
             newAttributes: ø
@@ -593,9 +599,11 @@ graph: function [
         if not? Grafito\caseSensitive? ->
             collator: " COLLATE NOCASE"
 
+        nameT: lower to :string name
+
         propertyFilters: new []
         edgeFilters: new []
-        qvals: new @[name]
+        qvals: new @[nameT]
         qpropvals: new []
         qedgevals: new []
 
@@ -619,7 +627,7 @@ graph: function [
         else [
             if and? not? dictionary? att 
                     not? null? att ->
-                att: #att
+                att: #.lower att
 
             ; HACK - to solve
             remove.key 'att 'n
