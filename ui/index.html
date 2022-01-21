@@ -329,17 +329,52 @@
                     <div class="infobar">
                         <div class="graph-info"
                             v-show="sidebar.active=='graph'">
-                            <span class="tag" 
-                                  :style="infobar.tag.style">
-                                  {{infobar.tag.caption}}
-                            </span>
+                            <span v-if="graph.selected.node.length==0 && graph.selected.edge.length==0"
+                                  class="tag" style="background-color: #CCC; color: black">INFO</span>
+                            <span v-else-if="graph.selected.node.length==1 && graph.selected.edge.length==0"
+                                  class="tag" :style="`background-color: ${graph.selected.node[0].color.background}; color: white`">{{graph.selected.node[0].tag}}</span>
+                            <span v-else-if="graph.selected.node.length==0 && graph.selected.edge.length==1"
+                                  class="tag" style="background-color: black; color: white">{{graph.selected.edge[0].label}}</span>
+                            <span v-else
+                                  class="tag" style="background-color: #CCC; color: black">INFO</span>
+
                             <nav class="breadcrumb">
                                 <ul>
-                                    <li class="is-active" v-for="(value, key) in infobar.paths">
-                                        <a href="#">
-                                            <b>{{key}}:</b>&nbsp;{{value}}
-                                        </a>
-                                    </li>
+                                    <template v-if="graph.selected.node.length==0 && graph.selected.edge.length==0">
+                                        <li class="is-active">
+                                            <a><b>Showing:</b>{{graph.dataview.nodes.length}} node<template v-if="(graph.dataview.nodes.length > 1) || (graph.dataview.nodes.length == 0)">s</template> and {{graph.dataview.edges.length}} edge<template v-if="(graph.dataview.edges.length > 1) || (graph.dataview.edges.length == 0)">s</template></a>
+                                        </li>
+                                    </template>
+                                    <template v-else-if="graph.selected.node.length==1 && graph.selected.edge.length==0">
+                                        <li class="is-active" v-for="(value, key) in graph.selected.node[0].properties">
+                                            <a>
+                                                <b>{{key}}:</b>{{value}}
+                                            </a>
+                                        </li>
+                                    </template>
+                                    <template v-else-if="graph.selected.node.length==0 && graph.selected.edge.length==1">
+                                        <li class="is-active">
+                                            <a><b>From:</b>{{graph.data.nodes.get(graph.selected.edge[0].from).tag}} ({{graph.data.nodes.get(graph.selected.edge[0].from).label}})</a>
+                                        </li>
+                                        <li class="is-active">
+                                            <a><b>To:</b>{{graph.data.nodes.get(graph.selected.edge[0].to).tag}} ({{graph.data.nodes.get(graph.selected.edge[0].to).label}})</a>
+                                        </li>
+                                    </template>
+                                    <template v-else>
+                                        <li class="is-active">
+                                            <a><b>Selected:</b>
+                                                <template v-if="graph.selected.node.length > 0">
+                                                    {{graph.selected.node.length}} node<template v-if="graph.selected.node.length > 1">s</template>
+                                                </template>
+                                                <template v-if="graph.selected.node.length > 0 && graph.selected.edge.length > 0">
+                                                    and
+                                                </template>
+                                                <template v-if="graph.selected.edge.length > 0">
+                                                    {{graph.selected.edge.length}} edge<template v-if="graph.selected.edge.length > 1">s</template>
+                                                </template>
+                                            </a>
+                                        </li>
+                                    </template>
                                 </ul>
                             </nav>
                         </div>
