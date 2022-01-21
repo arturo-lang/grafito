@@ -526,29 +526,21 @@ const Grafito = {
             });
 
             this.graph.view.on("hoverNode", (x)=>{
-                if ((this.graph.selected.node.length == 0)&&(this.graph.selected.edge.length == 0)){
-                    let node = nodes.get(x.node);
-
-                }
+                this.graph.hovered.node = nodes.get(x.node);
+                this.graph.hovered.edge = null;
             });
 
-            this.graph.view.on("hoverEdge", (ev)=>{
-                if ((this.graph.selected.node.length == 0)&&(this.graph.selected.edge.length == 0)){
-                    let edge = edges.get(ev.edge);
-
-                }
+            this.graph.view.on("hoverEdge", (x)=>{
+                this.graph.hovered.edge = edges.get(x.edge);
+                this.graph.hovered.node = null;
             });
 
             this.graph.view.on("blurNode", ()=>{
-                // if ((this.graph.selected.node.length == 0)&&(this.graph.selected.edge.length == 0)){
-                //     this.showDefaultInfo();
-                // }
+                this.graph.hovered.node = null;
             });
 
             this.graph.view.on("blurEdge", ()=>{
-                // if ((this.graph.selected.node.length == 0)&&(this.graph.selected.edge.length == 0)){
-                //     this.showDefaultInfo();
-                // }
+                this.graph.hovered.edge = null;
             });
         },
 

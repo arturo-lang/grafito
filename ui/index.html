@@ -330,7 +330,12 @@
                         <div class="graph-info"
                             v-show="sidebar.active=='graph'">
                             <template v-if="graph.selected.node.length==0 && graph.selected.edge.length==0">
-                                <span class="tag" style="background-color: #CCC; color: black">INFO</span>
+                                <span v-if="graph.hovered.node != null"
+                                      class="tag" :style="`background-color: ${graph.hovered.node.color.background}; color: white`">{{graph.hovered.node.tag}}</span>
+                                <span v-else-if="graph.hovered.edge != null"
+                                      class="tag" style="background-color: black; color: white">{{graph.hovered.edge.label}}</span>
+                                <span v-else 
+                                      class="tag" style="background-color: #CCC; color: black">INFO</span>
                             </template>
                             <span v-else-if="graph.selected.node.length==1 && graph.selected.edge.length==0"
                                   class="tag" :style="`background-color: ${graph.selected.node[0].color.background}; color: white`">{{graph.selected.node[0].tag}}</span>
@@ -342,9 +347,26 @@
                             <nav class="breadcrumb">
                                 <ul>
                                     <template v-if="graph.selected.node.length==0 && graph.selected.edge.length==0">
-                                        <li class="is-active">
-                                            <a><b>Showing:</b>{{graph.dataview.nodes.length}} node<template v-if="(graph.dataview.nodes.length > 1) || (graph.dataview.nodes.length == 0)">s</template> and {{graph.dataview.edges.length}} edge<template v-if="(graph.dataview.edges.length > 1) || (graph.dataview.edges.length == 0)">s</template></a>
-                                        </li>
+                                        <template v-if="graph.hovered.node != null">
+                                            <li class="is-active" v-for="(value, key) in graph.hovered.node.properties">
+                                                <a>
+                                                    <b>{{key}}:</b>{{value}}
+                                                </a>
+                                            </li>
+                                        </template>
+                                        <template v-else-if="graph.hovered.edge != null">
+                                            <li class="is-active">
+                                                <a><b>From:</b>{{graph.data.nodes.get(graph.hovered.edge.from).tag}} ({{graph.data.nodes.get(graph.hovered.edge.from).label}})</a>
+                                            </li>
+                                            <li class="is-active">
+                                                <a><b>To:</b>{{graph.data.nodes.get(graph.hovered.edge.to).tag}} ({{graph.data.nodes.get(graph.hovered.edge.to).label}})</a>
+                                            </li>
+                                        </template>
+                                        <template v-else>
+                                            <li class="is-active">
+                                                <a><b>Showing:</b>{{graph.dataview.nodes.length}} node<template v-if="(graph.dataview.nodes.length > 1) || (graph.dataview.nodes.length == 0)">s</template> and {{graph.dataview.edges.length}} edge<template v-if="(graph.dataview.edges.length > 1) || (graph.dataview.edges.length == 0)">s</template></a>
+                                            </li>
+                                        </template>
                                     </template>
                                     <template v-else-if="graph.selected.node.length==1 && graph.selected.edge.length==0">
                                         <li class="is-active" v-for="(value, key) in graph.selected.node[0].properties">
