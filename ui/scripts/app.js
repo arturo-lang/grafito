@@ -157,6 +157,8 @@ const Grafito = {
                 fields: {
 
                 },
+                showAdd: false,
+                showAddActive: false,
                 showCancel: true
             }
         }
@@ -310,6 +312,7 @@ const Grafito = {
             this.modal.accept.button = button;
             this.modal.accept.style = style;
             this.modal.accept.action = callback;
+            this.modal.showAdd = false;
             this.modal.showCancel = true;
             this.modal.icon = "trash-fill";
 
@@ -322,6 +325,7 @@ const Grafito = {
             this.modal.accept.button = "Done"
             this.modal.accept.style = "";
             this.modal.accept.action = ()=>{};
+            this.modal.showAdd = false;
             this.modal.showCancel = false;
             this.modal.icon = "funnel-bold";
 
@@ -362,6 +366,7 @@ const Grafito = {
                 });
             };
             this.modal.accept.style = "is-modifying";
+            this.modal.showAdd = true;
             this.modal.showCancel = true;
             this.modal.icon = "pencil-fill";
 
@@ -393,6 +398,7 @@ const Grafito = {
                 }, edge.label, "black", "white");
             };
             this.modal.accept.style = "is-modifying";
+            this.modal.showAdd = false;
             this.modal.showCancel = true;
             this.modal.icon = "pencil-fill";
 
