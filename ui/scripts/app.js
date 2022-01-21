@@ -259,13 +259,15 @@ const Grafito = {
         },
 
         removeNode(nodeId=null){
-            if (nodeId==null) 
-                nodeId = this.graph.selected.node.id;
+            let list = [];
 
-            this.graph.data.nodes.remove(nodeId);
-            if ((this.graph.selected.node!=null)&&(this.graph.selected.node.id==nodeId)){
-                this.graph.selected.node = null;
-            }
+            if (nodeId==null) 
+                list = this.graph.selected.node.map((x)=> x.id);
+
+            for (var node of list)
+                this.graph.data.nodes.remove(node);
+
+            this.graph.selected.node = this.graph.selected.node.filter((x)=> !list.includes(x.id));
         },
 
         deleteNode(nodeId=null){
