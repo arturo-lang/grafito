@@ -809,6 +809,14 @@ ul.sidebar {
             padding-top: 8px;
             padding-bottom: 8px;
 
+            .leftmost {
+                margin-right: auto;
+
+                .field {
+                    display: inline-flex !important;
+                }
+            }
+
             button {
                 &.is-modifying {
                     border-color: @modifyingColor;
@@ -889,6 +897,17 @@ ul.sidebar {
             border-color: black !important;
             background: @darkBg;
             color: @darkFg !important;
+
+            .leftmost {
+                input {
+                    background: @darkBgDarker;
+                    border-color: black;
+                }
+
+                button {
+                    border-color: black;
+                }
+            }
 
             button {
                 background: transparent;
