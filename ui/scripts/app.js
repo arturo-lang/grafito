@@ -190,6 +190,16 @@ const Grafito = {
             this.updateInfo(node.properties, node.tag, node.color.background);
         },
 
+        showEdgeInfo(edge){
+            let nodeFrom = this.graph.data.nodes.get(edge.from);
+            let nodeTo = this.graph.data.nodes.get(edge.to);
+            
+            this.updateInfo({
+                "from": `${nodeFrom.tag} (${nodeFrom.label})`,
+                "to": `${nodeTo.tag} (${nodeTo.label})`
+            }, edge.label, "black", "white");
+        },
+
         getInputTypeForValue(val){
             if (typeof val == "boolean") return "checkbox";
             if (typeof val == "string") return "text";
@@ -411,13 +421,7 @@ const Grafito = {
                 edge.label = this.modal.fields.label;
                 this.graph.data.edges.update(edge);
 
-                let nodeFrom = this.graph.data.nodes.get(edge.from);
-                let nodeTo = this.graph.data.nodes.get(edge.to);
-                
-                this.updateInfo({
-                    "from": `${nodeFrom.tag} (${nodeFrom.label})`,
-                    "to": `${nodeTo.tag} (${nodeTo.label})`
-                }, edge.label, "black", "white");
+                this.showEdgeInfo(edge);
             };
             this.modal.accept.style = "is-modifying";
             this.modal.showAdd = false;
@@ -535,13 +539,7 @@ const Grafito = {
                 this.graph.selected.node = [];
                 this.graph.selected.edge.push(edge);
 
-                let nodeFrom = this.graph.data.nodes.get(edge.from);
-                let nodeTo = this.graph.data.nodes.get(edge.to);
-                
-                this.updateInfo({
-                    "from": `${nodeFrom.tag} (${nodeFrom.label})`,
-                    "to": `${nodeTo.tag} (${nodeTo.label})`
-                }, edge.label, "black", "white");
+                this.showEdgeInfo(edge);
             });
 
             this.graph.view.on("deselectEdge", (x)=>{
@@ -565,13 +563,8 @@ const Grafito = {
             this.graph.view.on("hoverEdge", (ev)=>{
                 if ((this.graph.selected.node.length == 0)&&(this.graph.selected.edge.length == 0)){
                     let edge = edges.get(ev.edge);
-                    let nodeFrom = this.graph.data.nodes.get(edge.from);
-                    let nodeTo = this.graph.data.nodes.get(edge.to);
 
-                    this.updateInfo({
-                        "from": `${nodeFrom.tag} (${nodeFrom.label})`,
-                        "to": `${nodeTo.tag} (${nodeTo.label})`
-                    }, edge.label, "black", "white");
+                    this.showEdgeInfo(edge);
                 }
             });
 
