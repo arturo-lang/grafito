@@ -275,6 +275,29 @@
                             </div>
                         </section>
                         <footer class="modal-card-foot">
+                            <div v-if="modal.showAdd"
+                                 class="leftmost">
+                                <button class="button is-light"
+                                        @click="modal.showAddActive = !modal.showAddActive"
+                                        :class="modal.showAddActive ? 'is-hovered' : ''">
+                                    <i class="ph-list-plus-bold"></i>
+                                </button>
+                                <div v-if="modal.showAddActive"
+                                     class="field has-addons">
+                                    <div class="control is-expanded">
+                                        <input
+                                        type="text"
+                                        class="input"
+                                        spellcheck="false">
+                                    </div>
+                                    <div class="control">
+                                        <button class="button"
+                                                @click="">
+                                            Add field
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             <button class="button is-outlined"
                                     :class="modal.accept.style"
                                     @click="modal.accept.action(); modal.active=false">
