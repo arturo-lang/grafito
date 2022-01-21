@@ -182,11 +182,11 @@ graph: function [
         ;; description: « create edge from source to target node with given name
         ;; returns: :dictionary
 
-        edgeId: performQuery.id 'edge createEdgeSQL @[name, src\id, tgt\id]
+        edgeId: performQuery.id 'edge createEdgeSQL @[lower name, src\id, tgt\id]
 
         #[
             id: edgeId
-            tag: name
+            tag: lower name
             source: src
             target: tgt
         ]
@@ -203,7 +203,7 @@ graph: function [
     ][
         ;; description: « delete edge from source to target node with given name
 
-        performQuery 'unedge deleteEdgeSQL @[name, src, tgt]
+        performQuery 'unedge deleteEdgeSQL @[lower name, src, tgt]
     ]
 
         ;
@@ -365,10 +365,10 @@ graph: function [
                 att: nd
                 if not? dictionary? att -> att: #att
                 'queries ++ createNodeSQL
-                'vals ++ @[name, write.json ø att]
+                'vals ++ @[lower name, write.json ø att]
                 'result ++ #[
                     id: lastId
-                    tag: name
+                    tag: lower name
                     properties: att
                 ]
             ]
@@ -380,10 +380,10 @@ graph: function [
         else [
             att: attributes
             if not? dictionary? att -> att: #att
-            nodeId: performQuery.id 'put createNodeSQL @[name, write.json ø att]
+            nodeId: performQuery.id 'put createNodeSQL @[lower name, write.json ø att]
             result: #[
                 id: nodeId
-                tag: name
+                tag: lower name
                 properties: att
             ]
 
@@ -595,7 +595,7 @@ graph: function [
 
         propertyFilters: new []
         edgeFilters: new []
-        qvals: new @[name]
+        qvals: new @[lower name]
         qpropvals: new []
         qedgevals: new []
 
