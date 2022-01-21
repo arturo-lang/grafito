@@ -108,7 +108,8 @@ const Grafito = {
                         hideEdgesOnZoom: true,
                         hoverConnectedEdges: true,
                         selectConnectedEdges: false,
-                        navigationButtons: true
+                        navigationButtons: true,
+                        multiselect: true
                     },
                     layout: {
 
