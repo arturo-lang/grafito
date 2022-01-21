@@ -80,16 +80,14 @@
                                     <i :class="`ph-${editOption.icon}`"></i>
                                 </div>
                                 <div class="editOption-separator"></div>
-                                <div v-for="editOption in editOptions.database">
-                                     <template v-if="(!editOption.onlyForSingle) || ((graph.selected.node.length==1) != (graph.selected.edge.length==1))"
-                                          @click="editOption.action()"
-                                          :data-tippy-content="editOption.tip"
-                                          class="editOption"
-                                          :class="editOption.effect"
-                                          data-tippy-placement="left"
-                                          data-tippy-theme="light">
-                                        <i :class="`ph-${editOption.icon}`"></i>
-                                    </template>
+                                <div v-for="editOption in editOptions.database"
+                                     @click="editOption.action()"
+                                     :data-tippy-content="editOption.tip"
+                                     class="editOption"
+                                     :class="editOption.effect"
+                                     data-tippy-placement="left"
+                                     data-tippy-theme="light">
+                                    <i :class="`ph-${editOption.icon}`"></i>
                                 </div>
                             </div>
                         </transition>
