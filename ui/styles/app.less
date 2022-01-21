@@ -963,7 +963,22 @@ ul.sidebar {
         
             b {
                 font-weight: 500;
-                margin-right: 0.2rem;
+                margin-right: 0.3rem;
+            }
+
+            i {
+                font-variant: all-small-caps;
+                font-style: normal;
+            }
+
+            li+li::before {
+                content: '\2022';
+                color: #666;
+            }
+        
+            li.edged+li.edged::before {
+                content: '\2192' !important;
+                color: #666;
             }
         }
     }
@@ -997,6 +1012,10 @@ ul.sidebar {
         .breadcrumb {
             a {
                 color: @darkFgDarker;
+            }
+
+            li+li::before {
+                color: @darkFg;
             }
         }
     }
