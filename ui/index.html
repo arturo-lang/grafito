@@ -64,9 +64,9 @@
                                 :id="`${optionGroup}EditOptions`" 
                                 v-show="
                                 (sidebar.active=='graph') && (
-                                    ((optionGroup=='main') && (graph.selected.node == []) && (graph.selected.edge == [])) ||
-                                    ((optionGroup=='node') && (graph.selected.node != [])) ||
-                                    ((optionGroup=='edge') && (graph.selected.edge != []))
+                                    ((optionGroup=='main') && (graph.selected.node.length == 0) && (graph.selected.edge.length == 0)) ||
+                                    ((optionGroup=='node') && (graph.selected.node.length > 0)) ||
+                                    ((optionGroup=='edge') && (graph.selected.edge.length > 0))
                                 )">
                                 <div v-for="editOption in editOptions.visualization"
                                     @click="editOption.action()"
