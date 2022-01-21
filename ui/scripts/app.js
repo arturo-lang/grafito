@@ -34,6 +34,10 @@ const Grafito = {
                     nodes: [],
                     edges: []
                 },
+                hovered: {
+                    node: null,
+                    edge: null
+                },
                 editOptions: {
                     main: {
                         visualization: [
