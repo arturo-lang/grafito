@@ -431,6 +431,8 @@ graph: function [
             else ->
                 newAttributes: extend updateable\properties additional
 
+            inspect newAttributes
+
             updateable\properties: newAttributes
             performQuery 'edit updateNodeSQL @[write.json ø newAttributes, updateable\id]
         ]
@@ -803,8 +805,7 @@ graph: function [
 
             "/updateNode"   [;[ndid,props]
                 nd: nodeFromId ndid
-                inspect read.json props
-                edit nd read.json props
+                edit.replace nd read.json props
                 ""
             ]
 
