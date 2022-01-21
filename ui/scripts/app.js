@@ -51,6 +51,15 @@ const Grafito = {
                             {icon: "trash-fill", tip: "Delete selected node", effect: "destructive", action: this.deleteNode}
                         ]
                     },
+                    nodes: {
+                        visualization: [
+                            {icon: "arrows-out-fill", tip: "Expand neighboring nodes", action: this.expandNodeNeighbors},
+                            {icon: "eye-slash-bold", tip: "Hide nodes from graph view", action: this.removeNode}
+                        ],
+                        database: [
+                            {icon: "trash-fill", tip: "Delete selected nodes", effect: "destructive", action: this.deleteNode}
+                        ]
+                    },
                     edge: {
                         visualization: [
                             {icon: "eye-slash-bold", tip: "Hide edge from graph view", action: this.removeEdge}
@@ -58,6 +67,22 @@ const Grafito = {
                         database: [
                             {icon: "pencil-fill", tip: "Edit selected edge", effect: "modifying", action: this.showEditEdgeDialog},
                             {icon: "trash-fill", tip: "Delete selected edge", effect: "destructive", action: this.deleteEdge}
+                        ]
+                    },
+                    edges: {
+                        visualization: [
+                            {icon: "eye-slash-bold", tip: "Hide edges from graph view", action: this.removeEdge}
+                        ],
+                        database: [
+                            {icon: "trash-fill", tip: "Delete selected edges", effect: "destructive", action: this.deleteEdge}
+                        ]
+                    },
+                    all: {
+                        visualization: [
+                            {icon: "eye-slash-bold", tip: "Hide elements from graph view", action: this.removeElement}
+                        ],
+                        database: [
+                            {icon: "trash-fill", tip: "Delete selected elements", effect: "destructive", action: this.deleteElement}
                         ]
                     }
                 },
@@ -520,33 +545,15 @@ const Grafito = {
 
             this.showDefaultInfo();
 
-            this.graph.view.on("selectNode", (x)=>{
-                let node = this.graph.data.nodes.get(x.nodes[0]);
-                this.graph.selected.node.push(node);
-                this.graph.selected.edge = [];
-                this.showNodeInfo(node);
-            });
+            const updateSelected = (x)=>{
+                this.graph.selected.node = x.nodes.map((e) => this.graph.data.nodes.get(e));
+                this.graph.selected.edge = x.edges.map((e) => this.graph.data.edges.get(e));
+            }
 
-            this.graph.view.on("deselectNode", (x)=>{
-                this.graph.selected.node = this.graph.selected.node.filter((e)=> e !== x);
-                this.graph.selected.edge = [];
-                this.showDefaultInfo();
-            });
-
-            this.graph.view.on("selectEdge", (x)=>{
-                let edge = this.graph.data.edges.get(x.edges[0]);
-
-                this.graph.selected.node = [];
-                this.graph.selected.edge.push(edge);
-
-                this.showEdgeInfo(edge);
-            });
-
-            this.graph.view.on("deselectEdge", (x)=>{
-                this.graph.selected.node = [];
-                this.graph.selected.edge = [];
-                this.showDefaultInfo();
-            });
+            this.graph.view.on("selectNode", updateSelected);
+            this.graph.view.on("deselectNode", updateSelected);
+            this.graph.view.on("selectEdge", updateSelected);
+            this.graph.view.on("deselectEdge", updateSelected);
 
             this.graph.view.on("doubleClick", (x)=>{
                 this.expandNodeNeighbors(x.nodes[0]);
