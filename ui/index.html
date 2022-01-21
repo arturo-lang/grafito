@@ -356,15 +356,15 @@
                                         </template>
                                         <template v-else-if="graph.hovered.edge != null">
                                             <li class="is-active edged">
-                                                <a><b>From:</b><i>{{graph.data.nodes.get(graph.hovered.edge.from).tag}}</i>&nbsp;{{graph.data.nodes.get(graph.hovered.edge.from).fullLabel}}</a>
+                                                <a><b>{{graph.data.nodes.get(graph.hovered.edge.from).tag}}</b>&nbsp;{{graph.data.nodes.get(graph.hovered.edge.from).fullLabel}}</a>
                                             </li>
                                             <li class="is-active edged">
-                                                <a><b>To:</b><i>{{graph.data.nodes.get(graph.hovered.edge.to).tag}}</i>&nbsp;{{graph.data.nodes.get(graph.hovered.edge.to).fullLabel}}</a>
+                                                <a><b>{{graph.data.nodes.get(graph.hovered.edge.to).tag}}</b>&nbsp;{{graph.data.nodes.get(graph.hovered.edge.to).fullLabel}}</a>
                                             </li>
                                         </template>
                                         <template v-else>
                                             <li class="is-active">
-                                                <a><b>Showing:</b>{{graph.dataview.nodes.length}} node<template v-if="(graph.dataview.nodes.length > 1) || (graph.dataview.nodes.length == 0)">s</template> and {{graph.dataview.edges.length}} edge<template v-if="(graph.dataview.edges.length > 1) || (graph.dataview.edges.length == 0)">s</template></a>
+                                                <a>Showing {{graph.dataview.nodes.length}} node<template v-if="(graph.dataview.nodes.length > 1) || (graph.dataview.nodes.length == 0)">s</template> and {{graph.dataview.edges.length}} edge<template v-if="(graph.dataview.edges.length > 1) || (graph.dataview.edges.length == 0)">s</template></a>
                                             </li>
                                         </template>
                                     </template>
@@ -377,15 +377,15 @@
                                     </template>
                                     <template v-else-if="graph.selected.node.length==0 && graph.selected.edge.length==1">
                                         <li class="is-active edged">
-                                            <a><b>From:</b><i>{{graph.data.nodes.get(graph.selected.edge[0].from).tag}}</i>&nbsp;{{graph.data.nodes.get(graph.selected.edge[0].from).fullLabel}}</a>
+                                            <a><b>{{graph.data.nodes.get(graph.selected.edge[0].from).tag}}</b>&nbsp;{{graph.data.nodes.get(graph.selected.edge[0].from).fullLabel}}</a>
                                         </li>
                                         <li class="is-active edged">
-                                            <a><b>To:</b><i>{{graph.data.nodes.get(graph.selected.edge[0].to).tag}}</i>&nbsp;{{graph.data.nodes.get(graph.selected.edge[0].to).fullLabel}}</a>
+                                            <a><b>{{graph.data.nodes.get(graph.selected.edge[0].to).tag}}</b>&nbsp;{{graph.data.nodes.get(graph.selected.edge[0].to).fullLabel}}</a>
                                         </li>
                                     </template>
                                     <template v-else>
                                         <li class="is-active">
-                                            <a><b>Selected:</b>
+                                            <a>Selected:
                                                 <template v-if="graph.selected.node.length > 0">
                                                     {{graph.selected.node.length}} node<template v-if="graph.selected.node.length > 1">s</template>
                                                 </template>
