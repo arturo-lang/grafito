@@ -186,6 +186,10 @@ const Grafito = {
             });
         },
 
+        showNodeInfo(node){
+            this.updateInfo(node.properties, node.tag, node.color.background);
+        },
+
         getInputTypeForValue(val){
             if (typeof val == "boolean") return "checkbox";
             if (typeof val == "string") return "text";
@@ -378,7 +382,7 @@ const Grafito = {
                     props: JSON.stringify(node.properties) 
                 }, ()=>{
                     this.graph.data.nodes.update(node);
-                    this.updateInfo(node.properties, node.tag, node.color.background);
+                    this.showNodeInfo(node);
                 });
             };
             this.modal.accept.style = "is-modifying";
@@ -516,7 +520,7 @@ const Grafito = {
                 let node = this.graph.data.nodes.get(x.nodes[0]);
                 this.graph.selected.node.push(node);
                 this.graph.selected.edge = [];
-                this.updateInfo(node.properties, node.tag, node.color.background);
+                this.showNodeInfo(node);
             });
 
             this.graph.view.on("deselectNode", (x)=>{
@@ -554,7 +558,7 @@ const Grafito = {
                 if ((this.graph.selected.node.length == 0)&&(this.graph.selected.edge.length == 0)){
                     let node = nodes.get(x.node);
 
-                    this.updateInfo(node.properties, node.tag, node.color.background); 
+                    this.showNodeInfo(node);
                 }
             });
 
