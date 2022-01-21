@@ -158,6 +158,7 @@ const Grafito = {
 
                 },
                 showAdd: false,
+                addField: "",
                 showAddActive: false,
                 showCancel: true
             }
@@ -185,9 +186,9 @@ const Grafito = {
 
         getInputTypeForValue(val){
             if (typeof val == "boolean") return "checkbox";
-            if (!isNaN(val)) return "number";
+            if (typeof val == "string") return "text";
 
-            return "text";
+            return "number";
         },
 
         processCommand(){
