@@ -286,13 +286,14 @@
                                      class="field has-addons">
                                     <div class="control is-expanded">
                                         <input
+                                        v-model="modal.addField"
                                         type="text"
                                         class="input"
                                         spellcheck="false">
                                     </div>
                                     <div class="control">
                                         <button class="button"
-                                                @click="">
+                                                @click="if (!(modal.addField in modal.fields)) modal.fields[modal.addField]='  '; modal.showAddActive=false">
                                             Add field
                                         </button>
                                     </div>
