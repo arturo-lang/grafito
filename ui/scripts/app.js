@@ -237,25 +237,28 @@ const Grafito = {
         //  To check & re-visit
 
         expandNodeNeighbors(nodeId=null){
+            let list = [nodeId];
+
             if (nodeId==null) 
-                nodeId = this.graph.selected.node.id;
+                list = this.graph.selected.node.map((x)=> x.id);
 
-            $.post("/nodeFromId", {ndid: nodeId }, (data)=>{
-                let dt = JSON.parse(data);
-                console.log(dt);
-                for (var node of dt.nodes){
-                    this.graph.data.nodes.update(node);
-                }
-                for (var edge of dt.edges){
-                    this.graph.data.edges.update(edge);
-                }
-                // FIX: Something weird going on with 
-                // graph.data & graph.dataview synchronization
+            for (let node of list)
+                $.post("/nodeFromId", {ndid: node }, (data)=>{
+                    let dt = JSON.parse(data);
+                    console.log(dt);
+                    for (let subnode of dt.nodes){
+                        this.graph.data.nodes.update(subnode);
+                    }
+                    for (let subedge of dt.edges){
+                        this.graph.data.edges.update(subedge);
+                    }
+                    // FIX: Something weird going on with 
+                    // graph.data & graph.dataview synchronization
 
-                this.resetFilterData(nomatterwhat=false);
-                // this.graph.dataview.nodes.refresh();
-                // this.graph.dataview.edges.refresh();
-            });
+                    this.resetFilterData(nomatterwhat=false);
+                    // this.graph.dataview.nodes.refresh();
+                    // this.graph.dataview.edges.refresh();
+                });
         },
 
         removeNode(nodeId=null){
