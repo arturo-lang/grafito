@@ -34,7 +34,6 @@
     * [unput](#unput)
     * [link](#link)
     * [unlink](#unlink)
-    * [what](#what)
     * [fetch](#fetch)
     * [preview](#preview)
 * [Filter Reference](#filter-reference)
@@ -358,29 +357,6 @@ y: put 'person [name: "Mary" surname: "Doe" birthday: 1986]
 
 link 'marriedTo x y
 unlink 'marriedTo x y
-```
-
-### what
-
-#### Description
-
-Get the first node of given type, that satisfies all of given properties and/or relationships.
-
-#### Usage
-
-<pre>
-<b>what</b> <ins>type</ins> <i>:literal</i>
-     <ins>properties</ins> <i>:block</i> <i>:dictionary</i> <i>:null</i>
-</pre>
-
-#### Returns
-
-- *:dictionary* (node)
-
-#### Examples
-
-```red
-print what 'person [name: "John"]
 ```
 
 ### fetch
