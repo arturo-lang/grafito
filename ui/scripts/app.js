@@ -264,7 +264,7 @@ const Grafito = {
             if (nodeId==null) 
                 list = this.graph.selected.node.map((x)=> x.id);
 
-            for (var node of list)
+            for (let node of list)
                 this.graph.data.nodes.remove(node);
 
             this.graph.selected.node = this.graph.selected.node.filter((x)=> !list.includes(x.id));
@@ -295,7 +295,7 @@ const Grafito = {
             if (edgeId==null) 
                 list = this.graph.selected.edge.map((x)=> x.id);
 
-            for (var edge of list)
+            for (let edge of list)
                 this.graph.data.edges.remove(edge);
 
             this.graph.selected.edge = this.graph.selected.edge.filter((x)=> !list.includes(x.id));
