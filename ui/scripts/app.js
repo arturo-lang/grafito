@@ -112,7 +112,7 @@ const Grafito = {
                     nodes: {
                         shape: "circle",
                         font: {
-                            face: "Roboto",
+                            face: "Source Sans Pro",
                             color: "white",
                             align: "center"
                         },
@@ -128,7 +128,7 @@ const Grafito = {
                             }
                         },
                         font: {
-                            face: "Roboto",
+                            face: "Source Sans Pro",
                             size: 12
                         },
                         smooth: {
