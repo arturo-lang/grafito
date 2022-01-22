@@ -609,7 +609,7 @@ const Grafito = {
             this.graph.config.interaction.hideEdgesOnDrag = !this.config.graphView.showEdgesOnDrag.value;
             this.graph.config.interaction.hideEdgesOnZoom = !this.config.graphView.showEdgesOnZoom.value;
 
-            this.graph.config.edges.dashed = this.config.graphView.showDashedEdges.value;
+            this.graph.config.edges.dashes = this.config.graphView.showDashedEdges.value;
 
             if (this.config.general.darkTheme.value){
                 this.graph.config.edges.font.background = '#2A2C33';
