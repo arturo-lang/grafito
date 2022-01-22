@@ -614,7 +614,7 @@ const Grafito = {
             if (this.config.general.darkTheme.value){
                 this.graph.config.edges.font.background = '#2A2C33';
                 this.graph.config.edges.font.color = '#DDDDDD';
-                this.graph.config.edges.font.strokeColor = 'black';
+                this.graph.config.edges.font.strokeColor = '#222222';
             }
             else {
                 this.graph.config.edges.font.background = '#ffffff';
