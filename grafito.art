@@ -922,7 +922,7 @@ graph: function [
     if null? entities -> entities: []
     ei: new 0
     while [ei < size entities].import [
-        entity: to :literal entities\[ei]
+        entity: to :literal lower to :string entities\[ei]
         let entity function [block] with 'entity -> generateHelper entity block
         inc 'ei
     ]
