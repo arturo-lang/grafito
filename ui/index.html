@@ -126,6 +126,7 @@
                                             <div v-for="(setting,key) in config.general"
                                                 class="panel-block">
                                                 <input v-model="config.general[key].value"
+                                                    @change="updateGraphView()"
                                                     :id="key"
                                                     type="checkbox"
                                                     class="switchable" >
