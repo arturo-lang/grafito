@@ -609,9 +609,9 @@ const Grafito = {
             this.graph.config.interaction.hideEdgesOnDrag = !this.config.graphView.showEdgesOnDrag.value;
             this.graph.config.interaction.hideEdgesOnZoom = !this.config.graphView.showEdgesOnZoom.value;
 
-            this.graph.config.edges.dashed = this.config.graphView.showDashedEdges;
+            this.graph.config.edges.dashed = this.config.graphView.showDashedEdges.value;
 
-            if (this.config.general.darkTheme){
+            if (this.config.general.darkTheme.value){
                 this.graph.config.edges.font.color = '#ffffff';
                 this.graph.config.edges.font.strokeColor = '#343434';
             }
