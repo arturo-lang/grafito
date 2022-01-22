@@ -384,7 +384,42 @@ const Grafito = {
         },
 
         showAddNodeDialog(){
+            let nodeId = this.graph.selected.node[0].id;
+            let node = this.graph.data.nodes.get(nodeId);
+
             this.modal.title = "Add node";
+            this.modal.mode = "edit";
+            this.modal.accept.button = "Save";
+
+            // TODO(edit node) fields appearing empty 
+            //  mainly the Name field; weird...
+            //  labels: bug, ui 
+
+            this.modal.accept.action = ()=>{
+                console.log("adding node";)
+                // node.tag = this.modal.fields.tag;
+                // delete this.modal.fields.tag;
+                // node.properties = this.modal.fields;
+
+                // // TODO(edit node) should be able to set tag as well
+                // $.post("/updateNode", {
+                //     ndid: nodeId, 
+                //     props: JSON.stringify(node.properties) 
+                // }, ()=>{
+                //     this.graph.data.nodes.update(node);
+                // });
+            };
+            this.modal.accept.style = "is-modifying";
+            this.modal.showAdd = true;
+            this.modal.addField = "";
+            this.modal.addFieldType = "String";
+            this.modal.showCancel = true;
+            this.modal.icon = "plus-bold";
+
+            this.modal.fields = {
+                tag: "Something"
+            };
+
             this.modal.active = true;
 
             console.log("UNIMPLEMENTED");
