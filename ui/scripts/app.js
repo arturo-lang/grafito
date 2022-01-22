@@ -134,7 +134,7 @@ const Grafito = {
                             face: "Source Sans Pro",
                             size: 12,
                             color: '#343434',
-                            strokeColor: '#ffffff'
+                            strokeColor: '#f5f5f5'
                         },
                         smooth: {
                             type: 'dynamic'
@@ -612,12 +612,14 @@ const Grafito = {
             this.graph.config.edges.dashed = this.config.graphView.showDashedEdges.value;
 
             if (this.config.general.darkTheme.value){
-                this.graph.config.edges.font.color = '#ffffff';
-                this.graph.config.edges.font.strokeColor = '#343434';
+                this.graph.config.edges.font.background = '#2A2C33';
+                this.graph.config.edges.font.color = '#DDDDDD';
+                this.graph.config.edges.font.strokeColor = 'black';
             }
             else {
+                this.graph.config.edges.font.background = '#ffffff';
                 this.graph.config.edges.font.color = '#343434';
-                this.graph.config.edges.font.strokeColor = '#ffffff';
+                this.graph.config.edges.font.strokeColor = '#F5F5F5';
             }
             
             this.graph.config.edges.font.size = (this.config.graphView.showEdgeLabels.value) ? 12 : 0;
