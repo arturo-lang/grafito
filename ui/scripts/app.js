@@ -129,7 +129,9 @@ const Grafito = {
                         },
                         font: {
                             face: "Source Sans Pro",
-                            size: 12
+                            size: 12,
+                            color: '#343434',
+                            strokeColor: '#ffffff'
                         },
                         smooth: {
                             type: 'dynamic'
@@ -603,6 +605,15 @@ const Grafito = {
             this.graph.config.interaction.hideNodesOnDrag = !this.config.graphView.showNodesOnDrag.value;
             this.graph.config.interaction.hideEdgesOnDrag = !this.config.graphView.showEdgesOnDrag.value;
             this.graph.config.interaction.hideEdgesOnZoom = !this.config.graphView.showEdgesOnZoom.value;
+
+            if (this.config.general.darkTheme){
+                this.graph.config.edges.font.color = '#ffffff';
+                this.graph.config.edges.font.strokeColor = '#343434';
+            }
+            else {
+                this.graph.config.edges.font.color = '#343434';
+                this.graph.config.edges.font.strokeColor = '#ffffff';
+            }
             
             this.graph.config.edges.font.size = (this.config.graphView.showEdgeLabels.value) ? 12 : 0;
 
