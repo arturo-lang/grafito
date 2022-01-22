@@ -10,22 +10,22 @@ const Grafito = {
             performInitialSetup: false,
             config: {
                 versions: {},
+                general: {
+                    darkTheme: {value: false, description: "Enable dark theme"},
+                    askForConfirmation: {value: true, description: "Always request confirmation before deleting elements"}
+                },
+                engine: {
+                    caseSensitive: {value: false, description: "Queries should be case-sensitive"}
+                },
                 graphView: {
                     showNodesOnDrag: {value: true, description: "Keep showing nodes when dragging"},
                     showEdgesOnDrag: {value: true, description: "Keep showing edges when dragging"},
                     showEdgesOnZoom: {value: false, description: "Keep showing edges when zooming"},
                     showEdgeLabels: {value: true, description: "Show edge labels"},
-                    showDashedEdges: {value: false, description: "Show edges as dashed lines"},
-                    askForConfirmation: {value: true, description: "Always request confirmation before deleting elements"}
+                    showDashedEdges: {value: false, description: "Show edges as dashed lines"}
                 },
                 tableView: {
                     prettifyJson: {value: true, description: "Prettify exported JSON data"}
-                },
-                engine: {
-                    caseSensitive: {value: false, description: "Queries should be case-sensitive"}
-                },
-                general: {
-                    darkTheme: {value: false, description: "Enable dark theme"}
                 }
             },
             working: false,
@@ -291,7 +291,7 @@ const Grafito = {
                     });
             }
             
-            if (this.config.graphView.askForConfirmation.value) 
+            if (this.config.general.askForConfirmation.value) 
                 this.showConfirmationDialog("Delete selected node", doDelete);
             else
                 doDelete();
@@ -322,7 +322,7 @@ const Grafito = {
                     });
             }
             
-            if (this.config.graphView.askForConfirmation.value) 
+            if (this.config.general.askForConfirmation.value) 
                 this.showConfirmationDialog("Delete selected edge", doDelete);
             else
                 doDelete();
