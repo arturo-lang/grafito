@@ -127,7 +127,9 @@ const Grafito = {
                                 type: "arrow"
                             }
                         },
+                        dashes: false,
                         font: {
+                            background: '#FFFFFF',
                             face: "Source Sans Pro",
                             size: 12,
                             color: '#343434',
