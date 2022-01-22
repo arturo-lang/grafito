@@ -384,8 +384,8 @@ const Grafito = {
         },
 
         showAddNodeDialog(){
-            let nodeId = this.graph.selected.node[0].id;
-            let node = this.graph.data.nodes.get(nodeId);
+            // let nodeId = this.graph.selected.node[0].id;
+            // let node = this.graph.data.nodes.get(nodeId);
 
             this.modal.title = "Add node";
             this.modal.mode = "edit";
@@ -396,7 +396,7 @@ const Grafito = {
             //  labels: bug, ui 
 
             this.modal.accept.action = ()=>{
-                console.log("adding node";)
+                console.log("adding node");
                 // node.tag = this.modal.fields.tag;
                 // delete this.modal.fields.tag;
                 // node.properties = this.modal.fields;
