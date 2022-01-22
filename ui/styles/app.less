@@ -983,12 +983,12 @@ ul.sidebar {
 
             li+li::before {
                 content: '\205E';
-                color: #666;
+                color: @darkFgDarker;
             }
         
             li.edged+li.edged::before {
                 content: '\2192' !important;
-                color: #666;
+                color: @darkBgDarker;
             }
         }
     }
@@ -1025,6 +1025,10 @@ ul.sidebar {
             }
 
             li+li::before {
+                color: #666;
+            }
+
+            li.edged+li.edged::before {
                 color: @darkFg;
             }
         }
