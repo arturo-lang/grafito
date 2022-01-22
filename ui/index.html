@@ -262,6 +262,7 @@
                                                 <div v-else>
                                                     <input v-model="modal.fields[key]" 
                                                        :type="getInputTypeForValue(value)"
+                                                       :style="(key=='tag') ? 'text-transform: lowercase' : ''"
                                                        class="input"
                                                        spellcheck="false">
                                                 </div>
@@ -292,7 +293,8 @@
                                                             <div class="dropdown-content">
                                                                 <template v-for="tagOption in modal.tagOptions">
                                                                     <a @click="modal.fields.tag=tagOption; modal.dropdownShowing=false"
-                                                                         class="dropdown-item">
+                                                                         class="dropdown-item"
+                                                                         style="text-transform: lowercase;">
                                                                         {{tagOption}}
                                                                     </a>
                                                                 </template> 
