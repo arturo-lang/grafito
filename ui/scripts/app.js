@@ -278,21 +278,29 @@ const Grafito = {
             this.graph.selected.node = this.graph.selected.node.filter((x)=> !list.includes(x.id));
         },
 
-        deleteNode(nodeId=null){
+        deleteNode(nodeId=null, message="Delete selected node", andThen=null){
             let doDelete = ()=>{
                 let list = [nodeId];
 
                 if (nodeId==null) 
                     list = this.graph.selected.node.map((x)=> x.id);
 
-                for (let node of list)
+                let nodeCounter = 0
+                for (let node of list){
                     $.post("/deleteNode", {ndid: node }, ()=>{
                         this.removeNode(node);
+                        nodeCounter += 1;
+                        if (nodeCounter == list.length && andThen != null)
+                            andThen();
                     });
+                }
             }
+
+            if ((this.graph.selected.node.length > 1) && (andThen==null))
+                message += "s";
             
             if (this.config.general.askForConfirmation.value) 
-                this.showConfirmationDialog("Delete selected node", doDelete);
+                this.showConfirmationDialog(message, doDelete);
             else
                 doDelete();
         },
@@ -309,7 +317,7 @@ const Grafito = {
             this.graph.selected.edge = this.graph.selected.edge.filter((x)=> !list.includes(x.id));
         },
 
-        deleteEdge(edgeId=null){
+        deleteEdge(edgeId=null, message="Delete selected edge", showConfirmation=true){
             let doDelete = ()=>{
                 let list = [edgeId];
 
@@ -321,11 +329,25 @@ const Grafito = {
                         this.removeEdge(edge);
                     });
             }
+
+            if (this.graph.selected.edge.length > 1)
+                message += "s";
             
-            if (this.config.general.askForConfirmation.value) 
-                this.showConfirmationDialog("Delete selected edge", doDelete);
+            if (this.config.general.askForConfirmation.value && showConfirmation) 
+                this.showConfirmationDialog(message, doDelete);
             else
                 doDelete();
+        },
+
+        removeElement(){
+            this.removeNode();
+            this.removeEdge();
+        },
+
+        deleteElement(){
+            this.deleteNode(null, message="Delete selected elements", andThen=()=>{
+                this.deleteEdge(null, message="", showConfirmation=false);
+            });
         },
 
         linkNodeMode(nodeId=null){
