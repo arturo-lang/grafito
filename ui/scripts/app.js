@@ -15,6 +15,7 @@ const Grafito = {
                     showEdgesOnDrag: {value: true, description: "Keep showing edges when dragging"},
                     showEdgesOnZoom: {value: false, description: "Keep showing edges when zooming"},
                     showEdgeLabels: {value: true, description: "Show edge labels"},
+                    showDashedEdges: {value: false, description: "Show edges as dashed lines"},
                     askForConfirmation: {value: true, description: "Always request confirmation before deleting elements"}
                 },
                 tableView: {
@@ -607,6 +608,8 @@ const Grafito = {
             this.graph.config.interaction.hideNodesOnDrag = !this.config.graphView.showNodesOnDrag.value;
             this.graph.config.interaction.hideEdgesOnDrag = !this.config.graphView.showEdgesOnDrag.value;
             this.graph.config.interaction.hideEdgesOnZoom = !this.config.graphView.showEdgesOnZoom.value;
+
+            this.graph.config.edges.dashed = this.config.graphView.showDashedEdges;
 
             if (this.config.general.darkTheme){
                 this.graph.config.edges.font.color = '#ffffff';
