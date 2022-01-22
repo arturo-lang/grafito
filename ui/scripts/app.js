@@ -184,14 +184,14 @@ const Grafito = {
                 title: "Some title",
                 icon: "",
                 mode: null,
+                dropdownShowing: false,
                 accept: {
                     button: "Yes, I accept it",
                     style: "",
                     action: ()=> {console.log("modal action clicked!");}
                 },
-                fields: {
-
-                },
+                fields: {},
+                tagOptions: [],
                 showAdd: false,
                 addField: "",
                 addFieldType: "String",
@@ -414,10 +414,13 @@ const Grafito = {
             this.modal.addField = "";
             this.modal.addFieldType = "String";
             this.modal.showCancel = true;
+            this.modal.dropdownShowing = false;
             this.modal.icon = "plus-bold";
 
+            this.modal.tagOptions = [...new Set(VM.graph.data.nodes.map((x)=>x.tag))].sort();
+
             this.modal.fields = {
-                tag: "Something"
+                tag: this.modal.tagOptions[0]
             };
 
             this.modal.active = true;
@@ -468,7 +471,10 @@ const Grafito = {
             this.modal.addField = "";
             this.modal.addFieldType = "String";
             this.modal.showCancel = true;
+            this.modal.dropdownShowing = false;
             this.modal.icon = "pencil-fill";
+
+            this.modal.tagOptions = [...new Set(VM.graph.data.nodes.map((x)=>x.tag))].sort();
 
             this.modal.fields = Object.assign({
                 tag: node.tag,
@@ -494,6 +500,7 @@ const Grafito = {
             this.modal.accept.style = "is-modifying";
             this.modal.showAdd = false;
             this.modal.showCancel = true;
+            this.modal.dropdownShowing = false;
             this.modal.icon = "pencil-fill";
 
             this.modal.fields = {

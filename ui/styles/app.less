@@ -806,6 +806,9 @@ ul.sidebar {
                 &.is-hovered, &:hover {
                     border-color: #dbdbdb !important;
                     background: #F6F6F6;
+                }
+
+                &:not(.simple-dropdown).is-hovered, &:not(.simple-dropdown):hover {
                     color: @destructiveColor;
                 }
             }
@@ -846,6 +849,21 @@ ul.sidebar {
                         color: #fff;
                     }
                 }
+            }
+        }
+    }
+
+    // TODO(UI style) Modal dropdowns not behaving properly
+    //  there is an issue with Bulma & overflows for modal dialogs
+    //  labels: ui,bug
+    &.with-dropdown {
+        overflow: visible !important;
+
+        .modal-card {
+            overflow: visible !important;
+
+            .modal-card-body {
+                overflow: visible !important;
             }
         }
     }

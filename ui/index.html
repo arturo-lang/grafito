@@ -194,7 +194,7 @@
                         </div>
                     </section>
                     <div class="modal"
-                        :class="(modal.active) ? 'is-active' : ''">
+                        :class="(modal.active) ? ((modal.dropdownShowing) ? 'is-active with-dropdown' : 'is-active') : ''">
                         <div class="modal-background animate__animated animate__fadeIn animate__faster"></div>
                         <div class="modal-card animate__animated animate__slideInDown animate__faster">
                         <header class="modal-card-head">
@@ -266,14 +266,41 @@
                                                        spellcheck="false">
                                                 </div>
                                             </div>
-                                            <div class="control">
-                                                <button class="button"
-                                                        @click="delete modal.fields[key]">
-                                                    <span class="icon is-small">
-                                                        <i class="ph-backspace-bold"></i>
-                                                    </span>
-                                                </button>
-                                            </div>
+                                            <template v-if="key!='tag'">
+                                                <div class="control">
+                                                    <button class="button"
+                                                            @click="delete modal.fields[key]">
+                                                        <span class="icon is-small">
+                                                            <i class="ph-backspace-bold"></i>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                <div class="control">
+                                                    <div class="dropdown is-right"
+                                                         :class="(modal.dropdownShowing) ? 'is-active' : ''">
+                                                        <div class="dropdown-trigger">
+                                                          <button @click="modal.dropdownShowing=!modal.dropdownShowing"
+                                                                  class="button simple-dropdown" aria-haspopup="true" aria-controls="dropdown-menu6">
+                                                            <span class="icon is-small">
+                                                                <i class="ph-caret-down-bold"></i>
+                                                            </span>
+                                                          </button>
+                                                        </div>
+                                                        <div class="dropdown-menu" id="dropdown-menu6" role="menu">
+                                                            <div class="dropdown-content">
+                                                                <template v-for="tagOption in modal.tagOptions">
+                                                                    <a @click="modal.fields.tag=tagOption; modal.dropdownShowing=false"
+                                                                         class="dropdown-item">
+                                                                        {{tagOption}}
+                                                                    </a>
+                                                                </template> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
                                         </div>
                                     </div>
                                 </div>
@@ -291,11 +318,11 @@
                                      class="field has-addons">
                                      <div class="control">
                                         <span class="select">
-                                          <select v-model="modal.addFieldType">
-                                            <option>String</option>
-                                            <option>Number</option>
-                                            <option>Boolean</option>
-                                          </select>
+                                            <select v-model="modal.addFieldType">
+                                                <option>String</option>
+                                                <option>Number</option>
+                                                <option>Boolean</option>
+                                            </select>
                                         </span>
                                     </div>
                                     <div class="control is-expanded">
