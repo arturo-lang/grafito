@@ -11,6 +11,7 @@ do [
     ;---------------------------------------------
     graph .helpers: [person movie country book]
           .create
+          .server 
           "sample11" 
     [
         unless dbExists? [
