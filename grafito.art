@@ -66,6 +66,7 @@ graph: function [
     getMaxNodeIdSQL:            read "sql/procs/getMaxNodeId.sql"
 
     createEdgeSQL:              read "sql/procs/createEdge.sql"
+    updateEdgeSQL:              read "sql/procs/updateEdge.sql"
     deleteEdgeSQL:              read "sql/procs/deleteEdge.sql"
     deleteEdgeByIdSQL:          read "sql/procs/deleteEdgeById.sql"
 
@@ -231,7 +232,7 @@ graph: function [
     ][
         ;; description: « update edge with given tag
 
-        performQuery 'retag updateEdge @[tag, eid]
+        performQuery 'retag updateEdgeSQL @[tag, eid]
     ]
 
     ;
@@ -282,7 +283,7 @@ graph: function [
 
                 'clean ++ appendable
                 'usedColors ++ addColorForNodeType appendable usedColors
-                'edz ++ @[@[rez\3 rez\4 rez\5]]
+                'edz ++ @[@[rez\3 rez\4 rez\5 rez\6]]
             ]
             clean: unique clean
         ]
@@ -312,6 +313,7 @@ graph: function [
                 from: to :integer ed\0
                 to: to :integer ed\1
                 label: ed\2
+                dbId: ed\3
             ]
         ]
 
@@ -829,7 +831,7 @@ graph: function [
             ]
 
             "/updateEdge"   [;[egid,newtag]
-                eid: to :integer
+                eid: to :integer egid
                 retagEdge eid newtag
                 ""
             ]
