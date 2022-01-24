@@ -464,12 +464,14 @@ const Grafito = {
 
             this.modal.accept.action = ()=>{
                 node.tag = this.modal.fields.tag;
+                let newtag = this.modal.fields.tag;
                 delete this.modal.fields.tag;
                 node.properties = this.modal.fields;
 
                 // TODO(edit node) should be able to set tag as well
                 $.post("/updateNode", {
                     ndid: nodeId, 
+                    newtag: newtag,
                     props: JSON.stringify(node.properties) 
                 }, ()=>{
                     this.graph.data.nodes.update(node);
