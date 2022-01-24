@@ -56,20 +56,21 @@ graph: function [
 
     schemaSQL:              split.by:";" read "sql/schema.sql"
 
-    createNodeSQL:          read "sql/procs/createNode.sql"
-    updateNodeSQL:          read "sql/procs/updateNode.sql"
-    deleteNodeSQL:          read "sql/procs/deleteNode.sql"
-    deleteNodeEdgesSQL:     read "sql/procs/deleteNodeEdges.sql"
-    getNodeSQL:             read "sql/procs/getNode.sql"
-    getRelatedNodesSQL:     read "sql/procs/getRelatedNodes.sql"
-    getMaxNodeIdSQL:        read "sql/procs/getMaxNodeId.sql"
+    createNodeSQL:              read "sql/procs/createNode.sql"
+    updateNodeSQL:              read "sql/procs/updateNode.sql"
+    updateNodePropertiesSQL:    read "sql/procs/updateNodeProperties.sql"
+    deleteNodeSQL:              read "sql/procs/deleteNode.sql"
+    deleteNodeEdgesSQL:         read "sql/procs/deleteNodeEdges.sql"
+    getNodeSQL:                 read "sql/procs/getNode.sql"
+    getRelatedNodesSQL:         read "sql/procs/getRelatedNodes.sql"
+    getMaxNodeIdSQL:            read "sql/procs/getMaxNodeId.sql"
 
-    createEdgeSQL:          read "sql/procs/createEdge.sql"
-    deleteEdgeSQL:          read "sql/procs/deleteEdge.sql"
-    deleteEdgeByIdSQL:      read "sql/procs/deleteEdgeById.sql"
+    createEdgeSQL:              read "sql/procs/createEdge.sql"
+    deleteEdgeSQL:              read "sql/procs/deleteEdge.sql"
+    deleteEdgeByIdSQL:          read "sql/procs/deleteEdgeById.sql"
 
-    fetchNodesSQL:          read "sql/procs/fetchNodes.sql"
-    fetchNodesWithEdgesSQL: read "sql/procs/fetchNodes.withEdges.sql"
+    fetchNodesSQL:              read "sql/procs/fetchNodes.sql"
+    fetchNodesWithEdgesSQL:     read "sql/procs/fetchNodes.withEdges.sql"
 
     ; Global SQL filters
 
@@ -407,6 +408,7 @@ graph: function [
     ][
         ;; description: « update given node(s) with attributes
         ;; options: [
+        ;;      tag: « also set new tag
         ;;      replace: « replace entire object properties with given ones
         ;; ]
         ;; returns: :nothing
@@ -419,6 +421,7 @@ graph: function [
             toUpdate: new nd
 
         doReplace?: not? null? attr 'replace
+        withTag: attr 'tag
 
         additional: attributes
         if block? additional ->
@@ -433,7 +436,10 @@ graph: function [
                 newAttributes: extend updateable\properties additional
 
             updateable\properties: newAttributes
-            performQuery 'edit updateNodeSQL @[write.json ø newAttributes, updateable\id]
+            if? null? withTag ->
+                performQuery 'edit updateNodePropertiesSQL @[write.json ø newAttributes, updateable\id]
+            else ->
+                performQuery 'edit updateNodeSQL @[withTag, write.json ø newAttributes, updateable\id]
         ]
     ]
 
