@@ -56,20 +56,20 @@ graph: function [
 
     schemaSQL:              split.by:";" read "sql/schema.sql"
 
-    createNodeSQL:          read "sql/createNode.sql"
-    updateNodeSQL:          read "sql/updateNode.sql"
-    deleteNodeSQL:          read "sql/deleteNode.sql"
-    deleteNodeEdgesSQL:     read "sql/deleteNodeEdges.sql"
-    getNodeSQL:             read "sql/getNode.sql"
-    getRelatedNodesSQL:     read "sql/getRelatedNodes.sql"
-    getMaxNodeIdSQL:        read "sql/getMaxNodeId.sql"
+    createNodeSQL:          read "sql/procs/createNode.sql"
+    updateNodeSQL:          read "sql/procs/updateNode.sql"
+    deleteNodeSQL:          read "sql/procs/deleteNode.sql"
+    deleteNodeEdgesSQL:     read "sql/procs/deleteNodeEdges.sql"
+    getNodeSQL:             read "sql/procs/getNode.sql"
+    getRelatedNodesSQL:     read "sql/procs/getRelatedNodes.sql"
+    getMaxNodeIdSQL:        read "sql/procs/getMaxNodeId.sql"
 
-    createEdgeSQL:          read "sql/createEdge.sql"
-    deleteEdgeSQL:          read "sql/deleteEdge.sql"
-    deleteEdgeByIdSQL:      read "sql/deleteEdgeById.sql"
+    createEdgeSQL:          read "sql/procs/createEdge.sql"
+    deleteEdgeSQL:          read "sql/procs/deleteEdge.sql"
+    deleteEdgeByIdSQL:      read "sql/procs/deleteEdgeById.sql"
 
-    fetchNodesSQL:          read "sql/fetchNodes.sql"
-    fetchNodesWithEdgesSQL: read "sql/fetchNodes.withEdges.sql"
+    fetchNodesSQL:          read "sql/procs/fetchNodes.sql"
+    fetchNodesWithEdgesSQL: read "sql/procs/fetchNodes.withEdges.sql"
 
     ; Global SQL filters
 
