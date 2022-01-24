@@ -1,3 +1,3 @@
 UPDATE nodes 
-SET properties=?
+SET tag=?, properties=?
 WHERE id=?
