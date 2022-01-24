@@ -177,14 +177,20 @@ graph: function [
     ;--------------------------
 
     edge: function [
-        src :dictionary 
+        src :integer :dictionary 
         name :literal :string
-        tgt :dictionary
+        tgt :integer :dictionary
     ][
         ;; description: « create edge from source to target node with given name
         ;; returns: :dictionary
 
-        edgeId: performQuery.id 'edge createEdgeSQL @[name, src\id, tgt\id]
+        srcId: src
+        tgtId: tgt
+
+        if dictionary? srcId -> srcId: src\id
+        if dictionary? tgtId -> tgtId: tgt\id
+
+        edgeId: performQuery.id 'edge createEdgeSQL @[name, srcId, tgtId]
 
         #[
             id: edgeId
@@ -833,6 +839,13 @@ graph: function [
             "/createNode"   [;[newtag,props]
                 created: put newtag read.json props
                 write.json ø new nodeFromIds created
+            ]
+
+            "/linkNodes"    [;[newtag,src,tgt]
+                srcid: to :integer src
+                tgtid: to :integer tgt
+                edge srcid newtag tgtid
+                ""
             ]
 
             "/updateEdge"   [;[egid,newtag]
