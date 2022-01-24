@@ -381,16 +381,16 @@
                                         <template v-if="graph.hovered.node != null">
                                             <li class="is-active" v-for="(value, key) in graph.hovered.node.properties">
                                                 <a>
-                                                    <b>{{key}}</b>{{value}}
+                                                    <b>{{key}}:</b>{{value}}
                                                 </a>
                                             </li>
                                         </template>
                                         <template v-else-if="graph.hovered.edge != null">
                                             <li class="is-active edged">
-                                                <a><b>{{graph.data.nodes.get(graph.hovered.edge.from).tag}}</b>{{graph.data.nodes.get(graph.hovered.edge.from).fullLabel}}</a>
+                                                <a><b>{{graph.data.nodes.get(graph.hovered.edge.from).tag}}:</b>{{graph.data.nodes.get(graph.hovered.edge.from).fullLabel}}</a>
                                             </li>
                                             <li class="is-active edged">
-                                                <a><b>{{graph.data.nodes.get(graph.hovered.edge.to).tag}}</b>{{graph.data.nodes.get(graph.hovered.edge.to).fullLabel}}</a>
+                                                <a><b>{{graph.data.nodes.get(graph.hovered.edge.to).tag}}:</b>{{graph.data.nodes.get(graph.hovered.edge.to).fullLabel}}</a>
                                             </li>
                                         </template>
                                         <template v-else>
@@ -402,16 +402,16 @@
                                     <template v-else-if="graph.selected.node.length==1 && graph.selected.edge.length==0">
                                         <li class="is-active" v-for="(value, key) in graph.selected.node[0].properties">
                                             <a>
-                                                <b>{{key}}</b>{{value}}
+                                                <b>{{key}}:</b>{{value}}
                                             </a>
                                         </li>
                                     </template>
                                     <template v-else-if="graph.selected.node.length==0 && graph.selected.edge.length==1">
                                         <li class="is-active edged">
-                                            <a><b>{{graph.data.nodes.get(graph.selected.edge[0].from).tag}}</b>{{graph.data.nodes.get(graph.selected.edge[0].from).fullLabel}}</a>
+                                            <a><b>{{graph.data.nodes.get(graph.selected.edge[0].from).tag}}:</b>{{graph.data.nodes.get(graph.selected.edge[0].from).fullLabel}}</a>
                                         </li>
                                         <li class="is-active edged">
-                                            <a><b>{{graph.data.nodes.get(graph.selected.edge[0].to).tag}}</b>{{graph.data.nodes.get(graph.selected.edge[0].to).fullLabel}}</a>
+                                            <a><b>{{graph.data.nodes.get(graph.selected.edge[0].to).tag}}:</b>{{graph.data.nodes.get(graph.selected.edge[0].to).fullLabel}}</a>
                                         </li>
                                     </template>
                                     <template v-else>
