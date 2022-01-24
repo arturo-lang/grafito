@@ -822,9 +822,15 @@ graph: function [
                 ""
             ]
 
-            "/updateNode"   [;[ndid,props]
+            "/updateNode"   [;[ndid,newtag,props]
                 nd: nodeFromId ndid
-                edit.replace nd read.json props
+                edit.replace.tag:newtag nd read.json props
+                ""
+            ]
+
+            "/updateEdge"   [;[egid,newtag]
+                eid: to :integer
+                retagEdge eid newtag
                 ""
             ]
 
