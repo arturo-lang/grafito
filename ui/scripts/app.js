@@ -464,14 +464,13 @@ const Grafito = {
 
             this.modal.accept.action = ()=>{
                 node.tag = this.modal.fields.tag;
-                let newtag = this.modal.fields.tag;
                 delete this.modal.fields.tag;
                 node.properties = this.modal.fields;
 
                 // TODO(edit node) should be able to set tag as well
                 $.post("/updateNode", {
                     ndid: nodeId, 
-                    newtag: newtag,
+                    newtag: node.tag,
                     props: JSON.stringify(node.properties) 
                 }, ()=>{
                     this.graph.data.nodes.update(node);
@@ -498,15 +497,22 @@ const Grafito = {
             let edgeId = this.graph.selected.edge[0].id;
             let edge = this.graph.data.edges.get(edgeId);
 
+            console.log(edge);
+
             this.modal.title = "Edit edge";
             this.modal.mode = "edit";
             this.modal.accept.button = "Save";
             
             this.modal.accept.action = ()=>{
-                edge.label = this.modal.fields.label;
-                this.graph.data.edges.update(edge);
+                edge.label = this.modal.fields.tag;
 
-                this.showEdgeInfo(edge);
+                // TODO(edit node) should be able to set tag as well
+                $.post("/updateEdge", {
+                    egid: edgeId, 
+                    newtag: edge.label,
+                }, ()=>{
+                    this.graph.data.edges.update(edge);
+                });
             };
             this.modal.accept.style = "is-modifying";
             this.modal.showAdd = false;
