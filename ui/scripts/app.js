@@ -39,6 +39,11 @@ const Grafito = {
                     node: null,
                     edge: null
                 },
+                linkMode: false,
+                linker: {
+                    source: 0,
+                    target: 0
+                },
                 editOptions: {
                     main: {
                         visualization: [
@@ -152,7 +157,9 @@ const Grafito = {
                     layout: {
 
                     },
-                    manipulation: false,
+                    manipulation: {
+                        enabled: false
+                    },
                     physics: {
                         barnesHut: {
                             springConstant: 0.03,
@@ -360,10 +367,24 @@ const Grafito = {
         },
 
         linkNodeMode(nodeId=null){
-            if (nodeId==null) 
-                nodeId = this.graph.selected.node.id;
+            this.graph.linkMode = true;
+            toastInfo("Now, select the target node or click anywhere else to cancel the operation");
+        },
 
-            console.log("UNIMPLEMENTED");
+        addEdgeHandler(data, callback){
+            console.log('add edge', data);
+            if (data.from == data.to) {
+                var r = confirm("Do you want to connect the node to itself?");
+                if (r === true) {
+                    callback(data);
+                }
+            }
+            else {
+                callback(data);
+            }
+            // after each adding you will be back to addEdge mode
+            //this.graph.view.disableEdgeMode();
+            //network.addEdgeMode();
         },
 
         showConfirmationDialog(title, callback, button="Delete", style="is-destructive"){
@@ -481,6 +502,36 @@ const Grafito = {
             this.modal.fields = Object.assign({
                 tag: node.tag,
             }, node.properties);
+
+            this.modal.active = true;
+        },
+
+        showAddEdgeDialog(){
+            this.modal.title = "Link selected node";
+            this.modal.mode = "edit";
+            this.modal.accept.button = "Create";
+            
+            this.modal.accept.action = ()=>{
+                // TODO(edit node) should be able to set tag as well
+                $.post("/linkNodes", {
+                    newtag: this.modal.fields.tag,
+                    src: this.graph.linker.source,
+                    tgt: this.graph.linker.target
+                }, ()=>{
+                    // this.graph.data.edges.update(edge);
+                });
+            };
+            this.modal.accept.style = "is-modifying";
+            this.modal.showAdd = false;
+            this.modal.showCancel = true;
+            this.modal.dropdownShowing = false;
+            this.modal.icon = "pencil-fill";
+
+            this.modal.tagOptions = [...new Set(VM.graph.data.edges.map((x)=>x.label))].sort();
+
+            this.modal.fields = {
+                tag: ""
+            }
 
             this.modal.active = true;
         },
@@ -605,8 +656,16 @@ const Grafito = {
             this.graph.view = new vis.Network(container, this.graph.dataview, this.graph.config);
 
             const updateSelected = (x)=>{
+                if (this.graph.linkMode && !("previousSelection" in Object.keys(x)) && x.nodes.length ==1){
+                    this.graph.linker.source = this.graph.selected.node[0].id;
+                    this.graph.linker.target = x.nodes[0];
+
+                    this.showAddEdgeDialog();
+                }
                 this.graph.selected.node = x.nodes.map((e) => this.graph.data.nodes.get(e));
                 this.graph.selected.edge = x.edges.map((e) => this.graph.data.edges.get(e));
+
+                this.graph.linkMode = false;
             }
 
             this.graph.view.on("selectNode", updateSelected);
