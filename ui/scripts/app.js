@@ -508,7 +508,7 @@ const Grafito = {
 
                 // TODO(edit node) should be able to set tag as well
                 $.post("/updateEdge", {
-                    egid: edgeId, 
+                    egid: edge.dbId, 
                     newtag: edge.label,
                 }, ()=>{
                     this.graph.data.edges.update(edge);
