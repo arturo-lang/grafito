@@ -403,8 +403,8 @@ const Grafito = {
                 let props = this.modal.fields;
 
                 $.post("/createNode", {
-                    newtag, 
-                    props: JSON.stringify(node.properties) 
+                    newtag: nodeTag,
+                    props: JSON.stringify(props) 
                 }, (data)=>{
                     console.log(data);
                     console.log("DONE ;-)");//this.graph.data.nodes.update(node);
