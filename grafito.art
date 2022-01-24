@@ -832,7 +832,7 @@ graph: function [
 
             "/createNode"   [;[newtag,props]
                 created: put newtag read.json props
-                write.json ø newNodeFromIds created
+                write.json ø new nodeFromIds created
             ]
 
             "/updateEdge"   [;[egid,newtag]
