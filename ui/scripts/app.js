@@ -202,10 +202,19 @@ const Grafito = {
     },
     methods: {
         getInputTypeForValue(val){
-            if (typeof val == "boolean") return "checkbox";
+            if (typeof val == "boolean") return "text";
             if (typeof val == "string") return "text";
 
             return "number";
+        },
+
+        getInputIconForValue(key,val){
+            if (key == "tag") return "tag-bold";
+
+            if (typeof val == "boolean") return "question-bold";
+            if (typeof val == "string") return "text-aa-bold";
+
+            return "hash-bold";
         },
 
         processCommand(){
@@ -503,8 +512,10 @@ const Grafito = {
             this.modal.dropdownShowing = false;
             this.modal.icon = "pencil-fill";
 
+            this.modal.tagOptions = [...new Set(VM.graph.data.edges.map((x)=>x.label))].sort();
+
             this.modal.fields = {
-                label: edge.label
+                tag: edge.label
             }
 
             this.modal.active = true;

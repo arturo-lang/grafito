@@ -132,11 +132,8 @@ html, body {
 }
 
 .inline-switchable-container {
-    display: flex;
-    height: 2.5rem;
-    align-items: center;
-    justify-content: flex-start;
-    margin-left: -2px;
+
+    pointer-events: auto !important;
 
     .switchable {
         border: 1px solid #dbdbdb !important;
@@ -813,6 +810,25 @@ ul.sidebar {
                     color: @destructiveColor;
                 }
             }
+
+            .control.has-icons-left .input, 
+            .control.has-icons-right .input {
+                &~.icon {
+                    color: #AAA;
+
+                    .switchable {
+                        border-color: #AAA !important;
+                    }
+                }
+
+                &:focus~.icon {
+                    color: #333;
+
+                    .switchable {
+                        border-color: #333 !important;
+                    }
+                }
+            }
         }
 
         .modal-card-foot {
@@ -906,6 +922,25 @@ ul.sidebar {
                 border-color: black;
             }
 
+            .control.has-icons-left .input, 
+            .control.has-icons-right .input {
+                &~.icon {
+                    color: #666;
+
+                    .switchable {
+                        border-color: #666 !important;
+                    }
+                }
+
+                &:focus~.icon {
+                    color: @darkGrafitoPurple;
+
+                    .switchable {
+                        border-color: @darkFg !important;
+                    }
+                }
+            }
+
             button {
                 background-color: black;
                 border-color: black;
@@ -914,6 +949,9 @@ ul.sidebar {
                 &.is-hovered, &:hover {
                     background-color: lighten(black, 7%);
                     border-color: black !important;
+                }
+
+                &:not(.simple-dropdown).is-hovered, &:not(.simple-dropdown):hover {
                     color: @destructiveColor;
                 }
             }

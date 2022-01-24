@@ -251,21 +251,24 @@
                                     </div>
                                     <div class="field-body">
                                         <div class="field has-addons">
-                                            <div class="control is-expanded">
-                                                <div v-if="typeof value == 'boolean'"
-                                                     class="inline-switchable-container">
-                                                    <input v-model="modal.fields[key]"
+                                            <div class="control has-icons-left is-expanded"
+                                                 :class="(typeof value == 'boolean') ? 'has-icons-right' : ''">
+                                                <input v-model="modal.fields[key]" 
+                                                    :type="getInputTypeForValue(value)"
+                                                    :readonly="typeof value == 'boolean'"
+                                                    class="input"
+                                                    spellcheck="false">
+                                                
+                                                <span class="icon is-small is-left">
+                                                    <i :class="`ph-${getInputIconForValue(key,value)}`"></i>
+                                                </span>
+                                                <span v-if="typeof value == 'boolean'"
+                                                      class="icon is-small is-right inline-switchable-container">
+                                                     <input v-model="modal.fields[key]"
                                                            :id="key"
                                                            type="checkbox"
                                                            class="switchable">
-                                                </div>
-                                                <div v-else>
-                                                    <input v-model="modal.fields[key]" 
-                                                       :type="getInputTypeForValue(value)"
-                                                       :style="(key=='tag') ? 'text-transform: lowercase' : ''"
-                                                       class="input"
-                                                       spellcheck="false">
-                                                </div>
+                                                </span>
                                             </div>
                                             <template v-if="key!='tag'">
                                                 <div class="control">
