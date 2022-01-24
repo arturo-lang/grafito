@@ -54,7 +54,7 @@ graph: function [
 
     ; Global SQL scripts
 
-    schemaSQL:              split.by:";" read "sql/schema.sql"
+    schemaSQL:                  split.by:";" read "sql/schema.sql"
 
     createNodeSQL:              read "sql/procs/createNode.sql"
     updateNodeSQL:              read "sql/procs/updateNode.sql"
@@ -828,6 +828,11 @@ graph: function [
                 nd: nodeFromId ndid
                 edit.replace.tag:newtag nd read.json props
                 ""
+            ]
+
+            "/createNode"   [;[newtag,props]
+                created: put newtag read.json props
+                write.json ø newNodeFromIds created
             ]
 
             "/updateEdge"   [;[egid,newtag]
