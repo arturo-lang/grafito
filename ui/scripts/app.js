@@ -174,6 +174,23 @@ const Grafito = {
                 keys: [],
                 rows: []
             },
+            analytics: {
+                disk: {
+                    path: "",
+                    size: 0
+                },
+                memory: {
+                    free: 0,
+                    max: 0,
+                    total: 0,
+                    occupied: 0
+                },
+                database: {
+                    nodes: 0,
+                    edges: 0,
+                    degree: 0
+                }
+            },
             command: {
                 focused: false
             },
