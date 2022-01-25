@@ -142,6 +142,19 @@ graph: function [
     ]
 
     ;
+    ; Format size
+    ;--------------------------
+
+    formatSize: function [sz][
+        nz: new sz
+        if nz < 1024 -> return @[nz, "B"]
+        if nz < 1024*1024 -> return @[to :floating to :string .format: ".2f" nz//1024, "KB"]
+        if nz < 1024*1024*1024 -> return @[to :floating to :string .format: ".2f" (nz//1024)//1024, "MB"]
+        if nz < 1024*1024*1024*1024 -> return @[to :floating to :string .format: ".2f" ((nz//1024)//1024)//1024, "GB"]
+        return @[]
+    ]
+
+    ;
     ; Get db analytics
     ;--------------------------
 
@@ -154,8 +167,18 @@ graph: function [
         filesize: 0
 
         if not? empty? filename [
-            filesize: volume filename
+            prefilesize: formatSize volume filename
+            filesize: #[
+                number: first prefilesize
+                units: last prefilesize
+            ]
             filename: relative filename
+        ]
+
+        prememory: formatSize process\memory\occupied
+        mem: #[
+            number: first prememory
+            units: last prememory
         ]
 
         return #[
@@ -164,7 +187,7 @@ graph: function [
                 edges: edgeCount
                 degree: to :floating to :string .format: ".2f" avgDegree
             ]
-            memory: process\memory
+            memory: mem
             disk: #[
                 path: filename
                 size: filesize
