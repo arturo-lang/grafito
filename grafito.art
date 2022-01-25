@@ -153,9 +153,10 @@ graph: function [
         filename: dbPath
         filesize: 0
 
-        if not? empty? filename ->
-            filename: relative filename
+        if not? empty? filename [
             filesize: volume filename
+            filename: relative filename
+        ]
 
         return #[
             database: #[
