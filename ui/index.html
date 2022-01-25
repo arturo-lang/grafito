@@ -46,14 +46,14 @@
                 <main>
                     <aside>
                         <ul class="sidebar">
-                            <li v-for="(sidebarTip, sidebarItem) in sidebar.items" 
+                            <li v-for="(sidebarContent, sidebarItem) in sidebar.items" 
                                 :class="sidebar.active==sidebarItem && 'active'" 
-                                @click="sidebar.active=sidebarItem"
+                                @click="if (sidebarContent.action!=null) {sidebarContent.action();}; sidebar.active=sidebarItem"
                                 @mouseenter="sidebar.hovered=sidebarItem"
                                 @mouseleave="sidebar.hovered=''"
                                 data-tippy-placement="right"
                                 data-tippy-animation="perspective-extreme"
-                                :data-tippy-content="sidebarTip">
+                                :data-tippy-content="sidebarContent.tip">
                                 <i :class="(sidebar.active==sidebarItem || sidebar.hovered==sidebarItem) ? `ph-${sidebarItem}-fill` : `ph-${sidebarItem}`"></i>
                             </li>
                         </ul>
