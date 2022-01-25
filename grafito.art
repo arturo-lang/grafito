@@ -73,6 +73,9 @@ graph: function [
     fetchNodesSQL:              read "sql/procs/fetchNodes.sql"
     fetchNodesWithEdgesSQL:     read "sql/procs/fetchNodes.withEdges.sql"
 
+    countNodesSQL:              read "sql/procs/countNodes.sql"
+    countEdgesSQL:              read "sql/procs/countEdges.sql"
+
     ; Global SQL filters
 
     hasEdgeFilter:              read "sql/filters/hasEdge.sql"
