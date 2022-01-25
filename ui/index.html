@@ -137,8 +137,23 @@
                                         <span class="counter-label">Avg. Degree</span>
                                     </div>
                                 </div>
+
+                                <div class="columns counters">
+                                    <div class="column is-6 has-text-centered counter-column">
+                                        <span class="counter">
+                                            {{analytics.memory.occupied}}
+                                        </span> MB
+                                        <span class="counter-label"><i class="ph-cpu-fill"></i>&nbsp;Memory</span>
+                                    </div>
+                                    <div class="column is-6 has-text-centered counter-column">
+                                        <span class="counter">
+                                            {{analytics.disk.size}}
+                                        </span> MB
+                                        <span class="counter-label"><i class="ph-hard-drives-fill"></i>&nbsp;Size</span>
+                                    </div>
+                                </div>
                             </div>
-                            <pre><code>{{analytics}}</code></pre>
+                            <!--<pre><code>{{analytics}}</code></pre>-->
                         </div>
                         <div id="sliders" v-show="sidebar.active=='sliders'">
                             <div class="container">
