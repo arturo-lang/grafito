@@ -198,10 +198,10 @@ const Grafito = {
                 hovered: "",
                 active: "graph",
                 items: {
-                    "graph": "Graph view",
-                    "table": "Table view",
-                    "chart-pie-slice": "Analytics",
-                    "sliders": "Global settings"
+                    "graph":            { tip: "Graph view", action: null },
+                    "table":            { tip: "Table view", action: null },
+                    "chart-pie-slice":  { tip: "Analytics", action: this.getAnalytics },
+                    "sliders":          { tip: "Global settings", action: null }
                 }
             },
             modal: {
