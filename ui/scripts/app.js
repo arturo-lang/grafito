@@ -183,6 +183,7 @@ const Grafito = {
                 items: {
                     "graph": "Graph view",
                     "table": "Table view",
+                    "chart-pie-slice": "Analytics",
                     "sliders": "Global settings"
                 }
             },
