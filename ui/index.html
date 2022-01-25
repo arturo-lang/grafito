@@ -119,36 +119,36 @@
                             <div class="container">
                                 <div class="columns counters">
                                     <div class="column is-4 has-text-centered counter-column">
-                                        <span class="counter">
-                                            {{analytics.database.nodes}}
-                                        </span>
+                                        <p class="counter">
+                                            <span class="counter-number">{{analytics.database.nodes}}</span>
+                                        </p>
                                         <span class="counter-label">Nodes</span>
                                     </div>
                                     <div class="column is-4 has-text-centered counter-column">
-                                        <span class="counter">
-                                            {{analytics.database.edges}}
-                                        </span>
+                                        <p class="counter">
+                                            <span class="counter-number">{{analytics.database.edges}}</span>
+                                        </p>
                                         <span class="counter-label">Edges</span>
                                     </div>
                                     <div class="column is-4 has-text-centered counter-column">
-                                        <span class="counter">
-                                            {{analytics.database.degree}}
-                                        </span>
+                                        <p class="counter">
+                                            <span class="counter-number">{{analytics.database.degree}}</span>
+                                        </p>
                                         <span class="counter-label">Avg. Degree</span>
                                     </div>
                                 </div>
 
                                 <div class="columns counters">
                                     <div class="column is-6 has-text-centered counter-column">
-                                        <span class="counter">
-                                            {{analytics.memory.occupied}}
-                                        </span> MB
+                                        <p class="counter">
+                                            <span class="counter-number">{{analytics.memory.number}}</span> <span class="counter-units">{{analytics.memory.units}}</span>
+                                        </p>
                                         <span class="counter-label"><i class="ph-cpu-fill"></i>&nbsp;Memory</span>
                                     </div>
                                     <div class="column is-6 has-text-centered counter-column">
-                                        <span class="counter">
-                                            {{analytics.disk.size}}
-                                        </span> MB
+                                        <p class="counter">
+                                            <span class="counter-number">{{analytics.disk.size.number}}</span> <span class="counter-units">{{analytics.disk.size.units}}</span>
+                                        </p>
                                         <span class="counter-label"><i class="ph-hard-drives-fill"></i>&nbsp;Size</span>
                                     </div>
                                 </div>
