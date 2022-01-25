@@ -735,26 +735,50 @@ ul.sidebar {
         }
     }
 
+    .card {
+        margin-bottom: 1.5rem;
+
+        .card-header {
+            box-shadow: none;
+            border-bottom: 1px solid #EEE;
+        }
+
+        .card-content {
+            padding: 0;
+        }
+    }
+
     .counters {
         .counter-column {
             display: flex;
             flex-direction: column;
-            border: 1px solid #EEE;
+            //border: 1px solid #EEE;
 
             &:not(:first-child) {
                 border-left: none;
             }
 
             .counter {
-                font-size: 4rem;
+                font-size: 3rem;
             }
 
             .counter-label {
                 display: inline-flex;
                 justify-content: center;
                 align-items: center;
-                font-size: 2rem;
-                font-variant: all-small-caps;
+                font-size: 1.3rem;
+                text-transform: uppercase;
+                color: #AAA;
+                font-weight: 700;
+                text-shadow: rgb(255 255 255 / 50%) 0px 3px 3px;
+
+                i {
+                    margin-right: 0.5rem;
+                }
+            }
+
+            .counter-units {
+                font-size: 1.5rem;
             }
         }
     }

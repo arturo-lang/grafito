@@ -117,41 +117,70 @@
                                 </div>
                             </section>
                             <div class="container">
-                                <div class="columns counters">
-                                    <div class="column is-4 has-text-centered counter-column">
-                                        <p class="counter">
-                                            <span class="counter-number">{{analytics.database.nodes}}</span>
-                                        </p>
-                                        <span class="counter-label">Nodes</span>
+                                <div class="card">
+                                    <header class="card-header">
+                                      <p class="card-header-title">
+                                        <i class="ph-database-fill"></i>&nbsp;&nbsp;Database
+                                      </p>
+                                      <button class="card-header-icon" aria-label="more options">
+                                        <span class="icon">
+                                          <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                        </span>
+                                      </button>
+                                    </header>
+                                    <div class="card-content">
+                                        <div class="columns counters">
+                                            <div class="column is-4 has-text-centered counter-column">
+                                                <p class="counter">
+                                                    <span class="counter-number">{{analytics.database.nodes}}</span>
+                                                </p>
+                                                <span class="counter-label"><i class="ph-leaf-fill"></i>Nodes</span>
+                                            </div>
+                                            <div class="column is-4 has-text-centered counter-column">
+                                                <p class="counter">
+                                                    <span class="counter-number">{{analytics.database.edges}}</span>
+                                                </p>
+                                                <span class="counter-label"><i class="ph-arrow-bend-right-up-fill"></i>Edges</span>
+                                            </div>
+                                            <div class="column is-4 has-text-centered counter-column">
+                                                <p class="counter">
+                                                    <span class="counter-number">{{analytics.database.degree}}</span>
+                                                </p>
+                                                <span class="counter-label"><i class="ph-percent-fill"></i>Avg. Degree</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="column is-4 has-text-centered counter-column">
-                                        <p class="counter">
-                                            <span class="counter-number">{{analytics.database.edges}}</span>
-                                        </p>
-                                        <span class="counter-label">Edges</span>
+                                  </div>
+                                
+                                  <div class="card">
+                                    <header class="card-header">
+                                      <p class="card-header-title">
+                                        <i class="ph-gauge-fill"></i>&nbsp;&nbsp;Performance
+                                      </p>
+                                      <button class="card-header-icon" aria-label="more options">
+                                        <span class="icon">
+                                          <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                        </span>
+                                      </button>
+                                    </header>
+                                    <div class="card-content">
+                                        <div class="columns counters">
+                                            <div class="column is-6 has-text-centered counter-column">
+                                                <p class="counter">
+                                                    <span class="counter-number">{{analytics.memory.number}}</span> <span class="counter-units">{{analytics.memory.units}}</span>
+                                                </p>
+                                                <span class="counter-label"><i class="ph-cpu-fill"></i>Memory</span>
+                                            </div>
+                                            <div class="column is-6 has-text-centered counter-column">
+                                                <p class="counter">
+                                                    <span class="counter-number">{{analytics.disk.size.number}}</span> <span class="counter-units">{{analytics.disk.size.units}}</span>
+                                                </p>
+                                                <span class="counter-label"><i class="ph-hard-drives-fill"></i>Size</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="column is-4 has-text-centered counter-column">
-                                        <p class="counter">
-                                            <span class="counter-number">{{analytics.database.degree}}</span>
-                                        </p>
-                                        <span class="counter-label">Avg. Degree</span>
-                                    </div>
-                                </div>
-
-                                <div class="columns counters">
-                                    <div class="column is-6 has-text-centered counter-column">
-                                        <p class="counter">
-                                            <span class="counter-number">{{analytics.memory.number}}</span> <span class="counter-units">{{analytics.memory.units}}</span>
-                                        </p>
-                                        <span class="counter-label"><i class="ph-cpu-fill"></i>&nbsp;Memory</span>
-                                    </div>
-                                    <div class="column is-6 has-text-centered counter-column">
-                                        <p class="counter">
-                                            <span class="counter-number">{{analytics.disk.size.number}}</span> <span class="counter-units">{{analytics.disk.size.units}}</span>
-                                        </p>
-                                        <span class="counter-label"><i class="ph-hard-drives-fill"></i>&nbsp;Size</span>
-                                    </div>
-                                </div>
+                                  </div>
+                                
                             </div>
                             <!--<pre><code>{{analytics}}</code></pre>-->
                         </div>
