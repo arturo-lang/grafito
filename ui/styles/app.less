@@ -736,13 +736,18 @@ ul.sidebar {
     }
 
     .counters {
-        .counter {
-            font-size: 3rem;
-        }
+        .counter-column {
+            display: flex;
+            flex-direction: column;
+            
+            .counter {
+                font-size: 4rem;
+            }
 
-        .counter-label {
-            font-size: 2rem;
-            font-variant: small-caps;
+            .counter-label {
+                font-size: 2rem;
+                font-variant: all-small-caps;
+            }
         }
     }
 }
