@@ -723,6 +723,25 @@ ul.sidebar {
 
     padding: 2rem;
     overflow-y: auto;
+
+    table {
+        table-layout: fixed;
+
+        .query-cell {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-family: 'Fira Code' !important;
+        }
+
+        .query-ok {
+            color: green;
+        }
+
+        .query-wrong {
+            color: red;
+        }
+    }
 }
 
 .dark #query-history {

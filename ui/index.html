@@ -34,13 +34,13 @@
                     <div class="command"
                         :class="command.focused ? 'focused' : ''">
                         <div @click="processCommand()" 
-                            class="prompt">
+                             class="prompt">
                             <i :class="working ? ['ph-spinner-gap-fill', 'rotating'] : (command.focused ? 'ph-arrow-circle-right-fill' : 'ph-arrow-circle-right')"></i>
                         </div>
                         <input @focus="command.focused=true"
-                            @focusout="command.focused=false"
-                            @keyup.native.enter="processCommand()"
-                            type="text" spellcheck="false" placeholder="Enter a command">
+                               @focusout="command.focused=false"
+                               @keyup.native.enter="processCommand()"
+                               type="text" spellcheck="false" placeholder="Enter a command">
                     </div>
                 </header>
                 <main>
@@ -108,7 +108,40 @@
                             </table>
                         </div>
                         <div id="query-history" v-show="sidebar.active=='clock-counter-clockwise'">
-
+                            <table class="table is-fullwidth is-striped is-hoverable">
+                                <thead>
+                                    <tr>
+                                        <th width="60%">Query</th>
+                                        <th>Last run</th>
+                                        <th>Result</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(historyRow,historyIndex) in history.queries">
+                                        <td class="query-cell">{{historyRow.query}}</td>
+                                        <td>{{historyRow.last}}</td>
+                                        <td>
+                                            <template v-if="historyRow.worked">
+                                                <i class="ph-check-circle-fill query-ok"></i>&nbsp;in&nbsp;{{historyRow.time}}ms
+                                            </template>
+                                            <template v-else>
+                                                <i class="ph-x-circle-fill query-wrong"></i>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <a class="button is-small"
+                                               @click="copyQueryToClipboard(historyIndex)">
+                                                <i class="ph-copy-fill"></i>
+                                            </a>&nbsp;
+                                            <a class="button is-small"
+                                               @click="rerunQuery(historyIndex)">
+                                                <i class="ph-play-fill"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                         <div id="database" v-show="sidebar.active=='database'">
                             <section class="hero is-small">

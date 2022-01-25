@@ -174,6 +174,9 @@ const Grafito = {
                 keys: [],
                 rows: []
             },
+            history: {
+                queries: []
+            },
             analytics: {
                 disk: {
                     path: "",
@@ -248,9 +251,24 @@ const Grafito = {
             console.log("Grafito:: Processing command...");
 
             this.working = true;
-            $.post( "/exec", {command: $(".command input").val()}, (data)=>{
+            let currentQuery = $(".command input").val();
+            var currentdate = new Date(); 
+            var datetime = currentdate.getDate() + "/"
+                         + (currentdate.getMonth()+1)  + "/" 
+                         + currentdate.getFullYear() + " @ "  
+                         + currentdate.getHours() + ":"  
+                         + currentdate.getMinutes() + ":" 
+                         + currentdate.getSeconds();
+
+            $.post( "/exec", {command: currentQuery}, (data)=>{
                 if (data!="empty"){
                     if (data=="error"){
+                        this.history.queries.unshift({
+                            query: currentQuery,
+                            time: 0,
+                            last: datetime,
+                            worked: false
+                        });
                         toastError("Something went wrong. Check your syntax!");
                     }
                     else {
@@ -259,9 +277,24 @@ const Grafito = {
 
                             this.drawGraph(dd["data"], clean=true, firstDraw=true);
                             this.drawTable(dd["rows"]);
-                            toastSuccess(`Query executed in ${dd["timeTaken"].toFixed(2)} ms`);
+
+                            let timeTaken = dd["timeTaken"].toFixed(2);
+                            
+                            this.history.queries.unshift({
+                                query: currentQuery,
+                                time: timeTaken,
+                                last: datetime,
+                                worked: true
+                            });
+                            toastSuccess(`Query executed in ${timeTaken} ms`);
                         }
                         catch (e) {
+                            this.history.queries.unshift({
+                                query: currentQuery,
+                                time: 0,
+                                last: datetime,
+                                worked: false
+                            });
                             console.log(e);
                             toastError("Something went wrong!");
                         }
@@ -272,6 +305,18 @@ const Grafito = {
                 }
                 this.working = false;
             });
+        },
+
+        copyQueryToClipboard(queryId){
+            navigator.clipboard.writeText(this.history.queries[queryId].query).then(
+                ()=>toastInfo('The query has been copied to the clipboard!')
+            );
+        },
+
+        rerunQuery(queryId){
+            this.sidebar.active = 'graph';
+            $(".command input").val(this.history.queries[queryId].query);
+            this.processCommand();
         },
 
         // TODO(expandNodeNeighbors) Seems buggy
