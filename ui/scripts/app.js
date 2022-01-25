@@ -199,10 +199,11 @@ const Grafito = {
                 hovered: "",
                 active: "graph",
                 items: {
-                    "graph":            { tip: "Graph view", action: null },
-                    "table":            { tip: "Table view", action: null },
-                    "chart-pie-slice":  { tip: "Analytics", action: this.getAnalytics },
-                    "sliders":          { tip: "Global settings", action: null }
+                    "graph":                    { tip: "Graph view", action: null },
+                    "table":                    { tip: "Table view", action: null },
+                    "clock-counter-clockwise":  { tip: "Query history", action: null },
+                    "database":                    { tip: "Analytics", action: this.getAnalytics },                   
+                    "sliders":                  { tip: "Global settings", action: null }
                 }
             },
             modal: {
