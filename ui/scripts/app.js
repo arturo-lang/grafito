@@ -597,6 +597,12 @@ const Grafito = {
             }
         },
 
+        getAnalytics(){
+            $.post("/analytics", {}, (data)=>{
+                console.log(JSON.parse(data));
+            });
+        },
+
         drawGraph(dataset, clean=false, firstDraw=false){
             // if we're re-drawing the graph,
             // let's first delete all previous data
