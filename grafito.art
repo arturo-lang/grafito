@@ -906,6 +906,10 @@ graph: function [
                 ""
             ]
 
+            "/analytics" [;[]
+                write.json ø analytics
+            ]
+
             "/styles/app.less"  [
                 read "ui/styles/app.less"
             ]
