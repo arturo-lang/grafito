@@ -723,6 +723,7 @@ ul.sidebar {
 
     padding: 2rem;
     overflow-y: auto;
+    background: #F6F6F6;
 
     .hero {
         .title {
@@ -737,15 +738,24 @@ ul.sidebar {
     }
 
     .card {
-        margin-bottom: 1.5rem;
+        margin-top: 1.8rem;
+        box-shadow: 0 0.2em 0.4em -0.1em rgb(10 10 10 / 10%), 
+                    0 0 0 1px rgb(10 10 10 / 2%);
 
         .card-header {
             box-shadow: none;
             border-bottom: 1px solid #EEE;
+
+            .sideinfo {
+                align-items: center;
+                display: flex;
+                padding: .75rem 1rem;
+                color: #999;
+            }
         }
 
         .card-content {
-            padding: 0;
+            padding: 1rem;
         }
     }
 
@@ -756,11 +766,12 @@ ul.sidebar {
             //border: 1px solid #EEE;
 
             &:not(:first-child) {
-                border-left: none;
+                border-left: 1px solid #EEE;
             }
 
             .counter {
                 font-size: 3rem;
+                font-weight: 600;
             }
 
             .counter-label {
@@ -780,6 +791,16 @@ ul.sidebar {
 
             .counter-units {
                 font-size: 1.5rem;
+            }
+
+            &:hover {
+                .counter {
+                    color: darkgreen;
+                }
+
+                .counter-label {
+                    color: #666;
+                }
             }
         }
     }

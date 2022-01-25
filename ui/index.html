@@ -108,7 +108,7 @@
                             </table>
                         </div>
                         <div id="chart-pie-slice" v-show="sidebar.active=='chart-pie-slice'">
-                            <section class="hero">
+                            <section class="hero is-small">
                                 <div class="hero-body">
                                     <div class="container has-text-centered">
                                         <p class="title">Grafito</p>
@@ -122,11 +122,8 @@
                                       <p class="card-header-title">
                                         <i class="ph-database-fill"></i>&nbsp;&nbsp;Database
                                       </p>
-                                      <button class="card-header-icon" aria-label="more options">
-                                        <span class="icon">
-                                          <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                      </button>
+                                      <div class="sideinfo">{{analytics.disk.path}}</div>
+                                        
                                     </header>
                                     <div class="card-content">
                                         <div class="columns counters">
@@ -157,11 +154,6 @@
                                       <p class="card-header-title">
                                         <i class="ph-gauge-fill"></i>&nbsp;&nbsp;Performance
                                       </p>
-                                      <button class="card-header-icon" aria-label="more options">
-                                        <span class="icon">
-                                          <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                      </button>
                                     </header>
                                     <div class="card-content">
                                         <div class="columns counters">
@@ -173,7 +165,12 @@
                                             </div>
                                             <div class="column is-6 has-text-centered counter-column">
                                                 <p class="counter">
-                                                    <span class="counter-number">{{analytics.disk.size.number}}</span> <span class="counter-units">{{analytics.disk.size.units}}</span>
+                                                    <template v-if="analytics.disk.size.number==0">
+                                                        <span class="counter-number">&mdash;</span>
+                                                    </template>
+                                                    <template v-else>
+                                                        <span class="counter-number">{{analytics.disk.size.number}}</span> <span class="counter-units">{{analytics.disk.size.units}}</span>
+                                                    </template>                                                    
                                                 </p>
                                                 <span class="counter-label"><i class="ph-hard-drives-fill"></i>Size</span>
                                             </div>
