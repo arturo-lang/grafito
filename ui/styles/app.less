@@ -807,9 +807,57 @@ ul.sidebar {
 }
 
 .dark #chart-pie-slice {
+    background: @darkBg;
+
     .hero {
         .title {
             color: @darkGrafitoPurple;
+        }
+    }
+
+    .card {
+        background: @darkBgDarker;
+        color: @darkFg;
+
+        .card-header {
+            background: black;
+            border-bottom: 1px solid #444;
+
+            .card-header-title {
+                color: white;
+            }
+
+            .sideinfo {
+                color: @darkFgDarker;
+            }
+        }
+
+        .card-content {
+            //padding: 1rem;
+        }
+    }
+
+    .counters {
+        .counter-column {
+            &:not(:first-child) {
+                border-left: 1px solid #444;
+            }
+
+            .counter-label {
+                color: @darkFgDarker;
+
+                text-shadow: rgb(0 0 0 / 50%) 0px 3px 3px;
+            }
+
+            &:hover {
+                .counter {
+                    color: greenyellow;
+                }
+
+                .counter-label {
+                    color: @darkFg;
+                }
+            }
         }
     }
 }
