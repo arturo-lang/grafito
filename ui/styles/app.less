@@ -739,6 +739,11 @@ ul.sidebar {
         .counter-column {
             display: flex;
             flex-direction: column;
+            border: 1px solid #EEE;
+
+            &:not(:first-child) {
+                border-left: none;
+            }
             
             .counter {
                 font-size: 4rem;
