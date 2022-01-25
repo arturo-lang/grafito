@@ -177,13 +177,14 @@ const Grafito = {
             analytics: {
                 disk: {
                     path: "",
-                    size: 0
+                    size: {
+                        number: 0,
+                        units: ""
+                    }
                 },
                 memory: {
-                    free: 0,
-                    max: 0,
-                    total: 0,
-                    occupied: 0
+                    number: 0,
+                    units: ""
                 },
                 database: {
                     nodes: 0,
@@ -618,7 +619,7 @@ const Grafito = {
             $.post("/analytics", {}, (data)=>{
                 this.analytics = JSON.parse(data);
 
-                $(".counter").counterUp({
+                $(".counter-number").counterUp({
                     delay: 10,
                     time: 1000
                 });
