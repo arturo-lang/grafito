@@ -162,7 +162,7 @@ graph: function [
             database: #[
                 nodes: nodeCount
                 edges: edgeCount
-                degree: avgDegree
+                degree: to :floating to :string .format: ".2f" avgDegree
             ]
             memory: process\memory
             disk: #[
