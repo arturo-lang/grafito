@@ -616,7 +616,7 @@ const Grafito = {
 
         getAnalytics(){
             $.post("/analytics", {}, (data)=>{
-                console.log(JSON.parse(data));
+                this.analytics = JSON.parse(data);
             });
         },
 
