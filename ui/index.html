@@ -116,6 +116,28 @@
                                     </div>
                                 </div>
                             </section>
+                            <div class="container">
+                                <div class="columns">
+                                    <div class="column is-4 has-text-centered">
+                                        <span class="counter">
+                                            {{analytics.database.nodes}}
+                                        </span>
+                                        <span class="counter-label">Nodes</span>
+                                    </div>
+                                    <div class="column is-4 has-text-centered">
+                                        <span class="counter">
+                                            {{analytics.database.edges}}
+                                        </span>
+                                        <span class="counter-label">Edges</span>
+                                    </div>
+                                    <div class="column is-4 has-text-centered">
+                                        <span class="counter">
+                                            {{analytics.database.degree}}
+                                        </span>
+                                        <span class="counter-label">Avg. Degree</span>
+                                    </div>
+                                </div>
+                            </div>
                             <pre><code>{{analytics}}</code></pre>
                         </div>
                         <div id="sliders" v-show="sidebar.active=='sliders'">
