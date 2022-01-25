@@ -832,6 +832,7 @@ graph: function [
         Versions: #[
             engine: to :version first split.by:" " execute "sqlite3 --version"
             system: Grafito\Version
+            arturo: strip replace replace execute "arturo -v" "arturo" "" "v/" ""
         ]
         
         routes: #.raw[

@@ -113,9 +113,20 @@
                         <div id="database" v-show="sidebar.active=='database'">
                             <section class="hero is-small">
                                 <div class="hero-body">
-                                    <div class="container has-text-centered">
-                                        <p class="title">Grafito</p>
-                                        <p class="subtitle">system: v/{{config.versions.system}}&nbsp;&nbsp;&bull;&nbsp;&nbsp;engine: v/{{config.versions.engine}}</p>
+                                    <div class="container">
+                                        <div class="columns">
+                                            <div class="column is-6">
+                                                <p class="title">Grafito <span class="tag vernum is-light is-rounded">{{config.versions.system}}</span></p>
+                                            </div>
+                                            <div class="column is-6 right-column">
+                                                <ul>
+                                                    <li><b>backend:</b> Arturo v/{{config.versions.arturo}}</li>
+                                                    <li><b>engine:</b> SQLite v/{{config.versions.engine}}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <!--<p class="title">Grafito</p>
+                                        <p class="subtitle">system: v/{{config.versions.system}}&nbsp;&nbsp;&bull;&nbsp;&nbsp;</p>-->
                                     </div>
                                 </div>
                             </section>

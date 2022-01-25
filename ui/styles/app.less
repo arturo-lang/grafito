@@ -745,11 +745,40 @@ ul.sidebar {
         .title {
             color: @grafitoPurple;
             font-weight: 700;
+            font-size: 3rem;
+
+            .vernum {
+                font-size: 1.3rem !important;
+                padding-left: 0.35em;
+                padding-right: 0.35em;
+                color: #AAA;
+                background-color: #EEE;
+                height: inherit !important;
+                margin-left: 0.5rem;
+            }
         }
 
         .subtitle {
             font-weight: 600;
             color: darkgray;
+        }
+
+        .hero-body {
+            padding: 1.5rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+
+            .right-column {
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                text-align: right;
+                color: #999;
+
+                b {
+                    font-weight: 600;
+                }
+            }
         }
     }
 
@@ -828,6 +857,11 @@ ul.sidebar {
     .hero {
         .title {
             color: @darkGrafitoPurple;
+
+            .vernum {
+                color: #888;
+                background-color: @darkBgDarker;
+            }
         }
     }
 
