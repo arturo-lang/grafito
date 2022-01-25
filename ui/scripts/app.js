@@ -617,6 +617,11 @@ const Grafito = {
         getAnalytics(){
             $.post("/analytics", {}, (data)=>{
                 this.analytics = JSON.parse(data);
+
+                $(".counter").counterUp({
+                    delay: 10,
+                    time: 1000
+                });
             });
         },
 
