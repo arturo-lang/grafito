@@ -714,6 +714,22 @@ ul.sidebar {
 }
 
 /****************************************************
+ Query history page
+ ****************************************************/
+
+#query-history {
+    .stretched();
+    .noselect();
+
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+.dark #query-history {
+    background: @darkBg;
+}
+
+/****************************************************
  Analytics page
  ****************************************************/
 
@@ -866,7 +882,7 @@ ul.sidebar {
  Global settings page
  ****************************************************/
 
-#sliders {
+#settings {
     .stretched();
     .noselect();
 
@@ -883,7 +899,7 @@ ul.sidebar {
     }
 }
 
-.dark #sliders {
+.dark #settings {
     background: @darkBg;
 
     .panel {

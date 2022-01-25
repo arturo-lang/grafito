@@ -107,6 +107,9 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div id="query-history" v-show="sidebar.active=='clock-counter-clockwise'">
+
+                        </div>
                         <div id="database" v-show="sidebar.active=='database'">
                             <section class="hero is-small">
                                 <div class="hero-body">
@@ -175,7 +178,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="sliders" v-show="sidebar.active=='sliders'">
+                        <div id="settings" v-show="sidebar.active=='sliders'">
                             <div class="container">
                                 <div class="columns">
                                     <div class="column is-6">
