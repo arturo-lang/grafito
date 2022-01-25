@@ -142,6 +142,35 @@ graph: function [
     ]
 
     ;
+    ; Get db analytics
+    ;--------------------------
+
+    analytics: function [][
+        nodeCount: to :integer first first performQuery 'analytics countNodesSQL ø
+        edgeCount: to :integer first first performQuery 'analytics countEdgesSQL ø
+        avgDegree: edgeCount // nodeCount
+
+        filename: dbPath
+        filesize: 0
+
+        if not? null? filename ->
+            filesize: volume filename
+
+        return #[
+            database: #[
+                nodes: nodeCount
+                edges: edgeCount
+                degree: avgDegree
+            ]
+            memory: process\memory
+            disk: #[
+                path:  filename
+                size: filesize
+            ]
+        ]
+    ]
+
+    ;
     ; Get random node color
     ; for graph visualization
     ;--------------------------
