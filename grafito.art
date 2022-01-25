@@ -154,6 +154,7 @@ graph: function [
         filesize: 0
 
         if not? empty? filename ->
+            filename: relative filename
             filesize: volume filename
 
         return #[
@@ -164,7 +165,7 @@ graph: function [
             ]
             memory: process\memory
             disk: #[
-                path:  filename
+                path: filename
                 size: filesize
             ]
         ]
