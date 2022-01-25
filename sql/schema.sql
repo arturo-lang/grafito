@@ -5,7 +5,7 @@ CREATE TABLE nodes (
     properties  JSON NOT NULL
 );
 
-CREATE INDEX IF NOT EXISTS node_index ON NODES(id);
+CREATE INDEX IF NOT EXISTS node_index ON nodes(id);
 CREATE INDEX IF NOT EXISTS node_tag_index ON nodes(tag);
 
 DROP TABLE IF EXISTS edges;
@@ -19,5 +19,6 @@ CREATE TABLE edges (
     FOREIGN KEY (target) REFERENCES nodes(id)
 );
 
+CREATE INDEX IF NOT EXISTS edges_index ON edges(id);
 CREATE INDEX IF NOT EXISTS edges_source_index ON edges(source);
 CREATE INDEX IF NOT EXISTS edges_target_index ON edges(target);
