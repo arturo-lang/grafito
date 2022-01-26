@@ -324,16 +324,9 @@ const Grafito = {
             this.multilineMode = !this.multilineMode;
 
             if (this.multilineMode){
-                let nodeId = this.graph.selected.node[0].id;
-                let node = this.graph.data.nodes.get(nodeId);
-
                 this.modal.title = "New query";
                 this.modal.mode = "query";
                 this.modal.accept.button = "Execute";
-
-                // TODO(edit node) fields appearing empty 
-                //  mainly the Name field; weird...
-                //  labels: bug, ui 
 
                 this.modal.accept.action = ()=>{
                     console.log("executing query...");
