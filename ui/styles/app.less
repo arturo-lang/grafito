@@ -741,6 +741,12 @@ ul.sidebar {
         .query-wrong {
             color: red;
         }
+
+        th, td {
+            &:last-child {
+                text-align: right;
+            }
+        }
     }
 
     .no-queries {
@@ -790,9 +796,10 @@ ul.sidebar {
         a.button {
             background: black;
             color: @darkFgDarker;
+            border-color: #666;
 
             &:hover {
-                color: @darkFg;
+                color: @darkGrafitoPurple;
                 border-color: @darkGrafitoPurple;
             }
         }

@@ -114,8 +114,8 @@
                                         <tr>
                                             <th width="60%">Query</th>
                                             <th>Last run</th>
-                                            <th>Result</th>
-                                            <th>Actions</th>
+                                            <th width="13%">Result</th>
+                                            <th width="13%">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -124,19 +124,19 @@
                                             <td>{{historyRow.last}}</td>
                                             <td>
                                                 <template v-if="historyRow.worked">
-                                                    <i class="ph-check-circle-fill query-ok"></i>&nbsp;in&nbsp;{{historyRow.time}}ms
+                                                    <i class="ph-check-circle-fill query-ok"></i>&nbsp;{{historyRow.time}}ms
                                                 </template>
                                                 <template v-else>
                                                     <i class="ph-x-circle-fill query-wrong"></i>
                                                 </template>
                                             </td>
                                             <td>
-                                                <a class="button is-small"
-                                                @click="copyQueryToClipboard(historyIndex)">
+                                                <a class="button is-small row-button"
+                                                   @click="copyQueryToClipboard(historyIndex)">
                                                     <i class="ph-copy-fill"></i>
                                                 </a>&nbsp;
-                                                <a class="button is-small"
-                                                @click="rerunQuery(historyIndex)">
+                                                <a class="button is-small row-button"
+                                                   @click="rerunQuery(historyIndex)">
                                                     <i class="ph-play-fill"></i>
                                                 </a>
                                             </td>
