@@ -30,6 +30,7 @@ const Grafito = {
             },
             working: false,
             multilineMode: false,
+            editor: null,
             graph: {
                 dataset: {},
                 dataview: {
@@ -337,6 +338,11 @@ const Grafito = {
                 this.modal.dropdownShowing = false;
 
                 this.modal.active = true;
+                setTimeout(()=>{
+                    this.editor = ace.edit("editor");
+                    this.editor.setTheme("ace/theme/monokai");
+                    this.editor.getSession().setMode("ace/mode/arturo"); 
+                }, 500);
             }
             else {
                 this.modal.active = false;

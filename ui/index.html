@@ -332,7 +332,7 @@
                                 <p>This action is going to delete the selected elements from the graph database and is not reversible. Are you sure you want to proceed?</p>
                             </template>
                             <template v-if="modal.mode=='query'">
-                                <p>Multi-line query</p>
+                                <div id="editor"></div>
                             </template>
                             <template v-if="modal.mode=='filter'">
                                 <div class="columns">
@@ -585,6 +585,9 @@
         <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
         <script type="text/javascript" src="https://unpkg.com/@popperjs/core@2"></script>
         <script type="text/javascript" src="https://unpkg.com/tippy.js@6"></script>
+        <script type="text/javascript" src="/scripts/ace/ace.js"></script>
+        <script type="text/javascript" src="/scripts/ace/themes/monokai.js"></script>
+        <script type="text/javascript" src="/scripts/ace/modes/grafito.js"></script>
         <script type="text/javascript" src="/scripts/app.js"></script>
     </body>
 </html>
