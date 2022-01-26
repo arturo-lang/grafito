@@ -28,6 +28,7 @@ ace.define("ace/theme/monokai", ["require", "exports", "module", "ace/lib/dom"],
         .ace-monokai .ace_invalid.ace_deprecated {color: #F8F8F0;background-color: #AE81FF}
         .ace-monokai .ace_support.ace_constant,
         .ace-monokai .ace_support.ace_function {color: #66D9EF}
+        .ace-monokai .ace_support.ace_constant.bold {font-weight: bold}
         .ace-monokai .ace_fold {background-color: #A6E22E;border-color: #F8F8F2}
         .ace-monokai .ace_storage.ace_type,
         .ace-monokai .ace_support.ace_class,
