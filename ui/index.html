@@ -469,7 +469,7 @@
                                     @click="modal.accept.action(); modal.active=false">
                                 {{modal.accept.button}}
                             </button>
-                            <button @click="modal.active=false"
+                            <button @click="modal.active=false; multilineMode=false;"
                                     v-if="modal.showCancel"
                                     class="button is-light">
                                 Cancel
