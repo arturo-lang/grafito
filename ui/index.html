@@ -42,7 +42,10 @@
                                @keyup.native.enter="processCommand()"
                                type="text" spellcheck="false" placeholder="Enter a command">
                         <div @click="toggleMultilineMode()" 
-                               class="multiline">
+                             data-tippy-placement="bottom"
+                             data-tippy-content="Enter multi-line input"
+                             data-tippy-theme="light"
+                             class="multiline">
                               <i :class="multilineMode ? 'ph-caret-double-up-thin' : 'ph-caret-double-down-thin'"></i>
                         </div>
                     </div>
@@ -319,7 +322,7 @@
                                 <i :class="(modal.icon=='') ? '' : `ph-${modal.icon}`"></i>
                                 {{modal.title}}
                             </p>
-                            <button @click="modal.active=false"
+                            <button @click="modal.active=false; multilineMode=false;"
                                     class="delete" 
                                     aria-label="close" >
                             </button>
