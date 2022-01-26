@@ -10,7 +10,6 @@ const Grafito = {
             performInitialSetup: false,
             config: {
                 versions: {},
-                helpers: [],
                 general: {
                     darkTheme: {value: false, description: "Enable dark theme"},
                     askForConfirmation: {value: true, description: "Always request confirmation before deleting elements"}
@@ -340,29 +339,15 @@ const Grafito = {
                 this.modal.dropdownShowing = false;
 
                 this.modal.active = true;
-                //if (this.editor==null){
+                if (this.editor==null){
                     setTimeout(()=>{
                         this.editor = ace.edit("editor");
                         this.editor.setTheme("ace/theme/monokai");
-                        this.editor.session.setMode("ace/mode/arturo");
-                            if (this.config.helpers.length > 0){
-                                console.log("BEFORE:",this.editor.session.$mode.$highlightRules.$rules);
-                                this.editor.session.$mode.$highlightRules.$rules["start"].unshift({
-                                    token: "support.constant.bold", 
-                                    regex: `\\b(${this.config.helpers.join("|")})\\b`, 
-                                    onMatch: null
-                                });
-                                console.log("AFTER:",this.editor.session.$mode.$highlightRules.$rules);
-
-                                // force recreation of tokenizer
-                                this.editor.session.$mode.$tokenizer = null;
-                                this.editor.session.bgTokenizer.setTokenizer(this.editor.session.$mode.getTokenizer());
-                                // force re-highlight whole document
-                                this.editor.session.bgTokenizer.start(0);
-                            }
-                        
+                        this.editor.session.setMode("ace/mode/grafito", ()=>{
+                            
+                        });
                     }, 500);
-                //}
+                }
             }
             else {
                 this.modal.active = false;
