@@ -21,7 +21,7 @@ Grafito: #[
     Version: 0.2.8
 
     ; configuration
-    Debug?: true
+    Debug?: false
     verbose?: true
     caseSensitive?: true
 ]
@@ -95,7 +95,7 @@ graph: function [
     ; Color library
     ; for graph nodes
 
-    colorPalette: as.data "ui/palettes/inferno.art"
+    colorPalette: as.data "ui/palettes/viridis.art"
     ; [
     ;     'blue 'blueviolet 'brown 'cadetblue 'chocolate 'crimson 'darkblue 'darkgreen 
     ;     'darkmagenta 'darkorchid 'darkred 'darkslategray 'dodgerblue 'green 'indigo 
@@ -196,15 +196,32 @@ graph: function [
         ]
     ]
 
+    idealForeground: function [back][
+        rgb1: extract back
+        L1: sum @[0.2126*rgb1\red 0.7152*rgb1\green 0.0722*rgb1\blue]
+        rgb2: extract #white
+        L2: sum @[0.2126*rgb2\red 0.7152*rgb2\green 0.0722*rgb2\blue]
+
+        print ["L1:" L1]
+        print ["L2:" L2]
+
+        ratio: (L2 + 0.05) // (L1 + 0.05)
+
+        print ["Ratio:" ratio]
+
+        return #white
+    ]
+
     styleNode: function [nodeId, nodeTag, nodeProps][
         if not? key? nodeColors nodeTag [
             nodeColor: sample colorPalette
+            print [">> Picked:" nodeColor "for:" nodeTag]
             'colorPalette -- nodeColor
             set nodeColors nodeTag nodeColor
         ]
 
-        fg: to :string nodeColors\[nodeTag]\1
-        bg: to :string nodeColors\[nodeTag]\0
+        bg: to :string nodeColors\[nodeTag]
+        fg: to :string idealForeground nodeColors\[nodeTag]
 
         nodeLabel: first values nodeProps
 
