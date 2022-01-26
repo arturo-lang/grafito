@@ -196,8 +196,10 @@ graph: function [
         ]
     ]
 
-    styleNode: function [nodeTag, nodeLabel][
+    styleNode: function [nodeId, nodeTag, nodeProps][
         cl: to :string #008800
+
+        nodeLabel: first values nodeProps
 
         highlightField: #[
             border: as.code darken to :color cl 0.2
@@ -205,13 +207,17 @@ graph: function [
         ]
 
         return #[
+            id: nodeId
+            tag: nodeTag
+            properties: nodeProps
+            label: truncate nodeLabel 10
+            fullLabel: nodeLabel
             color: #[
                 border: cl
                 background: cl
                 hover: cl
                 highlight: highlightField
             ]
-            label: nodeLabel
         ]
     ]
 
@@ -343,67 +349,34 @@ graph: function [
     ;--------------------------
 
     nodeFromIds: function [nodes][
-        nodeset: new nodes
-        if not? block? nodeset [
-            nodeset: new @[nodeset]
-        ]
+        nodeset: nodes
+        if not? block? nodeset ->
+            nodeset: @[nodeset]
 
-        clean: new nodeset
-
-        edz: new []
-        ;usedColors: new []
+        nodeElements: map nodeset 'nd -> styleNode nd\id nd\tag nd\properties
+        edgeElements: new []
 
         loop nodeset [nd][
-            ;'usedColors ++ addColorForNodeType nd usedColors
-
             rezu: performQuery 'nodeFromIds getRelatedNodesSQL @[nd\id, nd\id, nd\id]
 
             loop rezu [rez][
-                appendable: #[
-                    id: rez\0
-                    tag: rez\1
-                    properties: read.json rez\2
+                'nodeElements ++ styleNode rez\0 rez\1 read.json rez\2
+                'edgeElements ++ #[
+                    id: ~"|rez\3|+|rez\4|+|rez\5|"
+                    dbId: rez\6
+                    label: rez\5
+                    from: to :integer rez\3
+                    to: to :integer rez\4
                 ]
-
-                'clean ++ appendable
-                ;'usedColors ++ addColorForNodeType appendable usedColors
-                'edz ++ @[@[rez\3 rez\4 rez\5 rez\6]]
-            ]
-            clean: unique clean
-        ]
-
-        elements: new []
-
-        loop clean [nd][
-            t: nd\tag
-            props: nd\properties
-            nconf: nodeConfig\[t]
-            
-            'elements ++ #[
-                id: to :integer nd\id
-                tag: t
-                properties: props
-                label: truncate get props nconf\label 10
-                fullLabel: get props nconf\label
-                color: nconf\color
             ]
         ]
 
-        relations: new []
-
-        loop edz [ed][
-            'relations ++ #[ 
-                id: ~"|ed\0|+|ed\1|+|ed\2|"
-                from: to :integer ed\0
-                to: to :integer ed\1
-                label: ed\2
-                dbId: ed\3
-            ]
-        ]
+        unique 'nodeElements
+        unique 'edgeElements
 
         return #[
-            nodes: unique elements
-            edges: unique relations
+            nodes: nodeElements
+            edges: edgeElements
         ]
     ]
 
