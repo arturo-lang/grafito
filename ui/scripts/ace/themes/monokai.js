@@ -28,7 +28,6 @@ ace.define("ace/theme/monokai", ["require", "exports", "module", "ace/lib/dom"],
         .ace-monokai .ace_invalid.ace_deprecated {color: #F8F8F0;background-color: #AE81FF}
         .ace-monokai .ace_support.ace_constant,
         .ace-monokai .ace_support.ace_function {color: #66D9EF}
-        .ace-monokai .ace_support.ace_constant.bold {font-weight: bold}
         .ace-monokai .ace_fold {background-color: #A6E22E;border-color: #F8F8F2}
         .ace-monokai .ace_storage.ace_type,
         .ace-monokai .ace_support.ace_class,
@@ -37,9 +36,11 @@ ace.define("ace/theme/monokai", ["require", "exports", "module", "ace/lib/dom"],
         .ace-monokai .ace_entity.ace_other,
         .ace-monokai .ace_entity.ace_other.ace_attribute-name,
         .ace-monokai .ace_variable {color: #A6E22E}
+        .ace-monokai .ace_helper {color: #FD971F}
         .ace-monokai .ace_variable.ace_parameter {color: #FD971F}
         .ace-monokai .ace_string {color: #E6DB74}
         .ace-monokai .ace_comment {color: #75715E}
+        .ace-monokai .bold {font-weight: bold}
         .ace-monokai .ace_indent-guide {background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWPQ0FD0ZXBzd/wPAAjVAoxeSgNeAAAAAElFTkSuQmCC) right repeat-y}`, 
     e("../lib/dom").importCssString(t.cssText, t.cssClass)
 });

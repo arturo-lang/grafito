@@ -46,7 +46,7 @@ ace.define("ace/mode/grafito_highlight_rules", ["require", "exports", "module", 
                     token: "support.constant.bold",
                     regex: "\\b(fetch|put|unput|link)\\b"
                 }, {
-                    token: "support.constant.bold",
+                    token: "support.helper.bold",
                     regex: "\\b(CUSTOM_HELPERS)\\b"
                 }, {
                     token: "constant.other",
