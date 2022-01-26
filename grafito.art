@@ -95,12 +95,13 @@ graph: function [
     ; Color library
     ; for graph nodes
 
-    colori: [
-        'blue 'blueviolet 'brown 'cadetblue 'chocolate 'crimson 'darkblue 'darkgreen 
-        'darkmagenta 'darkorchid 'darkred 'darkslategray 'dodgerblue 'green 'indigo 
-        'maroon 'mediumpurple 'midnightblue 'olive 'orange 'orangered 'peru 'purple 
-        'seagreen 'steelblue 'teal
-    ]
+    colori: values # "ui/palettes/default.art"
+    ; [
+    ;     'blue 'blueviolet 'brown 'cadetblue 'chocolate 'crimson 'darkblue 'darkgreen 
+    ;     'darkmagenta 'darkorchid 'darkred 'darkslategray 'dodgerblue 'green 'indigo 
+    ;     'maroon 'mediumpurple 'midnightblue 'olive 'orange 'orangered 'peru 'purple 
+    ;     'seagreen 'steelblue 'teal
+    ; ]
 
     ;==========================================
     ; HELPERS
@@ -206,6 +207,7 @@ graph: function [
             while [contains? existingCl cl][
                 cl: sample colori
             ]
+            cl: to :string cl
             ;print ~"picked |cl|"
             remove 'colori cl
             props: #[
@@ -217,7 +219,7 @@ graph: function [
                 ]
                 label: get keys nn\properties 0
             ]
-            props\color\highlight\border: as.code darken to :color to :string cl 0.2
+            props\color\highlight\border: as.code darken to :color cl 0.2
             props\color\highlight\background: cl
 
             set nodeConfig nn\tag props
