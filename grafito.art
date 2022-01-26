@@ -95,7 +95,7 @@ graph: function [
     ; Color library
     ; for graph nodes
 
-    colori: values # "ui/palettes/default.art"
+    colorPalette: as.data "ui/palettes/magma.art"
     ; [
     ;     'blue 'blueviolet 'brown 'cadetblue 'chocolate 'crimson 'darkblue 'darkgreen 
     ;     'darkmagenta 'darkorchid 'darkred 'darkslategray 'dodgerblue 'green 'indigo 
@@ -197,13 +197,20 @@ graph: function [
     ]
 
     styleNode: function [nodeId, nodeTag, nodeProps][
-        cl: to :string #008800
+        if not? key? nodeColors nodeTag [
+            nodeColor: sample colorPalette
+            'colorPalette -- nodeColor
+            set nodeColors nodeTag nodeColor
+        ]
+
+        fg: to :string nodeColors\[nodeTag]\1
+        bg: to :string nodeColors\[nodeTag]\0
 
         nodeLabel: first values nodeProps
 
         highlightField: #[
-            border: as.code darken to :color cl 0.2
-            background: cl
+            border: as.code darken to :color bg 0.2
+            background: bg
         ]
 
         return #[
@@ -213,10 +220,13 @@ graph: function [
             label: truncate nodeLabel 10
             fullLabel: nodeLabel
             color: #[
-                border: cl
-                background: cl
-                hover: cl
+                border: bg
+                background: bg
+                hover: bg
                 highlight: highlightField
+            ]
+            font: #[
+                color: fg
             ]
         ]
     ]
@@ -988,7 +998,7 @@ graph: function [
         dbExisted: exists? ~"|cleanpath|.db"
     ]
 
-    nodeConfig: #[]
+    nodeColors: #[]
 
     ; define aliases
     alias.infix {~>} 'link
