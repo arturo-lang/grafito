@@ -848,6 +848,7 @@ graph: function [
                     data: currentDataset
                     rows: currentNodes
                     versions: Versions
+                    helperEntities: entities
                     caseSensitive: Grafito\caseSensitive?
                 ]
             ]
