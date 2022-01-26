@@ -1,8 +1,8 @@
-ace.define("ace/mode/arturo_highlight_rules", ["require", "exports", "module", "ace/lib/oop", "ace/mode/text_highlight_rules"], function(ArturoHighlightRules, exports, module) {
+ace.define("ace/mode/grafito_highlight_rules", ["require", "exports", "module", "ace/lib/oop", "ace/mode/text_highlight_rules"], function(GrafitoHighlightRules, exports, module) {
     "use strict";
-    var oop = ArturoHighlightRules("../lib/oop"),
-        TextHighlightRules = ArturoHighlightRules("./text_highlight_rules").TextHighlightRules,
-        ArturoHighlightRules = function() {
+    var oop = GrafitoHighlightRules("../lib/oop"),
+        TextHighlightRules = GrafitoHighlightRules("./text_highlight_rules").TextHighlightRules,
+        GrafitoHighlightRules = function() {
             this.$rules = {
                 start: [{
                     token: "variable.parameter",
@@ -87,7 +87,7 @@ ace.define("ace/mode/arturo_highlight_rules", ["require", "exports", "module", "
                 }]
             }
         };
-    oop.inherits(ArturoHighlightRules, TextHighlightRules), exports.ArturoHighlightRules = ArturoHighlightRules
+    oop.inherits(GrafitoHighlightRules, TextHighlightRules), exports.GrafitoHighlightRules = GrafitoHighlightRules
 }), ace.define("ace/mode/folding/cstyle", ["require", "exports", "module", "ace/lib/oop", "ace/range", "ace/mode/folding/fold_mode"], function(BaseFoldMode, FoldMode, module) {
     "use strict";
     var oop = BaseFoldMode("../../lib/oop"),
@@ -163,15 +163,15 @@ ace.define("ace/mode/arturo_highlight_rules", ["require", "exports", "module", "
             return line.match(/^\s*/)[0]
         }
     }.call(MatchingBraceOutdent.prototype), exports.MatchingBraceOutdent = MatchingBraceOutdent
-}), ace.define("ace/mode/arturo", ["require", "exports", "module", "ace/lib/oop", "ace/mode/text", "ace/mode/arturo_highlight_rules", "ace/mode/folding/cstyle", "ace/mode/matching_brace_outdent", "ace/range"], function(Mode, exports, module) {
+}), ace.define("ace/mode/grafito", ["require", "exports", "module", "ace/lib/oop", "ace/mode/text", "ace/mode/grafito_highlight_rules", "ace/mode/folding/cstyle", "ace/mode/matching_brace_outdent", "ace/range"], function(Mode, exports, module) {
     "use strict";
     var oop = Mode("../lib/oop"),
         TextMode = Mode("./text").Mode,
-        ArturoHighlightRules = Mode("./arturo_highlight_rules").ArturoHighlightRules,
-        ArturoFoldMode = Mode("./folding/cstyle").FoldMode,
+        GrafitoHighlightRules = Mode("./grafito_highlight_rules").GrafitoHighlightRules,
+        GrafitoFoldMode = Mode("./folding/cstyle").FoldMode,
         MatchingBraceOutdent = Mode("./matching_brace_outdent").MatchingBraceOutdent,
         Mode = (Mode("../range").Range, function() {
-            this.HighlightRules = ArturoHighlightRules, this.foldingRules = new ArturoFoldMode, this.$outdent = new MatchingBraceOutdent, this.$behaviour = this.$defaultBehaviour
+            this.HighlightRules = GrafitoHighlightRules, this.foldingRules = new GrafitoFoldMode, this.$outdent = new MatchingBraceOutdent, this.$behaviour = this.$defaultBehaviour
         });
     oop.inherits(Mode, TextMode),
         function() {
@@ -194,8 +194,8 @@ ace.define("ace/mode/arturo_highlight_rules", ["require", "exports", "module", "
                 return this.$outdent.checkOutdent(line, input)
             }, this.autoOutdent = function(state, doc, row) {
                 this.$outdent.autoOutdent(doc, row)
-            }, this.$id = "ace/mode/arturo"
+            }, this.$id = "ace/mode/grafito"
         }.call(Mode.prototype), exports.Mode = Mode
-}), ace.require(["ace/mode/arturo"], function(m) {
+}), ace.require(["ace/mode/grafito"], function(m) {
     "object" == typeof module && "object" == typeof exports && module && (module.exports = m)
 });
