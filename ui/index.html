@@ -327,7 +327,8 @@
                                     aria-label="close" >
                             </button>
                         </header>
-                        <section class="modal-card-body">
+                        <section class="modal-card-body"
+                                 :class="(modal.mode=='query') ? 'query-mode' : ''">
                             <template v-if="modal.mode=='confirmation'">
                                 <p>This action is going to delete the selected elements from the graph database and is not reversible. Are you sure you want to proceed?</p>
                             </template>
