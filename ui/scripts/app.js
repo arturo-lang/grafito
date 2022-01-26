@@ -330,7 +330,7 @@ const Grafito = {
                 this.modal.accept.button = "Execute";
 
                 this.modal.accept.action = ()=>{
-                    $(".command input").val(this.editor.getValue());
+                    $(".command input").val(this.editor.getValue().replaceAll(/\n[\s\t]+/g," "));
                     this.processCommand();
                 };
                 this.modal.accept.style = "is-modifying";
