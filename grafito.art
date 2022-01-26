@@ -950,6 +950,18 @@ graph: function [
                 read "ui/scripts/app.js"
             ]
 
+            "/scripts/ace/ace.js" [
+                read "ui/scripts/ace/ace.js"
+            ]
+            
+            "/scripts/ace/themes/monokai.js" [
+                read "ui/scripts/ace/themes/monokai.js"
+            ]
+
+            "/scripts/ace/modes/grafito.js" [
+                read "ui/scripts/ace/modes/grafito.js"
+            ]
+
             "/exit" [
                 printDebug "Shutting down"
                 close db
