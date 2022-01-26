@@ -343,7 +343,22 @@ const Grafito = {
                     setTimeout(()=>{
                         this.editor = ace.edit("editor");
                         this.editor.setTheme("ace/theme/monokai");
-                        this.editor.getSession().setMode("ace/mode/arturo"); 
+                        this.editor.getSession().setMode("ace/mode/arturo", ()=>{
+                                var rules = this.editor.session.$mode.$highlightRules.getRules();
+                                console.log(rules);
+                            //     rules["start"].push({
+                            //         token: "constant.other", 
+                            //         regex: "'\\w[-\\w'*.?!]*", 
+                            //         onMatch: null
+                            //     })
+
+                            //     // force recreation of tokenizer
+                            //     this.editor.session.$mode.$tokenizer = null;
+                            //     this.editor.session.bgTokenizer.setTokenizer(this.editor.session.$mode.getTokenizer());
+                            //     // force re-highlight whole document
+                            //     this.editor.session.bgTokenizer.start(0);
+                            // }
+                        }); 
                     }, 500);
                 }
             }
