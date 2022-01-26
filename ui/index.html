@@ -108,40 +108,48 @@
                             </table>
                         </div>
                         <div id="query-history" v-show="sidebar.active=='clock-counter-clockwise'">
-                            <table class="table is-fullwidth is-striped is-hoverable">
-                                <thead>
-                                    <tr>
-                                        <th width="60%">Query</th>
-                                        <th>Last run</th>
-                                        <th>Result</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(historyRow,historyIndex) in history.queries">
-                                        <td class="query-cell">{{historyRow.query}}</td>
-                                        <td>{{historyRow.last}}</td>
-                                        <td>
-                                            <template v-if="historyRow.worked">
-                                                <i class="ph-check-circle-fill query-ok"></i>&nbsp;in&nbsp;{{historyRow.time}}ms
-                                            </template>
-                                            <template v-else>
-                                                <i class="ph-x-circle-fill query-wrong"></i>
-                                            </template>
-                                        </td>
-                                        <td>
-                                            <a class="button is-small"
-                                               @click="copyQueryToClipboard(historyIndex)">
-                                                <i class="ph-copy-fill"></i>
-                                            </a>&nbsp;
-                                            <a class="button is-small"
-                                               @click="rerunQuery(historyIndex)">
-                                                <i class="ph-play-fill"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <template v-if="history.queries.length > 0">
+                                <table class="table is-fullwidth is-striped">
+                                    <thead>
+                                        <tr>
+                                            <th width="60%">Query</th>
+                                            <th>Last run</th>
+                                            <th>Result</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(historyRow,historyIndex) in history.queries">
+                                            <td class="query-cell">{{historyRow.query}}</td>
+                                            <td>{{historyRow.last}}</td>
+                                            <td>
+                                                <template v-if="historyRow.worked">
+                                                    <i class="ph-check-circle-fill query-ok"></i>&nbsp;in&nbsp;{{historyRow.time}}ms
+                                                </template>
+                                                <template v-else>
+                                                    <i class="ph-x-circle-fill query-wrong"></i>
+                                                </template>
+                                            </td>
+                                            <td>
+                                                <a class="button is-small"
+                                                @click="copyQueryToClipboard(historyIndex)">
+                                                    <i class="ph-copy-fill"></i>
+                                                </a>&nbsp;
+                                                <a class="button is-small"
+                                                @click="rerunQuery(historyIndex)">
+                                                    <i class="ph-play-fill"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </template>
+                            <template v-else>
+                                <div class="no-queries">
+                                    <i class="ph-bug error-icon" style="font-size: 3rem;"></i>
+                                    <p class="error-message">No queries have been found.</p>
+                                </div>
+                            </template>
                         </div>
                         <div id="database" v-show="sidebar.active=='database'">
                             <section class="hero is-small">
