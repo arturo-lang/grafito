@@ -848,7 +848,6 @@ graph: function [
                     data: currentDataset
                     rows: currentNodes
                     versions: Versions
-                    helperEntities: entities
                     caseSensitive: Grafito\caseSensitive?
                 ]
             ]
@@ -960,7 +959,8 @@ graph: function [
             ]
 
             "/scripts/ace/modes/grafito.js" [
-                read "ui/scripts/ace/modes/grafito.js"
+                replace read "ui/scripts/ace/modes/grafito.js" 
+                        "CUSTOM_HELPERS" join.with:"|" entities
             ]
 
             "/exit" [
