@@ -41,6 +41,10 @@
                                @focusout="command.focused=false"
                                @keyup.native.enter="processCommand()"
                                type="text" spellcheck="false" placeholder="Enter a command">
+                        <div @click="toggleMultilineMode()" 
+                               class="multiline">
+                              <i :class="multilineMode ? 'ph-caret-double-up-thin' : 'ph-caret-double-down-thin'"></i>
+                        </div>
                     </div>
                 </header>
                 <main>
@@ -323,6 +327,9 @@
                         <section class="modal-card-body">
                             <template v-if="modal.mode=='confirmation'">
                                 <p>This action is going to delete the selected elements from the graph database and is not reversible. Are you sure you want to proceed?</p>
+                            </template>
+                            <template v-if="modal.mode=='query'">
+                                <p>Multi-line query</p>
                             </template>
                             <template v-if="modal.mode=='filter'">
                                 <div class="columns">

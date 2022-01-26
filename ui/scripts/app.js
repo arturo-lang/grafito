@@ -29,6 +29,7 @@ const Grafito = {
                 }
             },
             working: false,
+            multilineMode: false,
             graph: {
                 dataset: {},
                 dataview: {
@@ -317,6 +318,36 @@ const Grafito = {
             this.sidebar.active = 'graph';
             $(".command input").val(this.history.queries[queryId].query);
             this.processCommand();
+        },
+
+        toggleMultilineMode(){
+            this.multilineMode = !this.multilineMode;
+
+            if (this.multilineMode){
+                let nodeId = this.graph.selected.node[0].id;
+                let node = this.graph.data.nodes.get(nodeId);
+
+                this.modal.title = "New query";
+                this.modal.mode = "query";
+                this.modal.accept.button = "Execute";
+
+                // TODO(edit node) fields appearing empty 
+                //  mainly the Name field; weird...
+                //  labels: bug, ui 
+
+                this.modal.accept.action = ()=>{
+                    console.log("executing query...");
+                };
+                this.modal.accept.style = "is-modifying";
+                this.modal.showAdd = false;
+                this.modal.showCancel = true;
+                this.modal.dropdownShowing = false;
+
+                this.modal.active = true;
+            }
+            else {
+                this.modal.active = false;
+            }
         },
 
         // TODO(expandNodeNeighbors) Seems buggy
