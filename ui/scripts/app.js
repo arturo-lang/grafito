@@ -332,6 +332,7 @@ const Grafito = {
                 this.modal.accept.action = ()=>{
                     $(".command input").val(this.editor.getValue().replaceAll(/\n[\s\t]+/g," "));
                     this.processCommand();
+                    this.multilineMode = false;
                 };
                 this.modal.accept.style = "is-modifying";
                 this.modal.showAdd = false;
