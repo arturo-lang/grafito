@@ -330,7 +330,8 @@ const Grafito = {
                 this.modal.accept.button = "Execute";
 
                 this.modal.accept.action = ()=>{
-                    console.log("executing query...");
+                    $(".command input").val(this.editor.getValue());
+                    this.processCommand();
                 };
                 this.modal.accept.style = "is-modifying";
                 this.modal.showAdd = false;
@@ -338,11 +339,13 @@ const Grafito = {
                 this.modal.dropdownShowing = false;
 
                 this.modal.active = true;
-                setTimeout(()=>{
-                    this.editor = ace.edit("editor");
-                    this.editor.setTheme("ace/theme/monokai");
-                    this.editor.getSession().setMode("ace/mode/arturo"); 
-                }, 500);
+                if (this.editor==null){
+                    setTimeout(()=>{
+                        this.editor = ace.edit("editor");
+                        this.editor.setTheme("ace/theme/monokai");
+                        this.editor.getSession().setMode("ace/mode/arturo"); 
+                    }, 500);
+                }
             }
             else {
                 this.modal.active = false;
