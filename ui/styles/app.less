@@ -742,10 +742,61 @@ ul.sidebar {
             color: red;
         }
     }
+
+    .no-queries {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 15rem;
+        flex-direction: column;
+        color: #888;
+
+        .error-icon {
+            font-size: 3rem;
+        }
+
+        .error-message {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+    }
 }
 
 .dark #query-history {
     background: @darkBg;
+
+    table {
+        color: @darkFg;
+        background: @darkBgDarker;
+
+        thead td, thead th {
+            color: @darkFg;
+        }
+
+        td, th {
+            border-color: black !important;
+        }
+
+        *:not(.sorting_1):not(.sorting_2):not(.sorting_3) {
+            td, th {
+                border-color: @darkBg !important;
+            }
+        }
+
+        tbody tr:not(.is-selected):nth-child(even) {
+            background: @darkBg !important;
+        }
+
+        a.button {
+            background: black;
+            color: @darkFgDarker;
+
+            &:hover {
+                color: @darkFg;
+                border-color: @darkGrafitoPurple;
+            }
+        }
+    }
 }
 
 /****************************************************
