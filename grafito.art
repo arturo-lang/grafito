@@ -95,7 +95,7 @@ graph: function [
     ; Color library
     ; for graph nodes
 
-    colorPalette: as.data "ui/palettes/magma.art"
+    colorPalette: as.data "ui/palettes/inferno.art"
     ; [
     ;     'blue 'blueviolet 'brown 'cadetblue 'chocolate 'crimson 'darkblue 'darkgreen 
     ;     'darkmagenta 'darkorchid 'darkred 'darkslategray 'dodgerblue 'green 'indigo 
