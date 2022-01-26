@@ -121,7 +121,6 @@ const Grafito = {
                         shape: "circle",
                         font: {
                             face: "Source Sans Pro",
-                            color: "white",
                             align: "center"
                         },
                         widthConstraint: 70,
