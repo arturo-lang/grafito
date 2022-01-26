@@ -10,6 +10,7 @@ const Grafito = {
             performInitialSetup: false,
             config: {
                 versions: {},
+                helpers: [],
                 general: {
                     darkTheme: {value: false, description: "Enable dark theme"},
                     askForConfirmation: {value: true, description: "Always request confirmation before deleting elements"}
@@ -339,28 +340,29 @@ const Grafito = {
                 this.modal.dropdownShowing = false;
 
                 this.modal.active = true;
-                if (this.editor==null){
+                //if (this.editor==null){
                     setTimeout(()=>{
                         this.editor = ace.edit("editor");
                         this.editor.setTheme("ace/theme/monokai");
-                        this.editor.getSession().setMode("ace/mode/arturo", ()=>{
-                                var rules = this.editor.session.$mode.$highlightRules.getRules();
-                                console.log(rules);
-                            //     rules["start"].push({
-                            //         token: "constant.other", 
-                            //         regex: "'\\w[-\\w'*.?!]*", 
-                            //         onMatch: null
-                            //     })
+                        this.editor.session.setMode("ace/mode/arturo");
+                            if (this.config.helpers.length > 0){
+                                console.log("BEFORE:",this.editor.session.$mode.$highlightRules.$rules);
+                                this.editor.session.$mode.$highlightRules.$rules["start"].unshift({
+                                    token: "support.constant.bold", 
+                                    regex: `\\b(${this.config.helpers.join("|")})\\b`, 
+                                    onMatch: null
+                                });
+                                console.log("AFTER:",this.editor.session.$mode.$highlightRules.$rules);
 
-                            //     // force recreation of tokenizer
-                            //     this.editor.session.$mode.$tokenizer = null;
-                            //     this.editor.session.bgTokenizer.setTokenizer(this.editor.session.$mode.getTokenizer());
-                            //     // force re-highlight whole document
-                            //     this.editor.session.bgTokenizer.start(0);
-                            // }
-                        }); 
+                                // force recreation of tokenizer
+                                this.editor.session.$mode.$tokenizer = null;
+                                this.editor.session.bgTokenizer.setTokenizer(this.editor.session.$mode.getTokenizer());
+                                // force re-highlight whole document
+                                this.editor.session.bgTokenizer.start(0);
+                            }
+                        
                     }, 500);
-                }
+                //}
             }
             else {
                 this.modal.active = false;
@@ -906,6 +908,7 @@ const Grafito = {
             this.drawGraph(obj.data, clean=true, firstDraw=true);
             this.drawTable(obj.rows);
             this.config.versions = obj.versions;
+            this.config.helpers = obj.helperEntities;
             this.performInitialSetup = true;
             this.config.engine.caseSensitive.value = obj.caseSensitive;
             this.graph.initialized = true;
