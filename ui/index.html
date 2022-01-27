@@ -337,22 +337,28 @@
                                 <div id="editor"></div>
                             </template>
                             <template v-if="modal.mode=='palette'">
-                                <div class="field is-horizontal">
-                                    <div class="field-label">
-                                        <label class="label">Theme</label>
-                                    </div>
-                                    <div class="field-body">
-                                        <div class="control">
-                                            <select class="select is-medium" v-model="graph.palettes.active">
-                                                <option v-for="palette in Object.keys(graph.palettes.list)">
-                                                    {{palette}}
-                                                </option>
-                                            </select>
-                                            <template v-for="color in graph.palettes.list[graph.palettes.active]">
+                                <div class="columns">
+                                    <div class="column is-9 is-offset-1 has-text-centered">
+                                        <div class="field is-horizontal">
+                                            <div class="field-label"
+                                                 style="flex-grow: 0">
+                                                <label class="label">Theme</label>
+                                            </div>
+                                            <div class="field-body">
+                                                <div class="control">
+                                                    <select class="select" v-model="modal.selectedPalette">
+                                                        <option v-for="palette in Object.keys(graph.palettes.list).sort()">
+                                                            {{palette}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="palette-container">
+                                            <template v-for="color in graph.palettes.list[modal.selectedPalette]">
                                                 <div style="width: 20px; height: 20px;" 
                                                      :style="`background: ${color}`"></div>
                                             </template>
-
                                         </div>
                                     </div>
                                 </div>
