@@ -1093,6 +1093,17 @@ ul.sidebar {
         }
 
         .modal-card-body {
+            .palette-container {
+                display: flex;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            select {
+                border-radius: 5px;
+                padding: 0.3rem;
+            }
+
             &.query-mode {
                 padding: 0 !important;
             }
@@ -1220,6 +1231,11 @@ ul.sidebar {
 
             .field-label, .field-label label {
                 color: @darkFg !important;
+            }
+
+            select {
+                background: @darkBgDarker;
+                color: @darkFgDarker;
             }
 
             input {
