@@ -400,17 +400,8 @@ graph: function [
                 ]
             ]
         ]
-        ids: new []
-        nodeElements: select nodeElements 'ne [
-            if? not? contains? ids ne\id [
-                'ids ++ ne\id
-                true
-            ]
-            else [
-                false
-            ]
-        ]
-        ;unique 'nodeElements
+
+        unique 'nodeElements
         unique 'edgeElements
 
         return #[
