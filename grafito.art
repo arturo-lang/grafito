@@ -95,7 +95,7 @@ graph: function [
     ; Color library
     ; for graph nodes
 
-    colorPalette: as.data "ui/palettes/viridis.art"
+    colorPalette: as.data "ui/palettes/default.art"
     ; [
     ;     'blue 'blueviolet 'brown 'cadetblue 'chocolate 'crimson 'darkblue 'darkgreen 
     ;     'darkmagenta 'darkorchid 'darkred 'darkslategray 'dodgerblue 'green 'indigo 
@@ -197,31 +197,40 @@ graph: function [
     ]
 
     idealForeground: function [back][
-        rgb1: extract back
-        L1: sum @[0.2126*rgb1\red 0.7152*rgb1\green 0.0722*rgb1\blue]
-        rgb2: extract #white
-        L2: sum @[0.2126*rgb2\red 0.7152*rgb2\green 0.0722*rgb2\blue]
+        rgbs: values extract back
 
-        print ["L1:" L1]
-        print ["L2:" L2]
+        lrgbs: map rgbs 'rgb [
+            C: rgb // 255
+            if? C =< 0.03928 -> C: C // 12.92
+            else -> C: ((C+0.055)//1.055) ^ 2.4
+            C
+        ]
 
-        ratio: (L2 + 0.05) // (L1 + 0.05)
+        L: (lrgbs\0*0.2126) + (lrgbs\1*0.7152) + (lrgbs\2*0.0722)
 
-        print ["Ratio:" ratio]
-
+        if L > 0.189 [ return #black ]
         return #white
     ]
 
     styleNode: function [nodeId, nodeTag, nodeProps][
-        if not? key? nodeColors nodeTag [
-            nodeColor: sample colorPalette
-            print [">> Picked:" nodeColor "for:" nodeTag]
-            'colorPalette -- nodeColor
-            set nodeColors nodeTag nodeColor
-        ]
+        ; if not? key? nodeColors nodeTag [
+        ;     ;mainPalette: map split.every: 5 colorPalette 'sl -> sl\2
 
-        bg: to :string nodeColors\[nodeTag]
-        fg: to :string idealForeground nodeColors\[nodeTag]
+        ;     nodeColor: sample colorPalette
+        ;     existingColors: map values nodeColors => first
+            
+        ;     while [contains? existingColors nodeColor] ->
+        ;         nodeColor: sample colorPalette
+
+        ;     'colorPalette -- nodeColor
+        ;     set nodeColors nodeTag @[
+        ;         nodeColor
+        ;         idealForeground nodeColor
+        ;     ]
+        ; ]
+
+        bg: to :string sample colorPalette ;nodeColors\[nodeTag]\0
+        fg: to :string #white ;nodeColors\[nodeTag]\1
 
         nodeLabel: first values nodeProps
 
@@ -397,8 +406,17 @@ graph: function [
                 ]
             ]
         ]
-
-        unique 'nodeElements
+        ids: new []
+        nodeElements: select nodeElements 'ne [
+            if? not? contains? ids ne\id [
+                'ids ++ ne\id
+                true
+            ]
+            else [
+                false
+            ]
+        ]
+        ;unique 'nodeElements
         unique 'edgeElements
 
         return #[
