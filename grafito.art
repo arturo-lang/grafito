@@ -850,6 +850,8 @@ graph: function [
                     rows: currentNodes
                     versions: Versions
                     caseSensitive: Grafito\caseSensitive?
+                    palettes: colorPalettes
+                    activePalette: Palette
                 ]
             ]
 
