@@ -516,9 +516,6 @@ graph: function [
     ; Update existing node
     ;--------------------------
 
-    ; TODO(Grafito\edit) not changing JSON when field has been deleted
-    ;  labels: bug,engine,core functions
-
     edit: function [
         nd :dictionary :block
         attributes :block :dictionary

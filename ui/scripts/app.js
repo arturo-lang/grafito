@@ -360,7 +360,7 @@ const Grafito = {
             }
         },
 
-        // TODO(expandNodeNeighbors) Seems buggy
+        // TODO(expandNodeNeighbors) Verify it's working properly
         //  To check & re-visit
 
         expandNodeNeighbors(nodeId=null){
@@ -603,7 +603,7 @@ const Grafito = {
             this.modal.mode = "edit";
             this.modal.accept.button = "Save";
 
-            // TODO(edit node) fields appearing empty 
+            // TODO(edit node) Fields appearing empty after closing modal dialog
             //  mainly the Name field; weird...
             //  labels: bug, ui 
 
@@ -612,7 +612,6 @@ const Grafito = {
                 delete this.modal.fields.tag;
                 node.properties = this.modal.fields;
 
-                // TODO(edit node) should be able to set tag as well
                 $.post("/updateNode", {
                     ndid: nodeId, 
                     newtag: node.tag,
@@ -681,7 +680,6 @@ const Grafito = {
             this.modal.accept.action = ()=>{
                 edge.label = this.modal.fields.tag;
 
-                // TODO(edit node) should be able to set tag as well
                 $.post("/updateEdge", {
                     egid: edge.dbId, 
                     newtag: edge.label,
