@@ -223,13 +223,14 @@ graph: function [
 
     styleNode: function [nodeId, nodeTag, nodeProps][
         if not? key? nodeColors nodeTag [
-            nodeColor: sample colorPalette
+            cpal: colorPalettes\[Palette]
+
+            nodeColor: sample cpal
             existingColors: map values nodeColors => first
             
             while [contains? existingColors nodeColor] ->
-                nodeColor: sample colorPalette
+                nodeColor: sample cpal
 
-            'colorPalette -- nodeColor
             set nodeColors nodeTag @[
                 nodeColor
                 idealForeground nodeColor
