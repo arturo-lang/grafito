@@ -552,8 +552,6 @@ const Grafito = {
             };
 
             this.modal.active = true;
-
-            console.log("UNIMPLEMENTED");
         },
 
         showPaletteDialog(){
@@ -582,8 +580,6 @@ const Grafito = {
             this.modal.icon = "palette-bold";
 
             this.modal.active = true;
-
-            console.log("UNIMPLEMENTED");
         },
 
         addNewNodeField(){
