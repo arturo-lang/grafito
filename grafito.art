@@ -341,6 +341,19 @@ graph: function [
     ]
 
     ;
+    ; Update meta value
+    ;--------------------------
+
+    updateMeta: function [
+        prop :literal :string
+        val :any
+    ][
+        ;; description: « update a single meta value
+
+        editProperty 1 prop val
+    ]
+
+    ;
     ; Re-tag existing edge 
     ; by id
     ;--------------------------
