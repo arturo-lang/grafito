@@ -360,7 +360,7 @@ const Grafito = {
             }
         },
 
-        // TODO(expandNodeNeighbors) Verify it's working properly
+        // TODO(expandNodeNeighbors) Verify it's working properly in all cases
         //  To check & re-visit
 
         expandNodeNeighbors(nodeId=null){
@@ -603,7 +603,7 @@ const Grafito = {
             this.modal.mode = "edit";
             this.modal.accept.button = "Save";
 
-            // TODO(edit node) Fields appearing empty after closing modal dialog
+            // TODO(edit node) Fields appearing empty after closing modal
             //  mainly the Name field; weird...
             //  labels: bug, ui 
 
@@ -643,7 +643,6 @@ const Grafito = {
             this.modal.accept.button = "Create";
             
             this.modal.accept.action = ()=>{
-                // TODO(edit node) should be able to set tag as well
                 $.post("/linkNodes", {
                     newtag: this.modal.fields.tag,
                     src: this.graph.linker.source,
