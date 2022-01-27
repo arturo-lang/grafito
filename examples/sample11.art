@@ -4,135 +4,135 @@
 ;---------------------------------------------
 do.import {grafito.art}
 
-; set aliases
-
-
 do [
     ;---------------------------------------------
     ; Set up a new graph environment
     ; with a local database named "sample11"
     ;---------------------------------------------
-    graph .create
-          .helpers: [person movie country book] 
+    graph .helpers: [person movie country book]
+          .server 
+          .palette: 'viridis
           "sample11" 
     [
-        ;---------------------------------------------
-        ; Populate the database
-        ;---------------------------------------------
+        unless dbExists? [
+            ;---------------------------------------------
+            ; Populate the database
+            ;---------------------------------------------
 
-        uk: country.new [name: "United Kingdom"]
-        au: country.new [name: "Australia"]
-        us: country.new [name: "United States"] 
-        ca: country.new [name: "Canada"]
-        fr: country.new [name: "France"]
-        de: country.new [name: "Germany"]
-        se: country.new [name: "Sweden"]
-        es: country.new [name: "Spain"]
-        pl: country.new [name: "Poland"]
+            uk: country.new [name: "United Kingdom"]
+            au: country.new [name: "Australia"]
+            us: country.new [name: "United States"] 
+            ca: country.new [name: "Canada"]
+            fr: country.new [name: "France"]
+            de: country.new [name: "Germany"]
+            se: country.new [name: "Sweden"]
+            es: country.new [name: "Spain"]
+            pl: country.new [name: "Poland"]
 
-        nolan:      person.new [name: "Christopher Nolan" birthday: 1970 sex: "m"]
-        pearce:     person.new [name: "Guy Pearce" birthday: 1967 sex: "m"]
-        hanson:     person.new [name: "Curtis Hanson" birthday: 1945 sex: "m"]
-        spacey:     person.new [name: "Kevin Spacey" birthday: 1959 sex: "m"]
-        dicaprio:   person.new [name: "Leonardo DiCaprio" birthday: 1974 sex: "m"]
-        hardy:      person.new [name: "Tom Hardy" birthday: 1977 sex: "m"]
-        cotillard:  person.new [name: "Marion Cotillard" birthday: 1975 sex: "f"]
-        moss:       person.new [name: "Carrie-Ann Moss" birthday: 1967 sex: "f"]
-        kidman:     person.new [name: "Nicole Kidman" birthday: 1967 sex: "f"]
-        cruise:     person.new [name: "Tom Cruise" birthday: 1962 sex: "m"]
-        kubrick:    person.new [name: "Stanley Kubrick" birthday: 1928 died: 1999 sex: "m"]
-        burton:     person.new [name: "Tim Burton" birthday: 1958 sex: "m"]
-        depp:       person.new [name: "Johny Depp" birthday: 1965 sex: "m"]
-        hallstrom:  person.new [name: "Lasse Hallström" birthday: 1946 sex: "m"]
-        scorsese:   person.new [name: "Martin Scorsese" birthday: 1942 sex: "m"]
-        sydow:      person.new [name: "Max von Sydow" birthday: 1929 died: 2020 sex: "m"]
-        binoche:    person.new [name: "Juliette Binoche" birthday: 1964 sex: "f"]
-        dench:      person.new [name: "Judi Dench" birthday: 1934 sex: "f"]
-        eastwood:   person.new [name: "Clint Eastwood" birthday: 1930 sex: "m"]
-        polanski:   person.new [name: "Roman Polanski" birthday: 1933 sex: "m"]
-        olin:       person.new [name: "Lena Olin" birthday: 1955 sex: "f"]
-        zimmer:     person.new [name: "Hans Zimmer" birthday: 1957 sex: "m"]
-        pook:       person.new [name: "Jocelyn Pook" birthday: 1960 sex: "f"]
-        lehane:     person.new [name: "Dennis Lehane" birthday: 1965 sex: "m"]
-        penn:       person.new [name: "Sean Penn" birthday: 1960 sex: "m"]
-        malick:     person.new [name: "Terrence Malick" birthday: 1943 sex: "m"]
-        brody:      person.new [name: "Adrien Brody" birthday: 1973 sex: "m"]
-        wach1:      person.new [name: "Lana Wachowski" birthday: 1965 sex: "f"]
-        wach2:      person.new [name: "Lilly Wachowski" birthday: 1967 sex: "f"]
+            nolan:      person.new [name: "Christopher Nolan" birthday: 1970 sex: "m"]
+            pearce:     person.new [name: "Guy Pearce" birthday: 1967 sex: "m"]
+            hanson:     person.new [name: "Curtis Hanson" birthday: 1945 sex: "m"]
+            spacey:     person.new [name: "Kevin Spacey" birthday: 1959 sex: "m"]
+            dicaprio:   person.new [name: "Leonardo DiCaprio" birthday: 1974 sex: "m"]
+            hardy:      person.new [name: "Tom Hardy" birthday: 1977 sex: "m"]
+            cotillard:  person.new [name: "Marion Cotillard" birthday: 1975 sex: "f"]
+            moss:       person.new [name: "Carrie-Ann Moss" birthday: 1967 sex: "f"]
+            kidman:     person.new [name: "Nicole Kidman" birthday: 1967 sex: "f"]
+            cruise:     person.new [name: "Tom Cruise" birthday: 1962 sex: "m"]
+            kubrick:    person.new [name: "Stanley Kubrick" birthday: 1928 died: 1999 sex: "m" alive: false]
+            burton:     person.new [name: "Tim Burton" birthday: 1958 sex: "m"]
+            depp:       person.new [name: "Johny Depp" birthday: 1965 sex: "m"]
+            hallstrom:  person.new [name: "Lasse Hallström" birthday: 1946 sex: "m"]
+            scorsese:   person.new [name: "Martin Scorsese" birthday: 1942 sex: "m"]
+            sydow:      person.new [name: "Max von Sydow" birthday: 1929 died: 2020 sex: "m" alive: false]
+            binoche:    person.new [name: "Juliette Binoche" birthday: 1964 sex: "f"]
+            dench:      person.new [name: "Judi Dench" birthday: 1934 sex: "f"]
+            eastwood:   person.new [name: "Clint Eastwood" birthday: 1930 sex: "m"]
+            polanski:   person.new [name: "Roman Polanski" birthday: 1933 sex: "m"]
+            olin:       person.new [name: "Lena Olin" birthday: 1955 sex: "f"]
+            zimmer:     person.new [name: "Hans Zimmer" birthday: 1957 sex: "m"]
+            pook:       person.new [name: "Jocelyn Pook" birthday: 1960 sex: "f"]
+            lehane:     person.new [name: "Dennis Lehane" birthday: 1965 sex: "m"]
+            penn:       person.new [name: "Sean Penn" birthday: 1960 sex: "m"]
+            malick:     person.new [name: "Terrence Malick" birthday: 1943 sex: "m"]
+            brody:      person.new [name: "Adrien Brody" birthday: 1973 sex: "m"]
+            wach1:      person.new [name: "Lana Wachowski" birthday: 1965 sex: "f"]
+            wach2:      person.new [name: "Lilly Wachowski" birthday: 1967 sex: "f"]
 
-        memento:        movie.new [title: "Memento" year: 2000]
-        inception:      movie.new [title: "Inception" year: 2010]
-        laconfidential: movie.new [title: "L.A. Confidential" year: 1997]
-        matrix:         movie.new [title: "The Matrix" year: 1999]
-        eyes:           movie.new [title: "Eyes Wide Shut" year: 1999]
-        bigfish:        movie.new [title: "Big Fish" year: 2003]
-        sleepyhollow:   movie.new [title: "Sleepy Hollow" year: 1999]
-        chocolat:       movie.new [title: "Chocolat" year: 2000]
-        jedgar:         movie.new [title: "J. Edgar" year: 2011]
-        ninthgate:      movie.new [title: "The Ninth Gate" year: 1999]
-        shutter:        movie.new [title: "Shutter Island" year: 2010]
-        mystic:         movie.new [title: "Mystic River" year: 2003]
-        redline:        movie.new [title: "Thin Red Line" year: 1998]
-        pianist:        movie.new [title: "The Pianist" year: 2002]
+            memento:        movie.new [title: "Memento" year: 2000]
+            inception:      movie.new [title: "Inception" year: 2010]
+            laconfidential: movie.new [title: "L.A. Confidential" year: 1997]
+            matrix:         movie.new [title: "The Matrix" year: 1999]
+            eyes:           movie.new [title: "Eyes Wide Shut" year: 1999]
+            bigfish:        movie.new [title: "Big Fish" year: 2003]
+            sleepyhollow:   movie.new [title: "Sleepy Hollow" year: 1999]
+            chocolat:       movie.new [title: "Chocolat" year: 2000]
+            jedgar:         movie.new [title: "J. Edgar" year: 2011]
+            ninthgate:      movie.new [title: "The Ninth Gate" year: 1999]
+            shutter:        movie.new [title: "Shutter Island" year: 2010]
+            mystic:         movie.new [title: "Mystic River" year: 2003]
+            redline:        movie.new [title: "Thin Red Line" year: 1998]
+            pianist:        movie.new [title: "The Pianist" year: 2002]
 
-        mysticB:        book.new [title: "Mystic River" year: 2001 language: "en"]
+            mysticB:        book.new [title: "Mystic River" year: 2001 language: "en"]
 
-        ;---------------------------------------------
-        ; Define the relationships
-        ; between our nodes
-        ;---------------------------------------------
+            ;---------------------------------------------
+            ; Define the relationships
+            ; between our nodes
+            ;---------------------------------------------
 
-        [nolan hardy dench pook] ~> 'isFrom uk
-        [pearce kidman] ~> 'isFrom au
-        [malick brody hanson spacey dicaprio wach1 wach2 cruise kubrick burton depp eastwood scorsese lehane penn] ~> 'isFrom us
-        moss ~> 'isFrom ca
-        [cotillard binoche] ~> 'isFrom fr
-        polanski ~> 'isFrom [fr pl]
-        [hallstrom olin sydow] ~> 'isFrom se
-        zimmer ~> 'isFrom de
+            [nolan hardy dench pook] ~> 'isFrom uk
+            [pearce kidman] ~> 'isFrom au
+            [malick brody hanson spacey dicaprio wach1 wach2 cruise kubrick burton depp eastwood scorsese lehane penn] ~> 'isFrom us
+            moss ~> 'isFrom ca
+            [cotillard binoche] ~> 'isFrom fr
+            polanski ~> 'isFrom [fr pl]
+            [hallstrom olin sydow] ~> 'isFrom se
+            zimmer ~> 'isFrom de
 
-        nolan ~> 'directed [memento inception]
-        hanson ~> 'directed laconfidential
-        [wach1 wach2] ~> 'directed matrix
-        kubrick ~> 'directed eyes
-        burton ~> 'directed [bigfish sleepyhollow]
-        hallstrom ~> 'directed chocolat
-        eastwood ~> 'directed [jedgar mystic]
-        polanski ~> 'directed [pianist ninthgate]
-        scorsese ~> 'directed shutter
-        malick ~> 'directed [pianist redline]
+            nolan ~> 'directed [memento inception]
+            hanson ~> 'directed laconfidential
+            [wach1 wach2] ~> 'directed matrix
+            kubrick ~> 'directed eyes
+            burton ~> 'directed [bigfish sleepyhollow]
+            hallstrom ~> 'directed chocolat
+            eastwood ~> 'directed [jedgar mystic]
+            polanski ~> 'directed [pianist ninthgate]
+            scorsese ~> 'directed shutter
+            malick ~> 'directed [pianist redline]
 
-        pearce ~> 'actedIn [memento laconfidential]
-        spacey ~> 'actedIn laconfidential
-        [dicaprio hardy cotillard] ~> 'actedIn inception
-        [dicaprio sydow] ~> 'actedIn shutter
-        cotillard ~> 'actedIn bigfish
-        moss ~> 'actedIn [memento matrix chocolat]
-        [cruise kidman] ~> 'actedIn eyes
-        depp ~> 'actedIn [chocolat sleepyhollow]
-        [binoche dench olin] ~> 'actedIn chocolat
-        [dicaprio dench] ~> 'actedIn jedgar
-        [depp olin] ~> 'actedIn ninthgate
-        penn ~> 'actedIn [mystic redline]
-        brody ~> 'actedIn [redline pianist]
+            pearce ~> 'actedIn [memento laconfidential]
+            spacey ~> 'actedIn laconfidential
+            [dicaprio hardy cotillard] ~> 'actedIn inception
+            [dicaprio sydow] ~> 'actedIn shutter
+            cotillard ~> 'actedIn bigfish
+            moss ~> 'actedIn [memento matrix chocolat]
+            [cruise kidman] ~> 'actedIn eyes
+            depp ~> 'actedIn [chocolat sleepyhollow]
+            [binoche dench olin] ~> 'actedIn chocolat
+            [dicaprio dench] ~> 'actedIn jedgar
+            [depp olin] ~> 'actedIn ninthgate
+            penn ~> 'actedIn [mystic redline]
+            brody ~> 'actedIn [redline pianist]
 
-        zimmer ~> 'composed inception
-        pook ~> 'composed eyes
+            zimmer ~> 'composed inception
+            pook ~> 'composed eyes
 
-        nolan ~> 'written inception
+            nolan ~> 'written inception
 
-        lehane ~> 'written mysticB
-        mystic ~> 'basedOn mysticB
+            lehane ~> 'written mysticB
+            mystic ~> 'basedOn mysticB
 
-        [redline bigfish memento laconfidential jedgar shutter mystic] ~> 'origin us
-        matrix ~> 'origin [us au]
-        [inception eyes chocolat] ~> 'origin [uk us]
-        sleepyhollow ~> 'origin [us de]
-        ninthgate ~> 'origin [us fr es]
-        pianist ~> 'origin [uk fr de pl]
+            [redline bigfish memento laconfidential jedgar shutter mystic] ~> 'origin us
+            matrix ~> 'origin [us au]
+            [inception eyes chocolat] ~> 'origin [uk us]
+            sleepyhollow ~> 'origin [us de]
+            ninthgate ~> 'origin [us fr es]
+            pianist ~> 'origin [uk fr de pl]
 
-        wach1 ~> 'sibling wach2
-        cruise ~> 'married kidman
+            wach1 ~> 'sibling wach2
+            cruise ~> 'married kidman
+        ]
 
         ;---------------------------------------------
         ; Fetch every "person" &
