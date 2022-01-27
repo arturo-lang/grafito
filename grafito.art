@@ -24,6 +24,9 @@ Grafito: #[
     Debug?: false
     verbose?: true
     caseSensitive?: true
+
+    ; colors
+    Palette: ""
 ]
 
 graph: function [
@@ -222,23 +225,24 @@ graph: function [
     ;--------------------------
 
     styleNode: function [nodeId, nodeTag, nodeProps][
-        if not? key? nodeColors nodeTag [
-            cpal: colorPalettes\[Palette]
+        if not? key? Grafito\nodeColors nodeTag [
+            cpal: Grafito\Palette
+            cpal: colorPalettes\[cpal]
 
             nodeColor: sample cpal
-            existingColors: map values nodeColors => first
+            existingColors: map values Grafito\nodeColors => first
             
             while [contains? existingColors nodeColor] ->
                 nodeColor: sample cpal
 
-            set nodeColors nodeTag @[
+            Grafito\nodeColors\[nodeTag]: @[
                 nodeColor
                 idealForeground nodeColor
             ]
         ]
 
-        bg: to :string nodeColors\[nodeTag]\0
-        fg: to :string nodeColors\[nodeTag]\1
+        bg: to :string Grafito\nodeColors\[nodeTag]\0
+        fg: to :string Grafito\nodeColors\[nodeTag]\1
 
         nodeLabel: first values nodeProps
 
@@ -851,7 +855,7 @@ graph: function [
                     versions: Versions
                     caseSensitive: Grafito\caseSensitive?
                     palettes: colorPalettes
-                    activePalette: Palette
+                    activePalette: Grafito\Palette
                 ]
             ]
 
@@ -885,6 +889,13 @@ graph: function [
 
             "/nodeFromId"   [;[ndid]
                 newNodes: new nodeFromIds @[nodeFromId ndid]
+                write.json ø newNodes
+            ]
+
+            "/changePalette"    [;[newpalette, ndids]
+                Grafito\Palette: newpalette
+                Grafito\nodeColors: #[]
+                newNodes: new nodeFromIds map split.by:"," ndids => nodeFromId
                 write.json ø newNodes
             ]
 
@@ -1001,11 +1012,11 @@ graph: function [
 
     ; setup color palettes
 
-    Palette: attr 'palette
-    if null? Palette ->
-        Palette: "default"
+    Grafito\Palette: attr 'palette
+    if null? Grafito\Palette ->
+        Grafito\Palette: "default"
 
-    nodeColors: #[]
+    Grafito\nodeColors: #[]
 
     ; define aliases
     alias.infix {~>} 'link
