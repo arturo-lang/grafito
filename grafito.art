@@ -208,8 +208,6 @@ graph: function [
 
     styleNode: function [nodeId, nodeTag, nodeProps][
         if not? key? nodeColors nodeTag [
-            ;mainPalette: map split.every: 5 colorPalette 'sl -> sl\2
-
             nodeColor: sample colorPalette
             existingColors: map values nodeColors => first
             
