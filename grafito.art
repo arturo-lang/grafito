@@ -339,7 +339,7 @@ graph: function [
     ][
         ;; description: « set or update single node property
 
-        performQuery 'editProperty updateNodePropertySQL @[~"$.|prop|", write.json ø val, nid]
+        performQuery 'editProperty updateNodePropertySQL @[~"$.|prop|", write.compact.json ø val, nid]
     ]
 
     ;
@@ -483,7 +483,7 @@ graph: function [
                 att: nd
                 if not? dictionary? att -> att: # att
                 'queries ++ createNodeSQL
-                'vals ++ @[name, write.json ø att]
+                'vals ++ @[name, write.compact.json ø att]
                 'result ++ #[
                     id: lastId
                     tag: name
@@ -498,7 +498,7 @@ graph: function [
         else [
             att: attributes
             if not? dictionary? att -> att: # att
-            nodeId: performQuery.id 'put createNodeSQL @[name, write.json ø att]
+            nodeId: performQuery.id 'put createNodeSQL @[name, write.compact.json ø att]
             result: #[
                 id: nodeId
                 tag: name
@@ -554,9 +554,9 @@ graph: function [
 
             updateable\properties: newAttributes
             if? null? withTag ->
-                performQuery 'edit updateNodePropertiesSQL @[write.json ø newAttributes, updateable\id]
+                performQuery 'edit updateNodePropertiesSQL @[write.compact.json ø newAttributes, updateable\id]
             else ->
-                performQuery 'edit updateNodeSQL @[withTag, write.json ø newAttributes, updateable\id]
+                performQuery 'edit updateNodeSQL @[withTag, write.compact.json ø newAttributes, updateable\id]
         ]
     ]
 
@@ -1073,12 +1073,17 @@ graph: function [
         set metas 'version "undefined"
         set metas 'mode "json"
         set metas 'version Grafito\Version
+        set metas 'palette Grafito\Palette
 
         put'meta metas
         pop.discard 1
     ] 
     else [
         printDebug "using existing database"
+        meta: first fetch'meta []
+        
+        Grafito\nodeColors: read.json meta\properties\colors
+        Grafito\Palette: meta\properties\palette
     ]
 
     ; setup pragmas
