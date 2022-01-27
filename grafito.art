@@ -95,7 +95,9 @@ graph: function [
     ; Color palettes
     ; for graph nodes
 
-    colorPalette: as.data "ui/palettes/default.art"
+    colorPalettes: #.raw flatten.once map list "ui/palettes" 'palette [
+        @[extract.filename palette, as.data palette]
+    ]
 
     ;==========================================
     ; HELPERS
