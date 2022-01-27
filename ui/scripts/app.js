@@ -32,6 +32,10 @@ const Grafito = {
             multilineMode: false,
             editor: null,
             graph: {
+                palettes: {
+                    active: "",
+                    list: []
+                },
                 dataset: {},
                 dataview: {
                     nodes: [],
@@ -554,14 +558,14 @@ const Grafito = {
         showPaletteDialog(){
             this.modal.title = "Color palette";
             this.modal.mode = "palette";
-            this.modal.accept.button = "Apply";
+            this.modal.accept.button = "Done";
 
             this.modal.accept.action = ()=>{
                 console.log("Applying palette");
             };
-            this.modal.accept.style = "is-modifying";
+            this.modal.accept.style = "";
             this.modal.showAdd = false;
-            this.modal.showCancel = true;
+            this.modal.showCancel = false;
             this.modal.dropdownShowing = false;
             this.modal.icon = "palette-bold";
 
@@ -917,6 +921,8 @@ const Grafito = {
             this.performInitialSetup = true;
             this.config.engine.caseSensitive.value = obj.caseSensitive;
             this.graph.initialized = true;
+            this.graph.palettes.list = obj.palettes
+            this.graph.palettes.actice = obj.activePalette
         });
 
         // window.onbeforeunload = ()=>{
