@@ -190,6 +190,12 @@ graph: function [
         ]
     ]
 
+    ;
+    ; Get suitable fg color
+    ; depending on node bg
+    ; for better contrast
+    ;--------------------------
+
     idealForeground: function [back][
         rgbs: values extract back
 
@@ -205,6 +211,12 @@ graph: function [
         if L > 0.189 [ return #black ]
         return #white
     ]
+
+    ;
+    ; Get styled node
+    ; ready for use in the
+    ; graph view
+    ;--------------------------
 
     styleNode: function [nodeId, nodeTag, nodeProps][
         if not? key? nodeColors nodeTag [
