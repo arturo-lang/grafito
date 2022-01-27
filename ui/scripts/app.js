@@ -221,6 +221,7 @@ const Grafito = {
                 icon: "",
                 mode: null,
                 dropdownShowing: false,
+                selectedPalette: "",
                 accept: {
                     button: "Yes, I accept it",
                     style: "",
@@ -558,14 +559,25 @@ const Grafito = {
         showPaletteDialog(){
             this.modal.title = "Color palette";
             this.modal.mode = "palette";
-            this.modal.accept.button = "Done";
-
+            this.modal.accept.button = "Apply";
+            this.modal.selectedPalette = this.graph.palettes.active;
             this.modal.accept.action = ()=>{
-                console.log("Applying palette");
+                console.log("Applying palette:", this.modal.selectedPalette);
+                this.graph.palettes.active = this.modal.selectedPalette;
+
+                $.post("/changePalette", {
+                    newpalette: this.graph.palettes.active,
+                    ndids: this.graph.data.nodes.map((x)=>x.id).join(",")
+                }, (data)=>{
+                    let dt = JSON.parse(data);
+                    for (let subnode of dt.nodes){
+                        this.graph.data.nodes.update(subnode);
+                    }
+                });
             };
-            this.modal.accept.style = "";
+            this.modal.accept.style = "is-modifying";
             this.modal.showAdd = false;
-            this.modal.showCancel = false;
+            this.modal.showCancel = true;
             this.modal.dropdownShowing = false;
             this.modal.icon = "palette-bold";
 
@@ -922,7 +934,7 @@ const Grafito = {
             this.config.engine.caseSensitive.value = obj.caseSensitive;
             this.graph.initialized = true;
             this.graph.palettes.list = obj.palettes
-            this.graph.palettes.actice = obj.activePalette
+            this.graph.palettes.active = obj.activePalette
         });
 
         // window.onbeforeunload = ()=>{
