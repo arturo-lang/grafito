@@ -53,7 +53,8 @@ const Grafito = {
                             {icon: "arrows-clockwise-bold", tip: "Refresh view", action: this.refreshGraph}
                         ],
                         database: [
-                            {icon: "plus-bold", tip: "Add new node", effect: "modifying", action: this.showAddNodeDialog}
+                            {icon: "plus-bold", tip: "Add new node", effect: "modifying", action: this.showAddNodeDialog},
+                            {icon: "palette-bold", tip: "Color palette", effect: "modifying", action: this.showPaletteDialog}
                         ]
                     },
                     node: {
@@ -544,6 +545,25 @@ const Grafito = {
             this.modal.fields = {
                 tag: this.modal.tagOptions[0]
             };
+
+            this.modal.active = true;
+
+            console.log("UNIMPLEMENTED");
+        },
+
+        showPaletteDialog(){
+            this.modal.title = "Color palette";
+            this.modal.mode = "palette";
+            this.modal.accept.button = "Apply";
+
+            this.modal.accept.action = ()=>{
+                console.log("Applying palette");
+            };
+            this.modal.accept.style = "is-modifying";
+            this.modal.showAdd = false;
+            this.modal.showCancel = true;
+            this.modal.dropdownShowing = false;
+            this.modal.icon = "palette-bold";
 
             this.modal.active = true;
 
