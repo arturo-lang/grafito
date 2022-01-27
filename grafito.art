@@ -207,24 +207,24 @@ graph: function [
     ]
 
     styleNode: function [nodeId, nodeTag, nodeProps][
-        ; if not? key? nodeColors nodeTag [
-        ;     ;mainPalette: map split.every: 5 colorPalette 'sl -> sl\2
+        if not? key? nodeColors nodeTag [
+            ;mainPalette: map split.every: 5 colorPalette 'sl -> sl\2
 
-        ;     nodeColor: sample colorPalette
-        ;     existingColors: map values nodeColors => first
+            nodeColor: sample colorPalette
+            existingColors: map values nodeColors => first
             
-        ;     while [contains? existingColors nodeColor] ->
-        ;         nodeColor: sample colorPalette
+            while [contains? existingColors nodeColor] ->
+                nodeColor: sample colorPalette
 
-        ;     'colorPalette -- nodeColor
-        ;     set nodeColors nodeTag @[
-        ;         nodeColor
-        ;         idealForeground nodeColor
-        ;     ]
-        ; ]
+            'colorPalette -- nodeColor
+            set nodeColors nodeTag @[
+                nodeColor
+                idealForeground nodeColor
+            ]
+        ]
 
-        bg: to :string sample colorPalette ;nodeColors\[nodeTag]\0
-        fg: to :string #white ;nodeColors\[nodeTag]\1
+        bg: to :string nodeColors\[nodeTag]\0
+        fg: to :string nodeColors\[nodeTag]\1
 
         nodeLabel: first values nodeProps
 
