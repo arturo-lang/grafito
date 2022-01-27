@@ -339,7 +339,7 @@ graph: function [
     ][
         ;; description: « set or update single node property
 
-        performQuery 'editProperty updateNodePropertySQL @[prop, write.json ø val, nid]
+        performQuery 'editProperty updateNodePropertySQL @[~"$.|prop|", write.json ø val, nid]
     ]
 
     ;
