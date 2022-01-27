@@ -240,6 +240,8 @@ graph: function [
                 nodeColor
                 idealForeground nodeColor
             ]
+
+            updateMeta 'colors Grafito\nodeColors
         ]
 
         bg: to :string Grafito\nodeColors\[nodeTag]\0
@@ -925,6 +927,8 @@ graph: function [
                 Grafito\Palette: newpalette
                 Grafito\nodeColors: #[]
                 newNodes: new nodeFromIds map split.by:"," ndids => nodeFromId
+                updateMeta 'palette Grafito\Palette
+                updateMeta 'colors Grafito\nodeColors
                 write.json ø newNodes
             ]
 
