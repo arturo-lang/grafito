@@ -9,9 +9,9 @@ jobs:
   build:
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "actions/checkout@master"
+      - uses: "actions/checkout@main"
       - name: "TODO to Issue generator"
-        uses: "alstr/todo-to-issue-action@v2.4.1"
+        uses: "alstr/todo-to-issue-action@v4.5"
         id: "todo"
         with:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
