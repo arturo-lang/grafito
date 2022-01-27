@@ -35,6 +35,7 @@ graph: function [
     ;;      create: « recreate database from scratch, even if it exists
     ;;      case: « queries should be case-sensitive
     ;;      verbose: « show messages regarding database operations
+    ;;      palette: :string :literal « select color palette (current: default)
     ;; ]
     ;; returns: :any
     ;; example: {
@@ -994,6 +995,12 @@ graph: function [
         dbPath: ~"|cleanpath|.db"
         dbExisted: exists? ~"|cleanpath|.db"
     ]
+
+    ; setup color palettes
+
+    Palette: attr 'palette
+    if null? Palette ->
+        Palette: "default"
 
     nodeColors: #[]
 
