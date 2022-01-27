@@ -96,12 +96,6 @@ graph: function [
     ; for graph nodes
 
     colorPalette: as.data "ui/palettes/default.art"
-    ; [
-    ;     'blue 'blueviolet 'brown 'cadetblue 'chocolate 'crimson 'darkblue 'darkgreen 
-    ;     'darkmagenta 'darkorchid 'darkred 'darkslategray 'dodgerblue 'green 'indigo 
-    ;     'maroon 'mediumpurple 'midnightblue 'olive 'orange 'orangered 'peru 'purple 
-    ;     'seagreen 'steelblue 'teal
-    ; ]
 
     ;==========================================
     ; HELPERS
