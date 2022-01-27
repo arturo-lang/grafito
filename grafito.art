@@ -92,7 +92,7 @@ graph: function [
 
     app: read "ui/index.html"
 
-    ; Color library
+    ; Color palettes
     ; for graph nodes
 
     colorPalette: as.data "ui/palettes/default.art"
