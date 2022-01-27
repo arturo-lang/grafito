@@ -337,7 +337,25 @@
                                 <div id="editor"></div>
                             </template>
                             <template v-if="modal.mode=='palette'">
-                                PALETTE
+                                <div class="field is-horizontal">
+                                    <div class="field-label">
+                                        <label class="label">Theme</label>
+                                    </div>
+                                    <div class="field-body">
+                                        <div class="control">
+                                            <select class="select is-medium" v-model="graph.palettes.active">
+                                                <option v-for="palette in Object.keys(graph.palettes.list)">
+                                                    {{palette}}
+                                                </option>
+                                            </select>
+                                            <template v-for="color in graph.palettes.list[graph.palettes.active]">
+                                                <div style="width: 20px; height: 20px;" 
+                                                     :style="`background: ${color}`"></div>
+                                            </template>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </template>
                             <template v-if="modal.mode=='filter'">
                                 <div class="columns">
