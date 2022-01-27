@@ -62,6 +62,7 @@ graph: function [
 
     createNodeSQL:              read "sql/procs/createNode.sql"
     updateNodeSQL:              read "sql/procs/updateNode.sql"
+    updateNodePropertySQL:      read "sql/procs/updateNodeProperty.sql"
     updateNodePropertiesSQL:    read "sql/procs/updateNodeProperties.sql"
     deleteNodeSQL:              read "sql/procs/deleteNode.sql"
     deleteNodeEdgesSQL:         read "sql/procs/deleteNodeEdges.sql"
@@ -322,6 +323,21 @@ graph: function [
         ;; description: « delete edge with given id
 
         performQuery 'unedgeById deleteEdgeByIdSQL @[eid]
+    ]
+
+    ;
+    ; Update single property
+    ; by id
+    ;--------------------------
+
+    editProperty: function [
+        nid :integer
+        prop :literal :string
+        val :any
+    ][
+        ;; description: « set or update single node property
+
+        performQuery 'editProperty updateNodePropertySQL @[prop, write.json ø val, nid]
     ]
 
     ;
