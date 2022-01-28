@@ -10,7 +10,10 @@
 ;; author: drkameleon
 ;; website: « https://github.com/arturo-lang/grafito
 ;; category: database
-;; embed: ["ui" "sql"] [".art", ".sql", ".html", ".less", ".js"]
+;; embed: [
+;;      "ui" "sql"
+;;      ".art" ".sql" ".html" ".less" ".js"
+;; ]
 ;========================================================
 
 ;--------------------------
