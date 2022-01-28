@@ -1,4 +1,5 @@
 *.db
+*.graf
 test*.sql
 test*.art
 test*.nim
