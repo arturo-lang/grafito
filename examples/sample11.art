@@ -11,7 +11,7 @@ do [
     ;---------------------------------------------
     graph .helpers: [person movie country book]
           .server 
-          .palette: 'viridis
+          .palette: 'default
           "sample11" 
     [
         unless dbExists? [
