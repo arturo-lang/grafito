@@ -1040,8 +1040,8 @@ graph: function [
 
     if not? null? dbpath [
         cleanpath: extract.filename dbpath
-        dbPath: ~"|cleanpath|.db"
-        dbExisted: exists? ~"|cleanpath|.db"
+        dbPath: ~"|cleanpath|.graf"
+        dbExisted: exists? ~"|cleanpath|.graf"
     ]
 
     ; setup color palettes
