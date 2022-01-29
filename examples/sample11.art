@@ -10,6 +10,7 @@ do [
     ; with a local database named "sample11"
     ;---------------------------------------------
     graph .helpers: [person movie country book]
+          .create
           .server 
           .palette: 'default
           "sample11" 
