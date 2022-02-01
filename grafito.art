@@ -830,9 +830,10 @@ graph: function [
             edgeLimit: " >= 1"
         ]
 
-        if not? empty? propertyFilters ->
+        if not? empty? propertyFilters [
             propies: ~{!sql AND (|join.with: linker propertyFilters|)}
             'qvals ++ qpropvals
+        ]
 
         if? not? empty? edgeFilters [
             edgies: join.with: " OR " edgeFilters
