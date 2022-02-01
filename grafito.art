@@ -1062,6 +1062,10 @@ graph: function [
 
     dbExists?: true
 
+    ; get helpers
+    entities: attr "helpers"
+    if null? entities -> entities: []
+
     ; and initialize it
     ; with the given schema (if necessary)
     if? or? not? null? attr "create"
@@ -1076,6 +1080,7 @@ graph: function [
         set metas 'mode "json"
         set metas 'version Grafito\Version
         set metas 'palette Grafito\Palette
+        set metas 'entities write.json ø entities
 
         put'meta metas
         pop.discard 1
@@ -1086,6 +1091,7 @@ graph: function [
         
         Grafito\nodeColors: read.json meta\properties\colors
         Grafito\Palette: meta\properties\palette
+        entities: read.json meta\properties\entities
     ]
 
     ; setup pragmas
@@ -1093,8 +1099,6 @@ graph: function [
         performQuery 'main caseSensitiveLikePragma ø
 
     ; create helpers, if any
-    entities: attr "helpers"
-    if null? entities -> entities: []
     ei: new 0
     while [ei < size entities].import [
         entity: to :literal entities\[ei]
