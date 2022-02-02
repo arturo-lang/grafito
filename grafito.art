@@ -104,8 +104,8 @@ graph: function [
     ; Color palettes
     ; for graph nodes
 
-    colorPalettes: #.raw flatten.once map list "ui/palettes" 'palette [
-        @[extract.filename palette, as.data palette]
+    colorPalettes: #.raw flatten.once map list "ui/palettes" 'pal [
+        @[extract.filename pal, as.data pal]
     ]
 
     ;==========================================
@@ -775,7 +775,7 @@ graph: function [
                             ]
                             else [
                                 ; it's a complex property filter
-                                loop #v [filt,rg][
+                                loop # v [filt,rg][
 
                                     [collate,symb,val]: @[collator, "=", v]
 
