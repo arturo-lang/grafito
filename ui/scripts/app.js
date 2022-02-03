@@ -342,6 +342,7 @@ const Grafito = {
                 this.modal.accept.style = "is-modifying";
                 this.modal.showAdd = false;
                 this.modal.showCancel = true;
+                this.modal.icon = "arrow-circle-right";
                 this.modal.dropdownShowing = false;
 
                 this.modal.active = true;
