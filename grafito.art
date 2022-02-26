@@ -895,10 +895,10 @@ graph: function [
             post "/exec" [;[command]
                 try? [
                     if Grafito\verbose? ->
-                        printDebug "<== " ++ command
+                        printDebug "<== " ++ params\command
                     currentNodes: ""
                     bench: benchmark.get [
-                        currentNodes: new do command
+                        currentNodes: new do params\command
                     ]
                     if Grafito\verbose? -> 
                         printDebug ~"==> OK (|bench| ms)"
@@ -921,50 +921,50 @@ graph: function [
             ]
 
             post "/nodeFromId" [;[ndid]
-                newNodes: new nodeFromIds @[nodeFromId ndid]
+                newNodes: new nodeFromIds @[nodeFromId params\ndid]
                 write.json ø newNodes
             ]
 
             post "/changePalette" [;[newpalette, ndids]
-                Grafito\Palette: newpalette
+                Grafito\Palette: params\newpalette
                 Grafito\nodeColors: #[]
-                newNodes: new nodeFromIds map split.by:"," ndids => nodeFromId
+                newNodes: new nodeFromIds map split.by:"," params\ndids => nodeFromId
                 updateMeta 'palette Grafito\Palette
                 updateMeta 'colors Grafito\nodeColors
                 write.json ø newNodes
             ]
 
             post "/deleteNode" [;[ndid]
-                unput to :integer ndid
+                unput to :integer params\ndid
                 ""
             ]
 
             post "/updateNode" [;[ndid,newtag,props]
-                nd: nodeFromId ndid
-                edit.replace.tag:newtag nd read.json props
+                nd: nodeFromId params\ndid
+                edit.replace.tag:params\newtag nd read.json params\props
                 ""
             ]
 
             post "/createNode" [;[newtag,props]
-                created: put newtag read.json props
+                created: put params\newtag read.json params\props
                 write.json ø new nodeFromIds created
             ]
 
             post "/linkNodes" [;[newtag,src,tgt]
-                srcid: to :integer src
-                tgtid: to :integer tgt
-                edge srcid newtag tgtid
+                srcid: to :integer params\src
+                tgtid: to :integer params\tgt
+                edge srcid params\newtag tgtid
                 ""
             ]
 
             post "/updateEdge" [;[egid,newtag]
-                eid: to :integer egid
-                retagEdge eid newtag
+                eid: to :integer params\egid
+                retagEdge eid params\newtag
                 ""
             ]
 
             post "/deleteEdge" [;[egid]
-                edgeParts: split.by:"+" egid
+                edgeParts: split.by:"+" params\egid
                 unlink to :integer edgeParts\0 
                        edgeParts\2 
                        to :integer edgeParts\1
@@ -972,7 +972,7 @@ graph: function [
             ]
 
             post "/updateEngine" [;[caseSensitive]
-                if? to :logical caseSensitive [
+                if? to :logical params\caseSensitive [
                     Grafito\caseSensitive?: true
                     performQuery 'main caseSensitiveLikePragma ø
                 ]
