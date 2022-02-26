@@ -987,7 +987,7 @@ graph: function [
                 write.json ø analytics
             ]
 
-            get  "/styles/app.less"  [
+            get "/styles/app.less"  [
                 read "ui/styles/app.less"
             ]
 
