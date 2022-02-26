@@ -875,7 +875,7 @@ graph: function [
             arturo: strip replace execute "arturo -v" ["arturo" "v/"] ""
         ]
         
-        routes: #.raw[
+        routes: [
             get "/" [
                 render.template app
             ]
