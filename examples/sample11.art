@@ -11,7 +11,6 @@ do [
     ;---------------------------------------------
     graph .helpers: [person movie country book]
           .create
-          .server 
           .palette: 'default
           "sample11" 
     [
