@@ -876,11 +876,11 @@ graph: function [
         ]
         
         routes: [
-            get "/" [
+            GET "/" [
                 render.template app
             ]
 
-            post "/startup" [
+            POST "/startup" [
                 write.json ø #[
                     title: cleanpath
                     data: currentDataset
@@ -892,7 +892,7 @@ graph: function [
                 ]
             ]
 
-            post "/exec" [;[command]
+            POST "/exec" $[command][
                 try? [
                     if Grafito\verbose? ->
                         printDebug "<== " ++ params\command
@@ -920,12 +920,12 @@ graph: function [
                 ]
             ]
 
-            post "/nodeFromId" [;[ndid]
+            POST "/nodeFromId" $[ndid][
                 newNodes: new nodeFromIds @[nodeFromId params\ndid]
                 write.json ø newNodes
             ]
 
-            post "/changePalette" [;[newpalette, ndids]
+            POST "/changePalette" $[newpalette, ndids][
                 Grafito\Palette: params\newpalette
                 Grafito\nodeColors: #[]
                 newNodes: new nodeFromIds map split.by:"," params\ndids => nodeFromId
@@ -934,36 +934,36 @@ graph: function [
                 write.json ø newNodes
             ]
 
-            post "/deleteNode" [;[ndid]
+            POST "/deleteNode" $[ndid][
                 unput to :integer params\ndid
                 ""
             ]
 
-            post "/updateNode" [;[ndid,newtag,props]
+            POST "/updateNode" $[ndid,newtag,props][
                 nd: nodeFromId params\ndid
                 edit.replace.tag:params\newtag nd read.json params\props
                 ""
             ]
 
-            post "/createNode" [;[newtag,props]
+            POST "/createNode" $[newtag,props][
                 created: put params\newtag read.json params\props
                 write.json ø new nodeFromIds created
             ]
 
-            post "/linkNodes" [;[newtag,src,tgt]
+            POST "/linkNodes" $[newtag,src,tgt][
                 srcid: to :integer params\src
                 tgtid: to :integer params\tgt
                 edge srcid params\newtag tgtid
                 ""
             ]
 
-            post "/updateEdge" [;[egid,newtag]
+            POST "/updateEdge" $[egid,newtag][
                 eid: to :integer params\egid
                 retagEdge eid params\newtag
                 ""
             ]
 
-            post "/deleteEdge" [;[egid]
+            POST "/deleteEdge" $[egid][
                 edgeParts: split.by:"+" params\egid
                 unlink to :integer edgeParts\0 
                        edgeParts\2 
@@ -971,7 +971,7 @@ graph: function [
                 ""
             ]
 
-            post "/updateEngine" [;[caseSensitive]
+            POST "/updateEngine" $[caseSensitive][
                 if? to :logical params\caseSensitive [
                     Grafito\caseSensitive?: true
                     performQuery 'main caseSensitiveLikePragma ø
@@ -983,36 +983,36 @@ graph: function [
                 ""
             ]
 
-            post "/analytics" [;[]
+            POST "/analytics" [
                 write.json ø analytics
             ]
 
-            get "/styles/app.less"  [
+            GET "/styles/app.less"  [
                 read "ui/styles/app.less"
             ]
 
-            get "/styles/app.css"  [
+            GET "/styles/app.css"  [
                 read "ui/styles/app.css"
             ]
 
-            get "/scripts/app.js" [
+            GET "/scripts/app.js" [
                 read "ui/scripts/app.js"
             ]
 
-            get "/scripts/ace/ace.js" [
+            GET "/scripts/ace/ace.js" [
                 read "ui/scripts/ace/ace.js"
             ]
             
-            get "/scripts/ace/themes/monokai.js" [
+            GET "/scripts/ace/themes/monokai.js" [
                 read "ui/scripts/ace/themes/monokai.js"
             ]
 
-            get "/scripts/ace/modes/grafito.js" [
+            GET "/scripts/ace/modes/grafito.js" [
                 replace read "ui/scripts/ace/modes/grafito.js" 
                         "CUSTOM_HELPERS" join.with:"|" entities
             ]
 
-            get "/exit" [
+            GET "/exit" [
                 printDebug "Shutting down"
                 close db
                 exit
