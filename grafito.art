@@ -178,7 +178,6 @@ graph: function [
                 number: first prefilesize
                 units: last prefilesize
             ]
-            filename: relative filename
         ]
 
         prememory: formatSize process\memory\occupied
@@ -874,7 +873,7 @@ graph: function [
             system: Grafito\Version
             arturo: strip replace execute "arturo -v" ["arturo" "v/"] ""
         ]
-        
+
         routes: [
             GET "/" [
                 render.template app
@@ -895,10 +894,10 @@ graph: function [
             POST "/exec" $[command][
                 try? [
                     if Grafito\verbose? ->
-                        printDebug "<== " ++ params\command
+                        printDebug "<== " ++ command
                     currentNodes: ""
                     bench: benchmark.get [
-                        currentNodes: new do params\command
+                        currentNodes: new do command
                     ]
                     if Grafito\verbose? -> 
                         printDebug ~"==> OK (|bench| ms)"
@@ -921,50 +920,50 @@ graph: function [
             ]
 
             POST "/nodeFromId" $[ndid][
-                newNodes: new nodeFromIds @[nodeFromId params\ndid]
+                newNodes: new nodeFromIds @[nodeFromId ndid]
                 write.json ø newNodes
             ]
 
             POST "/changePalette" $[newpalette, ndids][
-                Grafito\Palette: params\newpalette
+                Grafito\Palette: newpalette
                 Grafito\nodeColors: #[]
-                newNodes: new nodeFromIds map split.by:"," params\ndids => nodeFromId
+                newNodes: new nodeFromIds map split.by:"," ndids => nodeFromId
                 updateMeta 'palette Grafito\Palette
                 updateMeta 'colors Grafito\nodeColors
                 write.json ø newNodes
             ]
 
             POST "/deleteNode" $[ndid][
-                unput to :integer params\ndid
+                unput to :integer ndid
                 ""
             ]
 
             POST "/updateNode" $[ndid,newtag,props][
-                nd: nodeFromId params\ndid
-                edit.replace.tag:params\newtag nd read.json params\props
+                nd: nodeFromId ndid
+                edit.replace.tag:newtag nd read.json props
                 ""
             ]
 
             POST "/createNode" $[newtag,props][
-                created: put params\newtag read.json params\props
+                created: put newtag read.json props
                 write.json ø new nodeFromIds created
             ]
 
             POST "/linkNodes" $[newtag,src,tgt][
-                srcid: to :integer params\src
-                tgtid: to :integer params\tgt
-                edge srcid params\newtag tgtid
+                srcid: to :integer src
+                tgtid: to :integer tgt
+                edge srcid newtag tgtid
                 ""
             ]
 
             POST "/updateEdge" $[egid,newtag][
-                eid: to :integer params\egid
-                retagEdge eid params\newtag
+                eid: to :integer egid
+                retagEdge eid newtag
                 ""
             ]
 
             POST "/deleteEdge" $[egid][
-                edgeParts: split.by:"+" params\egid
+                edgeParts: split.by:"+" egid
                 unlink to :integer edgeParts\0 
                        edgeParts\2 
                        to :integer edgeParts\1
@@ -972,7 +971,7 @@ graph: function [
             ]
 
             POST "/updateEngine" $[caseSensitive][
-                if? to :logical params\caseSensitive [
+                if? to :logical caseSensitive [
                     Grafito\caseSensitive?: true
                     performQuery 'main caseSensitiveLikePragma ø
                 ]
