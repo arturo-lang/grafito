@@ -49,7 +49,7 @@ graph: function [
     ;;      graph "mydb" [
     ;;          ; do sth with this graph database
     ;;      ]
-    ;;      ;;;;
+    ;;      ..........
     ;;      ; in memory database
     ;;      graph ø [
     ;;          ; do sth with this graph database
