@@ -622,8 +622,9 @@ graph: function [
             edges: new []
             tg: @ tgt
             if? :dictionary = type src [
-                loop tg [t]->
+                loop tg [t][
                     'edges ++ edge src name t
+                ]
             ]
             else [
                 sr: @ src
