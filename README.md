@@ -66,52 +66,132 @@ do.import {grafito.art}
 do [
     ;---------------------------------------------
     ; Set up a new graph environment
-    ; with a local database named "sample4"
+    ; with a local database named "sample11"
     ;---------------------------------------------
-    graph.create "sample4" [
+    graph .helpers: [person movie country book]
+          .create
+          .palette: 'default
+          "sample11" 
+    [
+        unless dbExists? [
+            ;---------------------------------------------
+            ; Populate the database
+            ;---------------------------------------------
 
-        ;---------------------------------------------
-        ; Populate the database
-        ;---------------------------------------------
+            uk: country.new [name: "United Kingdom"]
+            au: country.new [name: "Australia"]
+            us: country.new [name: "United States"] 
+            ca: country.new [name: "Canada"]
+            fr: country.new [name: "France"]
+            de: country.new [name: "Germany"]
+            se: country.new [name: "Sweden"]
+            es: country.new [name: "Spain"]
+            pl: country.new [name: "Poland"]
 
-        uk: put'country [name: "United Kingdom"]
-        au: put'country [name: "Australia"]
-        us: put'country [name: "United States"] 
-        ca: put'country [name: "Canada"]
+            nolan:      person.new [name: "Christopher Nolan" birthday: 1970 sex: "m"]
+            pearce:     person.new [name: "Guy Pearce" birthday: 1967 sex: "m"]
+            hanson:     person.new [name: "Curtis Hanson" birthday: 1945 sex: "m"]
+            spacey:     person.new [name: "Kevin Spacey" birthday: 1959 sex: "m"]
+            dicaprio:   person.new [name: "Leonardo DiCaprio" birthday: 1974 sex: "m"]
+            hardy:      person.new [name: "Tom Hardy" birthday: 1977 sex: "m"]
+            cotillard:  person.new [name: "Marion Cotillard" birthday: 1975 sex: "f"]
+            moss:       person.new [name: "Carrie-Ann Moss" birthday: 1967 sex: "f"]
+            kidman:     person.new [name: "Nicole Kidman" birthday: 1967 sex: "f"]
+            cruise:     person.new [name: "Tom Cruise" birthday: 1962 sex: "m"]
+            kubrick:    person.new [name: "Stanley Kubrick" birthday: 1928 died: 1999 sex: "m" alive: false]
+            burton:     person.new [name: "Tim Burton" birthday: 1958 sex: "m"]
+            depp:       person.new [name: "Johny Depp" birthday: 1965 sex: "m"]
+            hallstrom:  person.new [name: "Lasse Hallström" birthday: 1946 sex: "m"]
+            scorsese:   person.new [name: "Martin Scorsese" birthday: 1942 sex: "m"]
+            sydow:      person.new [name: "Max von Sydow" birthday: 1929 died: 2020 sex: "m" alive: false]
+            binoche:    person.new [name: "Juliette Binoche" birthday: 1964 sex: "f"]
+            dench:      person.new [name: "Judi Dench" birthday: 1934 sex: "f"]
+            eastwood:   person.new [name: "Clint Eastwood" birthday: 1930 sex: "m"]
+            polanski:   person.new [name: "Roman Polanski" birthday: 1933 sex: "m"]
+            olin:       person.new [name: "Lena Olin" birthday: 1955 sex: "f"]
+            zimmer:     person.new [name: "Hans Zimmer" birthday: 1957 sex: "m"]
+            pook:       person.new [name: "Jocelyn Pook" birthday: 1960 sex: "f"]
+            lehane:     person.new [name: "Dennis Lehane" birthday: 1965 sex: "m"]
+            penn:       person.new [name: "Sean Penn" birthday: 1960 sex: "m"]
+            malick:     person.new [name: "Terrence Malick" birthday: 1943 sex: "m"]
+            brody:      person.new [name: "Adrien Brody" birthday: 1973 sex: "m"]
+            wach1:      person.new [name: "Lana Wachowski" birthday: 1965 sex: "f"]
+            wach2:      person.new [name: "Lilly Wachowski" birthday: 1967 sex: "f"]
 
-        nolan:    put'person [name: "Christopher Nolan" birthday: 1970 sex: "m"]
-        pearce:   put'person [name: "Guy Pearce" birthday: 1967 sex: "m"]
-        hanson:   put'person [name: "Curtis Hanson" birthday: 1945 sex: "m"]
-        spacey:   put'person [name: "Kevin Spacey" birthday: 1959 sex: "m"]
-        dicaprio: put'person [name: "Leonardo DiCaprio" birthday: 1974 sex: "m"]
-        moss:     put'person [name: "Carrie-Ann Moss" birthday: 1967 sex: "f"]
+            memento:        movie.new [title: "Memento" year: 2000]
+            inception:      movie.new [title: "Inception" year: 2010]
+            laconfidential: movie.new [title: "L.A. Confidential" year: 1997]
+            matrix:         movie.new [title: "The Matrix" year: 1999]
+            eyes:           movie.new [title: "Eyes Wide Shut" year: 1999]
+            bigfish:        movie.new [title: "Big Fish" year: 2003]
+            sleepyhollow:   movie.new [title: "Sleepy Hollow" year: 1999]
+            chocolat:       movie.new [title: "Chocolat" year: 2000]
+            jedgar:         movie.new [title: "J. Edgar" year: 2011]
+            ninthgate:      movie.new [title: "The Ninth Gate" year: 1999]
+            shutter:        movie.new [title: "Shutter Island" year: 2010]
+            mystic:         movie.new [title: "Mystic River" year: 2003]
+            redline:        movie.new [title: "Thin Red Line" year: 1998]
+            pianist:        movie.new [title: "The Pianist" year: 2002]
 
-        wach1: put'person [name: "Lana Wachowski" birthday: 1965 sex: "f"]
-        wach2: put'person [name: "Lilly Wachowski" birthday: 1967 sex: "f"]
+            mysticB:        book.new [title: "Mystic River" year: 2001 language: "en"]
 
-        memento:         put'movie [title: "Memento" year: 2000]
-        inception:       put'movie [title: "Inception" year: 2010]
-        laconfidential:  put'movie [title: "L.A. Confidential" year: 1997]
-        matrix:          put'movie [title: "The Matrix" year: 1999]
+            ;---------------------------------------------
+            ; Define the relationships
+            ; between our nodes
+            ;---------------------------------------------
 
-        ;---------------------------------------------
-        ; Define the relationships
-        ; between our nodes
-        ;---------------------------------------------
+            [nolan hardy dench pook] ~> 'isFrom uk
+            [pearce kidman] ~> 'isFrom au
+            [malick brody hanson spacey dicaprio wach1 wach2 cruise kubrick burton depp eastwood scorsese lehane penn] ~> 'isFrom us
+            moss ~> 'isFrom ca
+            [cotillard binoche] ~> 'isFrom fr
+            polanski ~> 'isFrom [fr pl]
+            [hallstrom olin sydow] ~> 'isFrom se
+            zimmer ~> 'isFrom de
 
-        link'isFrom nolan uk
-        link'isFrom pearce au
-        link'isFrom @[hanson spacey dicaprio wach1 wach2] us
-        link'isFrom moss ca
+            nolan ~> 'directed [memento inception]
+            hanson ~> 'directed laconfidential
+            [wach1 wach2] ~> 'directed matrix
+            kubrick ~> 'directed eyes
+            burton ~> 'directed [bigfish sleepyhollow]
+            hallstrom ~> 'directed chocolat
+            eastwood ~> 'directed [jedgar mystic]
+            polanski ~> 'directed [pianist ninthgate]
+            scorsese ~> 'directed shutter
+            malick ~> 'directed [pianist redline]
 
-        link'directed nolan @[memento inception]
-        link'directed hanson laconfidential
-        link'directed @[wach1 wach2] matrix
+            pearce ~> 'actedIn [memento laconfidential]
+            spacey ~> 'actedIn laconfidential
+            [dicaprio hardy cotillard] ~> 'actedIn inception
+            [dicaprio sydow] ~> 'actedIn shutter
+            cotillard ~> 'actedIn bigfish
+            moss ~> 'actedIn [memento matrix chocolat]
+            [cruise kidman] ~> 'actedIn eyes
+            depp ~> 'actedIn [chocolat sleepyhollow]
+            [binoche dench olin] ~> 'actedIn chocolat
+            [dicaprio dench] ~> 'actedIn jedgar
+            [depp olin] ~> 'actedIn ninthgate
+            penn ~> 'actedIn [mystic redline]
+            brody ~> 'actedIn [redline pianist]
 
-        link'actedIn pearce @[memento laconfidential]
-        link'actedIn spacey laconfidential
-        link'actedIn dicaprio inception
-        link'actedIn moss @[memento matrix]
+            zimmer ~> 'composed inception
+            pook ~> 'composed eyes
+
+            nolan ~> 'written inception
+
+            lehane ~> 'written mysticB
+            mystic ~> 'basedOn mysticB
+
+            [redline bigfish memento laconfidential jedgar shutter mystic] ~> 'origin us
+            matrix ~> 'origin [us au]
+            [inception eyes chocolat] ~> 'origin [uk us]
+            sleepyhollow ~> 'origin [us de]
+            ninthgate ~> 'origin [us fr es]
+            pianist ~> 'origin [uk fr de pl]
+
+            wach1 ~> 'sibling wach2
+            cruise ~> 'married kidman
+        ]
 
         ;---------------------------------------------
         ; Fetch every "person" &
@@ -150,10 +230,10 @@ Then, just clone this repo and simply go to the folder via your terminal.
 
 After having installed the latest version of Arturo, you can use Grafito from any Arturo script as a library.
 
-For example, here's how you run one of the included examples:
+For example, here's how to run the above example:
 
 ```
-arturo examples/sample3.art
+arturo examples/sample11.art
 ```
 
 #### As a Standalone tool
@@ -184,10 +264,10 @@ graph.create "mygraph" [
 
 ```red
 graph.create "mygraph" [
-	john: put'person [name: "John" sex: 'm]
-	joan: put'person [name: "Joan" sex: 'f]
+	john: put 'person [name: "John" sex: 'm]
+	joan: put 'person [name: "Joan" sex: 'f]
 
-	link 'marriedTo john joan
+	link john 'marriedTo joan
 ]
 ```
 
@@ -195,7 +275,7 @@ graph.create "mygraph" [
 
 ```red
 graph "mygraph" [
-	inspect what'person [name: "Joan"]
+	inspect fetch 'person [name: "Joan"]
 ]
 ```
 
@@ -204,7 +284,7 @@ graph "mygraph" [
 
 ```red
 graph "mygraph" [
-	unput what'person [name: "John"]
+	unput fetch 'person [name: "John"]
 ]
 ```
 
@@ -212,8 +292,8 @@ graph "mygraph" [
 
 ```red
 graph "mygraph" [
-	unlink'marriedTo what'person [name: "John"]
-                         what'person [name: "Joan"]
+	unlink fetch 'person [name: "John"] 'marriedTo 
+           fetch 'person [name: "Joan"]
 ]
 ```
 
@@ -223,7 +303,7 @@ graph "mygraph" [
 graph "mygraph" [
 	inspect fetch'person [
 		sex: "m"
-		marriedTo: what 'person [name: "Joan"]
+		marriedTo: fetch 'person [name: "Joan"]
 	]
 ]
 ```
@@ -232,7 +312,7 @@ graph "mygraph" [
 
 ```red
 graph "mygraph" [
-	fetch'person [
+	fetch 'person [
 		surname:"Doe"
 		age: -> greater: 30
 	]
@@ -273,18 +353,19 @@ If you pass `null` (or `ø`) then the database will be *in-memory*. If you want 
 
 #### Description
 
-Create a new node of given type and with given properties.
+Insert new node(s) to graph with given name and attributes.
 
 #### Usage
 
 <pre>
-<b>put</b> <ins>type</ins> <i>:literal</i>
-    <ins>properties</ins> <i>:dictionary</i>
+<b>put</b> <ins>name</ins> <i>:literal</i>, <i>:string</i>
+    <ins>attributes</ins> <i>:dictionary</i>, <i>:block</i>
 </pre>
 
 #### Returns
 
 - *:dictionary* (node)
+- *:block* (of nodes)
 
 #### Examples
 
@@ -296,12 +377,12 @@ put 'person [name: "John" surname: "Doe" birthday: 1986]
 
 #### Description
 
-Delete given node
+Remove given node(s) from graph.
 
 #### Usage
 
 <pre>
-<b>unput</b> <ins>node</ins> <i>:dictionary</i>
+<b>unput</b> <ins>node</ins> <i>:dictionary</i>, <i>:block</i>
 </pre>
 
 #### Examples
@@ -315,14 +396,14 @@ unput x
 
 #### Description
 
-Create a new relationship of given type between given nodes.
+Create a connection from source to target node with given name.
 
 #### Usage
 
 <pre>
-<b>link</b> <ins>type</ins> <i>:literal</i>
-     <ins>source</ins> <i>:dictionary</i> (node), <i>:block</i> of <i>:dictionary</i> (node)
-     <ins>target</ins> <i>:dictionary</i> (node), <i>:block</i> of <i>:dictionary</i> (node)
+<b>link</b> <ins>source</ins> <i>:dictionary</i> (node), <i>:block</i> (of nodes)
+     <ins>name</ins> <i>:literal</i>, <i>:string</i>
+     <ins>target</ins> <i>:dictionary</i> (node), <i>:block</i> (of nodes)
 </pre>
 
 #### Returns
@@ -332,22 +413,22 @@ Create a new relationship of given type between given nodes.
 #### Examples
 
 ```red
-link 'marriedTo put 'person [name: "John" surname: "Doe" birthday: 1986] 
-                put 'person [name: "Mary" surname: "Doe" birthday: 1986]
+link put 'person [name: "John" surname: "Doe" birthday: 1986] 'marriedTo 
+     put 'person [name: "Mary" surname: "Doe" birthday: 1986]
 ```
 
 ### unlink
 
 #### Description
 
-Delete given relationship between given nodes.
+Remove connection from source to target node with given name
 
 #### Usage
 
 <pre>
-<b>unlink</b> <ins>type</ins> <i>:literal</i>
-       <ins>source</ins> <i>:dictionary</i> (node)
-       <ins>target</ins> <i>:dictionary</i> (node)
+<b>unlink</b>   <ins>source</ins> <i>:dictionary</i> (node), <i>:block</i> (of nodes)
+       <ins>name</ins> <i>:literal</i>, <i>:string</i>
+       <ins>target</ins> <i>:dictionary</i> (node), <i>:block</i> (of nodes)
 </pre>
 
 #### Examples
@@ -360,39 +441,16 @@ link 'marriedTo x y
 unlink 'marriedTo x y
 ```
 
-### what
-
-#### Description
-
-Get the first node of given type, that satisfies all of given properties and/or relationships.
-
-#### Usage
-
-<pre>
-<b>what</b> <ins>type</ins> <i>:literal</i>
-     <ins>properties</ins> <i>:block</i> <i>:dictionary</i> <i>:null</i>
-</pre>
-
-#### Returns
-
-- *:dictionary* (node)
-
-#### Examples
-
-```red
-print what 'person [name: "John"]
-```
-
 ### fetch
 
 #### Description
 
-Get all nodes of given type, that satisfy all of given properties and/or relationships.
+Retrieves nodes with name that match all given attributes.
 
 #### Usage
 
 <pre>
-<b>fetch</b> <ins>type</ins> <i>:literal</i>
+<b>fetch</b> <ins>name</ins> <i>:literal</i>, <i>:string</i>
       <ins>properties</ins> <i>:block</i> <i>:dictionary</i> <i>:null</i>
 </pre>
 
@@ -406,7 +464,7 @@ Get all nodes of given type, that satisfy all of given properties and/or relatio
 print fetch 'person [surname: "Doe"]
 print fetch 'person [
 	surname: "Doe"
-	marriedTo: what'person [name: "Mary"]
+	marriedTo: fetch'person [name: "Mary"]
 ]
 ```
 
