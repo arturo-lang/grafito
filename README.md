@@ -515,19 +515,27 @@ fetch'person [ surname: -> contains: "D" ]
 
 Get rows that *contain* the given text.
 
-### less
+### prefix
+
+Get rows that start with, or "have as prefix", the given text.
+
+### suffix
+
+Get rows that end with, or "have as suffix", the given text.
+
+### under
 
 Get rows with a numeric value *less than* the given one.
 
-### greater
+### over
 
 Get rows with a numeric value *greater than* the given one.
 
-### lessOrEqual
+### underOrEqual
 
 Get rows with a numeric value *less than or equal to* the given one.
 
-### greaterOrEqual
+### overOrEqual
 
 Get rows with a numeric value *greater than or equal to* the given one.
 
