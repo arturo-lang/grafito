@@ -246,7 +246,7 @@ Of course, you can also run Grafito as a tool on it own:
 
 (If you pass a name, it will use it as your database file. If not, the database will be in-memory)
 
-<p align="center"><img width="100%" align="center" src="https://raw.githubusercontent.com/arturo-lang/grafito/master/console.png"/></p>
+<p align="center"><img width="100%" align="center" src="https://raw.githubusercontent.com/arturo-lang/grafito/master/console-screenshot.png"/></p>
 
 And you can see your lightweight graph engine in action!
 
