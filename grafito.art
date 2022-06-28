@@ -1133,7 +1133,7 @@ if standalone? [
     logoTxt: read "logo.txt"
 
     GrafitoHeader: join @[
-        print color #magenta replace.regex logoTxt "#(.+)" (color #white "$1") ++ color.keep #magenta ""
+        print color #magenta replace logoTxt {/#(.+)/} (color #white "$1") ++ color.keep #magenta ""
         print "  "
         color #gray "-------------------------------------" BR
         color #gray ~"  system: v/|Versions\system|, engine: v/|Versions\engine|" BR
