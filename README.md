@@ -426,7 +426,7 @@ Remove connection from source to target node with given name
 #### Usage
 
 <pre>
-<b>unlink</b>   <ins>source</ins> <i>:dictionary</i> (node), <i>:block</i> (of nodes)
+<b>unlink</b> <ins>source</ins> <i>:dictionary</i> (node), <i>:block</i> (of nodes)
        <ins>name</ins> <i>:literal</i>, <i>:string</i>
        <ins>target</ins> <i>:dictionary</i> (node), <i>:block</i> (of nodes)
 </pre>
