@@ -1,4 +1,4 @@
-do.import {grafito.art}
+do {grafito.art}
  
 do [
     graph ø [
