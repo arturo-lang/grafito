@@ -1151,7 +1151,7 @@ if standalone? [
         print color #orange "## Launching Grafito console - rock on! 🤘"
         print ""
 
-        while ø .import [
+        while ø [
             Got: null
 
             indentation: ""
@@ -1168,8 +1168,8 @@ if standalone? [
                 inp: inp ++ input ".. " ++ indentation
             ]
 
-            try?.verbose.import [
-                try.verbose.import to :block inp
+            try?.verbose [
+                try.verbose to :block inp
 
                 StackSize: size stack
                 
