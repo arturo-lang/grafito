@@ -910,7 +910,7 @@ graph: function [
                         write.json ø #[
                             data: currentDataset
                             rows: currentNodes
-                            timeTaken: to :string bench
+                            timeTaken: scalar bench
                         ]
                     ]
                 ]
