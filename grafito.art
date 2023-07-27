@@ -152,11 +152,10 @@ graph: function [
     ;--------------------------
 
     formatSize: function [sz][
-        nz: new sz
-        if nz < 1024 -> return @[nz, "B"]
-        if nz < 1024*1024 -> return @[to :floating to :string .format: ".2f" nz//1024, "KB"]
-        if nz < 1024*1024*1024 -> return @[to :floating to :string .format: ".2f" (nz//1024)//1024, "MB"]
-        if nz < 1024*1024*1024*1024 -> return @[to :floating to :string .format: ".2f" ((nz//1024)//1024)//1024, "GB"]
+        if sz < 1024 -> return sz
+        if sz < 1024*1024 -> return sz --> 'kB
+        if sz < 1024*1024*1024 -> return sz --> 'MB
+        if sz < 1024*1024*1024*1024 -> return sz --> 'GB
         return @[]
     ]
 
@@ -175,15 +174,15 @@ graph: function [
         if not? empty? filename [
             prefilesize: formatSize volume filename
             filesize: #[
-                number: first prefilesize
-                units: last prefilesize
+                number: to :string scalar prefilesize
+                units: to :string units prefilesize
             ]
         ]
 
         prememory: formatSize process\memory\occupied
         mem: #[
-            number: first prememory
-            units: last prememory
+            number: to :string scalar prememory
+            units: to :string units prememory
         ]
 
         return #[
