@@ -745,9 +745,9 @@ graph: function [
                     not? null? att ->
                 att: # att
 
-            ; HACK - to solve
-            remove.key 'att 'n
-            remove.key 'att 'a
+            ; ; HACK - to solve
+            ; remove.key 'att 'n
+            ; remove.key 'att 'a
 
             if not? empty? att [
                 loop att [k,v][
@@ -1100,7 +1100,7 @@ graph: function [
 
     ; create helpers, if any
     ei: new 0
-    while [ei < size entities].import [
+    while [ei < size entities] [
         entity: to :literal entities\[ei]
         let entity function [block] with 'entity -> generateHelper entity block
         inc 'ei
