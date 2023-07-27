@@ -561,7 +561,7 @@ For that, the most convenient place for me would be the [GitHub Issues](https://
 
 MIT License
 
-Copyright (c) 2022 Yanis Zafirópulos
+Copyright (c) 2023 Yanis Zafirópulos
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
