@@ -950,7 +950,7 @@ graph: function [
                         currentNodes: new do command
                     ]
                     if Grafito\verbose? -> 
-                        printDebug ~"==> OK (|bench| ms)"
+                        printDebug ~"==> OK (|bench|)"
                     (or? [not? block? currentNodes]
                             [and? [0 < size currentNodes][not? dictionary? first currentNodes]])?[
                         "empty"
