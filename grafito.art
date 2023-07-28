@@ -986,29 +986,15 @@ graph: function [
                 write.json ø analytics
             ]
 
-            GET "/styles/app.less"  [
-                read "ui/styles/app.less"
+            GET "/styles/(?<file>.+)"  $[file][
+                read ~"ui/styles/|file|"
             ]
 
-            GET "/styles/app.css"  [
-                read "ui/styles/app.css"
-            ]
-
-            GET "/scripts/app.js" [
-                read "ui/scripts/app.js"
-            ]
-
-            GET "/scripts/ace/ace.js" [
-                read "ui/scripts/ace/ace.js"
-            ]
-            
-            GET "/scripts/ace/themes/monokai.js" [
-                read "ui/scripts/ace/themes/monokai.js"
-            ]
-
-            GET "/scripts/ace/modes/grafito.js" [
-                replace read "ui/scripts/ace/modes/grafito.js" 
-                        "CUSTOM_HELPERS" join.with:"|" entities
+            GET "/scripts/(?<file>.+)" $[file][
+                (file = "ace/modes/grafito.js")? 
+                    -> replace read "ui/scripts/ace/modes/grafito.js" 
+                            "CUSTOM_HELPERS" join.with:"|" entities
+                    -> read ~"ui/scripts/|file|"
             ]
 
             GET "/exit" [
