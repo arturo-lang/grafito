@@ -986,7 +986,7 @@ graph: function [
                 write.json ø analytics
             ]
 
-            GET "/styles/(?<file>.+)"  $[file][
+            GET "/styles/(?<file>.+)" $[file][
                 read ~"ui/styles/|file|"
             ]
 
