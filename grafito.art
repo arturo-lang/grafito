@@ -131,10 +131,9 @@ graph: function [
 
             print ""
         ]
-        if? not? null? params [
+        (not? null? params)? [
             query db .with: params qu
-        ]
-        else [
+        ][
             query db qu
         ]
     ]
@@ -210,8 +209,8 @@ graph: function [
 
         lrgbs: map rgbs 'rgb [
             C: rgb // 255
-            if? C =< 0.03928 -> C: C // 12.92
-            else -> C: ((C+0.055)//1.055) ^ 2.4
+            (C =< 0.03928)? -> C: C // 12.92
+                            -> C: ((C+0.055)//1.055) ^ 2.4
             C
         ]
 
@@ -430,10 +429,9 @@ graph: function [
     ; Generate access helper
     ;--------------------------
     generateHelper: function [id,block][
-        if? not? null? attr 'new [
+        (not? null? attr 'new)? [
             put id block
-        ]
-        else [
+        ][
             fetch id block
         ]
     ]
@@ -476,7 +474,7 @@ graph: function [
 
         result: new []
 
-        if? not? null? attr 'many [
+        (not? null? attr 'many)? [
             lastId: to :integer first first performQuery 'put getMaxNodeIdSQL ø
             queries: new []
             vals: new []
@@ -496,8 +494,7 @@ graph: function [
 
             if Grafito\verbose? ->
                  printDebug ~{created |size attributes| nodes}
-        ]
-        else [
+        ] [
             att: attributes
             if not? dictionary? att -> att: # att
             nodeId: performQuery.id 'put createNodeSQL @[name, write.compact.json ø att]
@@ -508,7 +505,7 @@ graph: function [
             ]
 
             if Grafito\verbose? ->
-                printDebug ~{created 1 node (@|nodeId|) with |size att| propert|if? 1 = size att -> "y" else -> "ies"|}
+                printDebug ~{created 1 node (@|nodeId|) with |size att| propert|(1 = size att)? -> "y" -> "ies"|}
         ]
     
         return result
@@ -531,9 +528,9 @@ graph: function [
 
         toUpdate: ø
 
-        if? dictionary? nd ->
+        (dictionary? nd)? ->
             toUpdate: @[nd]
-        else ->
+        ->
             toUpdate: new nd
 
         doReplace?: not? null? attr 'replace
@@ -546,15 +543,15 @@ graph: function [
         loop toUpdate 'updateable [
             newAttributes: ø
 
-            if? doReplace? ->
+            (doReplace?)? ->
                 newAttributes: additional
-            else ->
+            ->
                 newAttributes: extend updateable\properties additional
 
             updateable\properties: newAttributes
-            if? null? withTag ->
+            (null? withTag)? ->
                 performQuery 'edit updateNodePropertiesSQL @[write.compact.json ø newAttributes, updateable\id]
-            else ->
+            ->
                 performQuery 'edit updateNodeSQL @[withTag, write.compact.json ø newAttributes, updateable\id]
         ]
     ]
@@ -571,9 +568,9 @@ graph: function [
 
         toDelete: ø
 
-        if? block? nd ->
+        (block? nd)? ->
             toDelete: new nd
-        else ->
+        ->
             toDelete: @[nd]
 
         loop toDelete 'deletable [
@@ -602,7 +599,7 @@ graph: function [
 
         edgeId: 0
 
-        if? :dictionary = type tgt [
+        (:dictionary = type tgt)? [
             edges: new []
             if :dictionary = type src [
                 ret: edge src name tgt
@@ -616,16 +613,14 @@ graph: function [
             if Grafito\verbose? -> printDebug ~"created |size edges| edges"
 
             return edges
-        ]
-        else [
+        ][
             edges: new []
             tg: @ tgt
-            if? :dictionary = type src [
+            (:dictionary = type src)? [
                 loop tg [t][
                     'edges ++ edge src name t
                 ]
-            ]
-            else [
+            ][
                 sr: @ src
                 loop sr [s] [
                     loop tg [t]->
@@ -653,21 +648,43 @@ graph: function [
         nodesFrom: new []
         nodesTo: new []
 
-        case [(type src)=]
-            when? -> :dictionary -> nodesFrom: @[src\id]
-            when? -> :integer -> nodesFrom: @[src]
-            else  -> nodesFrom: new map src 'n [
-                if? dictionary? n -> n\id
-                else -> n
+        ;case [(type src)=]
+        (dictionary? src)? -> nodesFrom: @[src\id]
+        [
+            (integer? src)? -> nodesFrom: @[src]
+            [
+                nodesFrom: new map src 'n [
+                    (dictionary? n)? -> n\id
+                    -> n
+                ]
             ]
+        ]
 
-        case [(type tgt)=]
-            when? -> :dictionary -> nodesTo: @[tgt\id]
-            when? -> :integer -> nodesTo: @[tgt]
-            else  -> nodesTo: new map tgt 'n [
-                if? dictionary? n -> n\id
-                else -> n
+            ; when? -> :dictionary -> nodesFrom: @[src\id]
+            ; when? -> :integer -> nodesFrom: @[src]
+            ; else  -> nodesFrom: new map src 'n [
+            ;     if? dictionary? n -> n\id
+            ;     else -> n
+            ; ]
+
+        (dictionary? tgt)? -> nodesFrom: @[tgt\id]
+        [
+            (integer? tgt)? -> nodesFrom: @[tgt]
+            [
+                nodesFrom: new map tgt 'n [
+                    (dictionary? n)? -> n\id
+                    -> n
+                ]
             ]
+        ]
+
+        ; if?case [(type tgt)=]
+        ;     when? -> :dictionary -> nodesTo: @[tgt\id]
+        ;     when? -> :integer -> nodesTo: @[tgt]
+        ;     else  -> nodesTo: new map tgt 'n [
+        ;         if? dictionary? n -> n\id
+        ;         else -> n
+        ;     ]
 
         loop nodesFrom 'nf [
             loop nodesTo 'nt [
@@ -709,7 +726,7 @@ graph: function [
         ;; setup main variables
 
         catchAny?: false
-        if? not? null? attr "any" ->
+        if not? null? attr "any" ->
             catchAny?: true
 
         collator: ""
@@ -724,7 +741,7 @@ graph: function [
 
         att: new attributes
 
-        if? string? att [
+        (string? att)? [
             [collate,symb,val]: @[collator, "=", as.code att]
             
             ; add it once (to check for `name`)
@@ -739,7 +756,7 @@ graph: function [
             ; so we'll have to forcefully set `catchAny?` to true
             catchAny?: true
         ]
-        else [
+        [
             if and? not? dictionary? att 
                     not? null? att ->
                 att: # att
@@ -750,70 +767,103 @@ graph: function [
 
             if not? empty? att [
                 loop att [k,v][
-                    case [equal? type v]
-                        when? [:null][
-                            ; it's an edge filter without criteria
-                            'edgeFilters ++ hasEdgeFilter
-                            'qedgevals ++ @[k]
-                        ]
-                        when? [:dictionary][
-                            ; it's an edge filter
-                            'edgeFilters ++ edgeWithTargetFilter
-                            'qedgevals ++ @[k, v\id]
-                        ]
-                        when? [:block][
-                            if? and? 0 < size v 
-                                    :dictionary = type first v [
-                                ; it's an array of edge filters
-                                orCriteria: new []
-                                loop v [edgef][
-                                    'orCriteria ++ {!sql (edges.tag=? AND edges.target=?)}
-                                    'qedgevals ++ @[k, edgef\id]
-                                ]
-                                'edgeFilters ++ "(" ++ (join.with:" OR " orCriteria) ++ ")"
+                    if null? v [
+                        ; it's an edge filter without criteria
+                        'edgeFilters ++ hasEdgeFilter
+                        'qedgevals ++ @[k]
+                        continue
+                    ]
+                    if dictionary? v [
+                        ; it's an edge filter
+                        'edgeFilters ++ edgeWithTargetFilter
+                        'qedgevals ++ @[k, v\id]
+                        continue
+                    ]
+                    if block? v [
+                        (and? 0 < size v 
+                                :dictionary = type first v)? [
+                            ; it's an array of edge filters
+                            orCriteria: new []
+                            loop v [edgef][
+                                'orCriteria ++ {!sql (edges.tag=? AND edges.target=?)}
+                                'qedgevals ++ @[k, edgef\id]
                             ]
-                            else [
-                                ; it's a complex property filter
-                                loop # v [filt,rg][
+                            'edgeFilters ++ "(" ++ (join.with:" OR " orCriteria) ++ ")"
+                        ]
+                        [
+                            ; it's a complex property filter
+                            loop # v [filt,rg][
 
-                                    [collate,symb,val]: @[collator, "=", v]
+                                [collate,symb,val]: @[collator, "=", v]
 
-                                    case [equal? filt]
-            
-                                        when? ["contains"]      -> [collate,symb,val]: @["", "LIKE", ~"%|rg|%"]
-                                        when? ["prefix"]        -> [collate,symb,val]: @["", "LIKE", ~"|rg|%"]
-                                        when? ["suffix"]        -> [collate,symb,val]: @["", "LIKE", ~"%|rg|"]
-                                        when? ["under"]         -> [collate,symb,val]: @["", "<", rg]
-                                        when? ["over"]          -> [collate,symb,val]: @["", ">", rg]
-                                        when? ["underOrEqual"]  -> [collate,symb,val]: @["", "<=", rg]
-                                        when? ["overOrEqual"]   -> [collate,symb,val]: @["", ">=", rg]
-                                        when? ["in"]            -> [collate,symb,val]: @[collator, "IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
-                                        when? ["not"][     
-                                            if? block? rg       -> [collate,symb,val]: @[collator, "NOT IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
-                                            else                -> [collate,symb,val]: @[collator, "!=", rg]
+                                (filt = "contains")? -> [collate,symb,val]: @["", "LIKE", ~"%|rg|%"]
+                                [
+                                    (filt = "prefix")? -> [collate,symb,val]: @["", "LIKE", ~"|rg|%"]
+                                    [
+                                        (filt = "suffix")? -> [collate,symb,val]: @["", "LIKE", ~"%|rg|"]
+                                        [
+                                            (filt = "under")? -> [collate,symb,val]: @["", "<", rg]
+                                            [
+                                                (filt = "over")? -> [collate,symb,val]: @["", ">", rg]
+                                                [
+                                                    (filt = "underOrEqual")? -> [collate,symb,val]: @["", "<=", rg]
+                                                    [
+                                                        (filt = "overOrEqual")? -> [collate,symb,val]: @["", ">=", rg]
+                                                        [
+                                                            (filt = "in")? -> [collate,symb,val]: @[collator, "IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
+                                                            [
+                                                                (filt = "not")? [ 
+                                                                    (block? rg)?       -> [collate,symb,val]: @[collator, "NOT IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
+                                                                                       -> [collate,symb,val]: @[collator, "!=", rg]
+                                                                ]
+                                                                [
+                                                                    panic.code: 1 ~"filter: |filt| not recognized"
+                                                                ]
+                                                            ]
+                                                        ]
+                                                    ]
+                                                ]
+                                            ]
                                         ]
-                                        else [
-                                            panic.code: 1 ~"filter: |filt| not recognized"
-                                        ]
-                                    
-                                    val: as.code val
-                                    'propertyFilters ++ ~propertyWithValueFilter
-                                    'qpropvals ++ @[~"$.|k|"]
+                                    ]
                                 ]
+                                ; case [equal? filt]
+        
+                                ;     when? ["contains"]      -> [collate,symb,val]: @["", "LIKE", ~"%|rg|%"]
+                                ;     when? ["prefix"]        -> [collate,symb,val]: @["", "LIKE", ~"|rg|%"]
+                                ;     when? ["suffix"]        -> [collate,symb,val]: @["", "LIKE", ~"%|rg|"]
+                                ;     when? ["under"]         -> [collate,symb,val]: @["", "<", rg]
+                                ;     when? ["over"]          -> [collate,symb,val]: @["", ">", rg]
+                                ;     when? ["underOrEqual"]  -> [collate,symb,val]: @["", "<=", rg]
+                                ;     when? ["overOrEqual"]   -> [collate,symb,val]: @["", ">=", rg]
+                                ;     when? ["in"]            -> [collate,symb,val]: @[collator, "IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
+                                ;     when? ["not"][     
+                                ;         if? block? rg       -> [collate,symb,val]: @[collator, "NOT IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
+                                ;         else                -> [collate,symb,val]: @[collator, "!=", rg]
+                                ;     ]
+                                ;     else [
+                                ;         panic.code: 1 ~"filter: |filt| not recognized"
+                                ;     ]
+                                
+                                val: as.code val
+                                'propertyFilters ++ ~propertyWithValueFilter
+                                'qpropvals ++ @[~"$.|k|"]
                             ]
                         ]
-                        when? [:logical][
-                            ; it's a simple property filter without criteria
-                            'propertyFilters ++ hasPropertyFilter
-                            'qpropvals ++ @[~"$.|k|"]
-                        ]
-                        else [
-                            ; it's a simple property filter
-                            [collate,symb,val]: @[collator, "=", as.code v]
-            
-                            'propertyFilters ++ ~propertyWithValueFilter
-                            'qpropvals ++ @[~"$.|k|"]
-                        ]
+                        continue
+                    ]
+                    if logical? v [
+                        ; it's a simple property filter without criteria
+                        'propertyFilters ++ hasPropertyFilter
+                        'qpropvals ++ @[~"$.|k|"]
+                        continue
+                    ]
+                        
+                    ; it's a simple property filter
+                    [collate,symb,val]: @[collator, "=", as.code v]
+    
+                    'propertyFilters ++ ~propertyWithValueFilter
+                    'qpropvals ++ @[~"$.|k|"]
                 ]
             ]
         ]
@@ -834,13 +884,13 @@ graph: function [
             'qvals ++ qpropvals
         ]
 
-        if? not? empty? edgeFilters [
+        (not? empty? edgeFilters)? [
             edgies: join.with: " OR " edgeFilters
             'qvals ++ qedgevals
 
             qr: ~fetchNodesWithEdgesSQL
         ]
-        else [
+        [
             qr: ~fetchNodesSQL
         ]
 
@@ -901,11 +951,11 @@ graph: function [
                     ]
                     if Grafito\verbose? -> 
                         printDebug ~"==> OK (|bench| ms)"
-                    if? or? [not? block? currentNodes]
-                            [and? [0 < size currentNodes][not? dictionary? first currentNodes]][
+                    (or? [not? block? currentNodes]
+                            [and? [0 < size currentNodes][not? dictionary? first currentNodes]])?[
                         "empty"
                     ]
-                    else [
+                    [
                         currentDataset: new nodeFromIds currentNodes
                         write.json ø #[
                             data: currentDataset
@@ -971,11 +1021,11 @@ graph: function [
             ]
 
             POST "/updateEngine" $[caseSensitive][
-                if? to :logical caseSensitive [
+                (to :logical caseSensitive)? [
                     Grafito\caseSensitive?: true
                     performQuery 'main caseSensitiveLikePragma ø
                 ]
-                else [
+                [
                     Grafito\caseSensitive?: false
                     performQuery 'main caseInsensitiveLikePragma ø
                 ]
@@ -1004,10 +1054,10 @@ graph: function [
             ]
         ]
 
-        if? null? attr 'server [
+        (null? attr 'server)? [
             serve.chrome routes
         ]
-        else [
+        [
             serve.verbose routes
         ]
     ]
@@ -1053,8 +1103,8 @@ graph: function [
 
     ; and initialize it
     ; with the given schema (if necessary)
-    if? or? not? null? attr "create"
-            not? dbExisted [
+    (or? not? null? attr "create"
+            not? dbExisted)? [
         dbExists?: false
         printDebug "creating database from scratch"
         performQuery.noDebug 'main schemaSQL ø
@@ -1069,8 +1119,7 @@ graph: function [
 
         put'meta metas
         unstack.discard 1
-    ] 
-    else [
+    ][
         printDebug "using existing database"
         meta: first fetch'meta []
         
