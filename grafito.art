@@ -634,6 +634,14 @@ graph: function [
         ]
     ]
 
+    reverseLink: function [
+        tgt :block :dictionary
+        name :literal :string
+        src :block :dictionary
+    ][
+        link src name tgt
+    ]
+
     ;
     ; Delete node edges
     ;--------------------------
