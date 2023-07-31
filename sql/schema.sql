@@ -16,7 +16,6 @@ CREATE TABLE edges (
     tag         TEXT,
     source      INTEGER,
     target      INTEGER,
-    direction   INTEGER,
     FOREIGN KEY (source) REFERENCES nodes(id),
     FOREIGN KEY (target) REFERENCES nodes(id)
 );

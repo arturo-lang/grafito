@@ -634,6 +634,23 @@ graph: function [
         ]
     ]
 
+    reverseLink: function [
+        tgt :block :dictionary
+        name :literal :string
+        src :block :dictionary
+    ][
+        link src name tgt
+    ]
+
+    reciprocalLink: function [
+        src :block :dictionary
+        name :literal :string
+        tgt :block :dictionary
+    ][
+        link src name tgt
+        link tgt name src
+    ]
+
     ;
     ; Delete node edges
     ;--------------------------
@@ -1090,6 +1107,8 @@ graph: function [
 
     ; define aliases
     alias.infix {~>} 'link
+    alias.infix {<~} 'reverseLink
+    alias.infix {<~>} 'reciprocalLink
 
     ; open the database
     printDebug ~"DB = |cleanpath|"
@@ -1105,7 +1124,7 @@ graph: function [
     ; with the given schema (if necessary)
     (or? not? null? attr "create"
             not? dbExisted)? [
-        dbExists?: false
+        dbExists?: false 
         printDebug "creating database from scratch"
         performQuery.noDebug 'main schemaSQL ø
         

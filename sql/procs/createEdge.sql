@@ -1,2 +1,2 @@
-INSERT INTO edges (tag, source, target, direction) 
-VALUES (?, ?, ?, 1)
+INSERT INTO edges (tag, source, target) 
+VALUES (?, ?, ?)
