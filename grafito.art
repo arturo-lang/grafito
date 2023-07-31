@@ -642,6 +642,15 @@ graph: function [
         link src name tgt
     ]
 
+    reciprocalLink: function [
+        src :block :dictionary
+        name :literal :string
+        tgt :block :dictionary
+    ][
+        link src name tgt
+        link tgt name src
+    ]
+
     ;
     ; Delete node edges
     ;--------------------------
