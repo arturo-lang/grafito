@@ -1098,6 +1098,7 @@ graph: function [
 
     ; define aliases
     alias.infix {~>} 'link
+    alias.infix {<~} 'reverseLink
 
     ; open the database
     printDebug ~"DB = |cleanpath|"
