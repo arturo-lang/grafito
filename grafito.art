@@ -1124,7 +1124,7 @@ graph: function [
     ; with the given schema (if necessary)
     (or? not? null? attr "create"
             not? dbExisted)? [
-        dbExists?: false
+        dbExists?: false 
         printDebug "creating database from scratch"
         performQuery.noDebug 'main schemaSQL ø
         
