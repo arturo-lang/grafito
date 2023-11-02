@@ -27,6 +27,7 @@
     * [Delete an existing Node](#delete-an-existing-node)
     * [Delete an existing Relationship](#delete-an-existing-relationship)
     * [More complex queries](#more-complex-queries)
+    	* [Reverse edge queries](#reverse-edge-queries) 
     	* [Using filters](#using-filters)
     * [Preview a Set of Nodes](#preview-a-set-of-nodes)
 * [Command Reference](#command-reference)
@@ -260,6 +261,16 @@ graph.create "mygraph" [
 ]
 ```
 
+The exact same thing using node helpers:
+
+```red
+graph.create "mygraph"
+     .helpers: [person]
+[
+	person.new [name: "John", sex: 'm]
+]
+```
+
 ### Create Relationships between Nodes
 
 ```red
@@ -271,6 +282,19 @@ graph.create "mygraph" [
 ]
 ```
 
+The exact same thing using node helpers and some syntactic sugar:
+
+```red
+graph.create "mygraph"
+     .helpers: [person]
+[
+	john: person.new [name: "John", sex: 'm]
+	joan: person.new [name: "Joan", sex: 'f]
+
+	john <~> 'marriedTo joan
+]
+```
+
 ### Search Nodes
 
 ```red
@@ -278,7 +302,15 @@ graph "mygraph" [
 	inspect fetch 'person [name: "Joan"]
 ]
 ```
+The exact same thing using node helpers:
 
+```red
+graph "mygraph"
+     .helpers: [person]
+[
+	inspect person [name: "Joan"]
+]
+```
 
 ### Delete an existing Node
 
@@ -305,6 +337,29 @@ graph "mygraph" [
 		sex: "m"
 		marriedTo: fetch 'person [name: "Joan"]
 	]
+]
+```
+
+The exact same thing using node helpers:
+
+```red
+graph "mygraph"
+     .helpers: [person]
+[
+	inspect person [
+		sex: "m"
+		marriedTo: person [name: "Joan"]
+	]
+]
+```
+
+#### Reverse edge queries
+
+```red
+; using our sample11.art graph
+
+movie [
+	directed: <| person "Clint Eastwood"
 ]
 ```
 
