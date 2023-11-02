@@ -732,6 +732,22 @@ graph: function [
     ]
 
     ;
+    ; Helpers
+    ; for edge filters
+    ;--------------------------
+    edgeFilterRight: function [cnt][
+        to :edgeFilter @[1, cnt]
+    ]
+
+    edgeFilterLeft: function [cnt][
+        to :edgeFilter @[2, cnt]
+    ]
+
+    edgeFilterBoth: function [cnt][
+        to :edgeFilter @[3, cnt]
+    ]
+
+    ;
     ; Fetch all results for tag
     ; with given properties
     ; and edges
