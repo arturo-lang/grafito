@@ -480,7 +480,7 @@ graph: function [
     
     put: function [
         name :literal :string
-        attributes :block :dictionary
+        attributes :string :block :dictionary
     ][
         ;; description: « insert new node(s) to graph with given name and attributes
         ;; options: [
@@ -503,7 +503,12 @@ graph: function [
             loop attributes 'nd [
                 lastId: lastId + 1
                 att: nd
-                if not? dictionary? att -> att: # att
+                (block? att)? -> att: # att [
+                    (string? att)? -> att: #[
+                        name: att
+                    ] []
+                ]
+                ;if not? dictionary? att -> att: # att
                 'queries ++ createNodeSQL
                 'vals ++ @[name, write.compact.json ø att]
                 'result ++ #[
@@ -518,7 +523,12 @@ graph: function [
                  printDebug ~{created |size attributes| nodes}
         ] [
             att: attributes
-            if not? dictionary? att -> att: # att
+            (block? att)? -> att: # att [
+                (string? att)? -> att: #[
+                    name: att
+                ] []
+            ]
+            ; if not? dictionary? att -> att: # att
             nodeId: performQuery.id 'put createNodeSQL @[name, write.compact.json ø att]
             result: #[
                 id: nodeId
