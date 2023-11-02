@@ -230,6 +230,19 @@ graph: function [
     ]
 
     ;
+    ; Safe SQLite-compatible
+    ; value codification
+    ; including Unicode strings
+    ;--------------------------
+    codifySafe: function [val][
+        (string? val)? [
+
+        ][
+            return as.code val
+        ]
+    ]
+
+    ;
     ; Get styled node
     ; ready for use in the
     ; graph view
@@ -784,7 +797,7 @@ graph: function [
         att: new attributes
 
         (string? att)? [
-            [collate,symb,val]: @[collator, "=", as.code att]
+            [collate,symb,val]: @[collator, "=", codifySafe att]
             
             ; add it once (to check for `name`)
             'propertyFilters ++ ~propertyWithValueFilter
@@ -935,7 +948,7 @@ graph: function [
                                 ;         panic.code: 1 ~"filter: |filt| not recognized"
                                 ;     ]
                                 
-                                val: as.code val
+                                val: codifySafe val
                                 'propertyFilters ++ ~propertyWithValueFilter
                                 'qpropvals ++ @[~"$.|k|"]
                             ]
@@ -950,7 +963,7 @@ graph: function [
                     ]
                         
                     ; it's a simple property filter
-                    [collate,symb,val]: @[collator, "=", as.code v]
+                    [collate,symb,val]: @[collator, "=", codifySafe v]
     
                     'propertyFilters ++ ~propertyWithValueFilter
                     'qpropvals ++ @[~"$.|k|"]
