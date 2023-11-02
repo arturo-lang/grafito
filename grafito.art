@@ -743,7 +743,7 @@ graph: function [
         to :edgeFilter @[2, cnt]
     ]
 
-    edgeFilterBoth: function [cnt][
+    edgeFilterAny: function [cnt][
         to :edgeFilter @[3, cnt]
     ]
 
@@ -1154,7 +1154,7 @@ graph: function [
 
     alias {|>} 'edgeFilterRight
     alias {<|} 'edgeFilterLeft
-    alias {<|>} 'edgeFilterBoth
+    alias {<|>} 'edgeFilterAny
 
     ; open the database
     printDebug ~"DB = |cleanpath|"
