@@ -839,6 +839,7 @@ graph: function [
                                 ]
                             ]
                         ]
+                        continue
                     ]
                     if block? v [
                         (and? 0 < size v 
