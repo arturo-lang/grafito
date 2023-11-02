@@ -831,7 +831,7 @@ graph: function [
                                 'edgeFilters ++ edgeWithSourceFilter
                                 'qedgevals ++ @[k, v\content\id]
                             ][
-                                (v\direction = 3)? -> [
+                                (v\direction = 3)? [
                                     'edgeFilters ++ edgeWithAnyFilter 
                                     'qedgevals ++ @[k, v\content\id, v\content\id]]
                                 ][
