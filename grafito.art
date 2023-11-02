@@ -33,6 +33,13 @@ Grafito: #[
     Palette: ""
 ]
 
+;
+; Define custom objects
+;--------------------------
+define :edgeFilter [direction, content][]
+
+;----------------------------------------------
+
 graph: function [
     dbpath :string :null
     body :block
