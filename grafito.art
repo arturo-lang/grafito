@@ -97,6 +97,8 @@ graph: function [
     hasEdgeFilter:              read "sql/filters/hasEdge.sql"
     hasPropertyFilter:          read "sql/filters/hasProperty.sql"
     edgeWithTargetFilter:       read "sql/filters/edgeWithTarget.sql"
+    edgeWithSourceFilter:       read "sql/filters/edgeWithSource.sql"
+    edgeWithAnyFilter:          read "sql/filters/edgeWithAny.sql"
     propertyWithValueFilter:    read "sql/filters/propertyWithValue.sql"
 
     ; Global SQL pragmas
