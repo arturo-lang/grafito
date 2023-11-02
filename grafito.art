@@ -508,7 +508,6 @@ graph: function [
                         name: att
                     ] []
                 ]
-                ;if not? dictionary? att -> att: # att
                 'queries ++ createNodeSQL
                 'vals ++ @[name, write.compact.json ø att]
                 'result ++ #[
@@ -528,7 +527,6 @@ graph: function [
                     name: att
                 ] []
             ]
-            ; if not? dictionary? att -> att: # att
             nodeId: performQuery.id 'put createNodeSQL @[name, write.compact.json ø att]
             result: #[
                 id: nodeId
