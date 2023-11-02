@@ -1133,6 +1133,10 @@ graph: function [
     alias.infix {<~} 'reverseLink
     alias.infix {<~>} 'reciprocalLink
 
+    alias {|>} 'edgeFilterRight
+    alias {<|} 'edgeFilterLeft
+    alias {<|>} 'edgeFilterBoth
+
     ; open the database
     printDebug ~"DB = |cleanpath|"
     db: open dbPath
