@@ -738,14 +738,17 @@ graph: function [
     ; for edge filters
     ;--------------------------
     edgeFilterRight: function [cnt][
+        print "in edgeFilterRight"
         to :edgeFilter @[1, cnt]
     ]
 
     edgeFilterLeft: function [cnt][
+        print "in edgeFilterLeft"
         to :edgeFilter @[2, cnt]
     ]
 
     edgeFilterAny: function [cnt][
+        print "in edgeFilterBoth"
         to :edgeFilter @[3, cnt]
     ]
 
@@ -823,23 +826,51 @@ graph: function [
                     ]
                     if is? :edgeFilter v [
                         ; it's a directed edge filter
-                        (v\direction = 1)? [
-                            'edgeFilters ++ edgeWithTargetFilter
-                            'qedgevals ++ @[k, v\content\id]
-                        ][
-                            (v\direction = 2)? [
-                                'edgeFilters ++ edgeWithSourceFilter
+                        if dictionary? v\content [
+                            (v\direction = 1)? [
+                                'edgeFilters ++ edgeWithTargetFilter
                                 'qedgevals ++ @[k, v\content\id]
                             ][
-                                (v\direction = 3)? [
-                                    'edgeFilters ++ edgeWithAnyFilter 
-                                    'qedgevals ++ @[k, v\content\id, v\content\id]
+                                (v\direction = 2)? [
+                                    'edgeFilters ++ edgeWithSourceFilter
+                                    'qedgevals ++ @[k, v\content\id]
                                 ][
-                                    print "Shouldn't have reached here!"
+                                    (v\direction = 3)? [
+                                        'edgeFilters ++ edgeWithAnyFilter 
+                                        'qedgevals ++ @[k, v\content\id, v\content\id]
+                                    ][
+                                        print "Shouldn't have reached here!"
+                                    ]
                                 ]
                             ]
+                            continue
                         ]
-                        continue
+                        if all? @[
+                            block? v\content
+                            0 < size v\content
+                            :dictionary = type first v\content
+                        ][
+                            orCriteria: new []
+                            loop v\content [edgef][
+                                (v\direction = 1)? [
+                                    'orCriteria ++ edgeWithTargetFilter
+                                    'qedgevals ++ @[k, edgef\id]
+                                ][
+                                    (v\direction = 2)? [
+                                        'orCriteria ++ edgeWithSourceFilter
+                                        'qedgevals ++ @[k, edgef\id]
+                                    ][
+                                        (v\direction = 3)? [
+                                            'orCriteria ++ edgeWithAnyFilter 
+                                            'qedgevals ++ @[k, edgef\id, edgef\id]
+                                        ][
+                                            print "Shouldn't have reached here!"
+                                        ]
+                                    ]
+                                ]
+                            ]
+                            'edgeFilters ++ "(" ++ (join.with:" OR " orCriteria) ++ ")"
+                        ]
                     ]
                     if block? v [
                         (and? 0 < size v 
@@ -847,7 +878,7 @@ graph: function [
                             ; it's an array of edge filters
                             orCriteria: new []
                             loop v [edgef][
-                                'orCriteria ++ {!sql (edges.tag=? AND edges.target=?)}
+                                'orCriteria ++ edgesWithTargetFilter
                                 'qedgevals ++ @[k, edgef\id]
                             ]
                             'edgeFilters ++ "(" ++ (join.with:" OR " orCriteria) ++ ")"
