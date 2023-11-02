@@ -1,7 +1,7 @@
 SELECT nodes.id, nodes.tag, nodes.properties
 FROM nodes
 INNER JOIN edges
-ON edges.source=nodes.id
+ON edges.source=nodes.id OR edges.target=nodes.id
 WHERE nodes.tag=? |propies|
 GROUP BY nodes.id 
 HAVING COUNT( 
