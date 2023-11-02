@@ -833,7 +833,7 @@ graph: function [
                             ][
                                 (v\direction = 3)? [
                                     'edgeFilters ++ edgeWithAnyFilter 
-                                    'qedgevals ++ @[k, v\content\id, v\content\id]]
+                                    'qedgevals ++ @[k, v\content\id, v\content\id]
                                 ][
                                     print "Shouldn't have reached here!"
                                 ]
