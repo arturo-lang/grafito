@@ -126,8 +126,6 @@ graph: function [
     ;--------------------------
 
     performQuery: function [ctx, qu, params][
-        print qu
-        print "---"
         if and? [Grafito\Debug?][null? attr 'noDebug] [
             context: to :string ctx
             prepend: " | "
@@ -740,17 +738,14 @@ graph: function [
     ; for edge filters
     ;--------------------------
     edgeFilterRight: function [cnt][
-        print "in edgeFilterRight"
         to :edgeFilter @[1, cnt]
     ]
 
     edgeFilterLeft: function [cnt][
-        print "in edgeFilterLeft"
         to :edgeFilter @[2, cnt]
     ]
 
     edgeFilterAny: function [cnt][
-        print "in edgeFilterBoth"
         to :edgeFilter @[3, cnt]
     ]
 
