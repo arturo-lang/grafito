@@ -236,7 +236,7 @@ graph: function [
     ;--------------------------
     codifySafe: function [val][
         (string? val)? [
-            return "+" + (escape.json val) + "+"
+            return "+" ++ (escape.json val) ++ "+"
         ][
             return as.code val
         ]
