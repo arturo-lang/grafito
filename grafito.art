@@ -126,6 +126,8 @@ graph: function [
     ;--------------------------
 
     performQuery: function [ctx, qu, params][
+        print qu
+        print "---"
         if and? [Grafito\Debug?][null? attr 'noDebug] [
             context: to :string ctx
             prepend: " | "
@@ -843,7 +845,6 @@ graph: function [
                                     ]
                                 ]
                             ]
-                            continue
                         ]
                         if all? @[
                             block? v\content
@@ -871,6 +872,7 @@ graph: function [
                             ]
                             'edgeFilters ++ "(" ++ (join.with:" OR " orCriteria) ++ ")"
                         ]
+                        continue
                     ]
                     if block? v [
                         (and? 0 < size v 
