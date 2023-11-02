@@ -11,7 +11,7 @@
 <p align="center"><img width="90%" align="center" src="https://raw.githubusercontent.com/arturo-lang/grafito/master/ui-screenshot.png"/></p>
 
 --- 
- 
+
 <!--ts-->
 
 * [At A Glance](#at-a-glance)
