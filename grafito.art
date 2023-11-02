@@ -878,7 +878,7 @@ graph: function [
                             ; it's an array of edge filters
                             orCriteria: new []
                             loop v [edgef][
-                                'orCriteria ++ edgesWithTargetFilter
+                                'orCriteria ++ edgeWithTargetFilter
                                 'qedgevals ++ @[k, edgef\id]
                             ]
                             'edgeFilters ++ "(" ++ (join.with:" OR " orCriteria) ++ ")"
