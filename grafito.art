@@ -819,6 +819,25 @@ graph: function [
                         'qedgevals ++ @[k, v\id]
                         continue
                     ]
+                    if is? :edgeFilter v [
+                        ; it's a directed edge filter
+                        (v\direction = 1)? [
+                            'edgeFilters ++ edgeWithTargetFilter
+                            'qedgevals ++ @[k, v\content\id]
+                        ][
+                            (v\direction = 2)? [
+                                'edgeFilters ++ edgeWithSourceFilter
+                                'qedgevals ++ @[k, v\content\id]
+                            ][
+                                (v\direction = 3)? -> [
+                                    'edgeFilters ++ edgeWithAnyFilter 
+                                    'qedgevals ++ @[k, v\content\id, v\content\id]]
+                                ][
+                                    print "Shouldn't have reached here!"
+                                ]
+                            ]
+                        ]
+                    ]
                     if block? v [
                         (and? 0 < size v 
                                 :dictionary = type first v)? [
