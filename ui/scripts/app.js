@@ -361,9 +361,6 @@ const Grafito = {
             }
         },
 
-        // TODO(expandNodeNeighbors) Verify it's working properly in all cases
-        //  To check & re-visit
-
         expandNodeNeighbors(nodeId=null){
             let list = [nodeId];
 
