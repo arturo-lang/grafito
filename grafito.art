@@ -278,7 +278,7 @@ graph: function [
         ]
 
         return #[
-            id: nodeId
+            id: to :integer nodeId
             tag: nodeTag
             properties: nodeProps
             label: truncate nodeLabel 10
