@@ -402,7 +402,7 @@ union
     ]
     person [
         sex: "f
-        isFrom: country "Spain"
+        isFrom: country "France"
     ]
 ```
 
