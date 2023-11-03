@@ -25,7 +25,7 @@ Grafito: #[
     Version: 0.2.8
 
     ; configuration
-    Debug?: false
+    Debug?: true
     verbose?: true
     caseSensitive?: true
 
