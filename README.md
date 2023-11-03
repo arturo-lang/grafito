@@ -30,6 +30,7 @@
     	* [Reverse edge queries](#reverse-edge-queries) 
     	* [Using filters](#using-filters)
     * [Preview a Set of Nodes](#preview-a-set-of-nodes)
+    * [Not just a query language!](#not-just-a-query-language-)
 * [Command Reference](#command-reference)
     * [put](#put)
     * [unput](#unput)
@@ -385,6 +386,27 @@ graph "mygraph" [
 ```
 
 (If you run the `sample4` in the *examples* folder, you'll be a minimal movie database. Running the command `preview` will open up the Desktop app with the image you see above ;-))
+
+#### Not just a query language!
+
+Now, let's be reminded that although Grafito may present itself as an easy-to-use
+Graph Query Language, actually it's a "shell" on top of Arturo. That is: you can use anything you would normally use in a full-blown programming language, *along with* the extra layer that is Grafito. Awesome, right?
+
+The above is a - very simple - example, but gives you definitely a rough idea (and no, [`union`](https://arturo-lang.io/documentation/library/sets/union/) has nothing to do with Grafito... it's just a normal command from Arturo's standard library)
+
+```red
+union 
+    person [
+        sex: "m"
+        birthday: -> under: 1960
+    ]
+    person [
+        sex: "f
+        isFrom: country "Spain"
+    ]
+```
+
+(totally random example: Find all the men that were born before 1960 + all the women from... France!)
 
 ## Command Reference
 
