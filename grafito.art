@@ -906,6 +906,7 @@ graph: function [
                             loop # v [filt,rg][
 
                                 [collate,symb,val]: @[collator, "=", v]
+                                requiresCodification: true
 
                                 (filt = "contains")? -> [collate,symb,val]: @["", "LIKE", ~"%|rg|%"]
                                 [
@@ -921,10 +922,15 @@ graph: function [
                                                     [
                                                         (filt = "overOrEqual")? -> [collate,symb,val]: @["", ">=", rg]
                                                         [
-                                                            (filt = "in")? -> [collate,symb,val]: @[collator, "IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
-                                                            [
+                                                            (filt = "in")? [
+                                                                [collate,symb,val]: @[collator, "IN", "(" ++ (join.with:", " map rg [x][codifySafe x]) ++ ")"]
+                                                                requiresCodification: false
+                                                            ][
                                                                 (filt = "not")? [ 
-                                                                    (block? rg)?       -> [collate,symb,val]: @[collator, "NOT IN", ~{(|join.with:", " map rg [x]["'" ++ (to :string x) ++ "'"]|)}]
+                                                                    (block? rg)?       [
+                                                                                          [collate,symb,val]: @[collator, "NOT IN", "(" ++ (join.with:", " map rg [x][codifySafe x]) ++ ")"]
+                                                                                          requiresCodification: false
+                                                                                       ]
                                                                                        -> [collate,symb,val]: @[collator, "!=", rg]
                                                                 ]
                                                                 [
@@ -956,7 +962,8 @@ graph: function [
                                 ;         panic.code: 1 ~"filter: |filt| not recognized"
                                 ;     ]
                                 
-                                val: codifySafe val
+                                if requiresCodification ->
+                                    val: codifySafe val
                                 'propertyFilters ++ ~propertyWithValueFilter
                                 'qpropvals ++ @[~"$.|k|"]
                             ]
