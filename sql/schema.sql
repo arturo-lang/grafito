@@ -16,6 +16,7 @@ CREATE TABLE edges (
     tag         TEXT,
     source      INTEGER,
     target      INTEGER,
+    properties  JSON NOT NULL,
     FOREIGN KEY (source) REFERENCES nodes(id),
     FOREIGN KEY (target) REFERENCES nodes(id)
 );
