@@ -26,10 +26,10 @@
     * [Search Nodes](#search-nodes)
     * [Delete an existing Node](#delete-an-existing-node)
     * [Delete an existing Relationship](#delete-an-existing-relationship)
+    * [Preview a Set of Nodes](#preview-a-set-of-nodes)
     * [More complex queries](#more-complex-queries)
     	* [Reverse edge queries](#reverse-edge-queries) 
     	* [Using filters](#using-filters)
-    * [Preview a Set of Nodes](#preview-a-set-of-nodes)
     * [Not just a query language!](#not-just-a-query-language)
 * [Command Reference](#command-reference)
     * [put](#put)
@@ -332,6 +332,16 @@ graph "mygraph" [
 ]
 ```
 
+### Preview a Set of Nodes
+
+```red
+graph "mygraph" [
+	preview fetch 'person ø
+]
+```
+
+(If you run the `sample4` in the *examples* folder, you'll be a minimal movie database. Running the command `preview` will open up the Desktop app with the image you see above ;-))
+
 ### More complex queries
 
 ```red
@@ -377,17 +387,7 @@ graph "mygraph" [
 ]
 ```
 
-### Preview a Set of Nodes
-
-```red
-graph "mygraph" [
-	preview fetch 'person ø
-]
-```
-
-(If you run the `sample4` in the *examples* folder, you'll be a minimal movie database. Running the command `preview` will open up the Desktop app with the image you see above ;-))
-
-#### Not just a query language!
+### Not just a query language!
 
 Now, let's be reminded that although Grafito may present itself as an easy-to-use
 Graph Query Language, actually it's a "shell" on top of Arturo. That is: you can use anything you would normally use in a full-blown programming language, *along with* the extra layer that is Grafito. Awesome, right?
