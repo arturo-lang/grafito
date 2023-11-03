@@ -30,7 +30,7 @@
     	* [Reverse edge queries](#reverse-edge-queries) 
     	* [Using filters](#using-filters)
     * [Preview a Set of Nodes](#preview-a-set-of-nodes)
-    * [Not just a query language!](#not-just-a-query-language-)
+    * [Not just a query language!](#not-just-a-query-language)
 * [Command Reference](#command-reference)
     * [put](#put)
     * [unput](#unput)
