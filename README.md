@@ -372,7 +372,7 @@ movie [
 graph "mygraph" [
 	fetch 'person [
 		surname:"Doe"
-		age: -> greater: 30
+		age: -> over: 30
 	]
 ]
 ```
