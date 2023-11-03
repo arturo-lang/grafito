@@ -339,7 +339,7 @@ graph "mygraph" [
 	preview fetch 'person ø
 ]
 ```
-
+ 
 (If you run the `sample4` in the *examples* folder, you'll be a minimal movie database. Running the command `preview` will open up the Desktop app with the image you see above ;-))
 
 ### More complex queries
