@@ -26,10 +26,11 @@
     * [Search Nodes](#search-nodes)
     * [Delete an existing Node](#delete-an-existing-node)
     * [Delete an existing Relationship](#delete-an-existing-relationship)
+    * [Preview a Set of Nodes](#preview-a-set-of-nodes)
     * [More complex queries](#more-complex-queries)
     	* [Reverse edge queries](#reverse-edge-queries) 
     	* [Using filters](#using-filters)
-    * [Preview a Set of Nodes](#preview-a-set-of-nodes)
+    * [Not just a query language!](#not-just-a-query-language)
 * [Command Reference](#command-reference)
     * [put](#put)
     * [unput](#unput)
@@ -40,12 +41,14 @@
     * [preview](#preview)
 * [Filter Reference](#filter-reference)
     * [contains](#contains)
-    * [less](#less)
-    * [greater](#greater)
-    * [lessOrEqual](#lessOrEqual)
-    * [greaterOrEqual](#greaterOrEqual)
-    * [not](#not)
+    * [prefix](#prefix)
+    * [suffix](#suffix)
+    * [over](#over)
+    * [under](#under)
+    * [overOrEqual](#greaterOrEqual)
+    * [underOrEqual](#underOrEqual)
     * [in](#in)
+    * [not](#not)
 * [Community](#community)
 * [License](#license)   
 
@@ -329,6 +332,16 @@ graph "mygraph" [
 ]
 ```
 
+### Preview a Set of Nodes
+
+```red
+graph "mygraph" [
+	preview fetch 'person ø
+]
+```
+
+(If you run the `sample4` in the *examples* folder, you'll be a minimal movie database. Running the command `preview` will open up the Desktop app with the image you see above ;-))
+
 ### More complex queries
 
 ```red
@@ -369,20 +382,31 @@ movie [
 graph "mygraph" [
 	fetch 'person [
 		surname:"Doe"
-		age: -> greater: 30
+		age: -> over: 30
 	]
 ]
 ```
 
-### Preview a Set of Nodes
+### Not just a query language!
+
+Now, let's be reminded that although Grafito may present itself as an easy-to-use
+Graph Query Language, actually it's a "shell" on top of Arturo. That is: you can use anything you would normally use in a full-blown programming language, *along with* the extra layer that is Grafito. Awesome, right?
+
+The above is a - very simple - example, but gives you definitely a rough idea (and no, [`union`](https://arturo-lang.io/documentation/library/sets/union/) has nothing to do with Grafito... it's just a normal command from Arturo's standard library)
 
 ```red
-graph "mygraph" [
-	preview fetch 'person ø
-]
+union 
+    person [
+        sex: "m"
+        birthday: -> under: 1960
+    ]
+    person [
+        sex: "f
+        isFrom: country "Spain"
+    ]
 ```
 
-(If you run the `sample4` in the *examples* folder, you'll be a minimal movie database. Running the command `preview` will open up the Desktop app with the image you see above ;-))
+(totally random example: Find all the men that were born before 1960 + all the women from... France!)
 
 ## Command Reference
 
@@ -578,30 +602,29 @@ Get rows that start with, or "have as prefix", the given text.
 
 Get rows that end with, or "have as suffix", the given text.
 
-### under
-
-Get rows with a numeric value *less than* the given one.
-
 ### over
 
 Get rows with a numeric value *greater than* the given one.
 
-### underOrEqual
+### under
 
-Get rows with a numeric value *less than or equal to* the given one.
+Get rows with a numeric value *less than* the given one.
 
 ### overOrEqual
 
 Get rows with a numeric value *greater than or equal to* the given one.
 
-### not
+### underOrEqual
 
-Get rows with a value *not equal to* the given one (or block of given values).
+Get rows with a numeric value *less than or equal to* the given one.
 
 ### in
 
 Get rows with a numeric value *equal* to *one of those in* the given block.
 
+### not
+
+Get rows with a value *not equal to* the given one (or block of given values).
 
 Community
 ------------------------------
