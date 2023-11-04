@@ -14,9 +14,9 @@ DROP TABLE IF EXISTS edges;
 CREATE TABLE edges (
     id          INTEGER PRIMARY KEY,
     tag         TEXT,
+    properties  JSON NOT NULL,
     source      INTEGER,
     target      INTEGER,
-    properties  JSON NOT NULL,
     FOREIGN KEY (source) REFERENCES nodes(id),
     FOREIGN KEY (target) REFERENCES nodes(id)
 );
