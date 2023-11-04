@@ -306,11 +306,11 @@ graph: function [
     ][
         ;; description: « create edge from source to target node with given name
         ;; returns: :dictionary
-
         srcId: src
         tgtId: tgt
 
-        props: (attr 'with) ?? #[]
+        props: (attr "") ?? #[]
+        unless dictionary? props -> props: # props
 
         if dictionary? srcId -> srcId: src\id
         if dictionary? tgtId -> tgtId: tgt\id
