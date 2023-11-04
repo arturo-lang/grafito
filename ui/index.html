@@ -566,12 +566,17 @@
                                         </li>
                                     </template>
                                     <template v-else-if="graph.selected.node.length==0 && graph.selected.edge.length==1">
-                                        <li class="is-active edged">
+                                        <li class="is-active" v-for="(value, key) in graph.selected.edge[0].properties">
+                                            <a>
+                                                <b>{{key}}:</b>{{value}}
+                                            </a>
+                                        </li>
+                                        <!-- <li class="is-active edged">
                                             <a><b>{{graph.data.nodes.get(graph.selected.edge[0].from).tag}}:</b>{{graph.data.nodes.get(graph.selected.edge[0].from).fullLabel}}</a>
                                         </li>
                                         <li class="is-active edged">
                                             <a><b>{{graph.data.nodes.get(graph.selected.edge[0].to).tag}}:</b>{{graph.data.nodes.get(graph.selected.edge[0].to).fullLabel}}</a>
-                                        </li>
+                                        </li> -->
                                     </template>
                                     <template v-else>
                                         <li class="is-active">
