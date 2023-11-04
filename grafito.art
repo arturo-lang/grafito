@@ -856,8 +856,6 @@ graph: function [
                         continue
                     ]
                     if is? :edgeFilter v [
-                        print "that's an edgeFilter!!!"
-                        inspect v
                         ; it's a directed edge filter
                         if dictionary? v\content [
                             searchForProperties: ""
@@ -895,15 +893,6 @@ graph: function [
                                 ]
                             ]
                         ]
-                        print ["block? v.content =>" block? v\content]
-                        print ["0 < size v.content =>" 0 < size v\content]
-                        print [":dictionary = type first v.content =>" :dictionary = type first v\content]
-                        print ["not? empty? v.properties" not? empty? v\properties]
-                        print ["OR GIVES:" or?
-                                and? [0 < size v\content]
-                                     [:dictionary = type first v\content]
-                                not? empty? v\properties
-                        ]
                         if all? @[
                             block? v\content
                             or? 
@@ -911,7 +900,6 @@ graph: function [
                                      [:dictionary = type first v\content]
                                 not? empty? v\properties
                         ][
-                            print "it's accurate!"
                             searchForProperties: ""
                             subfilters: []
                             subvals: []
@@ -922,7 +910,6 @@ graph: function [
 
                                 subfilters: new []
                                 loop v\properties [kk,vv][
-                                    print ["processing:" kk]
                                     [collate,symb,val]: @[collator, "=", codifySafe vv]
                                     subvals: subvals ++ ~"$.|kk|"
                                     subfilters: subfilters ++ ~edgePropertyWithValueFilter
@@ -930,8 +917,6 @@ graph: function [
                                 subfilters: join.with:" AND " subfilters
                                 searchForProperties: ~"AND (|subfilters|)"
                             ]
-
-                            print searchForProperties
 
                             orCriteria: new []
                             (0 < size v\content)? [
