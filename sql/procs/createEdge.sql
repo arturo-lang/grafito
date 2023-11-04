@@ -1,2 +1,2 @@
-INSERT INTO edges (tag, source, target) 
-VALUES (?, ?, ?)
+INSERT INTO edges (tag, properties, source, target) 
+VALUES (?, ?, ?, ?)
