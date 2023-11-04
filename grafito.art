@@ -871,7 +871,7 @@ graph: function [
                                 subfilters: new []
                                 loop v\properties [kk,vv][
                                     [collate,symb,val]: @[collator, "=", codifySafe vv]
-                                    subvals: subvals ++ kk
+                                    subvals: subvals ++ ~"$.|kk|"
                                     subfilters: subfilters ++ ~edgePropertyWithValueFilter
                                 ]
                                 subfilters: join.with:" AND " subfilters
@@ -924,7 +924,7 @@ graph: function [
                                 loop v\properties [kk,vv][
                                     print ["processing:" kk]
                                     [collate,symb,val]: @[collator, "=", codifySafe vv]
-                                    subvals: subvals ++ kk
+                                    subvals: subvals ++ ~"$.|kk|"
                                     subfilters: subfilters ++ ~edgePropertyWithValueFilter
                                 ]
                                 subfilters: join.with:" AND " subfilters
