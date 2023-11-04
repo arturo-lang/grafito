@@ -100,6 +100,7 @@ graph: function [
     edgeWithSourceFilter:           read "sql/filters/edgeWithSource.sql"
     edgeWithAnyFilter:              read "sql/filters/edgeWithAny.sql"
     nodePropertyWithValueFilter:    read "sql/filters/nodePropertyWithValue.sql"
+    edgePropertyWithValueFilter:    read "sql/filters/edgePropertyWithValue.sql"
 
     ; Global SQL pragmas
 
