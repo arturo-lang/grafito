@@ -25,7 +25,7 @@ Grafito: #[
     Version: 0.2.8
 
     ; configuration
-    Debug?: false
+    Debug?: true
     verbose?: true
     caseSensitive?: true
 
@@ -36,7 +36,7 @@ Grafito: #[
 ;
 ; Define custom objects
 ;--------------------------
-define :edgeFilter [direction, content][]
+define :edgeFilter [direction, content, properties][]
 
 ;----------------------------------------------
 
@@ -69,42 +69,44 @@ graph: function [
 
     ; Global SQL scripts
 
-    schemaSQL:                  split.by:";" read "sql/schema.sql"
+    schemaSQL:                      split.by:";" read "sql/schema.sql"
 
-    createNodeSQL:              read "sql/procs/createNode.sql"
-    updateNodeSQL:              read "sql/procs/updateNode.sql"
-    updateNodePropertySQL:      read "sql/procs/updateNodeProperty.sql"
-    updateNodePropertiesSQL:    read "sql/procs/updateNodeProperties.sql"
-    deleteNodeSQL:              read "sql/procs/deleteNode.sql"
-    deleteNodeEdgesSQL:         read "sql/procs/deleteNodeEdges.sql"
-    getNodeSQL:                 read "sql/procs/getNode.sql"
-    getRelatedNodesSQL:         read "sql/procs/getRelatedNodes.sql"
-    getMaxNodeIdSQL:            read "sql/procs/getMaxNodeId.sql"
+    createNodeSQL:                  read "sql/procs/createNode.sql"
+    updateNodeSQL:                  read "sql/procs/updateNode.sql"
+    updateNodePropertySQL:          read "sql/procs/updateNodeProperty.sql"
+    updateNodePropertiesSQL:        read "sql/procs/updateNodeProperties.sql"
+    deleteNodeSQL:                  read "sql/procs/deleteNode.sql"
+    deleteNodeEdgesSQL:             read "sql/procs/deleteNodeEdges.sql"
+    getNodeSQL:                     read "sql/procs/getNode.sql"
+    getRelatedNodesSQL:             read "sql/procs/getRelatedNodes.sql"
+    getMaxNodeIdSQL:                read "sql/procs/getMaxNodeId.sql"
 
-    createEdgeSQL:              read "sql/procs/createEdge.sql"
-    updateEdgeSQL:              read "sql/procs/updateEdge.sql"
-    deleteEdgeSQL:              read "sql/procs/deleteEdge.sql"
-    deleteEdgeByIdSQL:          read "sql/procs/deleteEdgeById.sql"
+    createEdgeSQL:                  read "sql/procs/createEdge.sql"
+    updateEdgeSQL:                  read "sql/procs/updateEdge.sql"
+    deleteEdgeSQL:                  read "sql/procs/deleteEdge.sql"
+    deleteEdgeByIdSQL:              read "sql/procs/deleteEdgeById.sql"
 
-    fetchNodesSQL:              read "sql/procs/fetchNodes.sql"
-    fetchNodesWithEdgesSQL:     read "sql/procs/fetchNodes.withEdges.sql"
+    fetchNodesSQL:                  read "sql/procs/fetchNodes.sql"
+    fetchNodesWithEdgesSQL:         read "sql/procs/fetchNodes.withEdges.sql"
 
-    countNodesSQL:              read "sql/procs/countNodes.sql"
-    countEdgesSQL:              read "sql/procs/countEdges.sql"
+    countNodesSQL:                  read "sql/procs/countNodes.sql"
+    countEdgesSQL:                  read "sql/procs/countEdges.sql"
 
     ; Global SQL filters
 
-    hasEdgeFilter:              read "sql/filters/hasEdge.sql"
-    hasPropertyFilter:          read "sql/filters/hasProperty.sql"
-    edgeWithTargetFilter:       read "sql/filters/edgeWithTarget.sql"
-    edgeWithSourceFilter:       read "sql/filters/edgeWithSource.sql"
-    edgeWithAnyFilter:          read "sql/filters/edgeWithAny.sql"
-    propertyWithValueFilter:    read "sql/filters/propertyWithValue.sql"
+    hasEdgeFilter:                  read "sql/filters/hasEdge.sql"
+    hasPropertyFilter:              read "sql/filters/hasProperty.sql"
+    edgeWithTargetFilter:           read "sql/filters/edgeWithTarget.sql"
+    edgeWithSourceFilter:           read "sql/filters/edgeWithSource.sql"
+    edgeWithAnyFilter:              read "sql/filters/edgeWithAny.sql"
+    edgeWithPropertiesFilter:       read "sql/filters/edgeWithProperties.sql"
+    nodePropertyWithValueFilter:    read "sql/filters/nodePropertyWithValue.sql"
+    edgePropertyWithValueFilter:    read "sql/filters/edgePropertyWithValue.sql"
 
     ; Global SQL pragmas
 
-    caseInsensitiveLikePragma:  read "sql/pragmas/caseInsensitiveLike.sql"
-    caseSensitiveLikePragma:    read "sql/pragmas/caseSensitiveLike.sql"
+    caseInsensitiveLikePragma:      read "sql/pragmas/caseInsensitiveLike.sql"
+    caseSensitiveLikePragma:        read "sql/pragmas/caseSensitiveLike.sql"
 
     ; Global UI template
 
@@ -137,7 +139,7 @@ graph: function [
             ]
 
             print color #gray prepend ++ join.with:"\n"++prepend split.lines queryString
-
+            inspect params
             print ""
         ]
         (not? null? params)? [
@@ -306,18 +308,21 @@ graph: function [
     ][
         ;; description: « create edge from source to target node with given name
         ;; returns: :dictionary
-
         srcId: src
         tgtId: tgt
+
+        props: (attr "") ?? #[]
+        unless dictionary? props -> props: # props
 
         if dictionary? srcId -> srcId: src\id
         if dictionary? tgtId -> tgtId: tgt\id
 
-        edgeId: performQuery.id 'edge createEdgeSQL @[name, srcId, tgtId]
+        edgeId: performQuery.id 'edge createEdgeSQL @[name, write.compact.json ø props, srcId, tgtId]
 
         #[
             id: edgeId
             tag: name
+            properties: props
             source: src
             target: tgt
         ]
@@ -432,6 +437,7 @@ graph: function [
                     id: ~"|rez\3|+|rez\4|+|rez\5|"
                     dbId: rez\6
                     label: rez\5
+                    properties: read.json rez\7
                     from: to :integer rez\3
                     to: to :integer rez\4
                 ]
@@ -758,16 +764,22 @@ graph: function [
     ; Helpers
     ; for edge filters
     ;--------------------------
-    edgeFilterRight: function [cnt][
-        to :edgeFilter @[1, cnt]
+    edgeFilterRight: function [cnt, props][
+        pp: props
+        if block? pp -> pp: # pp
+        to :edgeFilter @[1, cnt, pp]
     ]
 
-    edgeFilterLeft: function [cnt][
-        to :edgeFilter @[2, cnt]
+    edgeFilterLeft: function [cnt, props][
+        pp: props
+        if block? pp -> pp: # pp
+        to :edgeFilter @[2, cnt, pp]
     ]
 
-    edgeFilterAny: function [cnt][
-        to :edgeFilter @[3, cnt]
+    edgeFilterAny: function [cnt, props][
+        pp: props
+        if block? pp -> pp: # pp
+        to :edgeFilter @[3, cnt, pp]
     ]
 
     ;
@@ -808,11 +820,11 @@ graph: function [
             [collate,symb,val]: @[collator, "=", codifySafe att]
             
             ; add it once (to check for `name`)
-            'propertyFilters ++ ~propertyWithValueFilter
+            'propertyFilters ++ ~nodePropertyWithValueFilter
             'qpropvals ++ @[~"$.name"]
 
             ; add it once more (to check for `title`)
-            'propertyFilters ++ ~propertyWithValueFilter
+            'propertyFilters ++ ~nodePropertyWithValueFilter
             'qpropvals ++ @[~"$.title"]
 
             ; we won't it to be valid when any of the two criteria above is true
@@ -838,53 +850,112 @@ graph: function [
                     ]
                     if dictionary? v [
                         ; it's an edge filter
-                        'edgeFilters ++ edgeWithTargetFilter
+                        searchForProperties: ""
+                        'edgeFilters ++ ~edgeWithTargetFilter
                         'qedgevals ++ @[k, v\id]
                         continue
                     ]
                     if is? :edgeFilter v [
+                        print "that's an edgeFilter!!!"
+                        inspect v
                         ; it's a directed edge filter
                         if dictionary? v\content [
+                            searchForProperties: ""
+                            subfilters: []
+                            subvals: []
+                            if not? empty? v\properties [
+                                collator: ""
+                                if not? Grafito\caseSensitive? ->
+                                    collator: " COLLATE NOCASE"
+
+                                subfilters: new []
+                                loop v\properties [kk,vv][
+                                    [collate,symb,val]: @[collator, "=", codifySafe vv]
+                                    subvals: subvals ++ ~"$.|kk|"
+                                    subfilters: subfilters ++ ~edgePropertyWithValueFilter
+                                ]
+                                subfilters: join.with:" AND " subfilters
+                                searchForProperties: ~"AND (|subfilters|)"
+                            ]
+                                    
                             (v\direction = 1)? [
-                                'edgeFilters ++ edgeWithTargetFilter
-                                'qedgevals ++ @[k, v\content\id]
+                                'edgeFilters ++ ~edgeWithTargetFilter
+                                'qedgevals ++ @[k, v\content\id] ++ subvals
                             ][
                                 (v\direction = 2)? [
-                                    'edgeFilters ++ edgeWithSourceFilter
-                                    'qedgevals ++ @[k, v\content\id]
+                                    'edgeFilters ++ ~edgeWithSourceFilter
+                                    'qedgevals ++ @[k, v\content\id] ++ subvals
                                 ][
                                     (v\direction = 3)? [
-                                        'edgeFilters ++ edgeWithAnyFilter 
-                                        'qedgevals ++ @[k, v\content\id, v\content\id]
+                                        'edgeFilters ++ ~edgeWithAnyFilter 
+                                        'qedgevals ++ @[k, v\content\id, v\content\id] ++ subvals
                                     ][
                                         print "Shouldn't have reached here!"
                                     ]
                                 ]
                             ]
                         ]
+                        print ["block? v.content =>" block? v\content]
+                        print ["0 < size v.content =>" 0 < size v\content]
+                        print [":dictionary = type first v.content =>" :dictionary = type first v\content]
+                        print ["not? empty? v.properties" not? empty? v\properties]
+                        print ["OR GIVES:" or?
+                                and? [0 < size v\content]
+                                     [:dictionary = type first v\content]
+                                not? empty? v\properties
+                        ]
                         if all? @[
                             block? v\content
-                            0 < size v\content
-                            :dictionary = type first v\content
+                            or? 
+                                and? [0 < size v\content]
+                                     [:dictionary = type first v\content]
+                                not? empty? v\properties
                         ][
+                            print "it's accurate!"
+                            searchForProperties: ""
+                            subfilters: []
+                            subvals: []
+                            if not? empty? v\properties [
+                                collator: ""
+                                if not? Grafito\caseSensitive? ->
+                                    collator: " COLLATE NOCASE"
+
+                                subfilters: new []
+                                loop v\properties [kk,vv][
+                                    print ["processing:" kk]
+                                    [collate,symb,val]: @[collator, "=", codifySafe vv]
+                                    subvals: subvals ++ ~"$.|kk|"
+                                    subfilters: subfilters ++ ~edgePropertyWithValueFilter
+                                ]
+                                subfilters: join.with:" AND " subfilters
+                                searchForProperties: ~"AND (|subfilters|)"
+                            ]
+
+                            print searchForProperties
+
                             orCriteria: new []
-                            loop v\content [edgef][
-                                (v\direction = 1)? [
-                                    'orCriteria ++ edgeWithTargetFilter
-                                    'qedgevals ++ @[k, edgef\id]
-                                ][
-                                    (v\direction = 2)? [
-                                        'orCriteria ++ edgeWithSourceFilter
-                                        'qedgevals ++ @[k, edgef\id]
+                            (0 < size v\content)? [
+                                loop v\content [edgef][
+                                    (v\direction = 1)? [
+                                        'orCriteria ++ ~edgeWithTargetFilter
+                                        'qedgevals ++ @[k, edgef\id] ++ subvals
                                     ][
-                                        (v\direction = 3)? [
-                                            'orCriteria ++ edgeWithAnyFilter 
-                                            'qedgevals ++ @[k, edgef\id, edgef\id]
+                                        (v\direction = 2)? [
+                                            'orCriteria ++ ~edgeWithSourceFilter
+                                            'qedgevals ++ @[k, edgef\id] ++ subvals
                                         ][
-                                            print "Shouldn't have reached here!"
+                                            (v\direction = 3)? [
+                                                'orCriteria ++ ~edgeWithAnyFilter 
+                                                'qedgevals ++ @[k, edgef\id, edgef\id] ++ subvals
+                                            ][
+                                                print "Shouldn't have reached here!"
+                                            ]
                                         ]
                                     ]
                                 ]
+                            ][
+                                'orCriteria ++ ~edgeWithPropertiesFilter
+                                'qedgevals ++ @[k] ++ subvals
                             ]
                             'edgeFilters ++ "(" ++ (join.with:" OR " orCriteria) ++ ")"
                         ]
@@ -896,7 +967,8 @@ graph: function [
                             ; it's an array of edge filters
                             orCriteria: new []
                             loop v [edgef][
-                                'orCriteria ++ edgeWithTargetFilter
+                                searchForProperties: ""
+                                'orCriteria ++ ~edgeWithTargetFilter
                                 'qedgevals ++ @[k, edgef\id]
                             ]
                             'edgeFilters ++ "(" ++ (join.with:" OR " orCriteria) ++ ")"
@@ -964,7 +1036,7 @@ graph: function [
                                 
                                 if requiresCodification ->
                                     val: codifySafe val
-                                'propertyFilters ++ ~propertyWithValueFilter
+                                'propertyFilters ++ ~nodePropertyWithValueFilter
                                 'qpropvals ++ @[~"$.|k|"]
                             ]
                         ]
@@ -980,7 +1052,7 @@ graph: function [
                     ; it's a simple property filter
                     [collate,symb,val]: @[collator, "=", codifySafe v]
     
-                    'propertyFilters ++ ~propertyWithValueFilter
+                    'propertyFilters ++ ~nodePropertyWithValueFilter
                     'qpropvals ++ @[~"$.|k|"]
                 ]
             ]

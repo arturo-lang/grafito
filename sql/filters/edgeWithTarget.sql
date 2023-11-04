@@ -1,1 +1,1 @@
-(edges.tag=? AND edges.target=?)
+(edges.tag=? AND edges.target=? |searchForProperties|)
