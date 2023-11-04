@@ -850,17 +850,35 @@ graph: function [
                     if is? :edgeFilter v [
                         ; it's a directed edge filter
                         if dictionary? v\content [
+                            searchForProperties: ""
+                            subfilters: []
+                            subvals: []
+                            if not? empty? v\properties [
+                                collator: ""
+                                if not? Grafito\caseSensitive? ->
+                                    collator: " COLLATE NOCASE"
+
+                                subfilters: new []
+                                loop v\properties [kk,vv][
+                                    [collate,symb,val]: @[collator, "=", codifySafe vv]
+                                    subvals: subvals ++ kk
+                                    subfilters: subfilters ++ ~edgePropertyWithValueFilter
+                                ]
+                                subfilters: join.with:" AND " subfilters
+                                searchForProperties: subfilters
+                            ]
+                                    
                             (v\direction = 1)? [
-                                'edgeFilters ++ edgeWithTargetFilter
-                                'qedgevals ++ @[k, v\content\id]
+                                'edgeFilters ++ ~edgeWithTargetFilter
+                                'qedgevals ++ @[k, v\content\id] ++ subvals
                             ][
                                 (v\direction = 2)? [
-                                    'edgeFilters ++ edgeWithSourceFilter
-                                    'qedgevals ++ @[k, v\content\id]
+                                    'edgeFilters ++ ~edgeWithSourceFilter
+                                    'qedgevals ++ @[k, v\content\id] ++ subvals
                                 ][
                                     (v\direction = 3)? [
-                                        'edgeFilters ++ edgeWithAnyFilter 
-                                        'qedgevals ++ @[k, v\content\id, v\content\id]
+                                        'edgeFilters ++ ~edgeWithAnyFilter 
+                                        'qedgevals ++ @[k, v\content\id, v\content\id] ++ subvals
                                     ][
                                         print "Shouldn't have reached here!"
                                     ]
@@ -872,19 +890,38 @@ graph: function [
                             0 < size v\content
                             :dictionary = type first v\content
                         ][
+                            searchForProperties: ""
+                            subfilters: []
+                            subvals: []
+                            if not? empty? v\properties [
+                                collator: ""
+                                if not? Grafito\caseSensitive? ->
+                                    collator: " COLLATE NOCASE"
+
+                                subfilters: new []
+                                loop v\properties [kk,vv][
+                                    [collate,symb,val]: @[collator, "=", codifySafe vv]
+                                    subvals: subvals ++ kk
+                                    subfilters: subfilters ++ ~edgePropertyWithValueFilter
+                                ]
+                                subfilters: join.with:" AND " subfilters
+                                searchForProperties: subfilters
+                            ]
+
                             orCriteria: new []
+
                             loop v\content [edgef][
                                 (v\direction = 1)? [
-                                    'orCriteria ++ edgeWithTargetFilter
-                                    'qedgevals ++ @[k, edgef\id]
+                                    'orCriteria ++ ~edgeWithTargetFilter
+                                    'qedgevals ++ @[k, edgef\id] ++ subvals
                                 ][
                                     (v\direction = 2)? [
-                                        'orCriteria ++ edgeWithSourceFilter
-                                        'qedgevals ++ @[k, edgef\id]
+                                        'orCriteria ++ ~edgeWithSourceFilter
+                                        'qedgevals ++ @[k, edgef\id] ++ subvals
                                     ][
                                         (v\direction = 3)? [
-                                            'orCriteria ++ edgeWithAnyFilter 
-                                            'qedgevals ++ @[k, edgef\id, edgef\id]
+                                            'orCriteria ++ ~edgeWithAnyFilter 
+                                            'qedgevals ++ @[k, edgef\id, edgef\id] ++ subvals
                                         ][
                                             print "Shouldn't have reached here!"
                                         ]
