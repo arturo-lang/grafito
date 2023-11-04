@@ -23,7 +23,7 @@
 Grafito: #[
     ; version
     Version: 0.2.8
-
+ 
     ; configuration
     Debug?: true
     verbose?: true
