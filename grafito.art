@@ -69,42 +69,42 @@ graph: function [
 
     ; Global SQL scripts
 
-    schemaSQL:                  split.by:";" read "sql/schema.sql"
+    schemaSQL:                      split.by:";" read "sql/schema.sql"
 
-    createNodeSQL:              read "sql/procs/createNode.sql"
-    updateNodeSQL:              read "sql/procs/updateNode.sql"
-    updateNodePropertySQL:      read "sql/procs/updateNodeProperty.sql"
-    updateNodePropertiesSQL:    read "sql/procs/updateNodeProperties.sql"
-    deleteNodeSQL:              read "sql/procs/deleteNode.sql"
-    deleteNodeEdgesSQL:         read "sql/procs/deleteNodeEdges.sql"
-    getNodeSQL:                 read "sql/procs/getNode.sql"
-    getRelatedNodesSQL:         read "sql/procs/getRelatedNodes.sql"
-    getMaxNodeIdSQL:            read "sql/procs/getMaxNodeId.sql"
+    createNodeSQL:                  read "sql/procs/createNode.sql"
+    updateNodeSQL:                  read "sql/procs/updateNode.sql"
+    updateNodePropertySQL:          read "sql/procs/updateNodeProperty.sql"
+    updateNodePropertiesSQL:        read "sql/procs/updateNodeProperties.sql"
+    deleteNodeSQL:                  read "sql/procs/deleteNode.sql"
+    deleteNodeEdgesSQL:             read "sql/procs/deleteNodeEdges.sql"
+    getNodeSQL:                     read "sql/procs/getNode.sql"
+    getRelatedNodesSQL:             read "sql/procs/getRelatedNodes.sql"
+    getMaxNodeIdSQL:                read "sql/procs/getMaxNodeId.sql"
 
-    createEdgeSQL:              read "sql/procs/createEdge.sql"
-    updateEdgeSQL:              read "sql/procs/updateEdge.sql"
-    deleteEdgeSQL:              read "sql/procs/deleteEdge.sql"
-    deleteEdgeByIdSQL:          read "sql/procs/deleteEdgeById.sql"
+    createEdgeSQL:                  read "sql/procs/createEdge.sql"
+    updateEdgeSQL:                  read "sql/procs/updateEdge.sql"
+    deleteEdgeSQL:                  read "sql/procs/deleteEdge.sql"
+    deleteEdgeByIdSQL:              read "sql/procs/deleteEdgeById.sql"
 
-    fetchNodesSQL:              read "sql/procs/fetchNodes.sql"
-    fetchNodesWithEdgesSQL:     read "sql/procs/fetchNodes.withEdges.sql"
+    fetchNodesSQL:                  read "sql/procs/fetchNodes.sql"
+    fetchNodesWithEdgesSQL:         read "sql/procs/fetchNodes.withEdges.sql"
 
-    countNodesSQL:              read "sql/procs/countNodes.sql"
-    countEdgesSQL:              read "sql/procs/countEdges.sql"
+    countNodesSQL:                  read "sql/procs/countNodes.sql"
+    countEdgesSQL:                  read "sql/procs/countEdges.sql"
 
     ; Global SQL filters
 
-    hasEdgeFilter:              read "sql/filters/hasEdge.sql"
-    hasPropertyFilter:          read "sql/filters/hasProperty.sql"
-    edgeWithTargetFilter:       read "sql/filters/edgeWithTarget.sql"
-    edgeWithSourceFilter:       read "sql/filters/edgeWithSource.sql"
-    edgeWithAnyFilter:          read "sql/filters/edgeWithAny.sql"
-    propertyWithValueFilter:    read "sql/filters/propertyWithValue.sql"
+    hasEdgeFilter:                  read "sql/filters/hasEdge.sql"
+    hasPropertyFilter:              read "sql/filters/hasProperty.sql"
+    edgeWithTargetFilter:           read "sql/filters/edgeWithTarget.sql"
+    edgeWithSourceFilter:           read "sql/filters/edgeWithSource.sql"
+    edgeWithAnyFilter:              read "sql/filters/edgeWithAny.sql"
+    nodePropertyWithValueFilter:    read "sql/filters/nodePropertyWithValue.sql"
 
     ; Global SQL pragmas
 
-    caseInsensitiveLikePragma:  read "sql/pragmas/caseInsensitiveLike.sql"
-    caseSensitiveLikePragma:    read "sql/pragmas/caseSensitiveLike.sql"
+    caseInsensitiveLikePragma:      read "sql/pragmas/caseInsensitiveLike.sql"
+    caseSensitiveLikePragma:        read "sql/pragmas/caseSensitiveLike.sql"
 
     ; Global UI template
 
@@ -812,11 +812,11 @@ graph: function [
             [collate,symb,val]: @[collator, "=", codifySafe att]
             
             ; add it once (to check for `name`)
-            'propertyFilters ++ ~propertyWithValueFilter
+            'propertyFilters ++ ~nodePropertyWithValueFilter
             'qpropvals ++ @[~"$.name"]
 
             ; add it once more (to check for `title`)
-            'propertyFilters ++ ~propertyWithValueFilter
+            'propertyFilters ++ ~nodePropertyWithValueFilter
             'qpropvals ++ @[~"$.title"]
 
             ; we won't it to be valid when any of the two criteria above is true
@@ -968,7 +968,7 @@ graph: function [
                                 
                                 if requiresCodification ->
                                     val: codifySafe val
-                                'propertyFilters ++ ~propertyWithValueFilter
+                                'propertyFilters ++ ~nodePropertyWithValueFilter
                                 'qpropvals ++ @[~"$.|k|"]
                             ]
                         ]
@@ -984,7 +984,7 @@ graph: function [
                     ; it's a simple property filter
                     [collate,symb,val]: @[collator, "=", codifySafe v]
     
-                    'propertyFilters ++ ~propertyWithValueFilter
+                    'propertyFilters ++ ~nodePropertyWithValueFilter
                     'qpropvals ++ @[~"$.|k|"]
                 ]
             ]
