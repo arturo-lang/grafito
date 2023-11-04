@@ -310,14 +310,17 @@ graph: function [
         srcId: src
         tgtId: tgt
 
+        props: (attr 'with) ?? #[]
+
         if dictionary? srcId -> srcId: src\id
         if dictionary? tgtId -> tgtId: tgt\id
 
-        edgeId: performQuery.id 'edge createEdgeSQL @[name, srcId, tgtId]
+        edgeId: performQuery.id 'edge createEdgeSQL @[name, write.compact.json ø props, srcId, tgtId]
 
         #[
             id: edgeId
             tag: name
+            properties: props
             source: src
             target: tgt
         ]
