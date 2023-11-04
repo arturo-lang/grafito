@@ -875,7 +875,7 @@ graph: function [
                                     subfilters: subfilters ++ ~edgePropertyWithValueFilter
                                 ]
                                 subfilters: join.with:" AND " subfilters
-                                searchForProperties: subfilters
+                                searchForProperties: ~"AND (|subfilters|)"
                             ]
                                     
                             (v\direction = 1)? [
@@ -928,7 +928,7 @@ graph: function [
                                     subfilters: subfilters ++ ~edgePropertyWithValueFilter
                                 ]
                                 subfilters: join.with:" AND " subfilters
-                                searchForProperties: subfilters
+                                searchForProperties: ~"AND (|subfilters|)"
                             ]
 
                             print searchForProperties
