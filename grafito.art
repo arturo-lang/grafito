@@ -99,6 +99,7 @@ graph: function [
     edgeWithTargetFilter:           read "sql/filters/edgeWithTarget.sql"
     edgeWithSourceFilter:           read "sql/filters/edgeWithSource.sql"
     edgeWithAnyFilter:              read "sql/filters/edgeWithAny.sql"
+    edgeWithPropertiesFilter:       read "sql/filters/edgeWithProperties.sql"
     nodePropertyWithValueFilter:    read "sql/filters/nodePropertyWithValue.sql"
     edgePropertyWithValueFilter:    read "sql/filters/edgePropertyWithValue.sql"
 
@@ -138,7 +139,7 @@ graph: function [
             ]
 
             print color #gray prepend ++ join.with:"\n"++prepend split.lines queryString
-
+            inspect params
             print ""
         ]
         (not? null? params)? [
@@ -764,15 +765,21 @@ graph: function [
     ; for edge filters
     ;--------------------------
     edgeFilterRight: function [cnt, props][
-        to :edgeFilter @[1, cnt, props]
+        pp: props
+        if block? pp -> pp: # pp
+        to :edgeFilter @[1, cnt, pp]
     ]
 
     edgeFilterLeft: function [cnt, props][
-        to :edgeFilter @[2, cnt, props]
+        pp: props
+        if block? pp -> pp: # pp
+        to :edgeFilter @[2, cnt, pp]
     ]
 
     edgeFilterAny: function [cnt, props][
-        to :edgeFilter @[3, cnt, props]
+        pp: props
+        if block? pp -> pp: # pp
+        to :edgeFilter @[3, cnt, pp]
     ]
 
     ;
@@ -849,6 +856,8 @@ graph: function [
                         continue
                     ]
                     if is? :edgeFilter v [
+                        print "that's an edgeFilter!!!"
+                        inspect v
                         ; it's a directed edge filter
                         if dictionary? v\content [
                             searchForProperties: ""
@@ -886,11 +895,23 @@ graph: function [
                                 ]
                             ]
                         ]
+                        print ["block? v.content =>" block? v\content]
+                        print ["0 < size v.content =>" 0 < size v\content]
+                        print [":dictionary = type first v.content =>" :dictionary = type first v\content]
+                        print ["not? empty? v.properties" not? empty? v\properties]
+                        print ["OR GIVES:" or?
+                                and? [0 < size v\content]
+                                     [:dictionary = type first v\content]
+                                not? empty? v\properties
+                        ]
                         if all? @[
                             block? v\content
-                            0 < size v\content
-                            :dictionary = type first v\content
+                            or? 
+                                and? [0 < size v\content]
+                                     [:dictionary = type first v\content]
+                                not? empty? v\properties
                         ][
+                            print "it's accurate!"
                             searchForProperties: ""
                             subfilters: []
                             subvals: []
@@ -901,6 +922,7 @@ graph: function [
 
                                 subfilters: new []
                                 loop v\properties [kk,vv][
+                                    print ["processing:" kk]
                                     [collate,symb,val]: @[collator, "=", codifySafe vv]
                                     subvals: subvals ++ kk
                                     subfilters: subfilters ++ ~edgePropertyWithValueFilter
@@ -909,25 +931,31 @@ graph: function [
                                 searchForProperties: subfilters
                             ]
 
-                            orCriteria: new []
+                            print searchForProperties
 
-                            loop v\content [edgef][
-                                (v\direction = 1)? [
-                                    'orCriteria ++ ~edgeWithTargetFilter
-                                    'qedgevals ++ @[k, edgef\id] ++ subvals
-                                ][
-                                    (v\direction = 2)? [
-                                        'orCriteria ++ ~edgeWithSourceFilter
+                            orCriteria: new []
+                            (0 < size v\content)? [
+                                loop v\content [edgef][
+                                    (v\direction = 1)? [
+                                        'orCriteria ++ ~edgeWithTargetFilter
                                         'qedgevals ++ @[k, edgef\id] ++ subvals
                                     ][
-                                        (v\direction = 3)? [
-                                            'orCriteria ++ ~edgeWithAnyFilter 
-                                            'qedgevals ++ @[k, edgef\id, edgef\id] ++ subvals
+                                        (v\direction = 2)? [
+                                            'orCriteria ++ ~edgeWithSourceFilter
+                                            'qedgevals ++ @[k, edgef\id] ++ subvals
                                         ][
-                                            print "Shouldn't have reached here!"
+                                            (v\direction = 3)? [
+                                                'orCriteria ++ ~edgeWithAnyFilter 
+                                                'qedgevals ++ @[k, edgef\id, edgef\id] ++ subvals
+                                            ][
+                                                print "Shouldn't have reached here!"
+                                            ]
                                         ]
                                     ]
                                 ]
+                            ][
+                                'orCriteria ++ ~edgeWithPropertiesFilter
+                                'qedgevals ++ @[k] ++ subvals
                             ]
                             'edgeFilters ++ "(" ++ (join.with:" OR " orCriteria) ++ ")"
                         ]
