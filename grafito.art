@@ -430,11 +430,13 @@ graph: function [
             rezu: performQuery 'nodeFromIds getRelatedNodesSQL @[nd\id, nd\id, nd\id]
 
             loop rezu [rez][
+                inspect rez
                 'nodeElements ++ styleNode rez\0 rez\1 read.json rez\2
                 'edgeElements ++ #[
                     id: ~"|rez\3|+|rez\4|+|rez\5|"
                     dbId: rez\6
                     label: rez\5
+                    properties: read.json rez\7
                     from: to :integer rez\3
                     to: to :integer rez\4
                 ]
