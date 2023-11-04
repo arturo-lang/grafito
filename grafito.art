@@ -36,7 +36,7 @@ Grafito: #[
 ;
 ; Define custom objects
 ;--------------------------
-define :edgeFilter [direction, content][]
+define :edgeFilter [direction, content, properties][]
 
 ;----------------------------------------------
 
@@ -762,16 +762,16 @@ graph: function [
     ; Helpers
     ; for edge filters
     ;--------------------------
-    edgeFilterRight: function [cnt][
-        to :edgeFilter @[1, cnt]
+    edgeFilterRight: function [cnt, props][
+        to :edgeFilter @[1, cnt, props]
     ]
 
-    edgeFilterLeft: function [cnt][
-        to :edgeFilter @[2, cnt]
+    edgeFilterLeft: function [cnt, props][
+        to :edgeFilter @[2, cnt, props]
     ]
 
-    edgeFilterAny: function [cnt][
-        to :edgeFilter @[3, cnt]
+    edgeFilterAny: function [cnt, props][
+        to :edgeFilter @[3, cnt, props]
     ]
 
     ;
