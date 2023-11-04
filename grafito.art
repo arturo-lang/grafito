@@ -843,7 +843,8 @@ graph: function [
                     ]
                     if dictionary? v [
                         ; it's an edge filter
-                        'edgeFilters ++ edgeWithTargetFilter
+                        searchForProperties: ""
+                        'edgeFilters ++ ~edgeWithTargetFilter
                         'qedgevals ++ @[k, v\id]
                         continue
                     ]
@@ -938,7 +939,8 @@ graph: function [
                             ; it's an array of edge filters
                             orCriteria: new []
                             loop v [edgef][
-                                'orCriteria ++ edgeWithTargetFilter
+                                searchForProperties: ""
+                                'orCriteria ++ ~edgeWithTargetFilter
                                 'qedgevals ++ @[k, edgef\id]
                             ]
                             'edgeFilters ++ "(" ++ (join.with:" OR " orCriteria) ++ ")"
