@@ -36,7 +36,7 @@ Grafito: #[
 ;
 ; Define custom objects
 ;--------------------------
-define :edgeFilter [direction, content, properties][]
+define :edgeFilter [direction, content, properties]
 
 ;----------------------------------------------
 
