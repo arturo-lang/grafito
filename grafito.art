@@ -25,7 +25,7 @@ Grafito: #[
     Version: 0.2.8
  
     ; configuration
-    Debug?: true
+    Debug?: false
     verbose?: true
     caseSensitive?: true
 
@@ -69,53 +69,53 @@ graph: function [
 
     ; Global SQL scripts
 
-    schemaSQL:                      split.by:";" read "sql/schema.sql"
+    schemaSQL:                      split.by:";" read.file ./"sql/schema.sql"
 
-    createNodeSQL:                  read "sql/procs/createNode.sql"
-    updateNodeSQL:                  read "sql/procs/updateNode.sql"
-    updateNodePropertySQL:          read "sql/procs/updateNodeProperty.sql"
-    updateNodePropertiesSQL:        read "sql/procs/updateNodeProperties.sql"
-    deleteNodeSQL:                  read "sql/procs/deleteNode.sql"
-    deleteNodeEdgesSQL:             read "sql/procs/deleteNodeEdges.sql"
-    getNodeSQL:                     read "sql/procs/getNode.sql"
-    getRelatedNodesSQL:             read "sql/procs/getRelatedNodes.sql"
-    getMaxNodeIdSQL:                read "sql/procs/getMaxNodeId.sql"
+    createNodeSQL:                  read.file ./"sql/procs/createNode.sql"
+    updateNodeSQL:                  read.file ./"sql/procs/updateNode.sql"
+    updateNodePropertySQL:          read.file ./"sql/procs/updateNodeProperty.sql"
+    updateNodePropertiesSQL:        read.file ./"sql/procs/updateNodeProperties.sql"
+    deleteNodeSQL:                  read.file ./"sql/procs/deleteNode.sql"
+    deleteNodeEdgesSQL:             read.file ./"sql/procs/deleteNodeEdges.sql"
+    getNodeSQL:                     read.file ./"sql/procs/getNode.sql"
+    getRelatedNodesSQL:             read.file ./"sql/procs/getRelatedNodes.sql"
+    getMaxNodeIdSQL:                read.file ./"sql/procs/getMaxNodeId.sql"
 
-    createEdgeSQL:                  read "sql/procs/createEdge.sql"
-    updateEdgeSQL:                  read "sql/procs/updateEdge.sql"
-    deleteEdgeSQL:                  read "sql/procs/deleteEdge.sql"
-    deleteEdgeByIdSQL:              read "sql/procs/deleteEdgeById.sql"
+    createEdgeSQL:                  read.file ./"sql/procs/createEdge.sql"
+    updateEdgeSQL:                  read.file ./"sql/procs/updateEdge.sql"
+    deleteEdgeSQL:                  read.file ./"sql/procs/deleteEdge.sql"
+    deleteEdgeByIdSQL:              read.file ./"sql/procs/deleteEdgeById.sql"
 
-    fetchNodesSQL:                  read "sql/procs/fetchNodes.sql"
-    fetchNodesWithEdgesSQL:         read "sql/procs/fetchNodes.withEdges.sql"
+    fetchNodesSQL:                  read.file ./"sql/procs/fetchNodes.sql"
+    fetchNodesWithEdgesSQL:         read.file ./"sql/procs/fetchNodes.withEdges.sql"
 
-    countNodesSQL:                  read "sql/procs/countNodes.sql"
-    countEdgesSQL:                  read "sql/procs/countEdges.sql"
+    countNodesSQL:                  read.file ./"sql/procs/countNodes.sql"
+    countEdgesSQL:                  read.file ./"sql/procs/countEdges.sql"
 
     ; Global SQL filters
 
-    hasEdgeFilter:                  read "sql/filters/hasEdge.sql"
-    hasPropertyFilter:              read "sql/filters/hasProperty.sql"
-    edgeWithTargetFilter:           read "sql/filters/edgeWithTarget.sql"
-    edgeWithSourceFilter:           read "sql/filters/edgeWithSource.sql"
-    edgeWithAnyFilter:              read "sql/filters/edgeWithAny.sql"
-    edgeWithPropertiesFilter:       read "sql/filters/edgeWithProperties.sql"
-    nodePropertyWithValueFilter:    read "sql/filters/nodePropertyWithValue.sql"
-    edgePropertyWithValueFilter:    read "sql/filters/edgePropertyWithValue.sql"
+    hasEdgeFilter:                  read.file ./"sql/filters/hasEdge.sql"
+    hasPropertyFilter:              read.file ./"sql/filters/hasProperty.sql"
+    edgeWithTargetFilter:           read.file ./"sql/filters/edgeWithTarget.sql"
+    edgeWithSourceFilter:           read.file ./"sql/filters/edgeWithSource.sql"
+    edgeWithAnyFilter:              read.file ./"sql/filters/edgeWithAny.sql"
+    edgeWithPropertiesFilter:       read.file ./"sql/filters/edgeWithProperties.sql"
+    nodePropertyWithValueFilter:    read.file ./"sql/filters/nodePropertyWithValue.sql"
+    edgePropertyWithValueFilter:    read.file ./"sql/filters/edgePropertyWithValue.sql"
 
     ; Global SQL pragmas
 
-    caseInsensitiveLikePragma:      read "sql/pragmas/caseInsensitiveLike.sql"
-    caseSensitiveLikePragma:        read "sql/pragmas/caseSensitiveLike.sql"
+    caseInsensitiveLikePragma:      read.file ./"sql/pragmas/caseInsensitiveLike.sql"
+    caseSensitiveLikePragma:        read.file ./"sql/pragmas/caseSensitiveLike.sql"
 
     ; Global UI template
 
-    app: read "ui/index.html"
+    app: read.file ./"ui/index.html"
 
     ; Color palettes
     ; for graph nodes
 
-    colorPalettes: #.raw flatten.once map list "ui/palettes" 'pal [
+    colorPalettes: #.raw flatten.once map list ./"ui/palettes" 'pal [
         @[extract.filename pal, as.data pal]
     ]
 
@@ -1209,14 +1209,14 @@ graph: function [
             ]
 
             GET "/styles/(?<file>.+)" $[file][
-                read ~"ui/styles/|file|"
+                read.file ./ ~"ui/styles/|file|"
             ]
 
             GET "/scripts/(?<file>.+)" $[file][
                 (file = "ace/modes/grafito.js")? 
-                    -> replace read "ui/scripts/ace/modes/grafito.js" 
+                    -> replace read.file ./"ui/scripts/ace/modes/grafito.js" 
                             "CUSTOM_HELPERS" join.with:"|" entities
-                    -> read ~"ui/scripts/|file|"
+                    -> read.file ./ ~"ui/scripts/|file|"
             ]
 
             GET "/exit" [
@@ -1342,7 +1342,7 @@ if standalone? [
 
     BR: "\n"
 
-    logoTxt: read "logo.txt"
+    logoTxt: read.file "logo.txt"
 
     GrafitoHeader: join @[
         print color #magenta replace logoTxt {/#(.+)/} (color #white "$1") ++ color.keep #magenta ""
