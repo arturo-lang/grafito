@@ -2,7 +2,7 @@
 ; Import Grafito
 ; and ... let's rock'n'roll! :)
 ;---------------------------------------------
-do {grafito.art}
+import ./{../grafito.art}
 
 do [
     ;---------------------------------------------
