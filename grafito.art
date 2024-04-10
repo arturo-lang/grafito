@@ -22,7 +22,7 @@
 
 Grafito: #[
     ; version
-    Version: 0.2.8
+    Version: 0.2.10
  
     ; configuration
     Debug?: false
