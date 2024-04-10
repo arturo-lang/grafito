@@ -6,7 +6,7 @@
 ; in Arturo
 ;--------------------------------------------------------
 ;; name: grafito
-;; version: 0.2.8
+;; version: 0.2.12
 ;; author: drkameleon
 ;; website: « https://github.com/arturo-lang/grafito
 ;; category: database
@@ -22,7 +22,7 @@
 
 Grafito: #[
     ; version
-    Version: 0.2.11
+    Version: 0.2.12
  
     ; configuration
     Debug?: false
