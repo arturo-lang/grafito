@@ -1342,7 +1342,7 @@ if standalone? [
 
     BR: "\n"
 
-    logoTxt: read.file "logo.txt"
+    logoTxt: read.file ./"logo.txt"
 
     GrafitoHeader: join @[
         print color #magenta replace logoTxt {/#(.+)/} (color #white "$1") ++ color.keep #magenta ""
