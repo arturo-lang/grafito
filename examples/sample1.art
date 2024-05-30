@@ -8,45 +8,39 @@
 ;;
 ;; Have fun!
 
-do.import "grafito.art"
+import {grafito}!
 
-do [
-	graph.create "sample1" [
-		john: put 'person [s: "John" sex: 'm]
-		joan: put 'person [s: "Joan" sex: 'f]
-		bob:  put 'person [s: "Bob"  sex: 'm]
-		jill: put 'person [s: "Jill" sex: 'f]
+graph.create "sample1" [
+	john: put 'person [s: "John" sex: 'm]
+	joan: put 'person [s: "Joan" sex: 'f]
+	bob:  put 'person [s: "Bob"  sex: 'm]
+	jill: put 'person [s: "Jill" sex: 'f]
 
-		link'marriedTo john joan
-		link'childOf @[bob jill] @[john joan]
+	link'marriedTo john joan
+	link'childOf @[bob jill] @[john joan]
+]
+
+benchmark [
+	graph.verbose "sample1" [
+
+		print "getting first person named Joan..."
+		joan: what'person [s: "Joan"]
+		inspect joan
+
+		print "getting all male people married to Joan..."
+		husband: what 'person [sex: 'm marriedTo: joan]
+		inspect husband
+
+		; inspect fetch 'person [
+		; 	marriedTo: what 'person [s: "Joan"]
+		; ]
+
+		preview fetch 'person ø
 	]
 ]
 
-do [
-	benchmark [
-		graph.verbose "sample1" [
-
-			print "getting first person named Joan..."
-			joan: what'person [s: "Joan"]
-			inspect joan
-
-			print "getting all male people married to Joan..."
-			husband: what 'person [sex: 'm marriedTo: joan]
-			inspect husband
-
-			; inspect fetch 'person [
-			; 	marriedTo: what 'person [s: "Joan"]
-			; ]
-
-			preview fetch 'person ø
-		]
-	]
-]
-
-; do [
-; 	graph "sample1" [
-; 		preview fetch 'person ø
-; 	]
+; graph "sample1" [
+; 	preview fetch 'person ø
 ; ]
 
 ; execute ~"dot -Tpng sample.dot -o sample.png"
