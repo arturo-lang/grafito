@@ -1,6 +1,6 @@
-do.import {grafito.art}
+import {grafito}!
 
-do [ graph.create "sample2" [
+graph.create "sample2" [
     honorEnN: put'Pos [p:"noun"]
     honorEsN: put'Pos [p:"noun"]
     dishonorEnN: put'Pos [p:"noun"]
@@ -17,4 +17,4 @@ do [ graph.create "sample2" [
     link'antonym dishonorEnN honorEnN
 
     preview fetch 'Pos ø
-]]
+]
