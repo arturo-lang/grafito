@@ -1296,7 +1296,7 @@ graph: function [
         set metas 'entities write.json ø entities
 
         put'meta metas
-        unstack.discard 1
+        discard unstack 1
     ][
         printDebug "using existing database"
         meta: first fetch'meta []
