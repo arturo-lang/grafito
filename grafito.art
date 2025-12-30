@@ -240,7 +240,7 @@ graph: function [
         (string? val)? [
             return {"} ++ (escape.json val) ++ {"}
         ][
-            return as.code val
+            return express val
         ]
     ]
 
@@ -275,7 +275,7 @@ graph: function [
         nodeLabel: first values nodeProps
 
         highlightField: #[
-            border: as.code darken to :color bg 0.2
+            border: express darken to :color bg 0.2
             background: bg
         ]
 
