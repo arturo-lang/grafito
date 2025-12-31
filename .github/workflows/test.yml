@@ -24,16 +24,16 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-        version:
-          - full
     steps:
       - name: "Cancel similar actions in progress"
         uses: styfle/cancel-workflow-action@0.6.0
         with:
           access_token: ${{ github.token }}
 
-      - name: "Setup Arturo"
-        uses: arturo-lang/arturo-action@main
+      - name: Install Arturo
+        uses: arturo-lang/arturo-action@v2
+        with: 
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "Checkout"
         uses: actions/checkout@main
