@@ -116,7 +116,7 @@ graph: function [
     ; for graph nodes
 
     colorPalettes: #.raw flatten.once map list ./"ui/palettes" 'pal [
-        @[extract.filename pal, express pal]
+        @[extract.filename pal, to :block read.file pal]
     ]
 
     ;==========================================
