@@ -19,6 +19,12 @@ jobs:
             (matrix.os == 'macos')   && (matrix.arch == 'arm64' && 'macos-latest' || 'macOS-15-intel') ||
             (matrix.os == 'windows') && 'windows-latest' || 
                                         'ubuntu-latest'  }}
+
+        # TODO(workflows/test) FreeBSD workflow gets stuck
+        #  Not sure if it has to do with the VM setup on GitHub Actions
+        #  or something related to the implementation of Grafito, 
+        #  but we'll have to investigate this.
+        #  labels: workflows, bug
         strategy:
             fail-fast: false
             matrix:
