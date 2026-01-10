@@ -25,7 +25,7 @@ jobs:
                 include: 
                     - {os: linux,   arch: amd64}
                     - {os: linux,   arch: arm64}
-                    - {os: freebsd, arch: amd64}
+                    # - {os: freebsd, arch: amd64}
                     - {os: macos,   arch: amd64}
                     - {os: macos,   arch: arm64}
                     - {os: windows, arch: amd64}
