@@ -116,7 +116,7 @@ graph: function [
     ; for graph nodes
 
     colorPalettes: #.raw flatten.once map list ./"ui/palettes" 'pal [
-        @[extract.filename pal, as.data pal]
+        @[extract.filename pal, to :block read.file pal]
     ]
 
     ;==========================================
@@ -240,7 +240,7 @@ graph: function [
         (string? val)? [
             return {"} ++ (escape.json val) ++ {"}
         ][
-            return as.code val
+            return express val
         ]
     ]
 
@@ -275,7 +275,7 @@ graph: function [
         nodeLabel: first values nodeProps
 
         highlightField: #[
-            border: as.code darken to :color bg 0.2
+            border: express darken to :color bg 0.2
             background: bg
         ]
 
@@ -317,7 +317,7 @@ graph: function [
         if dictionary? srcId -> srcId: src\id
         if dictionary? tgtId -> tgtId: tgt\id
 
-        edgeId: performQuery.id 'edge createEdgeSQL @[name, write.compact.json ø props, srcId, tgtId]
+        edgeId: performQuery.id 'edge createEdgeSQL @[name, write.compact.json props ø, srcId, tgtId]
 
         #[
             id: edgeId
@@ -367,7 +367,7 @@ graph: function [
     ][
         ;; description: « set or update single node property
 
-        performQuery 'editProperty updateNodePropertySQL @[~"$.|prop|", write.compact.json ø val, nid]
+        performQuery 'editProperty updateNodePropertySQL @[~"$.|prop|", write.compact.json val ø, nid]
     ]
 
     ;
@@ -515,7 +515,7 @@ graph: function [
                     ] []
                 ]
                 'queries ++ createNodeSQL
-                'vals ++ @[name, write.compact.json ø att]
+                'vals ++ @[name, write.compact.json att ø]
                 'result ++ #[
                     id: lastId
                     tag: name
@@ -533,7 +533,7 @@ graph: function [
                     name: att
                 ] []
             ]
-            nodeId: performQuery.id 'put createNodeSQL @[name, write.compact.json ø att]
+            nodeId: performQuery.id 'put createNodeSQL @[name, write.compact.json att ø]
             result: #[
                 id: nodeId
                 tag: name
@@ -586,9 +586,9 @@ graph: function [
 
             updateable\properties: newAttributes
             (null? withTag)? ->
-                performQuery 'edit updateNodePropertiesSQL @[write.compact.json ø newAttributes, updateable\id]
+                performQuery 'edit updateNodePropertiesSQL @[write.compact.json newAttributes ø, updateable\id]
             ->
-                performQuery 'edit updateNodeSQL @[withTag, write.compact.json ø newAttributes, updateable\id]
+                performQuery 'edit updateNodeSQL @[withTag, write.compact.json newAttributes ø, updateable\id]
         ]
     ]
 
@@ -1105,7 +1105,7 @@ graph: function [
             ]
 
             POST "/startup" [
-                write.json ø #[
+                write.json #[
                     title: cleanpath
                     data: currentDataset
                     rows: currentNodes
@@ -1113,7 +1113,7 @@ graph: function [
                     caseSensitive: Grafito\caseSensitive?
                     palettes: colorPalettes
                     activePalette: Grafito\Palette
-                ]
+                ] ø
             ]
 
             POST "/exec" $[command][
@@ -1132,18 +1132,18 @@ graph: function [
                     ]
                     [
                         currentDataset: new nodeFromIds currentNodes
-                        write.json ø #[
+                        write.json #[
                             data: currentDataset
                             rows: currentNodes
                             timeTaken: scalar bench
-                        ]
+                        ] ø
                     ]
                 ]
             ]
 
             POST "/nodeFromId" $[ndid][
                 newNodes: new nodeFromIds @[nodeFromId ndid]
-                write.json ø newNodes
+                write.json newNodes ø
             ]
 
             POST "/changePalette" $[newpalette, ndids][
@@ -1152,7 +1152,7 @@ graph: function [
                 newNodes: new nodeFromIds map split.by:"," ndids => nodeFromId
                 updateMeta 'palette Grafito\Palette
                 updateMeta 'colors Grafito\nodeColors
-                write.json ø newNodes
+                write.json newNodes ø
             ]
 
             POST "/deleteNode" $[ndid][
@@ -1168,7 +1168,7 @@ graph: function [
 
             POST "/createNode" $[newtag,props][
                 created: put newtag read.json props
-                write.json ø new nodeFromIds created
+                write.json new nodeFromIds created ø
             ]
 
             POST "/linkNodes" $[newtag,src,tgt][
@@ -1205,7 +1205,7 @@ graph: function [
             ]
 
             POST "/analytics" [
-                write.json ø analytics
+                write.json analytics ø
             ]
 
             GET "/styles/(?<file>.+)" $[file][
@@ -1293,7 +1293,7 @@ graph: function [
         set metas 'mode "json"
         set metas 'version Grafito\Version
         set metas 'palette Grafito\Palette
-        set metas 'entities write.json ø entities
+        set metas 'entities write.json entities ø
 
         put'meta metas
         discard unstack 1
