@@ -1,46 +1,63 @@
-name: "Build & Test"
+name: "CI"
 on:
-  push:
-    branches:
-      - '**'
-    tags-ignore:
-      - '**'
-  pull_request:
-    paths-ignore:
-      - 'docs/*'
-      - '*.yml'
-      - '*.md'
-      - 'LICENSE'
+    push:
+        branches:
+        - master
+    pull_request:
+        types: [opened, synchronize]
+    workflow_dispatch:
 
-defaults:
-  run:
-    shell: bash -l {0}
+concurrency: 
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
 
 jobs:  
-  build:
-    name: "Build & Test"
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os:
-          - ubuntu-latest
-    steps:
-      - name: "Cancel similar actions in progress"
-        uses: styfle/cancel-workflow-action@0.6.0
-        with:
-          access_token: ${{ github.token }}
+    build:
+        name: "Test"
+        runs-on: ${{ 
+            (matrix.os == 'linux')   && (matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest') ||
+            (matrix.os == 'macos')   && (matrix.arch == 'arm64' && 'macos-latest' || 'macOS-15-intel') ||
+            (matrix.os == 'windows') && 'windows-latest' || 
+                                        'ubuntu-latest'  }}
 
-      - name: Install Arturo
-        uses: arturo-lang/arturo-action@v2
-        with: 
-          token: ${{ secrets.GITHUB_TOKEN }}
+        # TODO(workflows/test) FreeBSD workflow gets stuck
+        #  Not sure if it has to do with the VM setup on GitHub Actions
+        #  or something related to the implementation of Grafito, 
+        #  but we'll have to investigate this.
+        #  labels: workflows, bug
+        strategy:
+            fail-fast: false
+            matrix:
+                include: 
+                    - {os: linux,   arch: amd64}
+                    - {os: linux,   arch: arm64}
+                    # - {os: freebsd, arch: amd64}
+                    - {os: macos,   arch: amd64}
+                    - {os: macos,   arch: arm64}
+                    - {os: windows, arch: amd64}
+                    
+        defaults:
+            run:
+                shell: ${{ 
+                    (matrix.os == 'freebsd') && 'freebsd {0}' ||
+                    (matrix.os == 'windows') && 'msys2 {0}'   || 
+                                                'bash'        }}
 
-      - name: "Checkout"
-        uses: actions/checkout@main
-        with:
-          submodules: recursive
+        steps:
+            - name: "Checkout sources"
+              uses: actions/checkout@v4
+              with:
+                submodules: recursive
 
-      - name: Run unit tests
-        run: |
-          echo "${{ github.workspace }}/bin" >> $GITHUB_PATH
-          arturo tests/test1.art
+            - name: Setup Arturo
+              uses: arturo-lang/setup-arturo@v2
+              with: 
+                token: ${{ secrets.GITHUB_TOKEN }}
+                os: ${{ matrix.os }}
+                arch: ${{ matrix.arch }}
+
+            - name: Run unit tests
+              run: |
+                cd $GITHUB_WORKSPACE
+                arturo -e "inspect sys\deps"
+                arturo tests/test1.art
