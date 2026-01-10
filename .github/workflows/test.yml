@@ -53,4 +53,5 @@ jobs:
             - name: Run unit tests
               run: |
                 cd $GITHUB_WORKSPACE
+                arturo -e "inspect sys\deps"
                 arturo tests/test1.art
